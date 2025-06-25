@@ -1,16 +1,51 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sample Glossary</title>
+    <title>Explorateur de Philosophie</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div id="content">
-        <p>This is a sample text with /JavaScript:an interpreted language that powers dynamic websites/ embedded.</p>
-        <p>Another example: /HTML:the standard markup language for documents on the web/ is used along with /CSS:a style sheet language for describing document presentation/.</p>
-    </div>
+    <h1>Explorateur de Philosophie</h1>
+
+    <section id="level1" class="level">
+        <h2>Niveau 1 &ndash; Sélection des notions et repères</h2>
+        <div class="lists">
+            <div class="list" id="notionsList">
+                <h3>Notions</h3>
+            </div>
+            <div class="list" id="reperesList">
+                <h3>Repères</h3>
+            </div>
+        </div>
+        <div id="sandboxContainer">
+            <h3>Bac à sable</h3>
+            <div id="sandbox"></div>
+        </div>
+        <div id="lockZone">
+            <p>Glisser le cadenas ici pour verrouiller</p>
+            <div id="lock" draggable="true">🔒</div>
+            <div id="lockTarget"></div>
+        </div>
+        <button id="validateBtn" disabled>Valider la sélection</button>
+        <p id="level1Error" class="error"></p>
+    </section>
+
+    <section id="level2" class="level hidden">
+        <h2>Niveau 2 &ndash; Choix d'un sujet</h2>
+        <p>Choisissez un sujet de dissertation&nbsp;:</p>
+        <select id="subjectSelect"></select>
+        <p id="level2Error" class="error"></p>
+    </section>
+
+    <section id="level3" class="level hidden">
+        <h2>Niveau 3 &ndash; Ordonnancement des thèses</h2>
+        <div id="thesesContainer"></div>
+        <button id="exportBtn">Exporter</button>
+        <textarea id="exportArea" readonly></textarea>
+    </section>
+
     <script src="script.js"></script>
 </body>
 </html>
