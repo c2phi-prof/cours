@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Analyse Logique - Adam Smith</title>
+    <style>
+        :root { --blue: #1a73e8; --green: #1e8e3e; --red: #d93025; --gray: #f8f9fa; }
+        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; margin: 0; padding: 0; background: #fff; font-size: 14px; line-height: 1.4; color: #202124; }
+        .liste-exercices { display: flex; flex-direction: column; width: 100%; margin-bottom: 80px; }
+        .phrase-container { display: flex; align-items: stretch; border-bottom: 1px solid #f1f3f4; position: relative; transition: background 0.2s ease; }
+        .num-pos { width: 30px; display: flex; align-items: center; justify-content: center; background: var(--gray); color: #70757a; font-size: 11px; flex-shrink: 0; }
+        .phrase-content { flex-grow: 1; padding: 8px 35px 8px 15px; cursor: pointer; position: relative; }
+        
+        /* États */
+        .phrase-container[data-state="selected"] { background-color: #e8f0fe; }
+        .phrase-container[data-state="correct"] { border-left: 5px solid var(--green); background: #f8fff9; cursor: default; }
+        .phrase-container[data-state="incorrect"] { border-left: 5px solid var(--red); background: #fff8f8; }
+
+        /* Crayon sémantique */
+        .info-trigger { 
+            display: none; position: absolute; top: 5px; right: 5px; font-size: 22px; cursor: pointer; z-index: 10;
+            filter: grayscale(100%) opacity(0.6); transition: all 0.3s ease;
+        }
+        .info-trigger::before { content: '✏️'; } 
+        body[data-victory="true"] .phrase-container[data-state="correct"] .info-trigger { display: block; }
+        .phrase-container[data-view="semantic"] .info-trigger { filter: grayscale(0%) sepia(100%) hue-rotate(190deg) saturate(500%); opacity: 1; }
+
+        /* Marquage sémantique */
+        .remarque { display: none; } 
+        .phrase-container[data-view="semantic"] .txt-raw { display: none; }
+        .phrase-container[data-view="semantic"] .remarque { display: inline; }
+        .c1 { background-color: #ffeb3b; padding: 1px 3px; border-radius: 3px; font-weight: bold; } 
+        .c2 { background-color: #bbdefb; padding: 1px 3px; border-radius: 3px; } 
+        .cp { background-color: #f8bbd0; padding: 1px 3px; border-radius: 3px; }
+        .red { color: var(--red); font-weight: bold; }
+
+        /* Footer */
+        .footer { position: fixed; bottom: 0; width: 100%; background: #fff; padding: 12px; box-shadow: 0 -2px 8px rgba(0,0,0,0.1); display: flex; justify-content: center; z-index: 100; }
+        #main-btn { width: 95%; max-width: 400px; padding: 12px; border: none; border-radius: 4px; font-weight: bold; cursor: pointer; }
+        .btn-ready { background: var(--blue) !important; color: white; animation: pulse 1.5s infinite; }
+        .btn-cooldown { background: #202124 !important; color: #f1f3f4; }
+        .btn-modify { background: #5f6368 !important; color: white; }
+        .btn-copy { background: var(--green) !important; color: white; }
+        @keyframes pulse { 0% { box-shadow: 0 0 0 0 rgba(26, 115, 232, 0.4); } 70% { box-shadow: 0 0 0 10px rgba(26, 115, 232, 0); } 100% { box-shadow: 0 0 0 0 rgba(26, 115, 232, 0); } }
+    </style>
+</head>
+<body>
+<div id="container" class="liste-exercices"></div>
+<div class="footer"><button id="main-btn" onclick="actionPrincipale()">Initialisation...</button></div>
+
+<script>
+const TITRE = "Adam Smith - Justice vs Bienfaisance";
+const DATA_TEXTE = [
+    { id: "1", txt: "La société peut se maintenir entre différents hommes comme entre différents marchands, à partir du sens de son utilité, sans aucun lien réciproque d’amour ou d’affection.", note: "La société peut se maintenir <span class='c1'>à partir du</span> sens de son <span class='c2'>utilité</span>, <span class='c1'>sans aucun</span> lien réciproque <span class='cp'>d’amour ou d’affection</span>." },
+    { id: "2", txt: "Et quoique l’homme qui en est membre ne soit lié par aucune obligation, ni par aucune forme de gratitude vis-à-vis d’autrui, la société peut toujours être soutenue par l’échange mercenaire de bons services selon des valeurs convenues.", note: "<span class='c1'>Et quoique</span> l'individu ne soit lié par aucune <span class='cp'>gratitude</span>, la société peut être <span class='c1'>soutenue par</span> l’<span class='c2'>échange mercenaire</span> de bons services." },
+    { id: "3", txt: "La société, toutefois, ne peut subsister entre ceux qui sont toujours prêts à se nuire et à se causer du tort.", note: "La société, <span class='c1'>toutefois</span>, <span class='c1'>ne peut subsister</span> entre ceux qui sont prêts à se <span class='red'>nuire</span>." },
+    { id: "4", txt: "Dès que surviennent les préjudices, dès que s’installent le ressentiment réciproque et l’animosité, tous les liens de la société sont déchirés.", note: "<span class='c1'>Dès que</span> surviennent les <span class='red'>préjudices</span>, <span class='c1'>tous</span> les liens de la société sont <span class='c1'>déchirés</span>." },
+    { id: "5", txt: "S’il y a une société entre des brigands et des assassins, ils doivent au moins, selon l’observation commune, s’abstenir de se voler ou de s’assassiner les uns les autres.", note: "<span class='c1'>S’il y a</span> une société entre des brigands, ils doivent <span class='c1'>au moins</span> s’abstenir de se voler : c'est le degré zéro de la <span class='c2'>justice</span>." },
+    { id: "6", txt: "La bienfaisance est donc moins essentielle à l’existence de la société que la justice.", note: "La <span class='cp'>bienfaisance</span> est <span class='c1'>donc moins essentielle</span> à l’existence de la société que la <span class='c2'>justice</span>." },
+    { id: "7", txt: "La société peut se maintenir sans bienfaisance, quoique dans un état qui ne soit pas le plus confortable ; mais la prédominance de l’injustice la détruira absolument.", note: "La société peut se maintenir <span class='c1'>sans</span> <span class='cp'>bienfaisance</span> ; <span class='c1'>mais</span> la prédominance de l’<span class='c2'>injustice</span> la <span class='c1'>détruira absolument</span>." }
+];
+
+let journal = [], interactionMap = {}, timeTracker = {}, noteTimeTracker = {}, moves = 0, victory = false, isCooldown = false, hasMovedSinceLastCheck = false;
+let ordreInitial = [], selectedElement = null, startTime = Date.now(), lastNoteOpenTime = null;
+const SEUIL_LECTURE_TOTAL = 15;
+
+function calculerTempsLectureGlobal() { return Object.values(timeTracker).reduce((a, b) => a + b, 0) / 1000; }
+function initTracking(id) { interactionMap[id] = false; timeTracker[id] = 0; noteTimeTracker[id] = 0; }
+
+function init() {
+    const container = document.getElementById('container');
+    container.innerHTML = "";
+    let shuffled;
+    do { shuffled = [...DATA_TEXTE].sort(() => Math.random() - 0.5); } 
+    while (shuffled.every((item, i) => item.id === (i + 1).toString()));
+    
+    ordreInitial = shuffled.map(item => item.id);
+    shuffled.forEach((item, i) => {
+        initTracking(item.id);
+        const wrap = document.createElement('div');
+        wrap.className = 'phrase-container';
+        wrap.setAttribute('data-id', item.id);
+        wrap.onmouseenter = () => { wrap.startHover = Date.now(); };
+        wrap.onmouseleave = () => { if(wrap.startHover) { timeTracker[item.id] += (Date.now() - wrap.startHover); wrap.startHover = null; } };
+        wrap.innerHTML = `<div class="num-pos">${i+1}</div><div style="width:100%"><div class="phrase-content" onclick="handleClick(this.closest('.phrase-container'))"><span class="txt-raw">${item.txt}</span><span class="remarque">${item.note}</span><div class="info-trigger" onclick="toggleNote(event, this, '${item.id}')"></div></div></div>`;
+        container.appendChild(wrap);
+    });
+}
+
+function handleClick(el) {
+    if (victory || isCooldown || el.getAttribute('data-state') === 'correct') return;
+    if (!selectedElement) {
+        selectedElement = el;
+        el.setAttribute('data-state', 'selected');
+    } else {
+        if (selectedElement !== el) {
+            moves++; hasMovedSinceLastCheck = true;
+            const idA = selectedElement.getAttribute('data-id'), idB = el.getAttribute('data-id');
+            const contentA = selectedElement.querySelector('.phrase-content').innerHTML;
+            selectedElement.setAttribute('data-id', idB);
+            selectedElement.querySelector('.phrase-content').innerHTML = el.querySelector('.phrase-content').innerHTML;
+            el.setAttribute('data-id', idA);
+            el.querySelector('.phrase-content').innerHTML = contentA;
+        }
+        selectedElement.removeAttribute('data-state');
+        selectedElement = null;
+    }
+}
+
+function toggleNote(e, el, id) {
+    e.stopPropagation();
+    const container = el.closest('.phrase-container');
+    container.getAttribute('data-view') === 'semantic' ? container.removeAttribute('data-view') : container.setAttribute('data-view', 'semantic');
+}
+
+function verifier() {
+    const items = document.querySelectorAll('.phrase-container');
+    let correct = 0;
+    hasMovedSinceLastCheck = false;
+    items.forEach((item, i) => {
+        const isCorrect = item.getAttribute('data-id') === (i + 1).toString();
+        item.setAttribute('data-state', isCorrect ? 'correct' : 'incorrect');
+        if (isCorrect) correct++;
+    });
+    if (correct === DATA_TEXTE.length) {
+        victory = true;
+        document.body.setAttribute('data-victory', 'true');
+        document.getElementById('main-btn').innerText = "Copier le rapport IA";
+        document.getElementById('main-btn').className = "btn-copy";
+    } else {
+        isCooldown = true; setTimeout(() => { isCooldown = false; }, 3000);
+    }
+}
+
+function surveillerActivation() {
+    const btn = document.getElementById('main-btn');
+    if (victory) return;
+    const restant = SEUIL_LECTURE_TOTAL - calculerTempsLectureGlobal();
+    if (restant > 0) {
+        btn.innerText = `Lecture... (${Math.ceil(restant)}s)`;
+        btn.className = "btn-cooldown";
+    } else if (isCooldown) {
+        btn.innerText = "Analysez vos erreurs...";
+        btn.className = "btn-cooldown";
+    } else if (moves === 0 || !hasMovedSinceLastCheck) {
+        btn.innerText = "Réordonnez les arguments";
+        btn.className = "btn-modify";
+    } else {
+        btn.innerText = "Vérifier la cohérence";
+        btn.className = "btn-ready";
+    }
+}
+setInterval(surveillerActivation, 500);
+
+function actionPrincipale() {
+    if (victory) { /* Logique de copie ici */ alert("Rapport copié !"); return; }
+    if (document.getElementById('main-btn').className === "btn-ready") verifier();
+}
+
+window.onload = init;
+</script>
+</body>
+</html>
