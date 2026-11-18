@@ -1,0 +1,393 @@
+
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>TG - Révision d'argumentation</title>
+<style>
+:root{--bg:#f4f1ea;--card:#fffdf7;--ink:#2b2b26;--acc:#8a1c1c;--acc2:#a33c3c;--ok:#2e6b34;--bad:#a33;--line:#d8d2c4;--font:Georgia,'Times New Roman',serif;--shadow:rgba(0,0,0,.06)}
+body[data-theme="pronote"]{--bg:#ffffff;--card:#fafafa;--ink:#333333;--acc:#006400;--acc2:#4a9d4a;--ok:#2e7d32;--bad:#b03030;--line:#c9c9c9;--font:Arial,Helvetica,'Segoe UI',sans-serif;--shadow:rgba(0,0,0,.08)}
+body[data-theme="nuit"]{--bg:#12141a;--card:#1c1f28;--ink:#e8e6e0;--acc:#7fa8ff;--acc2:#a8c2ff;--ok:#7fd695;--bad:#ff8a8a;--line:#343947;--font:'Segoe UI',Helvetica,Arial,sans-serif;--shadow:rgba(0,0,0,.5)}
+*{box-sizing:border-box}
+body{font-family:var(--font);background:var(--bg);color:var(--ink);margin:0;padding:16px;transition:background .4s,color .4s;contain:paint}
+.scene{max-width:1100px;margin:0 auto}
+.outer{display:flex;gap:22px;align-items:flex-start;justify-content:center;flex-wrap:wrap}
+.phone{width:390px;max-width:100%;flex:0 0 auto;border:10px solid #1b1b1b;border-radius:34px;background:var(--bg);padding:14px 12px;min-height:78vh;box-shadow:0 10px 30px rgba(0,0,0,.35);contain:layout paint}
+.topbar{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:10px}
+h1{font-size:1.05em;color:var(--acc);margin:0;text-align:center;flex:1}
+.themebox{display:flex;align-items:center;gap:6px;font-size:.8em}
+.themebox select{font-family:var(--font);font-size:.9em;padding:5px 8px;border:1px solid var(--line);border-radius:20px;background:var(--card);color:var(--ink);cursor:pointer}
+.menubar{display:flex;justify-content:center;gap:6px;margin-bottom:10px;flex-wrap:wrap}
+.menubar button{font-size:.8em;padding:5px 12px}
+.sub{text-align:center;color:var(--ink);opacity:.75;margin-bottom:14px;font-style:italic}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px 14px;box-shadow:0 3px 10px var(--shadow);animation:cardIn .45s ease both}
+@keyframes cardIn{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+.progwrap{height:8px;background:var(--line);border-radius:4px;overflow:hidden;margin-bottom:14px}
+.progbar{height:100%;background:var(--acc);width:0;transition:width .6s cubic-bezier(.25,.9,.3,1);will-change:width}
+.qnum{font-size:.85em;opacity:.65;margin-bottom:8px}
+.qtext{font-size:1.05em;margin:0 0 14px;line-height:1.5}
+label.opt{display:block;border:1px solid var(--line);border-radius:9px;padding:12px 14px;margin:8px 0;cursor:pointer;line-height:1.4;transition:background .25s,border-color .25s}
+label.opt:hover{border-color:var(--acc2)}
+label.opt.sel{border-color:var(--acc);background:color-mix(in srgb,var(--acc) 10%,var(--card))}
+label.opt .tag{display:inline-block;font-size:.72em;border:1px solid var(--acc2);color:var(--acc2);border-radius:12px;padding:1px 8px;margin-right:6px;vertical-align:middle}
+.expl{display:none;margin-top:12px;padding:12px 14px;border-left:4px solid var(--acc2);background:color-mix(in srgb,var(--acc2) 8%,var(--card));border-radius:0 8px 8px 0;line-height:1.5;font-size:.93em}
+.expl.show{display:block;animation:fadeUp .4s ease both}
+@keyframes fadeUp{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+.btnrow{display:flex;gap:10px;margin-top:16px;flex-wrap:wrap}
+button{font-family:var(--font);font-size:.95em;padding:10px 16px;border:1px solid var(--acc);background:var(--acc);color:#fff;border-radius:20px;cursor:pointer}
+button:disabled{opacity:.4;cursor:default}
+button.ghost{background:transparent;color:var(--acc);border-color:var(--line)}
+.score{text-align:center;font-size:1.05em;margin:10px 0}
+.big{font-size:2em;color:var(--acc);font-weight:bold}
+.hbar{display:flex;align-items:center;gap:8px;margin:6px 0;font-size:.88em}
+.hbar .bar{flex:1;height:12px;background:var(--line);border-radius:6px;overflow:hidden}
+.hbar .fill{height:100%;background:var(--acc2)}
+.hbar .n{width:16px;text-align:right}
+.intro em{color:var(--acc)}
+.foot{text-align:center;font-size:.78em;opacity:.55;margin-top:12px}
+.panel{flex:1 1 320px;max-width:420px;background:var(--card);border:1px dashed var(--acc2);border-radius:14px;padding:16px;box-shadow:0 3px 10px var(--shadow)}
+.panel h2{font-size:1em;color:var(--acc);margin:0 0 10px}
+.panel .grp{margin-bottom:14px}
+.panel label.plab{display:block;font-size:.8em;opacity:.7;margin-bottom:4px}
+.panel select,.panel textarea{width:100%;font-family:var(--font);font-size:.85em;border:1px solid var(--line);border-radius:8px;padding:8px;background:var(--bg);color:var(--ink)}
+.panel textarea{height:120px;resize:vertical}
+.panel .hint{font-size:.75em;opacity:.6;line-height:1.4}
+.prow{display:flex;gap:8px;flex-wrap:wrap;margin-top:6px}
+.prow button{font-size:.85em;padding:8px 14px}
+.editing [data-edit]{outline:1.5px dashed var(--acc2);outline-offset:2px;border-radius:4px}
+[data-edit]:empty:before{content:"✎";opacity:.4}
+@media (max-width:480px){
+body{padding:12px 10px}
+.panel{max-width:100%}
+.phone{border-width:8px;padding:10px 8px}
+}
+</style>
+</head>
+<body data-theme="pronote">
+<div class="scene">
+<div class="outer">
+
+<div class="phone">
+<div class="topbar">
+<h1 data-edit data-kind="titre" id="h1">Jul</h1>
+<div class="themebox">🎨
+<select id="theme">
+<option value="pronote" selected>Pronote</option>
+<option value="classique">Classique</option>
+<option value="nuit">Nuit</option>
+</select>
+</div>
+</div>
+<div class="menubar"><button class="ghost" data-act="intro">Le défi</button><button class="ghost" data-act="portrait">Qui est Jule ?</button></div>
+<div class="sub" data-edit data-kind="soustitre" id="sub">« Si j'ai tort, est-ce que tu as raison ? »</div>
+<div class="card">
+<div class="progwrap"><div class="progbar" id="prog"></div></div>
+<div id="content"></div>
+</div>
+<div class="foot" id="foot">Egocito — modèle 1 parmi d'autres : le défi de Jule</div>
+</div>
+
+<div class="panel">
+<h2>⚙️ Commandes d'édition (hors cadre)</h2>
+
+<div class="grp">
+<label class="plab" for="seancelist">Modèle en cours (un modèle parmi d'autres)</label>
+<select id="seancelist"></select>
+</div>
+
+<div class="grp">
+<label class="plab">Édition des textes à l'écran</label>
+<div class="prow">
+<button class="ghost" id="editbtn">✏️ Éditer les textes</button>
+<button class="ghost" id="addqbtn">➕ Question</button>
+<button class="ghost" id="addhbtn">➕ Hypothèse</button>
+</div>
+<div class="hint">En mode édition, cliquez n'importe quel texte dans le téléphone ci-contre et tapez directement. Les modifications sont enregistrées automatiquement.</div>
+</div>
+
+<div class="grp">
+<label class="plab" for="io">Import / export JSON</label>
+<textarea id="io" placeholder='Collez ici une séance au format JSON, puis "Importer".'></textarea>
+<div class="prow">
+<button id="expbtn">📤 Exporter</button>
+<button class="ghost" id="impbtn">📥 Importer</button>
+<button class="ghost" id="rstbtn">↺ Réinitialiser</button>
+</div>
+<div class="hint">Chaque modèle suit le même format, réutilisable pour toute autre figure ou question : {titre, soustitre, questions:[{q, opts:[{t,p}], expl, verdict}], hypotheses:[{h,c}]}. L'export place le modèle courant dans le champ ci-dessus ; l'import accepte un ou plusieurs modèles, qui s'ajoutent au menu.</div>
+</div>
+</div>
+
+</div>
+</div>
+
+<script>
+"use strict";
+/* ================= MODÈLE DE DONNÉES ================= */
+const PROFILS={
+ logicien:{nom:"le Logicien",desc:"Vous exigez d'abord la validité d'un raisonnement : distinctions contradictoires / contraires, sens exact des mots (« nécessairement »), preuve positive. C'est l'esprit de l'Organon d'Aristote."},
+ duelliste:{nom:"le Dueliste",desc:"Vous pensez en victoire et défaite : si l'un perd, l'autre gagne. Prégnant dans le défi éristique, mais cela confond gagner un jeu et dire le vrai."},
+ reteur:{nom:"le Rhéteur",desc:"Vous privilégiez l'effet : assurance, audience, majorité. Convaincre n'est pas démontrer (Seconds Analytiques)."},
+ sophiste:{nom:"le Sophiste",desc:"Vous aimez les retournements et les interprétations imprévues. Apparenté de Jul : séduisant, mais l'apparence de preuve n'est pas la preuve."},
+ admirateur:{nom:"l'Admirateur",desc:"Vous confiez la vérité à la célébrité ou au nombre d'abonnés. C'est l'argument d'autorité, qu'Aristote range parmi les sophismes."},
+ sceptique:{nom:"le Sceptique",desc:"Vous préférez suspendre le jugement. Le doute a ses lettres de noblesse, mais il ne dispense pas d'argumenter en copie."},
+ relativiste:{nom:"le Relativiste",desc:"À chacun sa vérité : séduisant, mais cela dissout le débat lui-même, et Jul ne débattrait plus de rien."}
+};
+const PORTRAIT={
+ nom:"Qui est Jule ?",
+ texte:"Un élève m'a parlé de Jule. Jule occupe une chaîne imposante: des millions de vues à chaque clip ou live, une foule suspendue à ses sorties, une autre foule qui ne jure que par sa perte, et lui-même qui ne se montre presque jamais ailleurs que là, précisément, où il règne. Sur son plateau, il reçoit: le chat déborde, les appels affluent, et l'on vient le provoquer. Chacun s'y présente avec un argument, une raison, une conviction. Chacun repart avec le sentiment d'avoir eu tort. À tous les coups, Jule le démontre. Voilà la prémisse qui m'occupe, voilà ce qu'il faut d'abord écouter avant de rien réfuter.\n\nQue le Jule de cette app soit une fiction, j'y consens d'avance: personnage d'école, cousin philosophique de l'influenceur véritable, il n'engage que la rigueur de nosraisonnements. Mais c'est le propre des fictions bien construites que d'éclairer les nôtres. Si Jule ne peut perdre, est-ce qu'il joue encore ? Si, à tous les coups, mon tort est démontré, le sien — raison — est-il pour autant établi ? Voilà toute la question. La logique d'Aristote (Organon) distingue ce qui est nécessaire et ce qui ne fait qu'arriver toujours; elle nomme contradictoires deux énoncés qui ne peuvent être ni vrais ni faux ensemble, et contraires deux assertions qui peuvent perdre toutes les deux. Or il ne peut y avoir qu'un vainqueur dans un défi: prémisse de jeu, non de vérité. Mon échec ne fait pas sa victoire logique, encore moins « nécessairement ».\n\nCette app vous propose donc d'étudier Jule comme on étudie un sophiste d'Athènes: cinq manches pour révéler votre réflexe argumentatif, puis six hypothèses à lui soumettre.",
+ lien:"Des informations vérifiables sur la chaîne et son public (2 millions d'abonnés, live et clips, rapports entre Team Jul et détracteurs) y sont mêlées au personnage fictif du défi; à vérifier auprès de l'analyste que vous serez devenu."
+};
+const DEFAULT=[{
+ titre:"Jul",
+ soustitre:"« Si j'ai tort, est-ce que tu as raison ? »",
+ questions:[
+ {q:"Un élève cite l'influenceur Jul, qui « démontre à tous les coups » que son contradicteur a tort. Jul a-t-il donc nécessairement raison ?",
+  opts:[
+   {t:"Pas nécessairement : montrer que l'adversaire se trompe ne prouve pas qu'on dit vrai soi-même.",p:"logicien"},
+   {t:"Oui : dans un débat, si l'un a tort, l'autre a nécessairement raison.",p:"duelliste"},
+   {t:"Oui, à condition de parler avec assurance.",p:"reteur"},
+   {t:"La question n'a pas de sens : personne n'a jamais raison ni tort.",p:"sceptique"}],
+  expl:"Réfuter l'adversaire et prouver sa propre thèse sont deux tâches distinctes : les deux peuvent avoir tort en même temps.",verdict:"logicien"},
+ {q:"Pour une même proposition et à un même moment, « cette proposition est vraie » et « cette proposition est fausse » : que peut-on dire de ces deux énoncés ?",
+  opts:[
+   {t:"Ils sont contradictoires : l'un est nécessairement vrai et l'autre faux (tiers exclu).",p:"logicien"},
+   {t:"Ils peuvent être vrais en même temps : chacun croit sa vérité.",p:"relativiste"},
+   {t:"Ils peuvent être faux en même temps : le vrai et le faux dépendent du point de vue.",p:"sophiste"},
+   {t:"Ils n'ont aucun rapport logique entre eux.",p:"sceptique"}],
+  expl:"Tiers exclu d'Aristote : pour une même proposition, aucune troisième possibilité. Mais « j'ai tort » et « tu as tort » ne sont pas contradictoires.",verdict:"logicien"},
+ {q:"Quel est le défaut du raisonnement qui croit qu'avoir raison découle du fait que l'adversaire a tort ?",
+  opts:[
+   {t:"Une confusion entre contradictoires et contraires : démolir la thèse adverse n'établit pas la sienne.",p:"logicien"},
+   {t:"Un argument d'autorité : Jul étant célèbre, il a nécessairement raison.",p:"admirateur"},
+   {t:"Un cercle : il rejette ce qu'il veut prouver.",p:"sophiste"},
+   {t:"Rien : c'est un raisonnement logiquement valide.",p:"duelliste"}],
+  expl:"Fausse dichotomie : « je dis vrai » et « tu dis vrai » peuvent être faux ensemble. Une vraie paire de contradictoires ne comporte jamais deux faux.",verdict:"logicien"},
+ {q:"Un influenceur déclare : « On m'a prouvé que j'avais tort, donc c'est vous qui avez raison. » Que lui répondre ?",
+  opts:[
+   {t:"Le fait d'avoir tort n'entraîne pas que l'interlocuteur ait raison, et encore moins raison « nécessairement ».",p:"logicien"},
+   {t:"Il a raison de changer d'avis, donc il avait déjà raison avant.",p:"sophiste"},
+   {t:"Celui qui a le plus d'abonnés a forcément raison.",p:"admirateur"},
+   {t:"La vérité est une affaire de majorité.",p:"reteur"}],
+  expl:"Deux erreurs : avoir tort ne rend personne d'autre raison ; « nécessairement » transforme une possibilité en certitude logique.",verdict:"logicien"},
+ {q:"Quelle conclusion pratique emporter pour votre dissertation ?",
+  opts:[
+   {t:"Ne pas se contenter de critiquer la thèse adverse : démontrer aussi positivement sa propre thèse.",p:"logicien"},
+   {t:"Critiquer longuement l'adversaire suffit, car s'il a tort, on a automatiquement raison.",p:"duelliste"},
+   {t:"Éviter toute objection, car toute critique de l'adversaire est un sophisme.",p:"sceptique"},
+   {t:"Commencer par citer un influenceur pour crédibiliser sa copie.",p:"admirateur"}],
+  expl:"La réfutation (partie négative) ne remplace jamais la démonstration (partie positive).",verdict:"logicien"}],
+ hypotheses:[
+  {h:"H1 — Le cadre du défi n'est pas celui de la vérité.",
+   c:"La prémisse P1 est éristique (victoire au jeu), non logique (le vrai). Dans l'Organon, la dialectique et la science visent le vrai ; l'éristique vise la victoire. Jul peut toujours gagner le duel et pourtant se tromper."},
+  {h:"« Prouver que j'ai tort » ne prouve rien de ses propres affirmations.",
+   c:"P2 ne porte que sur les énoncés du contradicteur. Il faudrait une prémisse cachée : « les seules thèses en présence sont les nôtres ». Le syllogisme est incomplet, donc invalide."},
+  {h:"« À tous les coups » n'est pas « nécessairement ».",
+   c:"L'universalité ne vaut pas la nécessité : Jul peut gagner à tous les coups par talent rhétorique ou adversaires faibles, sans que sa victoire soit nécessaire."},
+  {h:"« Prouver » au sens rhétorique n'est pas démontrer au sens logique.",
+   c:"La démonstration tire le nécessaire de principes vrais et premiers (Seconds Analytiques). « Je peux toujours prouver que tu as tort » peut signifier seulement : je sais toujours faire accroire que tu as tort."},
+  {h:"L'hypothèse charitable : P2 ne va qu'aux erreurs de l'adversaire.",
+   c:"Chaque preuve de Jul établit qu'un énoncé adverse est faux : il l'emporte par déconstruction, jamais sur ses propres affirmations. Sa force le rend invaincu, pas vrai."},
+  {h:"Contradiction et contrariété : deux thèses peuvent-elles perdre ensemble ?",
+   c:"Pour Aristote, des contradictoires ne peuvent être ni vraies ni fausses ensemble. Mais les thèses des deux camps ne sont pas des contradictoires : elles peuvent être fausses ensemble. « Un seul vainqueur » confond contrariété et contradiction."}
+ ]}];
+
+/* ================= ÉTAT ================= */
+let SEANCES=null,cur=0,idx=0,choices=[];
+let locked=false,editing=false;
+const deepClone=o=>JSON.parse(JSON.stringify(o));
+
+/* ================= RÉFÉRENCES DOM (mises en cache) ================= */
+const $=id=>document.getElementById(id);
+const dom={
+ content:$("content"),prog:$("prog"),h1:$("h1"),sub:$("sub"),
+ theme:$("theme"),seancelist:$("seancelist"),editbtn:$("editbtn"),
+ addqbtn:$("addqbtn"),addhbtn:$("addhbtn"),io:$("io"),
+ expbtn:$("expbtn"),impbtn:$("impbtn"),rstbtn:$("rstbtn")
+};
+const S=()=>SEANCES[cur];
+
+/* ================= GABARITS (pré-compilés) ================= */
+const esc=s=>String(s==null?"":s);
+function renderIntro(){
+locked=false;setProg(0);
+setContent(buildHTML(`
+<div class="intro" style="line-height:1.6">
+<p>Un élève a parlé à son professeur de l'influenceur <em>Jul</em>, qui « démontre à tous les coups » que son contradicteur a tort.</p>
+<p>De là une question à lui soumettre :</p>
+<p style="text-align:center"><em>« Si j'ai tort, est-ce que tu aurais nécessairement toujours raison ? »</em></p>
+<p>Pas de bonne ni de mauvaise réponse : répondez selon votre réflexe, l'app révèle votre <strong>profil argumentatif</strong> (Logicien, Dueliste, Rhéteur, Sophiste…).</p>
+<p style="font-size:.85em;opacity:.7">Cette séance n'est qu'<em>un modèle parmi d'autres</em> : d'autres figures et d'autres questions peuvent être chargées depuis le panneau (import JSON), au même format.</p>
+<div class="btnrow"><button data-act="start">Commencer</button></div>
+</div>`));
+}
+function renderPortrait(){
+locked=false;setProg(0);
+const P=PORTRAIT;
+setContent(buildHTML(
+"<div class=\"qnum\">Page</div>"+
+"<div class=\"qtext\" data-edit data-kind=\"portnom\">"+esc(P.nom)+"</div>"+
+"<div class=\"expl\" style=\"display:block;line-height:1.7\">"+
+"<span data-edit data-kind=\"porttxt\">"+esc(P.texte)+"</span></div>"+
+"<div class=\"qtext\" style=\"margin-top:14px;font-size:.88em;opacity:.8\" data-edit data-kind=\"portlien\">"+esc(P.lien)+"</div>"+
+"<div class=\"btnrow\"><button data-act=\"start\">Commencer</button><button class=\"ghost\" data-act=\"intro\">Le défi</button></div>"));
+}
+function start(){idx=0;choices.length=0;renderQ();}
+function renderQ(){
+locked=false;
+const q=S().questions[idx],n=S().questions.length;
+setProg(idx/n*100);
+const parts=["<div class=\"qnum\">Manche "+(idx+1)+" / "+n+"</div>",
+"<div class=\"qtext\" data-edit data-kind=\"question\" data-i=\""+idx+"\">"+esc(q.q)+"</div>"];
+for(let j=0;j<q.opts.length;j++){const o=q.opts[j];
+parts.push("<label class=\"opt\" data-act=\"pick\" data-j=\""+j+"\"><span class=\"tag\">"+profilShort(o.p)+"</span><span data-edit data-kind=\"opt\" data-i=\""+idx+"\" data-j=\""+j+"\">"+esc(o.t)+"</span></label>");}
+parts.push("<div class=\"expl\" id=\"expl\"></div>");
+parts.push("<div class=\"btnrow\"><button id=\"next\" data-act=\"next\" disabled>Manche suivante →</button></div>");
+setContent(buildHTML(parts.join("")));
+}
+function pick(j){
+if(locked)return;locked=true;
+const q=S().questions[idx],p=q.opts[j].p;
+choices.push(p);
+const labels=dom.content.querySelectorAll("label.opt");
+for(let k=0;k<labels.length;k++)if(k===j)labels[k].classList.add("sel");
+const flavor=(q.verdict===p)?"✔ C'est le raisonnement du philosophe : ":"✎ Votre réflexe séduit… mais Jul garde l'avantage : ";
+const e=$("expl");
+e.innerHTML=flavor+"<span data-edit data-kind=\"expl\" data-i=\""+idx+"\">"+esc(q.expl)+"</span>";
+e.classList.add("show");
+const nb=$("next");if(nb)nb.disabled=false;
+}
+function next(){if(++idx<S().questions.length)renderQ();else renderEnd();}
+function renderEnd(){
+setProg(100);
+const counts=Object.create(null);
+for(let i=0;i<choices.length;i++){const p=choices[i];counts[p]=(counts[p]||0)+1;}
+let dom_=null,max=0,keys=Object.keys(counts);
+for(let i=0;i<keys.length;i++)if(counts[keys[i]]>max){max=counts[keys[i]];dom_=keys[i];}
+if(!dom_)dom_="logicien";
+const total=Math.max(1,choices.length);
+let bars="";
+for(let i=0;i<keys.length;i++){const p=keys[i],w=Math.round(counts[p]/total*100);
+bars+="<div class=\"hbar\"><span style=\"flex:0 0 90px;font-size:.8em;opacity:.8\">"+esc((PROFILS[p]&&PROFILS[p].nom)||p)+"</span><span class=\"bar\"><span class=\"fill\" style=\"display:block;width:"+w+"%\"></span></span><span class=\"n\">"+counts[p]+"</span></div>";}
+const P=PROFILS[dom_]||{nom:dom_,desc:""};
+setContent(buildHTML(
+"<div class=\"score\"><div style=\"font-size:.85em;opacity:.7\">Votre profil argumentatif dominant :</div>"+
+"<div class=\"big\" data-edit data-kind=\"profilnom\" data-p=\""+dom_+"\">"+esc(P.nom)+"</div>"+
+"<div style=\"line-height:1.5;font-size:.92em\" data-edit data-kind=\"profildesc\" data-p=\""+dom_+"\">"+esc(P.desc)+"</div></div>"+
+"<div style=\"margin-top:14px\">"+bars+"</div>"+
+"<div class=\"qtext\" style=\"margin-top:14px;text-align:center\">Seul « le Logicien » tient tête à Jul. Passez aux hypothèses pour achever la réfutation.</div>"+
+"<div class=\"btnrow\" style=\"justify-content:center\"><button data-act=\"hyp\">Contre-attaque : les prémisses de Jul</button><button class=\"ghost\" data-act=\"start\">Nouvelle manche</button></div>"));
+}
+function renderHyp(){
+setProg(100);
+const parts=["<div class=\"qnum\">Partie 2 — Les prémisses de Jul</div>",
+"<div class=\"qtext\">Le raisonnement de Jul se laisse reconstruire ainsi :</div>",
+"<div class=\"expl\" style=\"display:block\"><strong>P1.</strong> Dans ce jeu de défi, il ne peut y avoir qu'un vainqueur : l'autre est nécessairement perdant.<br><strong>P2.</strong> Or Jul peut toujours prouver que son adversaire a tort.<br><strong>C.</strong> Donc Jul a nécessairement toujours raison.</div>",
+"<div class=\"qtext\" style=\"margin-top:14px\">Quelles hypothèses opposer à ce raisonnement ? Cliquez sur chacune pour la soumettre à Jul.</div>"];
+const H=S().hypotheses||[];
+for(let i=0;i<H.length;i++){
+parts.push("<label class=\"opt\" data-act=\"showhyp\" data-i=\""+i+"\"><span data-edit data-kind=\"hyp\" data-i=\""+i+"\" data-f=\"h\">"+esc(H[i].h)+"</span></label>");
+parts.push("<div class=\"expl\" id=\"hyp"+i+"\"><span data-edit data-kind=\"hyp\" data-i=\""+i+"\" data-f=\"c\">"+esc(H[i].c)+"</span></div>");}
+parts.push("<div class=\"btnrow\"><button data-act=\"start\">Nouvelle manche</button><button class=\"ghost\" data-act=\"intro\">Retour au début</button></div>");
+setContent(buildHTML(parts.join("")));
+}
+function profilShort(p){
+if(!p)return"…";
+const n=(PROFILS[p]&&PROFILS[p].nom)||p;
+return n.replace(/^(le |la |l')/,"").replace(/^./,c=>c.toUpperCase());
+}
+
+/* ================= HELPERS RENDU (un seul reflow par écran) ================= */
+function buildHTML(html){return html;}
+function setContent(html){dom.content.innerHTML=html;applyEdit();}
+function setProg(pct){dom.prog.style.width=pct+"%";}
+
+/* ================= SÉANCES ================= */
+function refreshList(){
+const opts=new Array(SEANCES.length);
+for(let i=0;i<SEANCES.length;i++)
+opts[i]="<option value=\""+i+"\""+(i===cur?" selected":"")+">Modèle "+(i+1)+" — "+esc(SEANCES[i].titre)+"</option>";
+dom.seancelist.innerHTML=opts.join("");
+}
+function selectSeance(i){cur=+i;syncHeader();renderIntro();}
+function syncHeader(){dom.h1.textContent=S().titre;dom.sub.textContent=S().soustitre;}
+
+/* ================= ÉDITION HORS CADRE ================= */
+function toggleEdit(){
+editing=!editing;
+document.body.classList.toggle("editing",editing);
+dom.editbtn.textContent=editing?"✅ Terminer":"✏️ Éditer les textes";
+applyEdit();
+if(!editing)syncHeader();
+}
+function applyEdit(){
+const els=dom.content.querySelectorAll("[data-edit]");
+for(let i=0;i<els.length;i++){const el=els[i];
+if(editing){el.contentEditable="true";el.spellcheck=false;}
+else el.contentEditable="false";}
+}
+function saveEdit(el){
+const k=el.dataset.kind,s=S();
+if(k==="titre"){s.titre=el.textContent;refreshList();}
+else if(k==="soustitre")s.soustitre=el.textContent;
+else if(k==="question")s.questions[el.dataset.i].q=el.innerHTML;
+else if(k==="opt")s.questions[el.dataset.i].opts[el.dataset.j].t=el.innerHTML;
+else if(k==="expl")s.questions[el.dataset.i].expl=el.innerHTML;
+else if(k==="hyp")s.hypotheses[el.dataset.i][el.dataset.f]=el.innerHTML;
+else if(k==="profilnom"){if(!s.profilNomTxt)s.profilNomTxt={};s.profilNomTxt[el.dataset.p]=el.innerHTML;}
+else if(k==="profildesc"){if(!s.profilDesc)s.profilDesc={};s.profilDesc[el.dataset.p]=el.innerHTML;}
+else if(k==="portnom"){if(!s.portrait)s.portrait={};s.portrait.nom=el.innerText;}
+else if(k==="porttxt"){if(!s.portrait)s.portrait={};s.portrait.texte=el.innerHTML;}
+else if(k==="portlien"){if(!s.portrait)s.portrait={};s.portrait.lien=el.innerText;}
+}
+function addQuestion(){
+S().questions.push({q:"Nouvelle question…",opts:[{t:"Option A",p:"logicien"},{t:"Option B",p:"duelliste"}],expl:"",verdict:"logicien"});
+renderIntro();
+}
+function addHyp(){
+if(!S().hypotheses)S().hypotheses=[];
+S().hypotheses.push({h:"Nouvelle hypothèse…",c:"Commentaire…"});
+renderHyp();
+}
+function exportJSON(){dom.io.value=JSON.stringify(SEANCES);}
+function importJSON(){
+try{
+const data=JSON.parse(dom.io.value);
+const arr=Array.isArray(data)?data:[data];
+if(!arr[0]||!arr[0].questions)throw 0;
+SEANCES=arr;cur=0;refreshList();syncHeader();renderIntro();
+}catch(e){alert("JSON invalide : attendu {titre, soustitre, questions:[{q, opts:[{t,p}], expl, verdict}], hypotheses:[{h,c}]}");}
+}
+function resetApp(){SEANCES=deepClone(DEFAULT);cur=0;refreshList();syncHeader();renderIntro();}
+
+/* ================= ÉCOUTEURS DÉLÉGUÉS (un seul binding) ================= */
+document.addEventListener("click",e=>{
+const t=e.target.closest("[data-act]");
+if(!t)return;
+const a=t.dataset.act;
+if(a==="pick")pick(+t.dataset.j);
+else if(a==="next")next();
+else if(a==="start")start();
+else if(a==="intro")renderIntro();
+else if(a==="hyp")renderHyp();
+else if(a==="portrait")renderPortrait();
+else if(a==="showhyp"){t.classList.add("sel");const h=$("hyp"+t.dataset.i);if(h)h.classList.add("show");}
+},true);
+document.addEventListener("blur",e=>{
+const el=e.target;
+if(editing&&el.dataset&&el.dataset.edit!==undefined)saveEdit(el);
+},true);
+dom.theme.addEventListener("change",()=>{document.body.dataset.theme=dom.theme.value;});
+dom.seancelist.addEventListener("change",()=>selectSeance(dom.seancelist.value));
+dom.editbtn.addEventListener("click",toggleEdit);
+dom.addqbtn.addEventListener("click",addQuestion);
+dom.addhbtn.addEventListener("click",addHyp);
+dom.expbtn.addEventListener("click",exportJSON);
+dom.impbtn.addEventListener("click",importJSON);
+dom.rstbtn.addEventListener("click",resetApp);
+/* ================= DÉMARRAGE ================= */
+SEANCES=deepClone(DEFAULT);
+refreshList();syncHeader();renderIntro();
+</script>
+</body>
+</html>
