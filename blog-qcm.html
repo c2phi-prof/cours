@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>QCM de Philosophie — Révisions par classe (TG2, TG5, TG9)</title>
+<style>
+  :root {
+    --bg: #f8fafc;
+    --card: #ffffff;
+    --ink: #1e293b;
+    --muted: #64748b;
+    --acc: #0f4c81;
+    --acc-light: #e0f2fe;
+    --border: #e2e8f0;
+    --tg2: #047857;
+    --tg2-bg: #d1fae5;
+    --tg5: #1d4ed8;
+    --tg5-bg: #dbeafe;
+    --tg9: #7c3aed;
+    --tg9-bg: #ede9fe;
+    --all: #b45309;
+    --all-bg: #fef3c7;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    padding: 20px;
+    font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    background-color: var(--bg);
+    color: var(--ink);
+    line-height: 1.6;
+  }
+  .container {
+    max-width: 960px;
+    margin: 0 auto;
+  }
+  header {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 24px 28px;
+    margin-bottom: 24px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+  }
+  header h1 {
+    margin: 0 0 8px 0;
+    font-size: 1.65rem;
+    color: var(--acc);
+  }
+  header p {
+    margin: 0;
+    color: var(--muted);
+    font-size: 0.98rem;
+  }
+  .filters {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-top: 18px;
+  }
+  .filter-btn {
+    border: 1px solid var(--border);
+    background: var(--bg);
+    color: var(--ink);
+    padding: 7px 16px;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+  .filter-btn:hover {
+    border-color: var(--acc);
+    color: var(--acc);
+  }
+  .filter-btn.active {
+    background: var(--acc);
+    color: #ffffff;
+    border-color: var(--acc);
+  }
+  .feed {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+  article.post {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 24px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.03);
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+  }
+  article.post:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(0,0,0,0.06);
+  }
+  .post-meta {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-bottom: 10px;
+    font-size: 0.85rem;
+  }
+  .badge {
+    padding: 3px 10px;
+    border-radius: 6px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+  }
+  .badge-tg2 { background: var(--tg2-bg); color: var(--tg2); }
+  .badge-tg5 { background: var(--tg5-bg); color: var(--tg5); }
+  .badge-tg9 { background: var(--tg9-bg); color: var(--tg9); }
+  .badge-all { background: var(--all-bg); color: var(--all); }
+  .post-date {
+    color: var(--muted);
+  }
+  .post-qcount {
+    margin-left: auto;
+    color: var(--muted);
+    background: var(--bg);
+    padding: 2px 8px;
+    border-radius: 6px;
+    border: 1px solid var(--border);
+  }
+  article.post h2 {
+    margin: 0 0 10px 0;
+    font-size: 1.25rem;
+    color: var(--ink);
+  }
+  article.post p.desc {
+    margin: 0 0 16px 0;
+    color: #334155;
+    font-size: 0.96rem;
+  }
+  .tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-bottom: 18px;
+  }
+  .tag {
+    font-size: 0.8rem;
+    background: #f1f5f9;
+    color: #475569;
+    padding: 3px 9px;
+    border-radius: 5px;
+  }
+  .actions {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    border-top: 1px solid var(--border);
+    padding-top: 14px;
+  }
+  .btn-launch {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: var(--acc);
+    color: #ffffff;
+    text-decoration: none;
+    padding: 9px 18px;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 0.92rem;
+    transition: background 0.2s;
+  }
+  .btn-launch:hover {
+    background: #0a365c;
+  }
+  .btn-preview {
+    background: transparent;
+    color: var(--acc);
+    border: 1px solid var(--acc);
+    padding: 9px 16px;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 0.92rem;
+    cursor: pointer;
+    transition: background 0.2s;
+  }
+  .btn-preview:hover {
+    background: var(--acc-light);
+  }
+  .iframe-box {
+    margin-top: 16px;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    overflow: hidden;
+    display: none;
+  }
+  .iframe-box iframe {
+    width: 100%;
+    height: 620px;
+    border: none;
+    display: block;
+  }
+  .note-gsite {
+    margin-top: 28px;
+    padding: 16px 20px;
+    background: #f1f5f9;
+    border-left: 4px solid var(--acc);
+    border-radius: 6px;
+    font-size: 0.88rem;
+    color: #475569;
+  }
+</style>
+</head>
+<body>
+<div class="container">
+  <header>
+    <h1>QCM de Philosophie — Révisions des séances</h1>
+    <p>Retrouvez ci-dessous les QCM interactifs publiés après chaque séance de cours pour réviser les notions, les textes et la méthodologie (TG2, TG5, TG9).</p>
+    <div class="filters" role="group" aria-label="Filtrer par classe">
+      <button class="filter-btn active" onclick="filterPosts('all', this)">Toutes les classes (6)</button>
+      <button class="filter-btn" onclick="filterPosts('TG2', this)">TG2 (2)</button>
+      <button class="filter-btn" onclick="filterPosts('TG5', this)">TG5 (2)</button>
+      <button class="filter-btn" onclick="filterPosts('TG9', this)">TG9 (1)</button>
+      <button class="filter-btn" onclick="filterPosts('TG', this)">Transversal / Argumentation (1)</button>
+    </div>
+  </header>
+
+  <main class="feed" id="feed">
+
+    <!-- Article 1 : TG2 - 18 novembre 2026 -->
+    <article class="post" data-class="TG2">
+      <div class="post-meta">
+        <span class="badge badge-tg2">TG2</span>
+        <span class="post-date">Séance du 18 novembre 2026</span>
+        <span class="post-qcount">18 questions · Compétences 4.4, 5.5, 5.10</span>
+      </div>
+      <h2>L'homme est-il un animal comme les autres ? (Corrigé de la dissertation)</h2>
+      <p class="desc">
+        Révision complète du corrigé de la dissertation : problématisation du paradoxe contenu dans le sujet, inversion du rapport au milieu, <em>homo faber</em> (Bergson), langage symbolique, éthologie, liberté comme obéissance à la loi qu'on s'est prescrite (Rousseau), distinction prix / dignité (Kant), sensibilité animale (Bentham) et réfutabilité scientifique (Popper).
+      </p>
+      <div class="tags">
+        <span class="tag">Nature / Culture</span>
+        <span class="tag">Perfectibilité (Rousseau)</span>
+        <span class="tag">Homo faber (Bergson)</span>
+        <span class="tag">Dignité (Kant)</span>
+        <span class="tag">Bentham</span>
+        <span class="tag">Popper</span>
+      </div>
+      <div class="actions">
+        <a class="btn-launch" href="TG21118-HommeAnimalCorrige.html" target="_blank" rel="noopener">Ouvrir le QCM ↗</a>
+        <button class="btn-preview" onclick="toggleFrame('frame-tg2-18', 'TG21118-HommeAnimalCorrige.html', this)">Afficher ici</button>
+      </div>
+      <div class="iframe-box" id="frame-tg2-18"></div>
+    </article>
+
+    <!-- Article 2 : TG2 - 17 novembre 2026 -->
+    <article class="post" data-class="TG2">
+      <div class="post-meta">
+        <span class="badge badge-tg2">TG2</span>
+        <span class="post-date">Séance du 17 novembre 2026</span>
+        <span class="post-qcount">17 questions · Compétence 6.1</span>
+      </div>
+      <h2>Kant : la maxime (Explication de texte)</h2>
+      <p class="desc">
+        Analyse de la deuxième étape de l'exemple de la fausse promesse chez Kant : le dilemme moral comme contradiction, la distinction entre <strong>légal</strong> et <strong>légitime</strong> (mensonge / abus de confiance), la définition de la maxime comme règle de conduite subjective, le « je » générique, le raisonnement concessif et le passage du particulier au général.
+      </p>
+      <div class="tags">
+        <span class="tag">Le devoir</span>
+        <span class="tag">Maxime</span>
+        <span class="tag">Légal / Légitime</span>
+        <span class="tag">Raisonnement concessif</span>
+        <span class="tag">Particulier / Général / Universel</span>
+      </div>
+      <div class="actions">
+        <a class="btn-launch" href="TG21117-Maxime.html" target="_blank" rel="noopener">Ouvrir le QCM ↗</a>
+        <button class="btn-preview" onclick="toggleFrame('frame-tg2-17', 'TG21117-Maxime.html', this)">Afficher ici</button>
+      </div>
+      <div class="iframe-box" id="frame-tg2-17"></div>
+    </article>
+
+    <!-- Article 3 : TG5 - 17 novembre 2026 -->
+    <article class="post" data-class="TG5">
+      <div class="post-meta">
+        <span class="badge badge-tg5">TG5</span>
+        <span class="post-date">Séance du 17 novembre 2026</span>
+        <span class="post-qcount">16 questions · Compétence 6.1</span>
+      </div>
+      <h2>Kant : la maxime (Explication de texte)</h2>
+      <p class="desc">
+        Étude approfondie de la formulation de la maxime chez Kant : reconnaissance du dilemme moral, distinction juridique entre mensonge et abus de confiance, cupidité / besoin, définition de la maxime subjective, raisonnement par concession (« Sans doute… mais… ») et mobilisation de l'amour de soi (Rousseau) et du bonheur (Aristote).
+      </p>
+      <div class="tags">
+        <span class="tag">Le devoir</span>
+        <span class="tag">Maxime</span>
+        <span class="tag">Légal / Légitime</span>
+        <span class="tag">Amour de soi / Amour propre</span>
+        <span class="tag">Raisonnement concessif</span>
+      </div>
+      <div class="actions">
+        <a class="btn-launch" href="TG51117-Maxime.html" target="_blank" rel="noopener">Ouvrir le QCM ↗</a>
+        <button class="btn-preview" onclick="toggleFrame('frame-tg5-17', 'TG51117-Maxime.html', this)">Afficher ici</button>
+      </div>
+      <div class="iframe-box" id="frame-tg5-17"></div>
+    </article>
+
+    <!-- Article 4 : TG9 - 17 novembre 2026 -->
+    <article class="post" data-class="TG9">
+      <div class="post-meta">
+        <span class="badge badge-tg9">TG9</span>
+        <span class="post-date">Séance du 17 novembre 2026</span>
+        <span class="post-qcount">17 questions · Compétence 6.1</span>
+      </div>
+      <h2>Kant : la maxime (Explication de texte)</h2>
+      <p class="desc">
+        Révision de la séance sur la maxime kantienne : le cas de conscience final de l'exemple, la distinction entre légalité et légitimité, le sens de la maxime comme règle de conduite individuelle face à sa propre conscience, la structure du raisonnement concessif et le repère <em>universel / général / particulier / singulier</em>.
+      </p>
+      <div class="tags">
+        <span class="tag">Le devoir</span>
+        <span class="tag">Maxime</span>
+        <span class="tag">Légal / Légitime</span>
+        <span class="tag">Dilemme moral</span>
+        <span class="tag">Raisonnement concessif</span>
+      </div>
+      <div class="actions">
+        <a class="btn-launch" href="TG91117-Maxime.html" target="_blank" rel="noopener">Ouvrir le QCM ↗</a>
+        <button class="btn-preview" onclick="toggleFrame('frame-tg9-17', 'TG91117-Maxime.html', this)">Afficher ici</button>
+      </div>
+      <div class="iframe-box" id="frame-tg9-17"></div>
+    </article>
+
+    <!-- Article 5 : TG5 - 16 novembre 2026 -->
+    <article class="post" data-class="TG5">
+      <div class="post-meta">
+        <span class="badge badge-tg5">TG5</span>
+        <span class="post-date">Séance du 16 novembre 2026</span>
+        <span class="post-qcount">16 questions · Compétences 5.7, 6.1</span>
+      </div>
+      <h2>Kant : l'impératif catégorique (Texte 3)</h2>
+      <p class="desc">
+        Première séance sur l'extrait des <em>Fondements de la métaphysique des mœurs</em> : la thèse de l'unique impératif catégorique dès la première ligne, l'approche déontologique / conséquentialiste du devoir, l'analyse de l'exemple de la fausse promesse (besoin, emprunt, promesse) et la méthode de lecture d'un texte argumenté par un exemple.
+      </p>
+      <div class="tags">
+        <span class="tag">Impératif catégorique</span>
+        <span class="tag">Déontologie / Conséquentialisme</span>
+        <span class="tag">Fausse promesse</span>
+        <span class="tag">Universel / Général / Particulier / Singulier</span>
+      </div>
+      <div class="actions">
+        <a class="btn-launch" href="TG51116-ImperatifCategorique.html" target="_blank" rel="noopener">Ouvrir le QCM ↗</a>
+        <button class="btn-preview" onclick="toggleFrame('frame-tg5-16', 'TG51116-ImperatifCategorique.html', this)">Afficher ici</button>
+      </div>
+      <div class="iframe-box" id="frame-tg5-16"></div>
+    </article>
+
+    <!-- Article 6 : TG - Argumentation (Tort / Raison) -->
+    <article class="post" data-class="TG">
+      <div class="post-meta">
+        <span class="badge badge-all">Toutes TG</span>
+        <span class="post-date">Atelier d'argumentation</span>
+        <span class="post-qcount">5 manches + 6 hypothèses</span>
+      </div>
+      <h2>Révision d'argumentation : « Si j'ai tort, est-ce que tu as raison ? »</h2>
+      <p class="desc">
+        Application interactive d'analyse logique à partir du défi de l'influenceur Jul : identifier son profil argumentatif (Logicien, Duelliste, Rhéteur, Sophiste…) et déconstruire un syllogisme fallacieux en distinguant <strong>contradictoires</strong> et <strong>contraires</strong> (Aristote, <em>Organon</em>), réfutation et démonstration positive.
+      </p>
+      <div class="tags">
+        <span class="tag">Logique (Aristote)</span>
+        <span class="tag">Contradictoires / Contraires</span>
+        <span class="tag">Réfutation / Démonstration</span>
+        <span class="tag">Éristique</span>
+      </div>
+      <div class="actions">
+        <a class="btn-launch" href="TG11118-TortRaison.html" target="_blank" rel="noopener">Ouvrir l'application ↗</a>
+        <button class="btn-preview" onclick="toggleFrame('frame-tg-tort', 'TG11118-TortRaison.html', this)">Afficher ici</button>
+      </div>
+      <div class="iframe-box" id="frame-tg-tort"></div>
+    </article>
+
+  </main>
+
+  <div class="note-gsite">
+    <strong>Intégration sur Google Sites :</strong> Ce fichier est prêt à être hébergé dans le dossier <code>qcm/</code> de votre dépôt GitHub Pages (ou copié directement via <em>Insérer &gt; Intégrer &gt; Intégrer le code</em> dans Google Sites). Les liens relatifs pointent vers les fichiers <code>.html</code> correspondants afin de préserver le partage du <code>localStorage</code> avec l'Arbre des compétences.
+  </div>
+</div>
+
+<script>
+function filterPosts(cls, btn) {
+  document.querySelectorAll('.filter-btn').forEach(function(b) {
+    b.classList.remove('active');
+  });
+  btn.classList.add('active');
+
+  document.querySelectorAll('article.post').forEach(function(post) {
+    var pCls = post.getAttribute('data-class');
+    if (cls === 'all' || pCls === cls) {
+      post.style.display = 'block';
+    } else {
+      post.style.display = 'none';
+    }
+  });
+}
+
+function toggleFrame(boxId, url, btn) {
+  var box = document.getElementById(boxId);
+  if (box.style.display === 'block') {
+    box.style.display = 'none';
+    box.innerHTML = '';
+    btn.textContent = 'Afficher ici';
+  } else {
+    box.style.display = 'block';
+    box.innerHTML = '<iframe src="' + url + '" loading="lazy" title="Aperçu du QCM"></iframe>';
+    btn.textContent = 'Masquer l\'aperçu';
+  }
+}
+</script>
+</body>
+</html>
