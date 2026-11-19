@@ -9,61 +9,30 @@
 <link rel="icon" type="image/png" href="favicon.png">
 <link rel="apple-touch-icon" href="favicon.png">
 <style>
-body { font-family: Georgia, serif; max-width: 860px; margin: 0 auto; padding: 1.5rem 1rem 3rem; background: #f6f2e8; color: #222; }
-h1 { border-bottom: 3px solid #8b0000; padding-bottom: .5rem; font-size: 2em; letter-spacing: .03em; }
-h2 { border-bottom: 1px solid #d8cfc0; padding-bottom: .4rem; font-weight: normal; font-style: italic; color: #6b675e; }
-#plateau { list-style: none; padding: 8px 0 0; display: flex; flex-direction: column; gap: 14px; perspective: 900px; }
-.tuile { position: relative; display: flex; align-items: center; gap: 14px; min-height: 84px; padding: 18px 22px;
-  background: linear-gradient(180deg,#ffffff 0%,#f8f4ea 100%);
-  border: 1px solid #d8cfc0; border-left: 8px solid #b8a04a; border-radius: 14px;
-  box-shadow: 0 4px 0 #d8cfc0, 0 8px 18px rgba(90,70,40,.12);
-  text-decoration: none; color: #1a3c6e; font-size: 1.3em; font-weight: bold; line-height: 1.3;
-  cursor: grab; touch-action: none; user-select: none;
-  transition: transform .18s cubic-bezier(.34,1.56,.64,1), box-shadow .18s ease, background .3s ease, color .3s ease, border-left-color .3s ease;
-  animation: dealOut .5s cubic-bezier(.25,.9,.3,1) backwards; }
-.tuile:nth-child(1){animation-delay:.03s}.tuile:nth-child(2){animation-delay:.09s}.tuile:nth-child(3){animation-delay:.15s}
-.tuile:nth-child(4){animation-delay:.21s}.tuile:nth-child(5){animation-delay:.27s}.tuile:nth-child(6){animation-delay:.33s}
-.tuile:nth-child(7){animation-delay:.39s}.tuile:nth-child(8){animation-delay:.45s}.tuile:nth-child(9){animation-delay:.51s}
-.tuile:nth-child(10){animation-delay:.57s}.tuile:nth-child(11){animation-delay:.63s}.tuile:nth-child(12){animation-delay:.69s}
-@keyframes dealOut { from { opacity: 0; transform: translateY(26px) rotateX(18deg) scale(.96); } to { opacity: 1; transform: none; } }
-.tuile:hover { transform: translateY(-4px) scale(1.015); box-shadow: 0 8px 0 #d8cfc0, 0 14px 26px rgba(90,70,40,.2); }
-.tuile.saisie { cursor: grabbing; transform: scale(1.06) rotate(1.6deg) !important; box-shadow: 0 18px 30px rgba(90,70,40,.35) !important; z-index: 5; }
-.tuile.cible-dessus { transform: translateY(-7px); border-top: 3px dashed #b8a04a; }
-.tuile.cible-dessous { transform: translateY(7px); border-bottom: 3px dashed #b8a04a; }
-.tuile.depose { animation: rebond .5s cubic-bezier(.25,.9,.3,1.4); }
-@keyframes rebond { 0% { transform: scale(1.12) rotate(-2deg); } 55% { transform: scale(.97) rotate(.5deg); } 100% { transform: none; } }
-.tuile .num-ordre { font-size: .55em; font-weight: normal; color: #b8a04a; background: #f1ead9; border-radius: 8px; padding: 4px 9px; min-width: 30px; text-align: center; }
-.tuile .poignee { font-size: .8em; color: #c9bfa8; letter-spacing: 2px; }
-.tuile.vu { background: linear-gradient(180deg,#f2efe6 0%,#eae5d8 100%); border-left-color: #8a9a8a; color: #8a857a; font-weight: normal; box-shadow: 0 3px 0 #d5d0c2; }
-.tuile.vu:hover { transform: scale(1.01); }
-.tuile .vu-marque { display: block; font-size: .5em; letter-spacing: .08em; text-transform: uppercase; color: #5d7a5d; margin-top: 4px; font-weight: normal; }
-.tuile.efface-vu { animation: fonduVu .7s ease; }
-@keyframes fonduVu { from { filter: brightness(1.35); } to { filter: none; } }
+body { font-family: Georgia, serif; max-width: 800px; margin: 2rem auto; padding: 0 1rem; background: #faf8f2; color: #222; }
+h1 { border-bottom: 2px solid #8b0000; padding-bottom: .5rem; }
+ul.liste-cours { list-style: none; padding: 0; }
+ul.liste-cours li { margin: .4rem 0; }
+ul.liste-cours a { display: block; padding: .6rem 1rem; background: #fff; border-left: 4px solid #b8a04a; border-radius: 6px; text-decoration: none; color: #1a3c6e; font-weight: bold; }
+ul.liste-cours a:hover { background: #eef3fa; }
+ul.liste-cours a.vu { background: #f4f1e8; border-left-color: #8a9a8a; color: #6b675e; font-weight: normal; }
+ul.liste-cours a .vu-marque { margin-left: .5rem; font-size: .68em; letter-spacing: .06em; text-transform: uppercase; color: #5d7a5d; }
 #erreur { color: #8b0000; display: none; }
-.barre-outils { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; margin: 1rem 0 .4rem; }
-.mini { font-size: .8em; color: #6b675e; margin-top: .8rem; }
-button.jeu { font-family: Georgia, serif; font-size: .95em; background: #8b0000; color: #fff; border: none; border-radius: 10px; padding: .6rem 1.1rem; cursor: pointer;
-  box-shadow: 0 4px 0 #5a0000; transition: transform .15s cubic-bezier(.34,1.56,.64,1), box-shadow .15s ease; }
-button.jeu:hover { transform: translateY(-2px); box-shadow: 0 6px 0 #5a0000; }
-button.jeu:active { transform: translateY(3px); box-shadow: 0 1px 0 #5a0000; }
+.mini { font-size: .8em; color: #6b675e; margin-top: 1rem; }
 </style>
 </head>
 <body>
 <h1>C2phi</h1>
 <h2>Fichiers HTML de ce répertoire</h2>
-<div class="barre-outils">
-  <button class="jeu" onclick="toutEffacer()">Tout remettre à neuf</button>
-  <button class="jeu" onclick="reordonnerAZ()">Ordre A→Z</button>
-</div>
-<ul id="plateau"></ul>
+<ul class="liste-cours" id="liste-cours"></ul>
 <p id="erreur">Impossible de charger la liste des fichiers (limite de l'API GitHub peut-être atteinte). Rechargez la page dans quelques instants.</p>
-<p class="mini">Glissez-déposez les blocs pour les remettre dans votre ordre (mémorisé dans ce navigateur). Les fichiers déjà ouverts apparaissent estompés, marqués «&nbsp;vu&nbsp;».</p>
+<p class="mini">Les fichiers que vous avez déjà ouverts apparaissent estompés, marqués «&nbsp;vu&nbsp;». Cliquez sur «&nbsp;Tout remettre à neuf&nbsp;» pour repartir de zéro.</p>
+<p><button onclick="toutEffacer()" style="font-family:Georgia,serif;background:#8b0000;color:#fff;border:none;border-radius:6px;padding:.5rem 1rem;cursor:pointer;">Tout remettre à neuf</button></p>
 <script>
 (function () {
-    var plateau = document.getElementById('plateau');
+    var liste = document.getElementById('liste-cours');
     var erreur = document.getElementById('erreur');
     var CLE_VUS = 'c2phi-fichiers-vus';
-    var CLE_ORDRE = 'c2phi-ordre-tuiles';
 
     function proprietaireEtDepot() {
         if (location.hostname.endsWith('.github.io')) {
@@ -76,151 +45,61 @@ button.jeu:active { transform: translateY(3px); box-shadow: 0 1px 0 #5a0000; }
     var ref = proprietaireEtDepot();
     var urlApi = 'https://api.github.com/repos/' + ref.owner + '/' + ref.repo + '/contents/?ref=HEAD';
 
-    function lireLS(cle) { try { return JSON.parse(localStorage.getItem(cle)) || []; } catch (e) { return []; } }
-    function ecrireLS(cle, val) { try { localStorage.setItem(cle, JSON.stringify(val)); } catch (e) {} }
-
-    function construire(fichiers) {
-        var noms = fichiers.map(function (f) { return f.name; });
-        var ordre = lireLS(CLE_ORDRE).filter(function (n) { return noms.indexOf(n) !== -1; });
-        noms.forEach(function (n) { if (ordre.indexOf(n) === -1) ordre.push(n); });
-
-        var vus = lireLS(CLE_VUS);
-        plateau.innerHTML = ordre.map(function (nom, i) {
-            var dejaVu = vus.indexOf(nom) !== -1;
-            var libelle = nom.replace(/\.html$/i, '');
-            return '<li><a class="tuile' + (dejaVu ? ' vu' : '') + '" data-fichier="' + nom + '" href="' + nom + '">' +
-                   '<span class="num-ordre">' + (i + 1) + '</span>' +
-                   '<span class="poignee">&#9776;</span>' +
-                   '<span class="texte">' + libelle + (dejaVu ? '<span class="vu-marque">vu</span>' : '') + '</span>' +
-                   '</a></li>';
-        }).join('');
-        brancher();
+    function lireVus() {
+        try { return JSON.parse(localStorage.getItem(CLE_VUS)) || {}; }
+        catch (e) { return {}; }
     }
 
-    function rafraichirNums() {
-        var tuiles = plateau.querySelectorAll('.tuile');
-        tuiles.forEach(function (t, i) {
-            t.querySelector('.num-ordre').textContent = i + 1;
-        });
-    }
-
-    function sauverOrdre() {
-        ecrireLS(CLE_ORDRE, Array.prototype.map.call(plateau.querySelectorAll('.tuile'), function (t) {
-            return t.getAttribute('data-fichier');
-        }));
+    function ecrireVus(vus) {
+        try { localStorage.setItem(CLE_VUS, JSON.stringify(vus)); } catch (e) {}
     }
 
     function marquer(nom) {
-        var vus = lireLS(CLE_VUS);
-        if (vus.indexOf(nom) === -1) {
-            vus.push(nom);
-            ecrireLS(CLE_VUS, vus);
-        }
+        var vus = lireVus();
+        vus[nom] = new Date().toISOString();
+        ecrireVus(vus);
     }
 
-    function brancher() {
-        var tuileTenue = null, decalY = 0, cible = null, ofs = null;
-
-        plateau.querySelectorAll('.tuile').forEach(function (tuile) {
-            tuile.addEventListener('click', function (e) {
-                if (tuile.getAttribute('data-deplace') === 'oui') { e.preventDefault(); return; }
-                marquer(tuile.getAttribute('data-fichier'));
-            });
-
-            tuile.addEventListener('pointerdown', function (e) {
-                tuileTenue = tuile;
-                ofs = tuile.parentNode;
-                decalY = e.clientY - tuile.getBoundingClientRect().top;
-                tuile.classList.add('saisie');
-                tuile.setPointerCapture(e.pointerId);
-            });
-
-            tuile.addEventListener('pointermove', function (e) {
-                if (tuile !== tuileTenue) return;
-                var y = e.clientY - decalY;
-                tuile.style.position = 'fixed';
-                tuile.style.left = tuile.getBoundingClientRect().left + 'px';
-                tuile.style.top = y + 'px';
-                tuile.style.width = tuile.offsetWidth + 'px';
-                tuile.setAttribute('data-deplace', 'oui');
-
-                plateau.querySelectorAll('.tuile').forEach(function (t) {
-                    if (t === tuile) return;
-                    t.classList.remove('cible-dessus', 'cible-dessous');
-                });
-                var dessous = document.elementFromPoint(e.clientX, Math.min(e.clientY, window.innerHeight - 2));
-                var c = dessous && dessous.closest ? dessous.closest('.tuile') : null;
-                if (c && c !== tuile) {
-                    cible = c;
-                    var r = c.getBoundingClientRect();
-                    c.classList.add(e.clientY < r.top + r.height / 2 ? 'cible-dessus' : 'cible-dessous');
-                } else { cible = null; }
-            });
-
-            tuile.addEventListener('pointerup', function (e) {
-                if (tuile !== tuileTenue) return;
-                tuileTenue = null;
-                tuile.classList.remove('saisie');
-                tuile.style.position = '';
-                tuile.style.left = '';
-                tuile.style.top = '';
-                tuile.style.width = '';
-                plateau.querySelectorAll('.tuile').forEach(function (t) { t.classList.remove('cible-dessus', 'cible-dessous'); });
-                var deplace = tuile.getAttribute('data-deplace') === 'oui';
-                tuile.removeAttribute('data-deplace');
-
-                if (cible && cible !== tuile) {
-                    var r = cible.getBoundingClientRect();
-                    var avant = e.clientY < r.top + r.height / 2;
-                    ofs.insertBefore(tuile.parentNode, avant ? cible.parentNode : cible.parentNode.nextSibling);
-                    tuile.classList.add('depose');
-                    setTimeout(function () { tuile.classList.remove('depose'); }, 550);
-                    rafraichirNums();
-                    sauverOrdre();
-                } else if (deplace) {
-                    tuile.classList.add('depose');
-                    setTimeout(function () { tuile.classList.remove('depose'); }, 550);
-                }
-            });
-
-            tuile.addEventListener('pointercancel', function () {
-                tuile.classList.remove('saisie');
-                tuile.style.position = ''; tuile.style.left = ''; tuile.style.top = ''; tuile.style.width = '';
-                tuile.removeAttribute('data-deplace');
-                plateau.querySelectorAll('.tuile').forEach(function (t) { t.classList.remove('cible-dessus', 'cible-dessous'); });
-                tuileTenue = null;
-            });
+    function afficher(fichiers) {
+        var vus = lireVus();
+        var html = fichiers
+            .filter(function (f) { return f.type === 'file' && /\.html$/i.test(f.name) && f.name !== 'index.html'; })
+            .sort(function (a, b) { return a.name.localeCompare(b.name, 'fr'); })
+            .map(function (f) {
+                var dejaVu = !!vus[f.name];
+                var quand = dejaVu ? new Date(vus[f.name]).toLocaleDateString('fr-FR') : '';
+                return '<li><a data-fichier="' + f.name + '" class="' + (dejaVu ? 'vu' : '') + '" title="' +
+                       (dejaVu ? 'Dernière consultation : ' + quand : 'Pas encore consulté') + '">' +
+                       f.name.replace(/\.html$/i, '') +
+                       (dejaVu ? '<span class="vu-marque">· vu le ' + quand + '</span>' : '') +
+                       '</a></li>';
+            })
+            .join('');
+        if (html) {
+            liste.innerHTML = html;
+        } else {
+            liste.innerHTML = '<li>Aucun fichier HTML trouvé.</li>';
+        }
+        liste.querySelectorAll('a[data-fichier]').forEach(function (a) {
+            var nom = a.getAttribute('data-fichier');
+            a.href = nom;
+            a.addEventListener('click', function () { marquer(nom); });
         });
     }
 
     fetch(urlApi)
-        .then(function (reponse) { if (!reponse.ok) throw new Error('API'); return reponse.json(); })
-        .then(function (fichiers) {
-            construire(fichiers.filter(function (f) { return f.type === 'file' && /\.html$/i.test(f.name) && f.name !== 'index.html'; }));
+        .then(function (reponse) {
+            if (!reponse.ok) throw new Error('API GitHub');
+            return reponse.json();
         })
-        .catch(function () { erreur.style.display = 'block'; });
+        .then(afficher)
+        .catch(function () {
+            erreur.style.display = 'block';
+        });
 
     window.toutEffacer = function () {
-        ecrireLS(CLE_VUS, []);
-        plateau.querySelectorAll('.tuile.vu').forEach(function (t) {
-            t.classList.remove('vu');
-            t.querySelector('.vu-marque') && t.querySelector('.vu-marque').remove();
-            t.classList.add('efface-vu');
-            setTimeout(function () { t.classList.remove('efface-vu'); }, 750);
-        });
-    };
-    window.reordonnerAZ = function () {
-        var tuiles = Array.prototype.slice.call(plateau.querySelectorAll('.tuile'));
-        tuiles.sort(function (a, b) {
-            return a.getAttribute('data-fichier').localeCompare(b.getAttribute('data-fichier'), 'fr');
-        });
-        tuiles.forEach(function (t) { plateau.appendChild(t.parentNode); });
-        rafraichirNums();
-        sauverOrdre();
-        plateau.querySelectorAll('.tuile').forEach(function (t) {
-            t.classList.add('depose');
-            setTimeout(function () { t.classList.remove('depose'); }, 550);
-        });
+        ecrireVus({});
+        location.reload();
     };
 })();
 </script>
