@@ -1,0 +1,577 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>C2phi · Espace révisions</title>
+<style>
+:root{--bleu:#00427a;--vert:#006400;--vert2:#2e8b2e;--fond:#f2f5f9;--ligne:#c9d6e4;--encre:#333;--rouge:#b03030;--or:#b8860b}
+*{box-sizing:border-box}
+body{font-family:Arial,Helvetica,sans-serif;background:var(--fond);color:var(--encre);margin:0;font-size:15px}
+header{background:var(--bleu);color:#fff;padding:14px 18px;display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+header h1{font-size:1.15em;margin:0}
+.entete-titre{flex:1}
+.tabs{display:flex;gap:6px;flex-wrap:wrap;margin:14px 0}
+.tabs button{background:#e4ecf5;border:1px solid var(--ligne);color:var(--bleu);padding:9px 16px;border-radius:4px;cursor:pointer;font-size:.95em;font-weight:bold}
+.tabs button.on{background:var(--vert);color:#fff;border-color:var(--vert)}
+main{max-width:980px;margin:0 auto;padding:0 14px 70px}
+.carte{background:#fff;border:1px solid var(--ligne);border-radius:4px;margin:8px 0;padding:14px}
+button.action{background:var(--vert);color:#fff;border:none;border-radius:4px;padding:9px 16px;cursor:pointer;font-weight:bold;font-size:.92em}
+button.action:hover{background:var(--vert2)}
+button.secondaire{background:#fff;color:var(--bleu);border:1px solid var(--ligne)}
+button.danger{background:var(--rouge)}
+select,input[type=text],input[type=file]{border:1px solid var(--ligne);border-radius:4px;padding:8px;font-family:inherit;font-size:.95em}
+.pastille{display:inline-block;width:12px;height:12px;border-radius:50%;border:1px solid #999;cursor:pointer;margin:0 2px;vertical-align:middle}
+.pastille.on{border:2px solid var(--encre)}
+.qcm-ligne{display:flex;align-items:center;gap:10px;flex-wrap:wrap;padding:10px;border:1px solid var(--ligne);margin:6px 0;border-radius:4px;background:#fdfefe}
+.qcm-ligne .titre{flex:1;min-width:200px;font-weight:bold;color:var(--bleu)}
+.badge{display:inline-block;padding:2px 8px;border-radius:10px;color:#fff;font-size:.75em;margin-left:4px}
+.question-bloc{border:1px solid var(--ligne);border-radius:4px;margin:8px 0;padding:12px;background:#fbfcfe}
+.question-bloc.cochee{border-color:var(--vert);background:#f2faf2}
+.opt{padding:8px 12px;border:1px solid var(--ligne);margin:6px 0;border-radius:4px;cursor:pointer}
+.opt.bonne{border-color:var(--vert);background:#eaf6ea;font-weight:bold}
+.opt.mauvaise{border-color:var(--rouge);background:#faeeee}
+.flashcarte{border:2px solid var(--bleu);border-radius:6px;min-height:140px;margin:10px 0;padding:22px;text-align:center;cursor:pointer;background:#fff;user-select:none;box-shadow:0 2px 8px rgba(0,60,120,.08)}
+.flashcarte .num{font-size:.8em;color:#777}
+.toast{position:fixed;right:16px;bottom:16px;max-width:340px;z-index:50}
+.toast>div{background:#fff;border-left:5px solid var(--vert);box-shadow:0 4px 14px rgba(0,0,0,.25);padding:12px 16px;margin-top:8px;border-radius:4px;font-size:.9em;animation:entree .3s ease}
+.toast>div.alerte{border-left-color:var(--rouge)}
+.toast>div.info{border-left-color:var(--bleu)}
+@keyframes entree{from{transform:translateY(14px);opacity:0}to{transform:none;opacity:1}}
+.bilan{display:flex;gap:14px;flex-wrap:wrap}
+.bilan .boite{flex:1;min-width:130px;background:#eef4fa;border:1px solid var(--ligne);border-radius:4px;padding:12px;text-align:center}
+.bilan .boite b{display:block;font-size:1.5em;color:var(--bleu)}
+.boites-leitner{display:flex;gap:6px;flex-wrap:wrap;margin:6px 0}
+.mini{font-size:.82em;color:#666}
+table.scores{width:100%;border-collapse:collapse;font-size:.88em}
+table.scores th,table.scores td{border:1px solid var(--ligne);padding:6px 8px;text-align:left}
+.pilote-bandeau{background:#fffbe6;border:1px solid var(--or);border-radius:4px;padding:10px 14px;margin:8px 0}
+.cache{display:none}
+h2.onglet{color:var(--bleu);border-bottom:2px solid var(--ligne);padding-bottom:6px}
+</style>
+</head>
+<body>
+<header>
+  <div class="entete-titre"><h1>C2phi · Espace de révisions</h1>
+  <div class="mini" style="color:#cfe0f5">QCM, flashcards, collections et scores — style Pronote</div></div>
+  <div id="indicateur" class="mini" style="color:#cfe0f5"></div>
+</header>
+<main>
+<div class="tabs">
+  <button data-vue="qcm" class="on">QCM de la base</button>
+  <button data-vue="flash">Flashcards</button>
+  <button data-vue="collections">Collections</button>
+  <button data-vue="scores">Scores</button>
+  <button data-vue="donnees">Données</button>
+</div>
+<section id="v-qcm"></section>
+<section id="v-flash" class="cache"></section>
+<section id="v-collections" class="cache"></section>
+<section id="v-scores" class="cache"></section>
+<section id="v-donnees" class="cache"></section>
+</main>
+<div class="toast" id="toast"></div><script>
+"use strict";
+/* ============ État & persistance ============ */
+var CLE = 'c2phi-revisions-v1';
+var ETIQ_COULEURS = ['#b03030','#b8860b','#006400','#0a5aa0','#6a3d9a','#c2417c'];
+var ETIQ_NOMS = ['Rouge','Or','Vert','Bleu','Violet','Rose'];
+var BOITES = [1,2,4,7,15,30];
+
+var etat = charger() || { tagsQcm:{}, cartes:{}, collections:{}, historique:[] };
+var banqueQcm = {};
+
+function charger(){
+  try { var r = localStorage.getItem(CLE); return r ? JSON.parse(r) : null; }
+  catch(e){ return null; }
+}
+function sauvegarder(silencieux){
+  try {
+    localStorage.setItem(CLE, JSON.stringify(etat));
+    if (!silencieux) toast('Sauvegarde locale effectuée (' + taille() + ').', 'ok');
+    majIndicateur();
+  } catch(e){
+    toast("Impossible d'écrire dans la mémoire du navigateur : vos marque-pages risquent d'être perdus.", 'alerte');
+  }
+}
+function taille(){
+  var n = JSON.stringify(etat).length;
+  return n > 2048 ? (n/1024).toFixed(0) + ' Ko' : n + ' octets';
+}
+function majIndicateur(){
+  var nbC = Object.keys(etat.cartes).length;
+  var nbCol = Object.keys(etat.collections).length;
+  var d = new Date();
+  document.getElementById('indicateur').textContent = nbC + ' carte' + (nbC>1?'s':'') + ' · ' + nbCol + ' collection' + (nbCol>1?'s':'') + ' · ' + d.toLocaleDateString('fr-FR');
+}
+function toast(message, genre){
+  var t = document.getElementById('toast');
+  var d = document.createElement('div');
+  d.className = genre === 'alerte' ? 'alerte' : (genre === 'info' ? 'info' : '');
+  d.textContent = message;
+  t.appendChild(d);
+  setTimeout(function(){ d.remove(); }, genre === 'alerte' ? 7000 : 4200);
+}
+
+/* ============ Onglets ============ */
+document.querySelectorAll('.tabs button').forEach(function(b){
+  b.addEventListener('click', function(){
+    document.querySelectorAll('.tabs button').forEach(function(x){ x.classList.remove('on'); });
+    b.classList.add('on');
+    ['qcm','flash','collections','scores','donnees'].forEach(function(v){
+      document.getElementById('v-' + v).classList.toggle('cache', v !== b.dataset.vue);
+    });
+    if (b.dataset.vue === 'collections') afficherCollections();
+    if (b.dataset.vue === 'scores') afficherScores();
+    if (b.dataset.vue === 'flash') afficherFlash();
+  });
+});
+
+/* ============ Vue QCM : liste de la base + tags + import ============ */
+function idCarte(texte){ var h = 0; for (var i = 0; i < texte.length; i++){ h = (h*31 + texte.charCodeAt(i)) % 999983; } return h; }
+
+function afficherQcm(){
+  var vue = document.getElementById('v-qcm');
+  vue.innerHTML = '<h2 class="onglet">QCM de la base</h2>' +
+    '<div class="carte"><div class="mini">Chargement de la liste des QCM du dépôt…</div></div>';
+  var ref = { owner:'c2phi-prof', repo:'cours' };
+  fetch('https://api.github.com/repos/' + ref.owner + '/' + ref.repo + '/contents/?ref=HEAD')
+    .then(function(r){ if(!r.ok) throw 0; return r.json(); })
+    .then(function(fs){
+      var qcms = fs.filter(function(f){ return f.type==='file' && /\.html$/i.test(f.name) && !/^(index|blog-qcm|espace-revisions)\.html$/i.test(f.name); });
+      if (!qcms.length){ vue.innerHTML = '<div class="carte">Aucun QCM trouvé dans le dépôt.</div>'; return; }
+      vue.innerHTML = '<h2 class="onglet">QCM de la base (' + qcms.length + ')</h2>' +
+        '<p class="mini">Marquez chaque QCM avec des tags de couleur, jouez-le, ou importez ses questions comme flashcards.</p>' +
+        qcms.map(ligneQcm).join('');
+      brancherQcm(qcms);
+    })
+    .catch(function(){
+      vue.innerHTML = '<div class="carte"><div class="pilote-bandeau">Impossible de joindre l\'API GitHub (limite horaire possible). Rechargez la page dans quelques minutes.</div></div>';
+    });
+}
+
+function ligneQcm(f){
+  var t = etat.tagsQcm[f.name] || [];
+  var pastilles = ETIQ_COULEURS.map(function(c, i){
+    return '<span class="pastille' + (t.indexOf(i) !== -1 ? ' on' : '') + '" data-nom="' + f.name + '" data-coul="' + i + '" title="Tag ' + ETIQ_NOMS[i] + '" style="background:' + c + '"></span>';
+  }).join('');
+  var badges = t.map(function(i){ return '<span class="badge" style="background:' + ETIQ_COULEURS[i] + '">' + ETIQ_NOMS[i] + '</span>'; }).join('');
+  return '<div class="qcm-ligne"><span class="titre">' + f.name.replace(/\.html$/i,'') + '</span>' +
+    '<span>' + badges + '</span><span>' + pastilles + '</span>' +
+    '<button class="action" onclick="jouerQcm(\'' + f.name + '\')">Jouer</button>' +
+    '<button class="action secondaire" onclick="importerQcm(\'' + f.name + '\')">Importer en flashcards</button></div>';
+}
+
+function brancherQcm(){
+  document.querySelectorAll('.pastille').forEach(function(p){
+    p.addEventListener('click', function(){
+      var nom = p.dataset.nom, c = parseInt(p.dataset.coul, 10);
+      etat.tagsQcm[nom] = etat.tagsQcm[nom] || [];
+      var i = etat.tagsQcm[nom].indexOf(c);
+      if (i === -1) etat.tagsQcm[nom].push(c); else etat.tagsQcm[nom].splice(i, 1);
+      sauvegarder(true);
+      afficherQcm();
+      toast('Tag mis à jour pour « ' + nom + ' ».');
+    });
+  });
+}
+
+/* ============ Import des questions d'un QCM en flashcards ============ */
+function importerQcm(nom){
+  fetch(nom)
+    .then(function(r){ if(!r.ok) throw 0; return r.text(); })
+    .then(function(txt){
+      var m = txt.match(/var QUIZ\s*=\s*(\{[\s\S]*?\});?\s*\n?\s*<\/script>/);
+      if (!m) { toast('Structure de QCM non reconnue dans ' + nom + '.', 'alerte'); return; }
+      var QUIZ;
+      try { QUIZ = (new Function('return ' + m[1]))(); }
+      catch(e){ toast('Erreur de lecture du QCM ' + nom + '.', 'alerte'); return; }
+      var ajoutees = 0;
+      QUIZ.questions.forEach(function(q){
+        var dos, front = q.name;
+        if (q.type === 'single'){
+          var bonne = q.options.filter(function(o){ return o.correct; })[0];
+          if (!bonne) return;
+          dos = bonne.text + (bonne.feedback ? '\n\n' + bonne.feedback : '');
+        } else {
+          if (!q.answers || !q.answers.length) return;
+          dos = q.answers[0] + (q.feedback ? '\n\n' + q.feedback : '');
+        }
+        var id = nom + '#' + idCarte(front);
+        if (!etat.cartes[id]) ajoutees++;
+        etat.cartes[id] = etat.cartes[id] || {
+          front: front, dos: dos, source: nom,
+          collections: [], statistiques: { boite:1, ok:0, non:0, derniere:null }
+        };
+      });
+      sauvegarder(true);
+      afficherQcm();
+      toast(ajoutees + ' nouvelle(s) flashcard(s) importée(s) depuis « ' + nom + ' ».');
+    })
+    .catch(function(){ toast('Chargement impossible pour ' + nom + '.', 'alerte'); });
+}
+
+/* ============ Jouer un QCM (scores enregistrés) ============ */
+function jouerQcm(nom){
+  fetch(nom)
+    .then(function(r){ if(!r.ok) throw 0; return r.text(); })
+    .then(function(txt){
+      var m = txt.match(/var QUIZ\s*=\s*(\{[\s\S]*?\});?\s*\n?\s*<\/script>/);
+      var QUIZ = (new Function('return ' + m[1]))();
+      lancerPartie(nom, QUIZ);
+    })
+    .catch(function(){ toast('Chargement impossible pour ' + nom + '.', 'alerte'); });
+}
+
+function lancerPartie(nom, QUIZ){
+  var vue = document.getElementById('v-qcm');
+  var i = 0, justes = 0;
+  function renduQuestion(){
+    var q = QUIZ.questions[i];
+    var html = '<h2 class="onglet">' + nom + ' — question ' + (i+1) + ' / ' + QUIZ.questions.length + '</h2><div class="carte"><div class="question-bloc"><p><b>' + q.name + '</b></p>';
+    if (q.type === 'single'){
+      html += q.options.map(function(o, j){ return '<div class="opt" data-j="' + j + '">' + o.text + '</div>'; }).join('');
+    } else {
+      html += '<input type="text" id="rep-libre" placeholder="Votre réponse…"> <button class="action" id="valider-libre">Valider</button>';
+    }
+    html += '</div></div>';
+    vue.innerHTML = html;
+    if (q.type === 'single'){
+      vue.querySelectorAll('.opt').forEach(function(el){
+        el.addEventListener('click', function(){
+          var o = q.options[parseInt(el.dataset.j,10)];
+          var ok = !!o.correct;
+          if (ok) justes++;
+          el.classList.add(ok ? 'bonne' : 'mauvaise');
+          if (!ok) vue.querySelectorAll('.opt').forEach(function(e2){
+            if (q.options[parseInt(e2.dataset.j,10)].correct) e2.classList.add('bonne');
+          });
+          noter(nom, q, ok);
+          setTimeout(suivante, 1600);
+        });
+      });
+    } else {
+      function valider(){
+        var v = document.getElementById('rep-libre').value.trim().toLowerCase();
+        var ok = q.answers.some(function(a){ return v && v.indexOf(a.toLowerCase()) !== -1; });
+        if (ok) justes++;
+        var d = document.createElement('div');
+        d.className = 'opt ' + (ok ? 'bonne' : 'mauvaise');
+        d.textContent = ok ? 'Juste : ' + q.answers[0] : 'La réponse attendue : « ' + q.answers[0] + ' ».';
+        d.style.cursor = 'default';
+        vue.querySelector('.question-bloc').appendChild(d);
+        noter(nom, q, ok);
+        setTimeout(suivante, 1800);
+      }
+      document.getElementById('valider-libre').addEventListener('click', valider);
+    }
+  }
+  function suivante(){
+    i++;
+    if (i < QUIZ.questions.length) renduQuestion();
+    else {
+      vue.innerHTML = '<h2 class="onglet">' + nom + '</h2><div class="carte"><p>Partie terminée : <b>' + justes + ' / ' + QUIZ.questions.length + '</b>. Score enregistré.</p>' +
+        '<button class="action" onclick="afficherQcm()">Retour à la base</button></div>';
+      etat.historique.push({ date: new Date().toISOString(), qcm: nom, score: justes, total: QUIZ.questions.length });
+      sauvegarder();
+    }
+  }
+  renduQuestion();
+}
+
+function noter(nom, q, ok){
+  var front = q.name;
+  Object.keys(etat.cartes).forEach(function(k){
+    if (etat.cartes[k].front === front && etat.cartes[k].source === nom) majBoite(etat.cartes[k].statistiques, ok);
+  });
+}
+
+/* ============ Flashcards : vue et sélection ============ */
+function toutesCartes(){ return Object.keys(etat.cartes).map(function(k){ return Object.assign({id:k}, etat.cartes[k]); }); }
+
+function afficherFlash(){
+  var vue = document.getElementById('v-flash');
+  var cartes = toutesCartes();
+  if (!cartes.length){
+    vue.innerHTML = '<h2 class="onglet">Flashcards</h2><div class="carte">Aucune flashcard pour l\'instant : ouvrez l\'onglet « QCM de la base » et cliquez « Importer en flashcards ».</div>';
+    return;
+  }
+  vue.innerHTML = '<h2 class="onglet">Flashcards (' + cartes.length + ')</h2>' +
+    '<p class="mini">Cochez des questions pour les ajouter à une collection, ou révisez-les directement.</p>' +
+    '<div><button class="action" onclick="ajouterCochees()">Ajouter la sélection à une collection…</button> ' +
+    '<button class="action secondaire" onclick="toutCocher()">Tout cocher</button></div><br>' +
+    cartes.map(function(c){
+      var st = c.statistiques;
+      var tags = (etat.tagsQcm[c.source] || []).map(function(t){ return '<span class="badge" style="background:' + ETIQ_COULEURS[t] + '">' + ETIQ_NOMS[t] + '</span>'; }).join('');
+      return '<div class="question-bloc">' +
+        '<input type="checkbox" class="coche" data-id="' + c.id + '"> ' + tags + ' ' +
+        '<b>' + c.front.slice(0,160) + (c.front.length>160?'…':'') + '</b>' +
+        '<div class="mini">Source : ' + c.source + ' · boîte ' + st.boite + '/6 · ' + st.ok + ' réussite(s), ' + st.non + ' échec(s)</div>' +
+        '</div>';
+    }).join('');
+}
+
+function toutCocher(){ document.querySelectorAll('.coche').forEach(function(c){ c.checked = true; }); }
+
+function ajouterCochees(){
+  var ids = [];
+  document.querySelectorAll('.coche:checked').forEach(function(c){ ids.push(c.dataset.id); });
+  if (!ids.length){ toast('Cochez d\'abord au moins une question.', 'alerte'); return; }
+  var noms = Object.keys(etat.collections).map(function(k){ return etat.collections[k].nom; });
+  var choix = prompt('Ajouter ' + ids.length + ' carte(s) à quelle collection ? (tapez un nouveau nom pour la créer, ou vide pour annuler)\nCollections existantes : ' + (noms.join(', ') || 'aucune'));
+  if (!choix) return;
+  var nom = choix.trim();
+  var col = Object.keys(etat.collections).filter(function(k){ return etat.collections[k].nom.toLowerCase() === nom.toLowerCase(); })[0];
+  var cle;
+  if (col) cle = col;
+  else { cle = 'col' + Date.now(); etat.collections[cle] = { nom: nom, creee: new Date().toISOString(), cartes: [] }; }
+  ids.forEach(function(id){
+    if (etat.collections[cle].cartes.indexOf(id) === -1) etat.collections[cle].cartes.push(id);
+    if (!etat.cartes[id].collections) etat.cartes[id].collections = [];
+    if (etat.cartes[id].collections.indexOf(cle) === -1) etat.cartes[id].collections.push(cle);
+  });
+  sauvegarder();
+  afficherFlash();
+}
+
+/* ============ Collections ============ */
+var triCourant = 'recent';
+function afficherCollections(){
+  var vue = document.getElementById('v-collections');
+  var cles = Object.keys(etat.collections);
+  if (!cles.length){
+    vue.innerHTML = '<h2 class="onglet">Collections</h2><div class="carte">Aucune collection. Créez-en une depuis l\'onglet Flashcards.</div>';
+    return;
+  }
+  var cols = cles.map(function(k){ return Object.assign({id:k}, etat.collections[k]); });
+  if (triCourant === 'alpha') cols.sort(function(a,b){ return a.nom.localeCompare(b.nom,'fr'); });
+  else if (triCourant === 'taille') cols.sort(function(a,b){ return b.cartes.length - a.cartes.length; });
+  else if (triCourant === 'revision') cols.sort(function(a,b){ return prochaineRevision(a) - prochaineRevision(b); });
+  else cols.sort(function(a,b){ return (b.creee||'').localeCompare(a.creee||''); });
+
+  vue.innerHTML = '<h2 class="onglet">Collections (' + cols.length + ')</h2>' +
+    '<p>Classer par : <select id="tri-col"><option value="recent">Plus récentes</option><option value="alpha">Nom (A→Z)</option><option value="taille">Nombre de cartes</option><option value="revision">Prochaine révision</option></select></p><div id="liste-cols"></div>';
+  document.getElementById('tri-col').value = triCourant;
+  document.getElementById('tri-col').addEventListener('change', function(){ triCourant = this.value; afficherCollections(); });
+  document.getElementById('liste-cols').innerHTML = cols.map(function(c){
+    return '<div class="carte"><b>' + c.nom + '</b> — ' + c.cartes.length + ' carte(s) · prochaine révision : ' + dateProchaine(c) +
+      '<br><button class="action" onclick="consulterCollection(\'' + c.id + '\')">Consulter (flashcards)</button> ' +
+      '<button class="action secondaire" onclick="automaster(\'' + c.id + '\')">Automaster</button> ' +
+      '<button class="action secondaire" onclick="exporterAnki(\'' + c.id + '\')">Export Anki (TSV)</button> ' +
+      '<button class="action secondaire" onclick="exporterQuizlet(\'' + c.id + '\')">Export Quizlet (CSV)</button> ' +
+      '<button class="action danger" onclick="supprimerCollection(\'' + c.id + '\')">Supprimer</button></div>';
+  }).join('');
+}
+
+function prochaineRevision(col){
+  var tmin = Infinity;
+  col.cartes.forEach(function(id){
+    var st = etat.cartes[id] && etat.cartes[id].statistiques;
+    if (!st) return;
+    var d = st.derniere ? new Date(st.derniere).getTime() + BOITES[Math.min(st.boite-1, BOITES.length-1)]*86400000 : 0;
+    if (d < tmin) tmin = d;
+  });
+  return tmin === Infinity ? 0 : tmin;
+}
+function dateProchaine(col){
+  var t = prochaineRevision(col);
+  if (!t) return 'à découvrir';
+  var d = new Date(t);
+  return d <= new Date() ? 'maintenant' : d.toLocaleDateString('fr-FR');
+}
+function supprimerCollection(id){
+  if (!confirm('Supprimer la collection « ' + etat.collections[id].nom + ' » ? Les flashcards restent dans votre base.')) return;
+  delete etat.collections[id];
+  sauvegarder(true);
+  toast('Collection supprimée.', 'info');
+  afficherCollections();
+}
+
+/* ============ Consultation flashcards (retournement) ============ */
+var consultation = null;
+function consulterCollection(id){
+  consultation = { id: id, i: 0, face: 'recto' };
+  var col = etat.collections[id];
+  var vue = document.getElementById('v-collections');
+  function rendu(){
+    var c = etat.cartes[col.cartes[consultation.i]];
+    if (!c){ vue.innerHTML = '<div class="carte">Collection vide. <button class="action" onclick="afficherCollections()">Retour</button></div>'; return; }
+    var txt = consultation.face === 'recto' ? c.front : c.dos;
+    vue.innerHTML = '<h2 class="onglet">' + col.nom + '</h2>' +
+      '<div class="flashcarte" id="fc"><div class="num">' + (consultation.i+1) + ' / ' + col.cartes.length + (consultation.face==='recto' ? ' — cliquez pour voir la réponse' : ' — réponse') + '</div><br>' +
+      txt.replace(/\n/g,'<br>') + '</div>' +
+      '<button class="action secondaire" onclick="flip()">Retourner</button> ' +
+      '<button class="action" onclick="repondreFlash(true)">Je savais</button> ' +
+      '<button class="action danger" onclick="repondreFlash(false)">Je ne savais pas</button> ' +
+      '<button class="action secondaire" onclick="afficherCollections()">Quitter</button>';
+    document.getElementById('fc').addEventListener('click', flip);
+  }
+  window.flip = function(){ consultation.face = consultation.face === 'recto' ? 'verso' : 'recto'; rendu(); };
+  window.repondreFlash = function(ok){
+    var cid = col.cartes[consultation.i];
+    majBoite(etat.cartes[cid].statistiques, ok);
+    sauvegarder(true);
+    consultation.i++;
+    consultation.face = 'recto';
+    if (consultation.i >= col.cartes.length){
+      sauvegarder();
+      vue.innerHTML = '<div class="carte">Tour terminé ! Score sauvegardé.</div>';
+      setTimeout(afficherCollections, 900);
+    } else rendu();
+  };
+  rendu();
+}
+
+function majBoite(st, ok){
+  st.derniere = new Date().toISOString();
+  if (ok){ st.ok++; st.boite = Math.min(st.boite+1, 6); }
+  else { st.non++; st.boite = 1; }
+}
+
+/* ============ Automaster : pilote de révision automatique ============ */
+var pilote = null;
+function automaster(id){
+  var col = etat.collections[id];
+  if (!col || !col.cartes.length){ toast('Collection vide : rien à réviser.', 'alerte'); return; }
+  var vitesse = parseFloat(prompt('Vitesse du pilote (1 = lent, 6 = rapide) :', '2') || '2');
+  pilote = { id: id, i: 0, tempo: Math.max(1.2, Math.min(6, vitesse)) * 1000, timer: null };
+  var vue = document.getElementById('v-collections');
+  vue.innerHTML = '<h2 class="onglet">Automaster — ' + col.nom + '</h2>' +
+    '<div class="pilote-bandeau"><b>Pilote automatique.</b> L\'application enchaîne les cartes et marque chaque révision comme réussie à votre place (files de Leitner). Pratique pour une relecture passive — mais se tester soi-même (mode « Je savais / Je ne savais pas ») mémorise mieux. Vous pouvez arrêter à tout moment.</div>' +
+    '<div id="pilote-carte"></div>' +
+    '<button class="action secondaire" onclick="stopPilote()">Arrêter</button>';
+  var sens = 'recto';
+  function etape(){
+    var c = etat.cartes[col.cartes[pilote.i]];
+    if (!c){ stopPilote(true); return; }
+    var m = document.getElementById('pilote-carte');
+    if (sens === 'recto'){
+      m.innerHTML = '<div class="flashcarte"><div class="num">Carte ' + (pilote.i+1) + ' / ' + col.cartes.length + ' — question</div><br>' + c.front.replace(/\n/g,'<br>') + '</div>';
+      sens = 'verso';
+    } else {
+      m.innerHTML = '<div class="flashcarte"><div class="num">Carte ' + (pilote.i+1) + ' / ' + col.cartes.length + ' — réponse</div><br>' + c.dos.replace(/\n/g,'<br>') + '</div>';
+      majBoite(c.statistiques, true);
+      sens = 'recto';
+      pilote.i++;
+      if (pilote.i >= col.cartes.length){ stopPilote(true); return; }
+    }
+    pilote.timer = setTimeout(etape, pilote.tempo);
+  }
+  function stopPilote(fin){
+    if (pilote && pilote.timer) clearTimeout(pilote.timer);
+    sauvegarder();
+    afficherCollections();
+    toast(fin ? 'Automaster terminé : révisions enregistrées à votre place (files de Leitner avancées).'
+               : 'Automaster interrompu : progression enregistrée.', fin ? 'ok' : 'info');
+  }
+  window.stopPilote = function(){ stopPilote(false); };
+  etape();
+}
+
+/* ============ Exports Anki / Quizlet ============ */
+function telecharger(nomFichier, contenu, mime){
+  var a = document.createElement('a');
+  a.href = URL.createObjectURL(new Blob([contenu], { type: mime || 'text/plain' }));
+  a.download = nomFichier;
+  document.body.appendChild(a); a.click(); a.remove();
+}
+function contenuCollection(id, sep, echappe){
+  var col = etat.collections[id];
+  return col.cartes.map(function(cid){
+    var c = etat.cartes[cid];
+    var r = c.front.replace(/\t/g,' ');
+    var v = c.dos.replace(/\t/g,' ');
+    if (echappe){ r = '"' + r.replace(/"/g,'""') + '"'; v = '"' + v.replace(/"/g,'""') + '"'; }
+    return r + sep + v;
+  }).join('\n');
+}
+function exporterAnki(id){
+  telecharger(etat.collections[id].nom.replace(/\W+/g,'-').toLowerCase() + '-anki.txt', contenuCollection(id, '\t', false), 'text/tab-separated-values');
+  toast('Export Anki téléchargé : ouvrez Anki → Fichier → Importer (séparateur : tabulation).', 'info');
+}
+function exporterQuizlet(id){
+  telecharger(etat.collections[id].nom.replace(/\W+/g,'-').toLowerCase() + '-quizlet.csv', contenuCollection(id, ',', true), 'text/csv');
+  toast('Export Quizlet téléchargé : Quizlet → Importer → collez le contenu du fichier.', 'info');
+}
+
+/* ============ Vue scores ============ */
+function afficherScores(){
+  var vue = document.getElementById('v-scores');
+  var cartes = toutesCartes();
+  var totOk = cartes.reduce(function(s,c){ return s + c.statistiques.ok; }, 0);
+  var totNon = cartes.reduce(function(s,c){ return s + c.statistiques.non; }, 0);
+  var tot = totOk + totNon;
+  vue.innerHTML = '<h2 class="onglet">Scores</h2>' +
+    '<div class="bilan"><div class="boite"><b>' + cartes.length + '</b>flashcards</div>' +
+    '<div class="boite"><b>' + totOk + '</b>bonnes réponses</div>' +
+    '<div class="boite"><b>' + totNon + '</b>erreurs</div>' +
+    '<div class="boite"><b>' + (tot ? Math.round(100*totOk/tot) + '%' : '—') + '</b>réussite</div>' +
+    '<div class="boite"><b>' + etat.historique.length + '</b>parties jouées</div></div><br>';
+  if (etat.historique.length){
+    vue.innerHTML += '<div class="carte"><b>Dernières parties</b><table class="scores"><tr><th>Date</th><th>QCM</th><th>Score</th></tr>' +
+      etat.historique.slice(-12).reverse().map(function(h){
+        return '<tr><td>' + new Date(h.date).toLocaleString('fr-FR') + '</td><td>' + h.qcm + '</td><td>' + h.score + ' / ' + h.total + '</td></tr>';
+      }).join('') + '</table></div>';
+  }
+  var rev = cartes.filter(function(c){ return c.statistiques.derniere; });
+  if (rev.length){
+    rev.sort(function(a,b){ return new Date(b.statistiques.derniere) - new Date(a.statistiques.derniere); });
+    vue.innerHTML += '<div class="carte"><b>Par flashcard</b><table class="scores"><tr><th>Question</th><th>Boîte</th><th>OK</th><th>Échecs</th><th>Dernière</th></tr>' +
+      rev.slice(0,25).map(function(c){
+        return '<tr><td>' + c.front.slice(0,60) + (c.front.length>60?'…':'') + '</td><td>' + c.statistiques.boite + '/6</td><td>' + c.statistiques.ok + '</td><td>' + c.statistiques.non + '</td><td>' + new Date(c.statistiques.derniere).toLocaleDateString('fr-FR') + '</td></tr>';
+      }).join('') + '</table></div>';
+  } else {
+    vue.innerHTML += '<div class="carte">Aucune révision enregistrée pour l\'instant.</div>';
+  }
+}
+
+/* ============ Données : export / import ============ */
+function afficherDonnees(silencieux){
+  var vue = document.getElementById('v-donnees');
+  vue.innerHTML = '<h2 class="onglet">Données</h2>' +
+    '<div class="pilote-bandeau"><b>À savoir.</b> Vos tags, flashcards, collections et scores sont enregistrés dans ce navigateur uniquement (stockage local). Changez souvent de navigateur ou d\'ordinateur ? Exportez régulièrement vos données ci-dessous, ou importez-les ailleurs.</div>' +
+    '<div class="carte"><b>Taille actuelle :</b> ' + taille() + '<br><br>' +
+    '<button class="action" onclick="exporterDonnees()">Exporter mes données (JSON)</button> ' +
+    '<button class="action secondaire" onclick="document.getElementById(\'f-import\').click()">Importer des données</button>' +
+    '<input type="file" id="f-import" class="cache" accept=".json"></div>';
+  document.getElementById('f-import').addEventListener('change', function(){
+    var f = this.files[0];
+    if (!f) return;
+    if (Object.keys(etat.cartes).length || Object.keys(etat.collections).length || etat.historique.length) {
+      if (!confirm('Des données existent déjà dans ce navigateur. Les fusionner avec le fichier importé ? (OK = fusionner, Annuler = abandon)')) { this.value=''; return; }
+    }
+    var fr = new FileReader();
+    fr.onload = function(){
+      try {
+        var data = JSON.parse(fr.result);
+        ['tagsQcm','cartes','collections','historique'].forEach(function(k){
+          if (!data[k]) return;
+          if (k === 'historique'){ etat.historique = etat.historique.concat(data[k]); }
+          else { Object.keys(data[k]).forEach(function(id2){ etat[k][id2] = data[k][id2]; }); }
+        });
+        sauvegarder();
+        majIndicateur();
+        toast('Données importées avec succès.', 'ok');
+        afficherDonnees(true);
+      } catch(e){ toast('Fichier illisible : import annulé.', 'alerte'); }
+    };
+    fr.readAsText(f);
+  });
+}
+function exporterDonnees(){
+  telecharger('c2phi-revisions-' + new Date().toISOString().slice(0,10) + '.json', JSON.stringify(etat, null, 2), 'application/json');
+  toast('Export téléchargé : conservez ce fichier, il contient toute votre progression.', 'info');
+}
+
+/* ============ Démarrage ============ */
+majIndicateur();
+afficherQcm();
+afficherDonnees(true);
+if (!Object.keys(etat.cartes).length && !Object.keys(etat.collections).length && !etat.historique.length){
+  toast('Bienvenue dans votre espace de révisions : tout sera sauvegardé automatiquement dans ce navigateur.', 'info');
+} else {
+  toast('Vos données (' + taille() + ') ont été restaurées depuis ce navigateur.', 'info');
+}
+</script>
+</body>
+</html>
