@@ -8,14 +8,15 @@
   :root {
     --bg: #f4f1ea;
     --panel: #fffdf7;
-    --ink: #232323;
-    --muted: #6b6355;
-    --accent: #8a1f2b;
-    --accent-hover: #6e1721;
+    --ink: #2b2b26;
+    --muted: #6b675e;
+    --accent: #8a1c1c;
+    --accent-hover: #6e1414;
     --accent-soft: #f6eaea;
-    --accent2: #b5474f;
-    --line: #e2dccd;
-    --ok: #1e6b3a;
+    --accent2: #a33c3c;
+    --bad: #a33;
+    --line: #d8d2c4;
+    --ok: #2e6b34;
     --okbg: #e8f4ec;
     --ok-border: #a3d4b5;
     --warn: #9a5b13;
@@ -24,18 +25,62 @@
     --info: #1d4e89;
     --infobg: #eaf2fb;
     --badge: #efe9db;
-    --gold: #b47b12;
+    --gold: #b09a5f;
     --goldbg: #fcf6e6;
-    --shadow: 0 2px 10px rgba(35, 35, 35, 0.06);
+    --shadow: 0 3px 10px rgba(0, 0, 0, 0.06);
+    --font: Georgia, "Times New Roman", serif;
   }
+  /* ---- Thèmes (identiques au modèle des QCM) ---- */
+  body[data-theme="pronote"] {
+    --bg: #ffffff; --panel: #fafafa; --ink: #333333; --muted: #666666;
+    --accent: #006400; --accent-hover: #004d00; --accent2: #4a9d4a; --bad: #b03030;
+    --line: #c9c9c9; --font: Arial, Helvetica, "Segoe UI", sans-serif;
+    --badge: #efefef; --accent-soft: #eef6ee; --ok: #2e7d32;
+  }
+  body[data-theme="moderne"] {
+    --bg: #eaf2fb; --panel: #ffffff; --ink: #1b2a3a; --muted: #5a7085;
+    --accent: #1c5d99; --accent-hover: #14497a; --accent2: #3f8fd6; --bad: #c0392b;
+    --line: #c4d4e8; --font: Verdana, Geneva, sans-serif;
+    --shadow: 0 3px 10px rgba(28, 93, 153, 0.15); --badge: #e4edf7; --accent-soft: #e7f0fa;
+  }
+  body[data-theme="machine"] {
+    --bg: #e6e6e2; --panel: #f7f7f2; --ink: #222222; --muted: #555;
+    --accent: #0a6b3c; --accent-hover: #075430; --accent2: #0e8f54; --bad: #b03030;
+    --line: #b8b8ae; --font: "Courier New", Courier, monospace;
+    --shadow: 0 3px 10px rgba(0, 0, 0, 0.12); --badge: #e9e9e2; --accent-soft: #e8f3ec;
+  }
+  body[data-theme="manuscrit"] {
+    --bg: #f0e6d6; --panel: #fbf3e4; --ink: #3b2f1e; --muted: #7a6a4e;
+    --accent: #7a5b1e; --accent-hover: #614614; --accent2: #a3823a; --bad: #8f3a2a;
+    --line: #d9c9a8; --font: "Comic Sans MS", "Segoe Script", cursive;
+    --shadow: 0 3px 10px rgba(90, 70, 40, 0.15); --badge: #efe3cb; --accent-soft: #f3ead6;
+  }
+  body[data-theme="creatif"] {
+    --bg: #f3e9ff; --panel: #ffffff; --ink: #2d1b4e; --muted: #6a5a8e;
+    --accent: #6a1bb0; --accent-hover: #55148d; --accent2: #c2410c; --bad: #c81e5a;
+    --line: #d9c4f2; --font: "Trebuchet MS", "Papyrus", fantasy;
+    --shadow: 0 3px 10px rgba(106, 27, 176, 0.18); --badge: #ede0fa; --accent-soft: #f0e4fc;
+  }
+  body[data-theme="nuit"] {
+    --bg: #12141a; --panel: #1c1f28; --ink: #e8e6e0; --muted: #9aa0b8;
+    --accent: #7fa8ff; --accent-hover: #6b93e8; --accent2: #a8c2ff; --bad: #ff8a8a;
+    --line: #343947; --font: "Segoe UI", Helvetica, Arial, sans-serif;
+    --okbg: #12301c; --ok-border: #2e5b3f; --warn: #d9a45b; --warnbg: #332611; --warn-border: #6a4d1e;
+    --info: #7fb0e8; --infobg: #152438; --goldbg: #2e2716; --gold: #d8c58a;
+    --shadow: 0 3px 10px rgba(0, 0, 0, 0.5); --badge: #262a35; --accent-soft: #232a3a; --ok: #7fd695;
+  }
+  body[data-theme="nuit"] .challenge-banner, body[data-theme="manuscrit"] .challenge-banner { color: #fffdf7; }
+  body[data-theme="nuit"] .challenge-banner .btn-banner { color: #10131a; color: var(--ink); background: var(--panel); }
+  body[data-theme="nuit"] .challenge-banner button[style*="color:inherit"] { border-color: rgba(20,24,40,0.5); color: #10131a; }
   * { box-sizing: border-box; margin: 0; }
   html, body { height: 100%; }
   body {
-    font-family: "Segoe UI", system-ui, -apple-system, sans-serif;
+    font-family: var(--font);
     background: var(--bg);
     color: var(--ink);
     display: flex;
     overflow: hidden;
+    transition: background 0.4s, color 0.4s;
   }
 
   /* ---------- Menu gauche ---------- */
@@ -51,7 +96,7 @@
   .menu-header {
     padding: 14px 16px 12px;
     border-bottom: 1px solid var(--line);
-    background: #faf7f0;
+    background: color-mix(in srgb, var(--panel) 94%, var(--muted));
   }
   .brand-row {
     display: flex;
@@ -92,7 +137,7 @@
     gap: 5px;
     transition: all .15s;
   }
-  .nav-pill-btn:hover { background: #f3ecdd; border-color: #d2c8b4; }
+  .nav-pill-btn:hover { background: color-mix(in srgb, var(--panel) 88%, var(--muted)); border-color: var(--line); }
   .nav-pill-btn.active {
     background: var(--accent);
     color: #fff;
@@ -100,10 +145,10 @@
   }
   .nav-pill-btn.challenge-btn {
     background: var(--goldbg);
-    border-color: #e6cf95;
-    color: #7a5107;
+    border-color: color-mix(in srgb, var(--gold) 55%, var(--line));
+    color: color-mix(in srgb, var(--gold) 70%, var(--ink));
   }
-  .nav-pill-btn.challenge-btn:hover { background: #f8eccb; }
+  .nav-pill-btn.challenge-btn:hover { background: color-mix(in srgb, var(--goldbg) 80%, var(--muted)); }
 
   /* Barre de recherche, tri et filtres */
   .menu-controls {
@@ -121,9 +166,9 @@
     border-radius: 8px;
     font: inherit;
     font-size: 13px;
-    background: #faf7f0;
+    background: color-mix(in srgb, var(--panel) 94%, var(--muted));
   }
-  .qcm-search:focus { outline: none; border-color: var(--accent); background: #fff; }
+  .qcm-search:focus { outline: none; border-color: var(--accent); background: var(--panel); }
   .controls-row {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -136,7 +181,7 @@
     border-radius: 7px;
     font: inherit;
     font-size: 11.5px;
-    background: #faf7f0;
+    background: color-mix(in srgb, var(--panel) 94%, var(--muted));
     color: var(--ink);
     cursor: pointer;
   }
@@ -148,7 +193,7 @@
   }
   .st-tab {
     border: 1px solid var(--line);
-    background: #faf7f0;
+    background: color-mix(in srgb, var(--panel) 94%, var(--muted));
     color: var(--muted);
     font: inherit;
     font-size: 11px;
@@ -158,7 +203,7 @@
     cursor: pointer;
     white-space: nowrap;
   }
-  .st-tab:hover { background: #f0e9da; }
+  .st-tab:hover { background: color-mix(in srgb, var(--panel) 90%, var(--muted)); }
   .st-tab.active {
     background: var(--ink);
     color: #fff;
@@ -177,7 +222,7 @@
     text-align: left;
     background: none;
     border: none;
-    border-bottom: 1px solid #f0ebe0;
+    border-bottom: 1px solid var(--line);
     cursor: pointer;
     font: inherit;
     color: var(--ink);
@@ -185,9 +230,9 @@
     border-left: 4px solid transparent;
     transition: background .15s;
   }
-  .qcm-item:hover { background: #f6f0e4; }
+  .qcm-item:hover { background: color-mix(in srgb, var(--panel) 92%, var(--muted)); }
   .qcm-item.active {
-    background: #f1e7d3;
+    background: color-mix(in srgb, var(--panel) 84%, var(--muted));
     border-left-color: var(--accent);
   }
   .qcm-item-top {
@@ -237,7 +282,7 @@
     font-weight: 700;
     padding: 1px 7px;
     border-radius: 6px;
-    background: #fff;
+    background: var(--panel);
     border: 1px solid var(--line);
     color: var(--ink);
   }
@@ -246,7 +291,7 @@
   .mini-bar {
     width: 100%;
     height: 4px;
-    background: #e6dfd0;
+    background: color-mix(in srgb, var(--line) 55%, var(--panel));
     border-radius: 4px;
     overflow: hidden;
     margin-top: 6px;
@@ -262,7 +307,7 @@
   .menu-footer {
     padding: 10px 14px;
     border-top: 1px solid var(--line);
-    background: #faf7f0;
+    background: color-mix(in srgb, var(--panel) 94%, var(--muted));
     font-size: 11.5px;
     color: var(--muted);
     display: flex;
@@ -285,7 +330,8 @@
 
   /* Bannière défi actif */
   .challenge-banner {
-    background: linear-gradient(135deg, #5e141d 0%, #8a1f2b 100%);
+    background: linear-gradient(135deg, var(--accent-hover) 0%, var(--accent) 100%);
+    border: 1px solid color-mix(in srgb, var(--accent) 60%, #fff);
     color: #fff;
     padding: 12px 20px;
     border-radius: 12px;
@@ -306,7 +352,7 @@
     opacity: .9;
   }
   .btn-banner {
-    background: #fff;
+    background: var(--panel);
     color: var(--accent);
     border: none;
     padding: 7px 14px;
@@ -317,7 +363,7 @@
     cursor: pointer;
     white-space: nowrap;
   }
-  .btn-banner:hover { background: #f7efe6; }
+  .btn-banner:hover { background: color-mix(in srgb, var(--panel) 92%, var(--muted)); }
 
   /* Cartes & En-têtes */
   .qcm-head {
@@ -381,7 +427,7 @@
   .status-card p {
     font-size: 14.5px;
     line-height: 1.5;
-    color: #3d3830;
+    color: var(--ink);
     margin-bottom: 16px;
   }
   .history-pills {
@@ -392,7 +438,7 @@
   }
   .hist-pill {
     font-size: 12px;
-    background: #faf7f0;
+    background: color-mix(in srgb, var(--panel) 94%, var(--muted));
     border: 1px solid var(--line);
     padding: 5px 10px;
     border-radius: 8px;
@@ -418,7 +464,7 @@
     gap: 7px;
     transition: all .15s;
   }
-  .btn:hover { background: #f3ecdd; }
+  .btn:hover { background: color-mix(in srgb, var(--panel) 88%, var(--muted)); }
   .btn-primary {
     background: var(--accent);
     color: #fff;
@@ -430,7 +476,7 @@
     color: #fff;
     border-color: var(--ok);
   }
-  .btn-ok:hover { background: #17542d; }
+  .btn-ok:hover { background: color-mix(in srgb, var(--ok) 85%, #000); }
   .btn-warn {
     background: var(--warn);
     color: #fff;
@@ -438,10 +484,10 @@
   }
   .btn-danger {
     color: var(--accent);
-    border-color: #e3c1c5;
-    background: #fdf6f6;
+    border-color: color-mix(in srgb, var(--bad) 40%, var(--panel));
+    background: color-mix(in srgb, var(--bad) 8%, var(--panel));
   }
-  .btn-danger:hover { background: #fae8ea; }
+  .btn-danger:hover { background: color-mix(in srgb, var(--bad) 15%, var(--panel)); }
 
   /* Barre d'outils pendant l'entraînement */
   .runner-toolbar {
@@ -475,7 +521,7 @@
   }
   .runner-bar {
     height: 7px;
-    background: #e6dfd0;
+    background: color-mix(in srgb, var(--line) 55%, var(--panel));
     border-radius: 999px;
     overflow: hidden;
   }
@@ -496,7 +542,7 @@
     box-shadow: 0 1px 4px rgba(0,0,0,.03);
   }
   .question.q-answered-ok { border-color: var(--ok-border); }
-  .question.q-answered-ko { border-color: #e2b4b9; }
+  .question.q-answered-ko { border-color: color-mix(in srgb, var(--bad) 45%, var(--panel)); }
   .q-top {
     display: flex;
     gap: 10px;
@@ -532,7 +578,7 @@
     padding: 10px 14px;
     font-size: 14.5px;
     line-height: 1.45;
-    background: #faf8f2;
+    background: color-mix(in srgb, var(--panel) 96%, var(--muted));
     transition: all .15s;
   }
   .ans-interactive {
@@ -541,7 +587,7 @@
     align-items: flex-start;
     gap: 10px;
   }
-  .ans-interactive:hover { background: #f3ecdd; border-color: #cbbda3; }
+  .ans-interactive:hover { background: color-mix(in srgb, var(--panel) 88%, var(--muted)); border-color: #cbbda3; }
   .ans-interactive input {
     margin-top: 4px;
     accent-color: var(--accent);
@@ -564,8 +610,8 @@
     font-weight: 700;
   }
   .ans.wrong-picked {
-    border-color: #c95b63;
-    background: #fbeeed;
+    border-color: color-mix(in srgb, var(--bad) 60%, var(--ink));
+    background: color-mix(in srgb, var(--bad) 8%, var(--panel));
   }
   .ans.wrong-picked::before {
     content: "✗ ";
@@ -575,7 +621,7 @@
   .ans .fb {
     margin-top: 8px;
     font-size: 13px;
-    color: #4a4335;
+    color: var(--muted);
     border-top: 1px dashed var(--line);
     padding-top: 7px;
   }
@@ -600,7 +646,7 @@
     border-radius: 8px;
     font: inherit;
     font-size: 14.5px;
-    background: #fff;
+    background: var(--panel);
   }
   .short-input:focus { outline: none; border-color: var(--accent); }
 
@@ -618,9 +664,9 @@
     border: 1px solid var(--line);
     border-radius: 8px;
     padding: 8px 12px;
-    background: #faf8f2;
+    background: color-mix(in srgb, var(--panel) 96%, var(--muted));
   }
-  .pair > span:first-child { font-weight: 600; background: #f3ecdd; }
+  .pair > span:first-child { font-weight: 600; background: color-mix(in srgb, var(--panel) 88%, var(--muted)); }
   .pair select {
     width: 100%;
     padding: 8px 10px;
@@ -628,7 +674,7 @@
     border-radius: 8px;
     font: inherit;
     font-size: 13.5px;
-    background: #fff;
+    background: var(--panel);
   }
 
   /* Texte à trous (Cloze) */
@@ -638,7 +684,7 @@
     margin-top: 6px;
   }
   .cloze-text mark {
-    background: #f3e2a5;
+    background: color-mix(in srgb, var(--gold) 25%, var(--goldbg));
     padding: 1px 7px;
     border-radius: 5px;
     font-weight: 600;
@@ -648,16 +694,16 @@
     width: 155px;
     padding: 2px 8px;
     margin: 0 3px;
-    border: 1px solid #bfb39b;
+    border: 1px solid color-mix(in srgb, var(--gold) 35%, var(--line));
     border-bottom: 2px solid var(--accent);
     border-radius: 6px;
     font: inherit;
     font-size: 14.5px;
-    background: #fff;
+    background: var(--panel);
     color: var(--ink);
   }
   .cloze-input.ok { background: var(--okbg); border-color: var(--ok); color: var(--ok); font-weight: 600; }
-  .cloze-input.ko { background: #fbeeed; border-color: #c95b63; color: var(--accent); }
+  .cloze-input.ko { background: color-mix(in srgb, var(--bad) 8%, var(--panel)); border-color: color-mix(in srgb, var(--bad) 60%, var(--ink)); color: var(--accent); }
 
   .q-validate-row {
     margin-top: 12px;
@@ -673,7 +719,7 @@
     border-radius: 9px;
     font-size: 13.5px;
     line-height: 1.5;
-    background: #f8f5ec;
+    background: color-mix(in srgb, var(--panel) 96%, var(--muted));
     border-left: 4px solid var(--accent);
   }
   .q-feedback-box.ok { background: var(--okbg); border-left-color: var(--ok); }
@@ -721,8 +767,8 @@
     gap: 10px;
   }
   .chal-card.unlocked {
-    border-color: #d9b65b;
-    background: linear-gradient(to bottom, #fcf7e8, #fffdf7);
+    border-color: color-mix(in srgb, var(--gold) 50%, var(--line));
+    background: linear-gradient(to bottom, var(--goldbg), var(--panel));
   }
   .chal-head { display: flex; justify-content: space-between; align-items: flex-start; gap: 8px; }
   .chal-title { font-size: 14.5px; font-weight: 700; }
@@ -734,7 +780,7 @@
     background: var(--badge);
     color: var(--muted);
   }
-  .chal-card.unlocked .chal-badge { background: #f3d98b; color: #5c3d04; }
+  .chal-card.unlocked .chal-badge { background: color-mix(in srgb, var(--gold) 40%, var(--goldbg)); color: color-mix(in srgb, var(--gold) 60%, var(--ink)); }
   .chal-desc { font-size: 13px; color: var(--muted); line-height: 1.4; }
 
   .topic-list {
@@ -762,7 +808,7 @@
     text-align: left;
     border-bottom: 1px solid var(--line);
   }
-  .history-table th { background: #faf7f0; color: var(--muted); font-weight: 600; }
+  .history-table th { background: color-mix(in srgb, var(--panel) 94%, var(--muted)); color: var(--muted); font-weight: 600; }
 
   /* Toast & Modale */
   #toast {
@@ -770,7 +816,7 @@
     bottom: 24px;
     left: 50%;
     transform: translateX(-50%) translateY(20px);
-    background: #232323;
+    background: var(--ink);
     color: #fff;
     padding: 10px 18px;
     border-radius: 10px;
@@ -839,7 +885,7 @@
   }
 </style>
 </head>
-<body>
+<body data-theme="pronote">
 
 <nav id="menu">
   <div class="menu-header">
@@ -870,6 +916,17 @@
       </select>
       <select id="author-filter" class="ctrl-select" title="Filtrer par auteur ou thème">
         <option value="ALL">Tous les sujets</option>
+      </select>
+    </div>
+    <div class="controls-row">
+      <select id="themesel" class="ctrl-select" title="Choisir le thème" onchange="setTheme(this.value)">
+        <option value="pronote" selected>Thème Pronote</option>
+        <option value="classique">Thème classique</option>
+        <option value="moderne">Moderne</option>
+        <option value="machine">Machine</option>
+        <option value="manuscrit">Manuscrit</option>
+        <option value="creatif">Créatif</option>
+        <option value="nuit">Mode nuit</option>
       </select>
     </div>
     <div class="status-tabs" id="status-tabs">
@@ -1364,7 +1421,7 @@ function renderChallengeBannerHTML() {
       </div>
       <div style="display:flex;gap:8px;align-items:center;">
         <button type="button" class="btn-banner" onclick="startQuizRun('${targetQuiz.id}', false)">Relever le défi</button>
-        <button type="button" class="btn-banner" style="background:rgba(255,255,255,0.18);color:#fff;" onclick="cancelChallenge()" title="Abandonner le défi">✕</button>
+        <button type="button" class="btn-banner" style="background:transparent;border:1px solid rgba(255,255,255,0.5);color:inherit;" onclick="cancelChallenge()" title="Abandonner le défi">✕</button>
       </div>
     </div>
   `;
@@ -2112,10 +2169,25 @@ document.getElementById("back-top").addEventListener("click", () => {
   mainEl.scrollTo({ top: 0, behavior: "smooth" });
 });
 
+/* ---- Thèmes (identiques au modèle des QCM) ---- */
+function setTheme(t) {
+  document.body.setAttribute("data-theme", t);
+  try { localStorage.setItem("qcm_theme", t); } catch (e) {}
+}
+try {
+  const savedTheme = localStorage.getItem("qcm_theme");
+  if (savedTheme) {
+    const sel = document.getElementById("themesel");
+    if (sel) sel.value = savedTheme;
+    setTheme(savedTheme);
+  } else { setTheme("pronote"); }
+} catch (e) { setTheme("pronote"); }
+
 // Démarrage de l'application
 initFilters();
 updateGlobalIndicators();
 renderDashboard();
 </script>
+<script type="module" src="https://static.cloudflareinsights.com/beacon.min.js/vce701823e78c4301a35b7e07294d87301792088814092" integrity="sha512-UKNk8GbxkABxKcXYuLkO16EleLGUkcvJWtpSNmExE0Too3ZaFAxTscNWEc1OdAv5/BikHawapSCaiD2XCmp+Bw==" nonce="B0Glo7RvkFe8mVSZ/GO+OQ==" data-cf-beacon='{"version":"2024.11.0","token":"36b4216ae2dc4d5488c249161e71fe1e","spa":2}' crossorigin="anonymous"></script>
 </body>
 </html>
