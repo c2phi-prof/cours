@@ -2,10 +2,63 @@
 <html lang="fr">
 <head>
 <meta charset="UTF-8">
-<meta http-equiv="refresh" content="0; url=cahier-de-texte/">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Cours de philosophie</title>
+<style>
+body { font-family: Georgia, serif; max-width: 800px; margin: 2rem auto; padding: 0 1rem; background: #faf8f2; color: #222; }
+h1 { border-bottom: 2px solid #8b0000; padding-bottom: .5rem; }
+ul.liste-cours { list-style: none; padding: 0; }
+ul.liste-cours li { margin: .4rem 0; }
+ul.liste-cours a { display: block; padding: .6rem 1rem; background: #fff; border: 1px solid #ddd; border-radius: 6px; text-decoration: none; color: #1a3c6e; }
+ul.liste-cours a:hover { background: #eef3fa; }
+#erreur { color: #8b0000; display: none; }
+</style>
 </head>
 <body>
+<h1>Cours de philosophie</h1>
 <p><a href="cahier-de-texte/">Accéder au cahier de texte de philosophie</a></p>
+<h2>Fichiers HTML de ce répertoire</h2>
+<ul class="liste-cours" id="liste-cours"></ul>
+<p id="erreur">Impossible de charger la liste des fichiers (limite de l'API GitHub peut-être atteinte). Rechargez la page dans quelques instants.</p>
+<script>
+(function () {
+    var liste = document.getElementById('liste-cours');
+    var erreur = document.getElementById('erreur');
+
+    function proprietaireEtDepot() {
+        if (location.hostname.endsWith('.github.io')) {
+            var proprietaire = location.hostname.replace('.github.io', '');
+            return { owner: proprietaire, repo: 'cours' };
+        }
+        return { owner: 'c2phi-prof', repo: 'cours' };
+    }
+
+    var ref = proprietaireEtDepot();
+    var urlApi = 'https://api.github.com/repos/' + ref.owner + '/' + ref.repo + '/contents/?ref=HEAD';
+
+    fetch(urlApi)
+        .then(function (reponse) {
+            if (!reponse.ok) throw new Error('API GitHub');
+            return reponse.json();
+        })
+        .then(function (fichiers) {
+            var html = fichiers
+                .filter(function (f) { return f.type === 'file' && /\.html$/i.test(f.name) && f.name !== 'index.html'; })
+                .sort(function (a, b) { return a.name.localeCompare(b.name, 'fr'); })
+                .map(function (f) {
+                    return '<li><a href="' + f.name + '">' + f.name.replace(/\.html$/i, '') + '</a></li>';
+                })
+                .join('');
+            if (html) {
+                liste.innerHTML = html;
+            } else {
+                liste.innerHTML = '<li>Aucun fichier HTML trouvé.</li>';
+            }
+        })
+        .catch(function () {
+            erreur.style.display = 'block';
+        });
+})();
+</script>
 </body>
 </html>
