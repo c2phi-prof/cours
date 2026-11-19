@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Peut-on tout connaître ?</title>
+<style>
+:root{
+  --bg:#f6f4ee; --paper:#fffdf7; --ink:#33322e; --soft:#6b675e; --line:#e3ded1;
+  --accent:#8a1c1c; --ok:#4c7a4c; --bad:#b04a3a; --gold:#b09a5f; --font:Georgia,'Times New Roman',serif;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--font);line-height:1.75;font-size:17px}
+.page{max-width:680px;margin:0 auto;padding:48px 24px 90px}
+header.journal{text-align:center;margin-bottom:42px}
+.entry-date{font-size:.78em;letter-spacing:.28em;text-transform:uppercase;color:var(--soft)}
+h1{font-weight:400;font-size:2em;margin:14px 0 6px;color:var(--ink);letter-spacing:.01em}
+.journal-sub{font-style:italic;color:var(--soft);font-size:.95em}
+.rule{width:56px;height:1px;background:var(--gold);margin:26px auto;border:none}
+p{margin:0 0 22px}
+.cite{text-align:center;font-style:italic;color:var(--soft);margin:28px 0;padding:0 30px;font-size:.95em}
+.cite .who{display:block;font-size:.8em;letter-spacing:.2em;text-transform:uppercase;margin-top:8px;font-style:normal}
+h2.jn{font-weight:400;font-size:1.3em;margin:36px 0 14px;color:var(--accent)}
+
+/* ---- QCM atténué : replié dans le flux du texte ---- */
+.qcm{border-left:2px solid var(--line);background:transparent;padding:2px 0 2px 22px;margin:26px 0;transition:opacity .3s}
+.qcm-veille{cursor:pointer;opacity:.62}
+.qcm-veille:hover,.qcm-veille:focus{opacity:.95}
+.qcm-veille .hint{font-size:.88em;font-style:italic;color:var(--soft)}
+.qcm-veille .lettre{font-variant:small-caps;letter-spacing:.12em;color:var(--accent);font-size:.85em}
+.qcm-veille .aperçu{margin:6px 0;color:var(--ink)}
+.qcm-veille .reste{font-size:.82em;color:var(--soft)}
+.qcm-affiché{opacity:1}
+.qcm-head{border-left:2px solid var(--accent);padding-left:22px;margin-left:-24px;margin-bottom:20px}
+.qcm-head h2{font-size:1.2em;font-weight:400;margin:0 0 2px;color:var(--accent);font-variant:small-caps;letter-spacing:.06em}
+.qcm-head .hint{font-size:.85em;font-style:italic;color:var(--soft);margin:0}
+.q{margin:0 0 30px}
+.q-num{font-size:.78em;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);margin-bottom:8px}
+.q-text{margin:0 0 12px;font-size:1em;line-height:1.65}
+.opt{display:block;padding:9px 14px;margin:7px 0;border:1px solid transparent;border-bottom:1px solid var(--line);cursor:pointer;transition:opacity .2s,border-color .2s;font-size:.95em;position:relative;color:var(--ink)}
+.opt:hover{border-color:var(--gold)}
+.opt.sel{border-color:var(--gold);border-bottom-color:var(--gold)}
+.q.réjouée .opt{cursor:default}
+.opt.good{color:var(--ok);font-weight:bold}
+.opt.bad{color:var(--bad)}
+.opt .tick{margin-left:8px;font-size:.85em}
+.fb{display:none;margin-top:12px;padding:12px 16px;font-size:.9em;line-height:1.6;color:var(--soft);border-left:2px solid var(--gold);font-style:italic}
+.fb.on{display:block}
+.réponse-courte input{width:100%;border:none;border-bottom:1px solid var(--line);background:transparent;font-family:var(--font);font-size:1em;color:var(--ink);padding:6px 2px;outline:none;transition:border-color .2s}
+.réponse-courte input:focus{border-color:var(--gold)}
+.réponse-courte .verdict{font-size:.85em;margin-top:6px;font-style:normal}
+.réponse-courte .verdict.ok{color:var(--ok)}
+.réponse-courte .verdict.no{color:var(--bad)}
+.prog{font-size:.8em;letter-spacing:.18em;text-transform:uppercase;color:var(--soft);text-align:center;margin:34px 0 8px}
+.prog-fil{height:1px;background:var(--line);position:relative;margin-bottom:30px}
+.prog-fil>span{position:absolute;left:0;top:0;height:1px;background:var(--gold);transition:width .6s ease}
+.score-final{text-align:center;margin-top:44px;font-size:1.05em}
+.score-final .nb{font-size:2.2em;color:var(--accent);display:block;font-variant:small-caps}
+footer{margin-top:70px;text-align:center;font-size:.8em;letter-spacing:.22em;text-transform:uppercase;color:var(--soft)}
+@media (max-width:520px){body{font-size:16px}.page{padding:34px 16px 70px}}
+</style>
+</head>
