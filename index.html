@@ -1,138 +1,74 @@
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>C2phi</title>
-<style>
-body { font-family: Georgia, serif; max-width: 800px; margin: 2rem auto; padding: 0 1rem; background: #faf8f2; color: #222; }
-h1 { border-bottom: 2px solid #8b0000; padding-bottom: .5rem; }
-ul.liste-cours { list-style: none; padding: 0; }
-ul.liste-cours li { margin: .4rem 0; }
-ul.liste-cours a { display: block; padding: .6rem 1rem; background: #fff; border: 1px solid #ddd; border-radius: 6px; text-decoration: none; color: #1a3c6e; }
-ul.liste-cours a:hover { background: #eef3fa; }
-.badge-nouveau { display: inline-block; margin-left: .6rem; padding: .1rem .55rem; border-radius: 10px; background: #8b0000; color: #fff; font-size: .68em; letter-spacing: .08em; text-transform: uppercase; vertical-align: middle; animation: pulse 2.2s ease-in-out infinite; }
-@keyframes pulse { 0%,100% { opacity: 1; } 50% { opacity: .55; } }
-#erreur { color: #8b0000; display: none; }
-</style>
-</head>
-<body>
-<h1>C2phi</h1>
-<h2>Fichiers HTML de ce répertoire</h2>
-<ul class="liste-cours" id="liste-cours"></ul>
-<p id="erreur">Impossible de charger la liste des fichiers (limite de l'API GitHub peut-être atteinte). Rechargez la page dans quelques instants.</p>
-<script>
-(function () {
-    var liste = document.getElementById('liste-cours');
-    var erreur = document.getElementById('erreur');
-
-    var NB_JOURS = 14;
-    var CACHE_HEURES = 6;
-    var CLE_CACHE = 'c2phi-dates-fichiers';
-
-    function proprietaireEtDepot() {
-        if (location.hostname.endsWith('.github.io')) {
-            var proprietaire = location.hostname.replace('.github.io', '');
-            return { owner: proprietaire, repo: 'cours' };
-        }
-        return { owner: 'c2phi-prof', repo: 'cours' };
+/* ============ Lecture du QUIZ d'un fichier, quel que soit le format ============ */
+function extraireQUIZ(txt){
+  var idx = txt.indexOf('var QUIZ');
+  if (idx === -1) return null;
+  var ligneDebut = txt.lastIndexOf('\n', idx) + 1;
+  var ligneFin = txt.indexOf('\n', idx);
+  var ligne = txt.slice(ligneDebut, ligneFin === -1 ? txt.length : ligneFin).trim();
+  if (/^var\s+QUIZ/.test(ligne)) {
+    var expr = ligne.replace(/^var\s+QUIZ\s*=\s*/, '').replace(/;\s*$/, '');
+    try { return (new Function('return ' + expr))(); } catch(e) {}
+  }
+  var s = txt.indexOf('{', idx);
+  var prof = 0;
+  for (var i = s; i < txt.length; i++) {
+    var ch = txt[i];
+    if (ch === '"' || ch === "'" || ch === '`') {
+      var fin = i;
+      do { fin = txt.indexOf(ch, fin + 1); if (fin > 0 && txt[fin-1] === '\\') fin++; } while (false);
+      if (fin === -1) return null;
+      i = fin; continue;
     }
+    if (ch === '{') prof++;
+    else if (ch === '}') { prof--; if (!prof) break; }
+  }
+  try { return (new Function('return ' + txt.slice(s, i + 1)))(); } catch(e) { return null; }
+}
+function formatNonSupporte(nom){
+  toast('« ' + nom + ' » utilise un format d\u2019exercice non compatible avec l\u2019import flashcards. Ouverture dans son propre onglet…', 'alerte');
+  window.open(encodeURI(nom), '_blank');
+}
 
-    var ref = proprietaireEtDepot();
-    var urlApi = 'https://api.github.com/repos/' + ref.owner + '/' + ref.repo + '/contents/?ref=HEAD';
-
-    function lireCache() {
-        try { return JSON.parse(localStorage.getItem(CLE_CACHE)) || {}; }
-        catch (e) { return {}; }
-    }
-
-    function ecrireCache(cache) {
-        try { localStorage.setItem(CLE_CACHE, JSON.stringify(cache)); } catch (e) {}
-    }
-
-    function dateEstRécente(iso) {
-        return (Date.now() - new Date(iso).getTime()) < NB_JOURS * 86400000;
-    }
-
-    function badge() {
-        return ' <span class="badge-nouveau">Nouveau</span>';
-    }
-
-    function afficher(fichiers) {
-        var html = fichiers
-            .filter(function (f) { return f.type === 'file' && /\.html$/i.test(f.name) && f.name !== 'index.html'; })
-            .sort(function (a, b) { return a.name.localeCompare(b.name, 'fr'); })
-            .map(function (f) {
-                return '<li><a data-fichier="' + f.name + '">' + f.name.replace(/\.html$/i, '') + '</a></li>';
-            })
-            .join('');
-        if (html) {
-            liste.innerHTML = html;
+/* ============ Import des questions d'un QCM en flashcards ============ */
+function importerQcm(nom){
+  fetch(encodeURI(nom))
+    .then(function(r){ if(!r.ok) throw 0; return r.text(); })
+    .then(function(txt){
+      var QUIZ = extraireQUIZ(txt);
+      if (!QUIZ || !QUIZ.questions) { formatNonSupporte(nom); return; }
+      var ajoutees = 0;
+      QUIZ.questions.forEach(function(q){
+        var dos, front = q.name;
+        if (q.type === 'single'){
+          var bonne = q.options.filter(function(o){ return o.correct; })[0];
+          if (!bonne) return;
+          dos = bonne.text + (bonne.feedback ? '\n\n' + bonne.feedback : '');
         } else {
-            liste.innerHTML = '<li>Aucun fichier HTML trouvé.</li>';
+          if (!q.answers || !q.answers.length) return;
+          dos = q.answers[0] + (q.feedback ? '\n\n' + q.feedback : '');
         }
-    }
+        var id = nom + '#' + idCarte(front);
+        if (!etat.cartes[id]) ajoutees++;
+        etat.cartes[id] = etat.cartes[id] || {
+          front: front, dos: dos, source: nom,
+          collections: [], statistiques: { boite:1, ok:0, non:0, derniere:null }
+        };
+      });
+      sauvegarder(true);
+      afficherQcm();
+      toast(ajoutees + ' nouvelle(s) flashcard(s) importée(s) depuis « ' + nom + ' ».');
+    })
+    .catch(function(){ toast('Chargement impossible pour ' + nom + '.', 'alerte'); });
+}
 
-    function demanderDates(fichiers) {
-        var cache = lireCache();
-        var maintenant = Date.now();
-        var àRafraîchir = fichiers.filter(function (f) {
-            var entrée = cache[f.name];
-            return !entrée || (maintenant - entrée.interrogé) > CACHE_HEURES * 3600000;
-        });
-
-        if (!àRafraîchir.length) {
-            appliquerBadges(cache);
-            return;
-        }
-
-        Promise.all(àRafraîchir.map(function (f) {
-            var url = 'https://api.github.com/repos/' + ref.owner + '/' + ref.repo
-                    + '/commits?sha=HEAD&per_page=1&path=' + encodeURIComponent(f.name);
-            return fetch(url)
-                .then(function (r) { return r.ok ? r.json() : null; })
-                .then(function (commits) {
-                    cache[f.name] = {
-                        date: (commits && commits[0] && commits[0].commit && commits[0].commit.committer)
-                              ? commits[0].commit.committer.date : null,
-                        interrogé: maintenant
-                    };
-                })
-                .catch(function () {
-                    cache[f.name] = { date: null, interrogé: maintenant };
-                });
-        })).then(function () {
-            ecrireCache(cache);
-            appliquerBadges(cache);
-        });
-    }
-
-    function appliquerBadges(cache) {
-        liste.querySelectorAll('a[data-fichier]').forEach(function (a) {
-            var nom = a.getAttribute('data-fichier');
-            var entrée = cache[nom];
-            var libellé = nom.replace(/\.html$/i, '');
-            a.innerHTML = libellé;
-            if (entrée && entrée.date && dateEstRécente(entrée.date)) {
-                a.innerHTML = libellé + badge();
-            }
-            a.href = nom;
-        });
-    }
-
-    fetch(urlApi)
-        .then(function (reponse) {
-            if (!reponse.ok) throw new Error('API GitHub');
-            return reponse.json();
-        })
-        .then(function (fichiers) {
-            afficher(fichiers);
-            demanderDates(fichiers);
-        })
-        .catch(function () {
-            erreur.style.display = 'block';
-        });
-})();
-</script>
-</body>
-</html>
+/* ============ Jouer un QCM (scores enregistrés) ============ */
+function jouerQcm(nom){
+  fetch(encodeURI(nom))
+    .then(function(r){ if(!r.ok) throw 0; return r.text(); })
+    .then(function(txt){
+      var QUIZ = extraireQUIZ(txt);
+      if (!QUIZ || !QUIZ.questions) { formatNonSupporte(nom); return; }
+      lancerPartie(nom, QUIZ);
+    })
+    .catch(function(){ toast('Chargement impossible pour ' + nom + '.', 'alerte'); });
+}
