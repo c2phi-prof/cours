@@ -1,164 +1,228 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Analyse Logique - Adam Smith</title>
-    <style>
-        :root { --blue: #1a73e8; --green: #1e8e3e; --red: #d93025; --gray: #f8f9fa; }
-        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; margin: 0; padding: 0; background: #fff; font-size: 14px; line-height: 1.4; color: #202124; }
-        .liste-exercices { display: flex; flex-direction: column; width: 100%; margin-bottom: 80px; }
-        .phrase-container { display: flex; align-items: stretch; border-bottom: 1px solid #f1f3f4; position: relative; transition: background 0.2s ease; }
-        .num-pos { width: 30px; display: flex; align-items: center; justify-content: center; background: var(--gray); color: #70757a; font-size: 11px; flex-shrink: 0; }
-        .phrase-content { flex-grow: 1; padding: 8px 35px 8px 15px; cursor: pointer; position: relative; }
-        
-        /* États */
-        .phrase-container[data-state="selected"] { background-color: #e8f0fe; }
-        .phrase-container[data-state="correct"] { border-left: 5px solid var(--green); background: #f8fff9; cursor: default; }
-        .phrase-container[data-state="incorrect"] { border-left: 5px solid var(--red); background: #fff8f8; }
-
-        /* Crayon sémantique */
-        .info-trigger { 
-            display: none; position: absolute; top: 5px; right: 5px; font-size: 22px; cursor: pointer; z-index: 10;
-            filter: grayscale(100%) opacity(0.6); transition: all 0.3s ease;
-        }
-        .info-trigger::before { content: '✏️'; } 
-        body[data-victory="true"] .phrase-container[data-state="correct"] .info-trigger { display: block; }
-        .phrase-container[data-view="semantic"] .info-trigger { filter: grayscale(0%) sepia(100%) hue-rotate(190deg) saturate(500%); opacity: 1; }
-
-        /* Marquage sémantique */
-        .remarque { display: none; } 
-        .phrase-container[data-view="semantic"] .txt-raw { display: none; }
-        .phrase-container[data-view="semantic"] .remarque { display: inline; }
-        .c1 { background-color: #ffeb3b; padding: 1px 3px; border-radius: 3px; font-weight: bold; } 
-        .c2 { background-color: #bbdefb; padding: 1px 3px; border-radius: 3px; } 
-        .cp { background-color: #f8bbd0; padding: 1px 3px; border-radius: 3px; }
-        .red { color: var(--red); font-weight: bold; }
-
-        /* Footer */
-        .footer { position: fixed; bottom: 0; width: 100%; background: #fff; padding: 12px; box-shadow: 0 -2px 8px rgba(0,0,0,0.1); display: flex; justify-content: center; z-index: 100; }
-        #main-btn { width: 95%; max-width: 400px; padding: 12px; border: none; border-radius: 4px; font-weight: bold; cursor: pointer; }
-        .btn-ready { background: var(--blue) !important; color: white; animation: pulse 1.5s infinite; }
-        .btn-cooldown { background: #202124 !important; color: #f1f3f4; }
-        .btn-modify { background: #5f6368 !important; color: white; }
-        .btn-copy { background: var(--green) !important; color: white; }
-        @keyframes pulse { 0% { box-shadow: 0 0 0 0 rgba(26, 115, 232, 0.4); } 70% { box-shadow: 0 0 0 10px rgba(26, 115, 232, 0); } 100% { box-shadow: 0 0 0 0 rgba(26, 115, 232, 0); } }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>C2phi</title>
+<meta name="description" content="C2phi — cours et révisions de philosophie">
+<meta name="theme-color" content="#8b0000">
+<link rel="icon" type="image/png" href="favicon.png">
+<link rel="apple-touch-icon" href="favicon.png">
+<style>
+body { font-family: Georgia, serif; max-width: 860px; margin: 0 auto; padding: 1.5rem 1rem 3rem; background: #f6f2e8; color: #222; }
+h1 { border-bottom: 3px solid #8b0000; padding-bottom: .5rem; font-size: 2em; letter-spacing: .03em; }
+h2 { border-bottom: 1px solid #d8cfc0; padding-bottom: .4rem; font-weight: normal; font-style: italic; color: #6b675e; }
+#plateau { list-style: none; padding: 8px 0 0; display: flex; flex-direction: column; gap: 14px; perspective: 900px; }
+.tuile { position: relative; display: flex; align-items: center; gap: 14px; min-height: 84px; padding: 18px 22px;
+  background: linear-gradient(180deg,#ffffff 0%,#f8f4ea 100%);
+  border: 1px solid #d8cfc0; border-left: 8px solid #b8a04a; border-radius: 14px;
+  box-shadow: 0 4px 0 #d8cfc0, 0 8px 18px rgba(90,70,40,.12);
+  text-decoration: none; color: #1a3c6e; font-size: 1.3em; font-weight: bold; line-height: 1.3;
+  cursor: grab; touch-action: none; user-select: none;
+  transition: transform .18s cubic-bezier(.34,1.56,.64,1), box-shadow .18s ease, background .3s ease, color .3s ease, border-left-color .3s ease;
+  animation: dealOut .5s cubic-bezier(.25,.9,.3,1) backwards; }
+.tuile:nth-child(1){animation-delay:.03s}.tuile:nth-child(2){animation-delay:.09s}.tuile:nth-child(3){animation-delay:.15s}
+.tuile:nth-child(4){animation-delay:.21s}.tuile:nth-child(5){animation-delay:.27s}.tuile:nth-child(6){animation-delay:.33s}
+.tuile:nth-child(7){animation-delay:.39s}.tuile:nth-child(8){animation-delay:.45s}.tuile:nth-child(9){animation-delay:.51s}
+.tuile:nth-child(10){animation-delay:.57s}.tuile:nth-child(11){animation-delay:.63s}.tuile:nth-child(12){animation-delay:.69s}
+@keyframes dealOut { from { opacity: 0; transform: translateY(26px) rotateX(18deg) scale(.96); } to { opacity: 1; transform: none; } }
+.tuile:hover { transform: translateY(-4px) scale(1.015); box-shadow: 0 8px 0 #d8cfc0, 0 14px 26px rgba(90,70,40,.2); }
+.tuile.saisie { cursor: grabbing; transform: scale(1.06) rotate(1.6deg) !important; box-shadow: 0 18px 30px rgba(90,70,40,.35) !important; z-index: 5; }
+.tuile.cible-dessus { transform: translateY(-7px); border-top: 3px dashed #b8a04a; }
+.tuile.cible-dessous { transform: translateY(7px); border-bottom: 3px dashed #b8a04a; }
+.tuile.depose { animation: rebond .5s cubic-bezier(.25,.9,.3,1.4); }
+@keyframes rebond { 0% { transform: scale(1.12) rotate(-2deg); } 55% { transform: scale(.97) rotate(.5deg); } 100% { transform: none; } }
+.tuile .num-ordre { font-size: .55em; font-weight: normal; color: #b8a04a; background: #f1ead9; border-radius: 8px; padding: 4px 9px; min-width: 30px; text-align: center; }
+.tuile .poignee { font-size: .8em; color: #c9bfa8; letter-spacing: 2px; }
+.tuile.vu { background: linear-gradient(180deg,#f2efe6 0%,#eae5d8 100%); border-left-color: #8a9a8a; color: #8a857a; font-weight: normal; box-shadow: 0 3px 0 #d5d0c2; }
+.tuile.vu:hover { transform: scale(1.01); }
+.tuile .vu-marque { display: block; font-size: .5em; letter-spacing: .08em; text-transform: uppercase; color: #5d7a5d; margin-top: 4px; font-weight: normal; }
+.tuile.efface-vu { animation: fonduVu .7s ease; }
+@keyframes fonduVu { from { filter: brightness(1.35); } to { filter: none; } }
+#erreur { color: #8b0000; display: none; }
+.barre-outils { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; margin: 1rem 0 .4rem; }
+.mini { font-size: .8em; color: #6b675e; margin-top: .8rem; }
+button.jeu { font-family: Georgia, serif; font-size: .95em; background: #8b0000; color: #fff; border: none; border-radius: 10px; padding: .6rem 1.1rem; cursor: pointer;
+  box-shadow: 0 4px 0 #5a0000; transition: transform .15s cubic-bezier(.34,1.56,.64,1), box-shadow .15s ease; }
+button.jeu:hover { transform: translateY(-2px); box-shadow: 0 6px 0 #5a0000; }
+button.jeu:active { transform: translateY(3px); box-shadow: 0 1px 0 #5a0000; }
+</style>
 </head>
 <body>
-<div id="container" class="liste-exercices"></div>
-<div class="footer"><button id="main-btn" onclick="actionPrincipale()">Initialisation...</button></div>
-
+<h1>C2phi</h1>
+<h2>Fichiers HTML de ce répertoire</h2>
+<div class="barre-outils">
+  <button class="jeu" onclick="toutEffacer()">Tout remettre à neuf</button>
+  <button class="jeu" onclick="reordonnerAZ()">Ordre A→Z</button>
+</div>
+<ul id="plateau"></ul>
+<p id="erreur">Impossible de charger la liste des fichiers (limite de l'API GitHub peut-être atteinte). Rechargez la page dans quelques instants.</p>
+<p class="mini">Glissez-déposez les blocs pour les remettre dans votre ordre (mémorisé dans ce navigateur). Les fichiers déjà ouverts apparaissent estompés, marqués «&nbsp;vu&nbsp;».</p>
 <script>
-const TITRE = "Adam Smith - Justice vs Bienfaisance";
-const DATA_TEXTE = [
-    { id: "1", txt: "La société peut se maintenir entre différents hommes comme entre différents marchands, à partir du sens de son utilité, sans aucun lien réciproque d’amour ou d’affection.", note: "La société peut se maintenir <span class='c1'>à partir du</span> sens de son <span class='c2'>utilité</span>, <span class='c1'>sans aucun</span> lien réciproque <span class='cp'>d’amour ou d’affection</span>." },
-    { id: "2", txt: "Et quoique l’homme qui en est membre ne soit lié par aucune obligation, ni par aucune forme de gratitude vis-à-vis d’autrui, la société peut toujours être soutenue par l’échange mercenaire de bons services selon des valeurs convenues.", note: "<span class='c1'>Et quoique</span> l'individu ne soit lié par aucune <span class='cp'>gratitude</span>, la société peut être <span class='c1'>soutenue par</span> l’<span class='c2'>échange mercenaire</span> de bons services." },
-    { id: "3", txt: "La société, toutefois, ne peut subsister entre ceux qui sont toujours prêts à se nuire et à se causer du tort.", note: "La société, <span class='c1'>toutefois</span>, <span class='c1'>ne peut subsister</span> entre ceux qui sont prêts à se <span class='red'>nuire</span>." },
-    { id: "4", txt: "Dès que surviennent les préjudices, dès que s’installent le ressentiment réciproque et l’animosité, tous les liens de la société sont déchirés.", note: "<span class='c1'>Dès que</span> surviennent les <span class='red'>préjudices</span>, <span class='c1'>tous</span> les liens de la société sont <span class='c1'>déchirés</span>." },
-    { id: "5", txt: "S’il y a une société entre des brigands et des assassins, ils doivent au moins, selon l’observation commune, s’abstenir de se voler ou de s’assassiner les uns les autres.", note: "<span class='c1'>S’il y a</span> une société entre des brigands, ils doivent <span class='c1'>au moins</span> s’abstenir de se voler : c'est le degré zéro de la <span class='c2'>justice</span>." },
-    { id: "6", txt: "La bienfaisance est donc moins essentielle à l’existence de la société que la justice.", note: "La <span class='cp'>bienfaisance</span> est <span class='c1'>donc moins essentielle</span> à l’existence de la société que la <span class='c2'>justice</span>." },
-    { id: "7", txt: "La société peut se maintenir sans bienfaisance, quoique dans un état qui ne soit pas le plus confortable ; mais la prédominance de l’injustice la détruira absolument.", note: "La société peut se maintenir <span class='c1'>sans</span> <span class='cp'>bienfaisance</span> ; <span class='c1'>mais</span> la prédominance de l’<span class='c2'>injustice</span> la <span class='c1'>détruira absolument</span>." }
-];
+(function () {
+    var plateau = document.getElementById('plateau');
+    var erreur = document.getElementById('erreur');
+    var CLE_VUS = 'c2phi-fichiers-vus';
+    var CLE_ORDRE = 'c2phi-ordre-tuiles';
 
-let journal = [], interactionMap = {}, timeTracker = {}, noteTimeTracker = {}, moves = 0, victory = false, isCooldown = false, hasMovedSinceLastCheck = false;
-let ordreInitial = [], selectedElement = null, startTime = Date.now(), lastNoteOpenTime = null;
-const SEUIL_LECTURE_TOTAL = 15;
-
-function calculerTempsLectureGlobal() { return Object.values(timeTracker).reduce((a, b) => a + b, 0) / 1000; }
-function initTracking(id) { interactionMap[id] = false; timeTracker[id] = 0; noteTimeTracker[id] = 0; }
-
-function init() {
-    const container = document.getElementById('container');
-    container.innerHTML = "";
-    let shuffled;
-    do { shuffled = [...DATA_TEXTE].sort(() => Math.random() - 0.5); } 
-    while (shuffled.every((item, i) => item.id === (i + 1).toString()));
-    
-    ordreInitial = shuffled.map(item => item.id);
-    shuffled.forEach((item, i) => {
-        initTracking(item.id);
-        const wrap = document.createElement('div');
-        wrap.className = 'phrase-container';
-        wrap.setAttribute('data-id', item.id);
-        wrap.onmouseenter = () => { wrap.startHover = Date.now(); };
-        wrap.onmouseleave = () => { if(wrap.startHover) { timeTracker[item.id] += (Date.now() - wrap.startHover); wrap.startHover = null; } };
-        wrap.innerHTML = `<div class="num-pos">${i+1}</div><div style="width:100%"><div class="phrase-content" onclick="handleClick(this.closest('.phrase-container'))"><span class="txt-raw">${item.txt}</span><span class="remarque">${item.note}</span><div class="info-trigger" onclick="toggleNote(event, this, '${item.id}')"></div></div></div>`;
-        container.appendChild(wrap);
-    });
-}
-
-function handleClick(el) {
-    if (victory || isCooldown || el.getAttribute('data-state') === 'correct') return;
-    if (!selectedElement) {
-        selectedElement = el;
-        el.setAttribute('data-state', 'selected');
-    } else {
-        if (selectedElement !== el) {
-            moves++; hasMovedSinceLastCheck = true;
-            const idA = selectedElement.getAttribute('data-id'), idB = el.getAttribute('data-id');
-            const contentA = selectedElement.querySelector('.phrase-content').innerHTML;
-            selectedElement.setAttribute('data-id', idB);
-            selectedElement.querySelector('.phrase-content').innerHTML = el.querySelector('.phrase-content').innerHTML;
-            el.setAttribute('data-id', idA);
-            el.querySelector('.phrase-content').innerHTML = contentA;
+    function proprietaireEtDepot() {
+        if (location.hostname.endsWith('.github.io')) {
+            var proprietaire = location.hostname.replace('.github.io', '');
+            return { owner: proprietaire, repo: 'cours' };
         }
-        selectedElement.removeAttribute('data-state');
-        selectedElement = null;
+        return { owner: 'c2phi-prof', repo: 'cours' };
     }
-}
 
-function toggleNote(e, el, id) {
-    e.stopPropagation();
-    const container = el.closest('.phrase-container');
-    container.getAttribute('data-view') === 'semantic' ? container.removeAttribute('data-view') : container.setAttribute('data-view', 'semantic');
-}
+    var ref = proprietaireEtDepot();
+    var urlApi = 'https://api.github.com/repos/' + ref.owner + '/' + ref.repo + '/contents/?ref=HEAD';
 
-function verifier() {
-    const items = document.querySelectorAll('.phrase-container');
-    let correct = 0;
-    hasMovedSinceLastCheck = false;
-    items.forEach((item, i) => {
-        const isCorrect = item.getAttribute('data-id') === (i + 1).toString();
-        item.setAttribute('data-state', isCorrect ? 'correct' : 'incorrect');
-        if (isCorrect) correct++;
-    });
-    if (correct === DATA_TEXTE.length) {
-        victory = true;
-        document.body.setAttribute('data-victory', 'true');
-        document.getElementById('main-btn').innerText = "Copier le rapport IA";
-        document.getElementById('main-btn').className = "btn-copy";
-    } else {
-        isCooldown = true; setTimeout(() => { isCooldown = false; }, 3000);
+    function lireLS(cle) { try { return JSON.parse(localStorage.getItem(cle)) || []; } catch (e) { return []; } }
+    function ecrireLS(cle, val) { try { localStorage.setItem(cle, JSON.stringify(val)); } catch (e) {} }
+
+    function construire(fichiers) {
+        var noms = fichiers.map(function (f) { return f.name; });
+        var ordre = lireLS(CLE_ORDRE).filter(function (n) { return noms.indexOf(n) !== -1; });
+        noms.forEach(function (n) { if (ordre.indexOf(n) === -1) ordre.push(n); });
+
+        var vus = lireLS(CLE_VUS);
+        plateau.innerHTML = ordre.map(function (nom, i) {
+            var dejaVu = vus.indexOf(nom) !== -1;
+            var libelle = nom.replace(/\.html$/i, '');
+            return '<li><a class="tuile' + (dejaVu ? ' vu' : '') + '" data-fichier="' + nom + '" href="' + nom + '">' +
+                   '<span class="num-ordre">' + (i + 1) + '</span>' +
+                   '<span class="poignee">&#9776;</span>' +
+                   '<span class="texte">' + libelle + (dejaVu ? '<span class="vu-marque">vu</span>' : '') + '</span>' +
+                   '</a></li>';
+        }).join('');
+        brancher();
     }
-}
 
-function surveillerActivation() {
-    const btn = document.getElementById('main-btn');
-    if (victory) return;
-    const restant = SEUIL_LECTURE_TOTAL - calculerTempsLectureGlobal();
-    if (restant > 0) {
-        btn.innerText = `Lecture... (${Math.ceil(restant)}s)`;
-        btn.className = "btn-cooldown";
-    } else if (isCooldown) {
-        btn.innerText = "Analysez vos erreurs...";
-        btn.className = "btn-cooldown";
-    } else if (moves === 0 || !hasMovedSinceLastCheck) {
-        btn.innerText = "Réordonnez les arguments";
-        btn.className = "btn-modify";
-    } else {
-        btn.innerText = "Vérifier la cohérence";
-        btn.className = "btn-ready";
+    function rafraichirNums() {
+        var tuiles = plateau.querySelectorAll('.tuile');
+        tuiles.forEach(function (t, i) {
+            t.querySelector('.num-ordre').textContent = i + 1;
+        });
     }
-}
-setInterval(surveillerActivation, 500);
 
-function actionPrincipale() {
-    if (victory) { /* Logique de copie ici */ alert("Rapport copié !"); return; }
-    if (document.getElementById('main-btn').className === "btn-ready") verifier();
-}
+    function sauverOrdre() {
+        ecrireLS(CLE_ORDRE, Array.prototype.map.call(plateau.querySelectorAll('.tuile'), function (t) {
+            return t.getAttribute('data-fichier');
+        }));
+    }
 
-window.onload = init;
+    function marquer(nom) {
+        var vus = lireLS(CLE_VUS);
+        if (vus.indexOf(nom) === -1) {
+            vus.push(nom);
+            ecrireLS(CLE_VUS, vus);
+        }
+    }
+
+    function brancher() {
+        var tuileTenue = null, decalY = 0, cible = null, ofs = null;
+
+        plateau.querySelectorAll('.tuile').forEach(function (tuile) {
+            tuile.addEventListener('click', function (e) {
+                if (tuile.getAttribute('data-deplace') === 'oui') { e.preventDefault(); return; }
+                marquer(tuile.getAttribute('data-fichier'));
+            });
+
+            tuile.addEventListener('pointerdown', function (e) {
+                tuileTenue = tuile;
+                ofs = tuile.parentNode;
+                decalY = e.clientY - tuile.getBoundingClientRect().top;
+                tuile.classList.add('saisie');
+                tuile.setPointerCapture(e.pointerId);
+            });
+
+            tuile.addEventListener('pointermove', function (e) {
+                if (tuile !== tuileTenue) return;
+                var y = e.clientY - decalY;
+                tuile.style.position = 'fixed';
+                tuile.style.left = tuile.getBoundingClientRect().left + 'px';
+                tuile.style.top = y + 'px';
+                tuile.style.width = tuile.offsetWidth + 'px';
+                tuile.setAttribute('data-deplace', 'oui');
+
+                plateau.querySelectorAll('.tuile').forEach(function (t) {
+                    if (t === tuile) return;
+                    t.classList.remove('cible-dessus', 'cible-dessous');
+                });
+                var dessous = document.elementFromPoint(e.clientX, Math.min(e.clientY, window.innerHeight - 2));
+                var c = dessous && dessous.closest ? dessous.closest('.tuile') : null;
+                if (c && c !== tuile) {
+                    cible = c;
+                    var r = c.getBoundingClientRect();
+                    c.classList.add(e.clientY < r.top + r.height / 2 ? 'cible-dessus' : 'cible-dessous');
+                } else { cible = null; }
+            });
+
+            tuile.addEventListener('pointerup', function (e) {
+                if (tuile !== tuileTenue) return;
+                tuileTenue = null;
+                tuile.classList.remove('saisie');
+                tuile.style.position = '';
+                tuile.style.left = '';
+                tuile.style.top = '';
+                tuile.style.width = '';
+                plateau.querySelectorAll('.tuile').forEach(function (t) { t.classList.remove('cible-dessus', 'cible-dessous'); });
+                var deplace = tuile.getAttribute('data-deplace') === 'oui';
+                tuile.removeAttribute('data-deplace');
+
+                if (cible && cible !== tuile) {
+                    var r = cible.getBoundingClientRect();
+                    var avant = e.clientY < r.top + r.height / 2;
+                    ofs.insertBefore(tuile.parentNode, avant ? cible.parentNode : cible.parentNode.nextSibling);
+                    tuile.classList.add('depose');
+                    setTimeout(function () { tuile.classList.remove('depose'); }, 550);
+                    rafraichirNums();
+                    sauverOrdre();
+                } else if (deplace) {
+                    tuile.classList.add('depose');
+                    setTimeout(function () { tuile.classList.remove('depose'); }, 550);
+                }
+            });
+
+            tuile.addEventListener('pointercancel', function () {
+                tuile.classList.remove('saisie');
+                tuile.style.position = ''; tuile.style.left = ''; tuile.style.top = ''; tuile.style.width = '';
+                tuile.removeAttribute('data-deplace');
+                plateau.querySelectorAll('.tuile').forEach(function (t) { t.classList.remove('cible-dessus', 'cible-dessous'); });
+                tuileTenue = null;
+            });
+        });
+    }
+
+    fetch(urlApi)
+        .then(function (reponse) { if (!reponse.ok) throw new Error('API'); return reponse.json(); })
+        .then(function (fichiers) {
+            construire(fichiers.filter(function (f) { return f.type === 'file' && /\.html$/i.test(f.name) && f.name !== 'index.html'; }));
+        })
+        .catch(function () { erreur.style.display = 'block'; });
+
+    window.toutEffacer = function () {
+        ecrireLS(CLE_VUS, []);
+        plateau.querySelectorAll('.tuile.vu').forEach(function (t) {
+            t.classList.remove('vu');
+            t.querySelector('.vu-marque') && t.querySelector('.vu-marque').remove();
+            t.classList.add('efface-vu');
+            setTimeout(function () { t.classList.remove('efface-vu'); }, 750);
+        });
+    };
+    window.reordonnerAZ = function () {
+        var tuiles = Array.prototype.slice.call(plateau.querySelectorAll('.tuile'));
+        tuiles.sort(function (a, b) {
+            return a.getAttribute('data-fichier').localeCompare(b.getAttribute('data-fichier'), 'fr');
+        });
+        tuiles.forEach(function (t) { plateau.appendChild(t.parentNode); });
+        rafraichirNums();
+        sauverOrdre();
+        plateau.querySelectorAll('.tuile').forEach(function (t) {
+            t.classList.add('depose');
+            setTimeout(function () { t.classList.remove('depose'); }, 550);
+        });
+    };
+})();
 </script>
 </body>
 </html>
