@@ -1,0 +1,2199 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Arbre de Compétences Méthodologiques — Philosophie (Tronc Commun)</title>
+<style>
+  :root {
+    --bg: #0d1117;
+    --panel: #161b22;
+    --panel-border: #30363d;
+    --gold: #e0b354;
+    --cyan: #58a6ff;
+    --text: #e6edf3;
+    --muted: #8b949e;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; }
+  body { background: var(--bg); color: var(--text); overflow: hidden; height: 100vh; display: flex; flex-direction: column; }
+
+  header {
+    height: 54px; background: var(--panel); border-bottom: 1px solid var(--panel-border);
+    display: flex; align-items: center; justify-content: space-between; padding: 0 16px; z-index: 20; gap: 10px;
+  }
+  .brand { font-weight: 700; color: var(--gold); font-size: 14px; white-space: nowrap; }
+  .toolbar-group { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; }
+  button, select {
+    background: #21262d; color: var(--text); border: 1px solid var(--panel-border);
+    padding: 5px 10px; border-radius: 6px; font-size: 12.5px; cursor: pointer; transition: all 0.15s;
+  }
+  button:hover { border-color: var(--gold); background: #292e36; }
+  button.primary { background: var(--gold); color: #0d1117; font-weight: 600; border-color: var(--gold); }
+  button.active-mode { background: #1f334d; border-color: var(--cyan); color: var(--cyan); }
+  button.danger:hover { border-color: #f85149; color: #f85149; }
+
+  .workspace { flex: 1; display: flex; position: relative; overflow: hidden; }
+  #canvas-container {
+    flex: 1; position: relative; overflow: hidden; cursor: grab;
+    background-image: radial-gradient(#21262d 1px, transparent 1px);
+    background-size: 28px 28px;
+  }
+  #canvas-container:active { cursor: grabbing; }
+  #world { position: absolute; top: 0; left: 0; transform-origin: 0 0; width: 6000px; height: 4000px; }
+  svg#edges { position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; overflow: visible; }
+  svg#edges path { fill: none; stroke-width: 2.5; pointer-events: stroke; cursor: pointer; }
+  svg#edges path:hover { stroke: #f85149 !important; stroke-width: 4.5; }
+
+  .col-header {
+    position: absolute; top: 20px; width: 230px; padding: 8px 12px; border-radius: 8px;
+    background: rgba(22, 27, 34, 0.9); border: 1px solid var(--panel-border);
+    font-weight: 700; font-size: 12px; text-transform: uppercase; letter-spacing: 0.5px; text-align: center;
+    pointer-events: none;
+  }
+
+  .node {
+    position: absolute; width: 230px; background: var(--panel);
+    border: 2px solid var(--panel-border); border-radius: 10px;
+    padding: 10px 12px; cursor: pointer; user-select: none;
+    box-shadow: 0 6px 16px rgba(0,0,0,0.5); transition: transform 0.1s, border-color 0.2s;
+  }
+  .node:hover { transform: translateY(-2px); }
+  .node.selected { border-color: #ffffff !important; box-shadow: 0 0 0 3px rgba(255,255,255,0.25); }
+  .node.unlocked { border-color: var(--gold); box-shadow: 0 0 14px rgba(224, 179, 84, 0.22); }
+  .node.locked { opacity: 0.72; }
+  .node.link-source { border-color: var(--cyan) !important; box-shadow: 0 0 18px rgba(88, 166, 255, 0.55); }
+
+  .node-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 5px; font-size: 10.5px; }
+  .node-badge { padding: 2px 6px; border-radius: 4px; font-weight: 600; text-transform: uppercase; }
+  .node-title { font-size: 13.5px; font-weight: 700; line-height: 1.25; margin-bottom: 4px; }
+  .node-desc { font-size: 11px; color: var(--muted); line-height: 1.35; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+  .node-footer { display: flex; justify-content: space-between; align-items: center; margin-top: 7px; padding-top: 5px; border-top: 1px solid #21262d; font-size: 10.5px; }
+  .status-dot { width: 7px; height: 7px; border-radius: 50%; display: inline-block; margin-right: 4px; }
+
+  aside#inspector {
+    width: 360px; background: var(--panel); border-left: 1px solid var(--panel-border);
+    padding: 16px; display: flex; flex-direction: column; gap: 12px; z-index: 20; overflow-y: auto;
+  }
+  aside h2 { font-size: 15px; color: var(--gold); border-bottom: 1px solid var(--panel-border); padding-bottom: 8px; }
+  label { display: block; font-size: 12px; color: var(--muted); margin-bottom: 4px; }
+  input[type="text"], textarea, select.field {
+    width: 100%; background: #0d1117; color: var(--text); border: 1px solid var(--panel-border);
+    border-radius: 6px; padding: 8px; font-size: 13px;
+  }
+  
+/* --- Jeu QCM --- */
+#qcm-overlay { position: fixed; inset: 0; background: rgba(1,4,9,.78); z-index: 100; display: none; align-items: center; justify-content: center; }
+#qcm-overlay.open { display: flex; }
+#qcm-modal { width: min(680px, 92vw); max-height: 88vh; overflow-y: auto; background: var(--panel); border: 1px solid var(--panel-border); border-radius: 12px; padding: 22px 26px; box-shadow: 0 18px 60px rgba(0,0,0,.55); }
+#qcm-modal h3 { color: var(--gold); margin-bottom: 4px; font-size: 17px; }
+#qcm-modal .qcm-sub { color: var(--muted); font-size: 12px; margin-bottom: 14px; }
+.qcm-revise { background: #0d1117; border: 1px solid var(--panel-border); border-radius: 8px; padding: 10px 14px; font-size: 12.5px; color: var(--muted); white-space: pre-wrap; margin: 10px 0 16px 0; max-height: 200px; overflow-y: auto; }
+.qcm-q { margin-bottom: 16px; }
+.qcm-q .qtxt { font-weight: 700; margin-bottom: 8px; font-size: 14px; }
+.qcm-opt { display: block; padding: 8px 12px; border: 1px solid var(--panel-border); border-radius: 8px; margin-bottom: 6px; cursor: pointer; font-size: 13px; }
+.qcm-opt:hover { border-color: var(--gold); }
+.qcm-opt.sel { border-color: var(--gold); background: #161b22; }
+.qcm-opt.ok { border-color: #3fb950; background: rgba(63,185,80,.12); }
+.qcm-opt.ko { border-color: #f85149; background: rgba(248,81,73,.10); }
+.qcm-res { margin: 14px 0; padding: 12px 16px; border-radius: 8px; font-weight: 700; }
+.qcm-res.ok { background: rgba(63,185,80,.15); color: #3fb950; }
+.qcm-res.ko { background: rgba(248,81,73,.12); color: #f85149; }
+.qcm-actions { display: flex; gap: 10px; justify-content: flex-end; margin-top: 16px; }
+.badge-item { display: flex; align-items: center; gap: 10px; padding: 8px 12px; border: 1px solid var(--panel-border); border-radius: 8px; margin-bottom: 6px; font-size: 13px; }
+.badge-item.locked { opacity: .45; filter: grayscale(1); }
+  textarea { resize: vertical; min-height: 220px; line-height: 1.45; }
+  #editor-form { flex: 1; min-height: 0; }
+  #editor-form > div:last-of-type { margin-top: auto; }
+  .desc-field { flex: 1; display: flex; flex-direction: column; min-height: 0; }
+  .desc-field textarea { flex: 1; min-height: 220px; }
+  .row { display: flex; gap: 8px; }
+  .hint {
+    position: absolute; bottom: 12px; left: 12px; background: rgba(22,27,34,0.92);
+    border: 1px solid var(--panel-border); padding: 7px 12px; border-radius: 6px;
+    font-size: 11.5px; color: var(--muted); pointer-events: none; z-index: 15;
+  }
+  .stats-bar {
+    font-size: 12.5px; background: #0d1117; padding: 4px 10px; border-radius: 6px; border: 1px solid var(--panel-border);
+  }
+  .stats-bar strong { color: var(--gold); }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="brand">⚔️ MÉTHODOLOGIE PHILOSOPHIE — TERMINALE (45 COMPÉTENCES · V5)</div>
+  <div class="stats-bar">
+    Mode : <strong id="mode-label">Édition</strong> • Acquis : <strong id="unlocked-count">0 / 27</strong> • XP : <strong id="xp-count">0</strong>
+  </div>
+  <div class="toolbar-group">
+    <button id="btn-mode" onclick="toggleMode()">🎮 Mode Joueur</button>
+    <button onclick="addNewNode()">➕ Ajouter</button>
+    <button id="btn-link" onclick="toggleLinkMode()">🔗 Relier</button>
+    <button onclick="toggleFullscreen()">⛶ Plein écran</button>
+    <button onclick="showBadges()">🏅 Badges & XP</button> <button onclick="showQCMSync()">✅ QCM des séances</button>
+    <button onclick="autoLayout()">📐 Aligner</button>
+    <button onclick="exportJSON()">💾 Exporter JSON</button>
+    <button onclick="document.getElementById('import-file').click()">📂 Importer</button>
+    <input type="file" id="import-file" accept=".json" style="display:none" onchange="importJSON(event)">
+    <button class="danger" onclick="resetDefault()">↺ Reset</button>
+  </div>
+</header>
+
+<div class="workspace">
+  <div id="canvas-container">
+    <div id="world">
+      <div id="headers-layer"></div>
+      <svg id="edges"></svg>
+      <div id="nodes-layer"></div>
+    </div>
+    <div class="hint" id="hint-text">
+      💡 Glissez les cartes pour déplacer • Cliquez pour éditer à droite • Molette pour zoomer • Glissez le fond pour naviguer • Cliquez sur un trait pour le supprimer.
+    </div>
+  </div>
+
+  <aside id="inspector">
+    <h2>Détail & Édition du Nœud</h2>
+    <div id="no-selection" style="color: var(--muted); font-size: 13px; line-height: 1.5;">
+      Cliquez sur une compétence de l'arbre pour afficher et modifier son contenu intégral.
+    </div>
+    <div id="editor-form" style="display:none; flex-direction: column; gap: 12px;">
+      <div>
+        <label>Titre de la compétence</label>
+        <input type="text" id="edit-title" oninput="updateSelected()">
+      </div>
+      <div class="row">
+        <div style="flex:1">
+          <label>Domaine (1 à 6)</label>
+          <select id="edit-cat" class="field" onchange="updateSelected()">
+            <option value="d1">1. Cahier & Prise de notes</option>
+            <option value="d2">2. Révisions & Carte mentale</option>
+            <option value="d3">3. Temps & Brouillon (3 feuilles)</option>
+            <option value="d4">4. Perspectives & Problématique</option>
+            <option value="d5">5. Argumentation, Plan & Exemples</option>
+            <option value="d6">6. Explication & Autonomie</option>
+          </select>
+        </div>
+        <div style="width:80px">
+          <label>Icône</label>
+          <input type="text" id="edit-icon" oninput="updateSelected()" style="text-align:center;">
+        </div>
+      </div>
+      <div class="desc-field">
+        <label>Principes & Consignes du cours</label>
+        <textarea id="edit-desc" oninput="updateSelected()"></textarea>
+      </div>
+      <div>
+        <button id="btn-toggle-unlock" onclick="toggleUnlockSelected()" style="width:100%"></button>
+      </div>
+      <div id="seances-box" style="margin-top:6px; border-top:1px solid var(--panel-border); padding-top:10px;">
+        <label>Séances où cette compétence a été travaillée</label>
+        <div id="seances-list" style="font-size:12px; color:var(--muted); line-height:1.7;"></div>
+      </div>
+      <div id="resources-box" style="margin-top:6px; border-top:1px solid var(--panel-border); padding-top:10px;">
+        <label>Ressources associées (fiches, corrigés, vidéos)</label>
+        <div id="resources-list" style="font-size:12px; color:var(--muted); line-height:1.7;"></div>
+      </div>
+      <div style="margin-top:6px; border-top:1px solid var(--panel-border); padding-top:10px;">
+        <button class="danger" onclick="deleteSelected()" style="width:100%">🗑️ Supprimer ce nœud</button>
+      </div>
+    </div>
+  </aside>
+</div>
+
+
+<div id="qcm-overlay" onclick="if(event.target===this)closeQCM()">
+  <div id="qcm-modal"></div>
+</div>
+
+<script>
+/* Bac à sable : localStorage peut être bloqué (iframe srcDoc). Shim mémoire alors. */
+try { localStorage.getItem("__t"); } catch (e) {
+  const mem = {
+    _d: {},
+    getItem(k) { return k in this._d ? this._d[k] : null; },
+    setItem(k, v) { this._d[k] = String(v); },
+    removeItem(k) { delete this._d[k]; },
+    key(i) { return Object.keys(this._d)[i] || null; },
+    get length() { return Object.keys(this._d).length; }
+  };
+  Object.defineProperty(window, "localStorage", { configurable: true, get() { return mem; } });
+}
+const DOMAINS = {
+  d1: { label: "1. Cahier & Notes", color: "#3fb950", x: 60 },
+  d2: { label: "2. Révisions & Carte", color: "#2ea043", x: 360 },
+  d3: { label: "3. Temps & Brouillon", color: "#58a6ff", x: 660 },
+  d4: { label: "4. Problématisation", color: "#a371f7", x: 960 },
+  d5: { label: "5. Plan & Exemples", color: "#d29922", x: 1260 },
+  d6: { label: "6. Texte & Autonomie", color: "#ff7b72", x: 1560 }
+};
+
+const DEFAULT_DATA = {
+  "nodes": [
+    {
+      "id": "1.1",
+      "cat": "d1",
+      "x": 60,
+      "y": 80,
+      "icon": "📓",
+      "title": "Statut du cahier",
+      "unlocked": true,
+      "desc": "Le cahier est un simple outil d'apprentissage et non une fin en soi ; le but ultime reste la qualité de la réflexion sur la copie d'examen.",
+      "seances": [
+        {
+          "d": "2026-09-07",
+          "dfr": "7 sept",
+          "cl": [
+            "TG02",
+            "TG05",
+            "TG09"
+          ],
+          "ti": "L'enseignement de la philosophie en classe de terminale"
+        }
+      ]
+    },
+    {
+      "id": "1.2",
+      "cat": "d1",
+      "x": 60,
+      "y": 245,
+      "icon": "🚫",
+      "title": "Surlignage interdit en classe",
+      "unlocked": true,
+      "desc": "En classe, ne pas perdre de temps à surligner les idées importantes. Réserver la mise en valeur visuelle au travail d'apprentissage et de révision à la maison.",
+      "seances": [
+        {
+          "d": "2026-09-07",
+          "dfr": "7 sept",
+          "cl": [
+            "TG02",
+            "TG05",
+            "TG09"
+          ],
+          "ti": "L'enseignement de la philosophie en classe de terminale"
+        }
+      ]
+    },
+    {
+      "id": "1.3",
+      "cat": "d1",
+      "x": 60,
+      "y": 410,
+      "icon": "📋",
+      "title": "Contenu attendu du cahier",
+      "unlocked": true,
+      "desc": "Noter obligatoirement tout ce qui est écrit au tableau (minimum obligatoire), complété par les remarques orales, les questions posées, les éclaircissements apportés en classe, les exercices d'application et les recherches personnelles.",
+      "seances": [
+        {
+          "d": "2026-09-07",
+          "dfr": "7 sept",
+          "cl": [
+            "TG02",
+            "TG05",
+            "TG09"
+          ],
+          "ti": "L'enseignement de la philosophie en classe de terminale"
+        }
+      ]
+    },
+    {
+      "id": "1.4",
+      "cat": "d1",
+      "x": 60,
+      "y": 575,
+      "icon": "✍️",
+      "title": "Prise de notes en 3 étapes",
+      "unlocked": true,
+      "desc": "Ne pas transcrire mécaniquement les paroles de l'enseignant :\n1. Écouter : attendre l'explication complète d'une idée pour en saisir la portée globale.\n2. Questionner : s'interroger sur ce qui est compris ou non et poser des questions précises en classe.\n3. Écrire : rédiger de manière synthétique et rapide ce qui a été compris, en utilisant des abréviations.",
+      "seances": [
+        {
+          "d": "2026-09-07",
+          "dfr": "7 sept",
+          "cl": [
+            "TG02",
+            "TG05",
+            "TG09"
+          ],
+          "ti": "L'enseignement de la philosophie en classe de terminale"
+        }
+      ]
+    },
+    {
+      "id": "1.5",
+      "cat": "d1",
+      "x": 60,
+      "y": 740,
+      "icon": "🔢",
+      "title": "Numéroter les pages du cahier",
+      "unlocked": false,
+      "desc": "Numéroter les pages du cahier lors des révisions : les fiches de citation renvoient au numéro de la page du cahier où la citation est expliquée dans son contexte.",
+      "seances": [
+        {
+          "d": "2026-11-16",
+          "dfr": "16 nov",
+          "cl": [
+            "TG02",
+            "TG09",
+            "TG05"
+          ],
+          "ti": "Méthode : la fonction de l'exemple dans une argumentation"
+        }
+      ]
+    },
+    {
+      "id": "2.1",
+      "cat": "d2",
+      "x": 350,
+      "y": 80,
+      "icon": "⏱️",
+      "title": "Régularité de l'apprentissage",
+      "unlocked": false,
+      "desc": "L'assimilation du cours doit être régulière sans attendre la fin du chapitre, afin de s'appuyer sur le souvenir frais de ce qui a été compris en classe.",
+      "seances": [
+        {
+          "d": "2026-09-07",
+          "dfr": "7 sept",
+          "cl": [
+            "TG02",
+            "TG05",
+            "TG09"
+          ],
+          "ti": "L'enseignement de la philosophie en classe de terminale"
+        }
+      ]
+    },
+    {
+      "id": "2.2",
+      "cat": "d2",
+      "x": 350,
+      "y": 245,
+      "icon": "🎯",
+      "title": "Les 3 éléments à réviser",
+      "unlocked": false,
+      "desc": "Travailler régulièrement :\n- Les connaissances (savoirs) : définitions des concepts et repères, thèses, citations courtes d'auteurs (1 à 2 lignes).\n- Les méthodes (savoir-faire) : prise de notes, problématique, carte mentale, argumentation.\n- Les questions directrices : problèmes clés abordés en cours.",
+      "seances": [
+        {
+          "d": "2026-09-07",
+          "dfr": "7 sept",
+          "cl": [
+            "TG02",
+            "TG05",
+            "TG09"
+          ],
+          "ti": "L'enseignement de la philosophie en classe de terminale"
+        }
+      ]
+    },
+    {
+      "id": "2.3",
+      "cat": "d2",
+      "x": 350,
+      "y": 410,
+      "icon": "🧠",
+      "title": "Carte mentale heuristique",
+      "unlocked": false,
+      "desc": "• Tracer d'abord une mini-carte rapide de mémoire avant de relire le cours.\n• Ne pas répliquer linéairement le texte ni passer par le surlignage : regrouper par grands axes logiques (ex. Définitions, Problèmes, Auteurs) comme on classe une liste de courses par rayons.\n• Traits pleins = rapports directs du document ; traits en pointillés = liens indirects et idées nouvelles.\n• Améliorer ensuite la carte en révisant et noter des questions à poser.",
+      "seances": [
+        {
+          "d": "2026-09-14",
+          "dfr": "14 sept",
+          "cl": [
+            "TG02",
+            "TG05",
+            "TG09"
+          ],
+          "ti": "Carte mentale du doc. sur la perspective \"existence humaine et culture\""
+        },
+        {
+          "d": "2026-09-15",
+          "dfr": "15 sept",
+          "cl": [
+            "TG02",
+            "TG05",
+            "TG09"
+          ],
+          "ti": "Recherche de définition de IDEAL (nom masculin)"
+        }
+      ]
+    },
+    {
+      "id": "2.4",
+      "cat": "d2",
+      "x": 350,
+      "y": 575,
+      "icon": "📖",
+      "title": "Recherche lexicale (CNRTL)",
+      "unlocked": false,
+      "desc": "Chercher la définition des concepts sur CNRTL.fr sans jamais la recopier machinalement : repérer et extraire les termes essentiels qui définissent le concept (ex. pour 'idéal' : perfection, finalité, norme pour la pensée et l'action).",
+      "seances": [
+        {
+          "d": "2026-09-15",
+          "dfr": "15 sept",
+          "cl": [
+            "TG02",
+            "TG05",
+            "TG09"
+          ],
+          "ti": "Recherche de définition de IDEAL (nom masculin)"
+        }
+      ]
+    },
+    {
+      "id": "2.5",
+      "cat": "d2",
+      "x": 350,
+      "y": 740,
+      "icon": "📝",
+      "title": "Retravailler les annotations de copies",
+      "unlocked": false,
+      "desc": "Coller les appréciations dans le cahier et les retravailler chez soi (erreurs graves de français, grammaire, orthographe, syntaxe, idées ou exemples à approfondir, présentation). Toute erreur répétée lors des devoirs suivants est pénalisée.",
+      "seances": [
+        {
+          "d": "2026-09-17",
+          "dfr": "17 sept",
+          "cl": [
+            "TG02",
+            "TG05"
+          ],
+          "ti": "Problématique du sujet “Peut-on être heureux quand les autres ne le sont pas ?”"
+        },
+        {
+          "d": "2026-09-18",
+          "dfr": "18 sept",
+          "cl": [
+            "TG09"
+          ],
+          "ti": "Remarques sur les appréciations des copies"
+        }
+      ]
+    },
+    {
+      "id": "2.6",
+      "cat": "d2",
+      "x": 350,
+      "y": 905,
+      "icon": "🗂️",
+      "title": "Fiche de citation",
+      "unlocked": false,
+      "desc": "Pour les citations à connaître pour le baccalauréat : recto, la citation seule (sans l'auteur) ; verso, l'auteur et une explication très résumée (2-3 phrases maximum), avec le numéro de la page du cahier où la citation est expliquée dans son contexte.\n\nLa fiche doit demander un effort de mémoire : on cherche de mémoire, on ne relit pas machinalement.",
+      "seances": [
+        {
+          "d": "2026-11-16",
+          "dfr": "16 nov",
+          "cl": [
+            "TG02",
+            "TG09",
+            "TG05"
+          ],
+          "ti": "Méthode : la fonction de l'exemple dans une argumentation"
+        }
+      ]
+    },
+    {
+      "id": "3.1",
+      "cat": "d3",
+      "x": 640,
+      "y": 80,
+      "icon": "⌛",
+      "title": "Gestion des 4 heures d'épreuve",
+      "unlocked": false,
+      "desc": "Consacrer 2h à 2h30 à la préparation au brouillon, et conserver au moins 1h30 exclusivement pour la rédaction de la copie.",
+      "seances": [
+        {
+          "d": "2026-09-10",
+          "dfr": "10 sept",
+          "cl": [
+            "TG02",
+            "TG05"
+          ],
+          "ti": "Correction de la question de réflexion"
+        },
+        {
+          "d": "2026-09-11",
+          "dfr": "11 sept",
+          "cl": [
+            "TG09"
+          ],
+          "ti": "Correction de la question de réflexion"
+        }
+      ]
+    },
+    {
+      "id": "3.2",
+      "cat": "d3",
+      "x": 640,
+      "y": 245,
+      "icon": "🚧",
+      "title": "Séparer réflexion et rédaction",
+      "unlocked": false,
+      "desc": "À la fin de la préparation, ne plus réfléchir au sujet, au plan ou aux transitions : le temps de rédaction sert uniquement à écrire clairement en soignant l'orthographe, la syntaxe et le choix exact des mots.",
+      "seances": [
+        {
+          "d": "2026-09-10",
+          "dfr": "10 sept",
+          "cl": [
+            "TG02",
+            "TG05"
+          ],
+          "ti": "Correction de la question de réflexion"
+        },
+        {
+          "d": "2026-09-11",
+          "dfr": "11 sept",
+          "cl": [
+            "TG09"
+          ],
+          "ti": "Correction de la question de réflexion"
+        }
+      ]
+    },
+    {
+      "id": "3.3",
+      "cat": "d3",
+      "x": 640,
+      "y": 410,
+      "icon": "🤫",
+      "title": "Décantation silencieuse (5-10 min)",
+      "unlocked": false,
+      "desc": "Au début de l'épreuve, consacrer 5 à 10 minutes à lire attentivement les trois sujets (ou lire le texte au moins 3 fois) sans rien rédiger, en ménageant des temps de décantation. Une fois le sujet choisi, ne plus faire marche arrière.",
+      "seances": [
+        {
+          "d": "2026-09-10",
+          "dfr": "10 sept",
+          "cl": [
+            "TG02",
+            "TG05"
+          ],
+          "ti": "Correction de la question de réflexion"
+        },
+        {
+          "d": "2026-09-11",
+          "dfr": "11 sept",
+          "cl": [
+            "TG09"
+          ],
+          "ti": "Correction de la question de réflexion"
+        }
+      ]
+    },
+    {
+      "id": "3.4",
+      "cat": "d3",
+      "x": 640,
+      "y": 575,
+      "icon": "📄",
+      "title": "Brouillon Feuille 1 : Idées en vrac",
+      "unlocked": false,
+      "desc": "Le désordre fécond : noter au kilomètre toutes les idées, intuitions, exemples, souvenirs de cours et citations qui viennent à l'esprit, sans censure, sans souci de style ni de linéarité.",
+      "seances": [
+        {
+          "d": "2026-09-03",
+          "dfr": "3 sept",
+          "cl": [
+            "TG02",
+            "TG05",
+            "TG09"
+          ],
+          "ti": "Peut-on être heureux quand les autres ne le sont pas?"
+        },
+        {
+          "d": "2026-09-10",
+          "dfr": "10 sept",
+          "cl": [
+            "TG02",
+            "TG05"
+          ],
+          "ti": "Correction de la question de réflexion"
+        },
+        {
+          "d": "2026-09-11",
+          "dfr": "11 sept",
+          "cl": [
+            "TG09"
+          ],
+          "ti": "Correction de la question de réflexion"
+        },
+        {
+          "d": "2026-09-17",
+          "dfr": "17 sept",
+          "cl": [
+            "TG02",
+            "TG05"
+          ],
+          "ti": "Problématique du sujet “Peut-on être heureux quand les autres ne le sont pas ?”"
+        },
+        {
+          "d": "2026-09-18",
+          "dfr": "18 sept",
+          "cl": [
+            "TG09"
+          ],
+          "ti": "Remarques sur les appréciations des copies"
+        }
+      ]
+    },
+    {
+      "id": "3.5",
+      "cat": "d3",
+      "x": 640,
+      "y": 740,
+      "icon": "🗂️",
+      "title": "Brouillon Feuille 2 : Tri & 3 couleurs",
+      "unlocked": false,
+      "desc": "Rapprocher les idées convergentes, isoler les oppositions, regrouper par paquets sous un titre résumé (grandes thèses) et hiérarchiser l'ordre logique (numérotation, flèches, carte mentale). Limiter à 3 codes couleurs maximum (exemples, concepts, connecteurs logiques).",
+      "seances": [
+        {
+          "d": "2026-09-10",
+          "dfr": "10 sept",
+          "cl": [
+            "TG02",
+            "TG05"
+          ],
+          "ti": "Correction de la question de réflexion"
+        },
+        {
+          "d": "2026-09-11",
+          "dfr": "11 sept",
+          "cl": [
+            "TG09"
+          ],
+          "ti": "Correction de la question de réflexion"
+        }
+      ]
+    },
+    {
+      "id": "3.6",
+      "cat": "d3",
+      "x": 640,
+      "y": 905,
+      "icon": "🏗️",
+      "title": "Brouillon Feuille 3 : Plan & transitions",
+      "unlocked": false,
+      "desc": "Établir l'architecture définitive des parties et sous-parties, rédiger chaque titre sous forme d'une phrase affirmative complète, et noter les phrases de transition et amorces d'analyse (sans rédiger tout le devoir au brouillon).",
+      "seances": [
+        {
+          "d": "2026-09-10",
+          "dfr": "10 sept",
+          "cl": [
+            "TG02",
+            "TG05"
+          ],
+          "ti": "Correction de la question de réflexion"
+        },
+        {
+          "d": "2026-09-11",
+          "dfr": "11 sept",
+          "cl": [
+            "TG09"
+          ],
+          "ti": "Correction de la question de réflexion"
+        },
+        {
+          "d": "2026-09-17",
+          "dfr": "17 sept",
+          "cl": [
+            "TG02",
+            "TG05"
+          ],
+          "ti": "Problématique du sujet “Peut-on être heureux quand les autres ne le sont pas ?”"
+        },
+        {
+          "d": "2026-09-18",
+          "dfr": "18 sept",
+          "cl": [
+            "TG09"
+          ],
+          "ti": "Remarques sur les appréciations des copies"
+        }
+      ]
+    },
+    {
+      "id": "4.1",
+      "cat": "d4",
+      "x": 930,
+      "y": 80,
+      "icon": "❓",
+      "title": "Question philosophique vs technique",
+      "unlocked": false,
+      "desc": "Distinguer les questions qui ne posent pas problème (réponse unique par calcul, fait établi ou algorithme) des questions philosophiques qui font débat et admettent plusieurs thèses recevables dès lors qu'elles sont argumentées.",
+      "seances": [
+        {
+          "d": "2026-09-08",
+          "dfr": "8 sept",
+          "cl": [
+            "TG02",
+            "TG05",
+            "TG09"
+          ],
+          "ti": "Un programme de perspectives"
+        }
+      ]
+    },
+    {
+      "id": "4.2",
+      "cat": "d4",
+      "x": 930,
+      "y": 245,
+      "icon": "🧭",
+      "title": "Mobiliser les 3 perspectives",
+      "unlocked": false,
+      "desc": "Identifier dans quelle perspective principale se pose le sujet (Existence humaine et culture, Morale et politique, ou Connaissance) et repérer s'il déborde sur une seconde perspective pour faire émerger d'autres réponses.",
+      "seances": [
+        {
+          "d": "2026-09-08",
+          "dfr": "8 sept",
+          "cl": [
+            "TG02",
+            "TG05",
+            "TG09"
+          ],
+          "ti": "Un programme de perspectives"
+        }
+      ]
+    },
+    {
+      "id": "4.3",
+      "cat": "d4",
+      "x": 930,
+      "y": 410,
+      "icon": "🧩",
+      "title": "Distinguer question et problème",
+      "unlocked": false,
+      "desc": "La question est l'énoncé de départ ; le problème (la problématique) n'est ni une reformulation du sujet ni une liste de petites questions, mais un raisonnement rédigé d'environ une demi-page dans l'introduction.\n\nRappel (2 nov.) : les principes de méthode ne sont pas des recettes à appliquer aveuglément ; ils supposent d'abord une réflexion personnelle sur le sujet. La problématique n'est pas encore maîtrisée : s'entraîner à la construire sur chaque sujet.",
+      "seances": [
+        {
+          "d": "2026-09-15",
+          "dfr": "15 sept",
+          "cl": [
+            "TG05"
+          ],
+          "ti": "fin du la leçon sur la perspective \"existence humaine et culture\""
+        },
+        {
+          "d": "2026-11-02",
+          "dfr": "2 nov",
+          "cl": [
+            "TG02",
+            "TG09"
+          ],
+          "ti": "Rappel de la méthode de la problématique"
+        }
+      ]
+    },
+    {
+      "id": "4.4",
+      "cat": "d4",
+      "x": 930,
+      "y": 575,
+      "icon": "⚡",
+      "title": "Construire la problématique (3 étapes)",
+      "unlocked": false,
+      "desc": "1. Analyser les termes du sujet — mais seulement ceux qui font problème (ex. dans « Peut-on être heureux quand les autres ne le sont pas ? », c'est « quand les autres ne le sont pas »). Distinguer plusieurs sens du terme, recourir au dictionnaire, et repérer le présupposé du sujet pour dégager la contradiction interne.\n2. Expliciter ce dilemme en un paragraphe rédigé exposant deux thèses opposées mais valables.\n3. Illustrer le problème par un exemple concret analysé.",
+      "seances": [
+        {
+          "d": "2026-09-15",
+          "dfr": "15 sept",
+          "cl": [
+            "TG05"
+          ],
+          "ti": "fin du la leçon sur la perspective \"existence humaine et culture\""
+        },
+        {
+          "d": "2026-09-17",
+          "dfr": "17 sept",
+          "cl": [
+            "TG02",
+            "TG05"
+          ],
+          "ti": "Problématique du sujet “Peut-on être heureux quand les autres ne le sont pas ?”"
+        },
+        {
+          "d": "2026-09-18",
+          "dfr": "18 sept",
+          "cl": [
+            "TG09"
+          ],
+          "ti": "Remarques sur les appréciations des copies"
+        },
+        {
+          "d": "2026-11-02",
+          "dfr": "2 nov",
+          "cl": [
+            "TG02",
+            "TG09"
+          ],
+          "ti": "Rappel de la méthode de la problématique"
+        }
+      ]
+    },
+    {
+      "id": "4.5",
+      "cat": "d4",
+      "x": 930,
+      "y": 740,
+      "icon": "🔎",
+      "title": "Interroger le présupposé de la question",
+      "unlocked": false,
+      "desc": "Toute question de sujet présuppose quelque chose (ex. dans « Peut-on être libre sans avoir le choix ? » : le choix serait la condition de la liberté — plus de choix, plus de liberté). C'est ce présupposé qu'il faut repérer puis remettre en cause : il incarne souvent l'opinion commune que la réflexion doit dépasser.",
+      "seances": [
+        {
+          "d": "2026-11-02",
+          "dfr": "2 nov",
+          "cl": [
+            "TG02",
+            "TG05",
+            "TG09"
+          ],
+          "ti": "Rappel de la méthode de la problématique"
+        }
+      ]
+    },
+    {
+      "id": "5.1",
+      "cat": "d5",
+      "x": 1220,
+      "y": 80,
+      "icon": "⚖️",
+      "title": "Distinguer Idée, Thèse et Argument",
+      "unlocked": false,
+      "desc": "• Idée : matière brute, intuition ou exemple surgissant au brouillon.\n• Thèse : affirmation ferme constituant une réponse possible au sujet à démontrer (3 à 5 thèses par devoir) ; ce n'est pas un avis personnel (on doit pouvoir défendre une thèse contraire à son opinion).\n• Argument : raison logique qui prouve la validité d'une thèse.",
+      "seances": [
+        {
+          "d": "2026-09-21",
+          "dfr": "21 sept",
+          "cl": [
+            "TG09"
+          ],
+          "ti": "Différence entre thèse, exemple, référence"
+        }
+      ]
+    },
+    {
+      "id": "5.2",
+      "cat": "d5",
+      "x": 1220,
+      "y": 245,
+      "icon": "🚫",
+      "title": "Bannir les plans binaires (Oui / Non)",
+      "unlocked": false,
+      "desc": "Éviter les plans mécaniques 'thèse / antithèse' ou 'avantages / inconvénients' qui juxtaposent les contraires ; préférer l'examen sous conditions ('oui, mais selon quelles limites...', 'non, sauf si...').",
+      "seances": [
+        {
+          "d": "2026-09-10",
+          "dfr": "10 sept",
+          "cl": [
+            "TG02",
+            "TG05"
+          ],
+          "ti": "Correction de la question de réflexion"
+        },
+        {
+          "d": "2026-09-11",
+          "dfr": "11 sept",
+          "cl": [
+            "TG09"
+          ],
+          "ti": "Correction de la question de réflexion"
+        }
+      ]
+    },
+    {
+      "id": "5.3",
+      "cat": "d5",
+      "x": 1220,
+      "y": 410,
+      "icon": "♟️",
+      "title": "Hiérarchiser selon la règle des échecs",
+      "unlocked": false,
+      "desc": "Ouvrir le devoir par la thèse la plus simple, la plus facile à comprendre et à expliquer — donc la plus convaincante (le premier coup aux échecs) —, progresser vers les objections morales ou critiques, puis s'élever vers l'approfondissement le plus large (souvent politique).\n\nRappel (24-25 sept.) : l'ordre des thèses n'est pas mécanique ; il doit être rigoureusement réfléchi pour convaincre le lecteur.",
+      "seances": [
+        {
+          "d": "2026-09-17",
+          "dfr": "17 sept",
+          "cl": [
+            "TG02",
+            "TG05"
+          ],
+          "ti": "Problématique du sujet “Peut-on être heureux quand les autres ne le sont pas ?”"
+        },
+        {
+          "d": "2026-09-18",
+          "dfr": "18 sept",
+          "cl": [
+            "TG09"
+          ],
+          "ti": "Remarques sur les appréciations des copies"
+        }
+      ]
+    },
+    {
+      "id": "5.4",
+      "cat": "d5",
+      "x": 1220,
+      "y": 575,
+      "icon": "💬",
+      "title": "Titres complets & Annonce de plan",
+      "unlocked": false,
+      "desc": "• Rédiger chaque titre de grande partie au brouillon sous forme de phrase affirmative complète (sujet + verbe + complément) comme auto-test de clarté.\n• Bannir les annonces de plan creuses ('nous verrons des arguments...') : résumer l'idée directrice réelle de chaque étape.",
+      "seances": [
+        {
+          "d": "2026-09-10",
+          "dfr": "10 sept",
+          "cl": [
+            "TG02",
+            "TG05"
+          ],
+          "ti": "Correction de la question de réflexion"
+        },
+        {
+          "d": "2026-09-11",
+          "dfr": "11 sept",
+          "cl": [
+            "TG09"
+          ],
+          "ti": "Correction de la question de réflexion"
+        },
+        {
+          "d": "2026-09-17",
+          "dfr": "17 sept",
+          "cl": [
+            "TG02",
+            "TG05"
+          ],
+          "ti": "Problématique du sujet “Peut-on être heureux quand les autres ne le sont pas ?”"
+        },
+        {
+          "d": "2026-09-18",
+          "dfr": "18 sept",
+          "cl": [
+            "TG09"
+          ],
+          "ti": "Remarques sur les appréciations des copies"
+        },
+        {
+          "d": "2026-09-25",
+          "dfr": "25 sept",
+          "cl": [
+            "TG09"
+          ],
+          "ti": "Point de méthode : rédiger les titres du plan détaillé"
+        }
+      ]
+    },
+    {
+      "id": "5.5",
+      "cat": "d5",
+      "x": 1220,
+      "y": 740,
+      "icon": "🏛️",
+      "title": "Exploiter judicieusement les exemples",
+      "unlocked": false,
+      "desc": "• Statut : un exemple illustre une idée générale par un cas singulier concret ; il n'est ni une affirmation générale ni une preuve suffisante à lui seul. Attention : une affirmation n'est pas un exemple (ex. « la naissance doit être déclarée en mairie » illustre que l'homme est l'animal qui respecte des lois ; « l'homme respecte des lois » est une affirmation).\n• Choix : éviter les exemples enfantins du quotidien ; privilégier littérature, histoire, sciences ou droit.\n• Développement : consacrer un paragraphe entier (présentation de la situation + analyse précise de ce qu'elle prouve).\n• Rappel : seule une raison (un argument) a valeur de preuve ; l'exemple illustre, il ne prouve pas (2 nov.).",
+      "seances": [
+        {
+          "d": "2026-09-21",
+          "dfr": "21 sept",
+          "cl": [
+            "TG09"
+          ],
+          "ti": "Différence entre thèse, exemple, référence"
+        },
+        {
+          "d": "2026-09-25",
+          "dfr": "25 sept",
+          "cl": [
+            "TG09"
+          ],
+          "ti": "Point de méthode : rédiger les titres du plan détaillé"
+        },
+        {
+          "d": "2026-11-16",
+          "dfr": "16 nov",
+          "cl": [
+            "TG02",
+            "TG09"
+          ],
+          "ti": "Méthode : la fonction de l'exemple dans une argumentation"
+        }
+      ]
+    },
+    {
+      "id": "5.6",
+      "cat": "d5",
+      "x": 1220,
+      "y": 905,
+      "icon": "✒️",
+      "title": "Rigueur lexicale & Alinéas",
+      "unlocked": false,
+      "desc": "Employer les termes dans leur sens philosophique exact (distinguer 'la morale' et 'le moral', 'absolu' et 'relatif') et matérialiser chaque paragraphe par un alinéa.",
+      "seances": [
+        {
+          "d": "2026-09-15",
+          "dfr": "15 sept",
+          "cl": [
+            "TG02",
+            "TG05"
+          ],
+          "ti": "Recherche de définition de IDEAL (nom masculin)"
+        }
+      ]
+    },
+    {
+      "id": "5.7",
+      "cat": "d5",
+      "x": 1220,
+      "y": 1070,
+      "icon": "🎭",
+      "title": "Les deux usages de l'exemple",
+      "unlocked": false,
+      "desc": "Deux manières de traiter un exemple, en explication de texte comme en dissertation :\n1. L'exemple vient APRÈS un argument pour l'illustrer et le rendre plus convaincant (l'auteur donne d'abord ses raisons qui s'enchaînent logiquement).\n2. L'argumentation est CONSTRUITE SUR un exemple (ex. la fausse promesse chez Kant, la crise d'adolescence chez Sartre) : l'exemple occupe plusieurs lignes et chaque point de l'argumentation s'y ramène ; il est développé puis analysé.\n\nDissertation et explication sont deux exercices complémentaires : ce qui vaut pour l'un vaut pour l'autre.",
+      "seances": [
+        {
+          "d": "2026-11-16",
+          "dfr": "16 nov",
+          "cl": [
+            "TG02",
+            "TG09"
+          ],
+          "ti": "Méthode : la fonction de l'exemple dans une argumentation"
+        }
+      ]
+    },
+    {
+      "id": "6.1",
+      "cat": "d6",
+      "x": 1510,
+      "y": 200,
+      "icon": "🔍",
+      "title": "Explication de texte rigoureuse",
+      "unlocked": false,
+      "desc": "Lire le texte au moins 3 fois avec décantation. Toute explication commence par la recherche de la thèse de l'auteur (affirmation principale, toujours discutable en philosophie), puis l'explication soi-même des arguments (raisons) et des exemples, sans paraphraser même si l'on n'est pas d'accord.\n\nHiérarchie de preuve (2 nov.) : seule une raison prouve ; l'exemple illustre la raison, il ne prouve pas. Montée d'un cran dans la difficulté avec les textes (Descartes, Marx, Kant).",
+      "seances": [
+        {
+          "d": "2026-09-10",
+          "dfr": "10 sept",
+          "cl": [
+            "TG02",
+            "TG05"
+          ],
+          "ti": "Correction de la question de réflexion"
+        },
+        {
+          "d": "2026-09-11",
+          "dfr": "11 sept",
+          "cl": [
+            "TG09"
+          ],
+          "ti": "Correction de la question de réflexion"
+        },
+        {
+          "d": "2026-11-02",
+          "dfr": "2 nov",
+          "cl": [
+            "TG02",
+            "TG09"
+          ],
+          "ti": "Rappel de la méthode de la problématique"
+        }
+      ]
+    },
+    {
+      "id": "6.2",
+      "cat": "d6",
+      "x": 1510,
+      "y": 420,
+      "icon": "🦉",
+      "title": "Penser par soi-même & Doute méthodique",
+      "unlocked": false,
+      "desc": "S'engager dans la démarche philosophique : ne pas suivre des modèles imposés ni l'opinion commune (doxa), suspendre ses préjugés par le doute méthodique et apprendre de ses erreurs rectifiées pour fonder son propre jugement.",
+      "seances": [
+        {
+          "d": "2026-09-07",
+          "dfr": "7 sept",
+          "cl": [
+            "TG02",
+            "TG05",
+            "TG09"
+          ],
+          "ti": "L'enseignement de la philosophie en classe de terminale"
+        }
+      ]
+    },
+    {
+      "id": "6.3",
+      "cat": "d6",
+      "x": 1510,
+      "y": 640,
+      "icon": "❝",
+      "title": "Citer le texte (conventions)",
+      "unlocked": false,
+      "desc": "Règles de la citation dans l'explication de texte :\n• Ne jamais se contenter d'un numéro de ligne : toujours citer les mots du texte.\n• Ouvrir et fermer les guillemets « » avec rigueur.\n• Raccourcir une phrase trop longue avec la convention [...], à condition de conserver son sens.\n\nLa citation exacte est la preuve du travail sur le texte ; une citation approximative décrédibilise l'explication.",
+      "seances": [
+        {
+          "d": "2026-11-03",
+          "dfr": "3 nov",
+          "cl": [
+            "TG02",
+            "TG05",
+            "TG09"
+          ],
+          "ti": "Méthode de l'explication de texte (Descartes, Lettres sur la liberté)"
+        }
+      ]
+    },
+    {
+      "id": "6.4",
+      "cat": "d6",
+      "x": 1510,
+      "y": 860,
+      "icon": "🪞",
+      "title": "Auto-évaluation méthodique",
+      "unlocked": false,
+      "desc": "Agir méthodiquement, c'est savoir ce que l'on fait et si ce que l'on fait est bien, sans demander aux autres. Chaque principe de méthode est un instrument d'auto-évaluation : si le titre du plan ne vient pas sous forme de phrase complète, les idées ne sont pas claires ; la méthode n'est pas une recette, mais la discipline d'un jugement qui se contrôle lui-même.",
+      "seances": [
+        {
+          "d": "2026-09-25",
+          "dfr": "25 sept",
+          "cl": [
+            "TG09"
+          ],
+          "ti": "Point de méthode : rédiger les titres du plan détaillé"
+        },
+        {
+          "d": "2026-11-02",
+          "dfr": "2 nov",
+          "cl": [
+            "TG02",
+            "TG05",
+            "TG09"
+          ],
+          "ti": "Rappel de la méthode de la problématique"
+        }
+      ]
+    },
+    {
+      "id": "4.6",
+      "cat": "d4",
+      "x": 930,
+      "y": 905,
+      "icon": "🚫",
+      "title": "Ne pas répondre avant de poser",
+      "unlocked": false,
+      "desc": "L'introduction ne doit pas contenir de réponse au sujet : on n'écrit pas « dans un premier temps, il est bien possible de tout connaître » avant d'avoir montré pourquoi la question pose problème. La réponse vient après la problématisation : commencer par la fin, c'est écrire un devoir sans problème, donc sans plan progressif.",
+      "seances": [],
+      "ressources": [
+        { "t": "doc", "ti": "TG5 - évaluation - limites de la connaissance (fiches du professeur)", "url": "https://docs.google.com/document/d/12Q85XnMPzbBmQ8eFTqiLO-70m-gY9laIQeDqxxTMu-g/edit" },
+        { "t": "doc", "ti": "Fiches d'évaluation TG5 - Peut-on tout connaître (21 copies, exemples réels)", "url": "https://docs.google.com/document/d/1WLp53dltxbB6usHzNdJ1klV_zQkhIj9w4gvsRWNbixw/edit" },
+        { "t": "doc", "ti": "Corrigé - problématiques (PDF)", "url": "https://drive.google.com/file/d/1f47xmMzDCDRAdQvar0BPTkhAtdLX6gNH/view" }
+      ]
+    },
+    {
+      "id": "4.7",
+      "cat": "d4",
+      "x": 930,
+      "y": 1070,
+      "icon": "🧭",
+      "title": "Le problème est dans la notion, pas dans les personnes",
+      "unlocked": false,
+      "desc": "Le problème d'un sujet ne vient jamais des différences entre les personnes (mémoire, goûts, culture) : il est dans la notion même que le sujet interroge. Situer la difficulté dans la psychologie d'un individu (une mémoire « plus petite et plus courte ») remplace le problème philosophique par une question de fait : même une humanité entière, avec des mémoires parfaites, se heurterait à la contradiction contenue dans la question. Le problème est objectif : il dépend de la complexité de la question, pas de la subjectivité de celui qui répond.",
+      "seances": [],
+      "ressources": [
+        { "t": "doc", "ti": "TG5 - évaluation - limites de la connaissance (fiches du professeur)", "url": "https://docs.google.com/document/d/12Q85XnMPzbBmQ8eFTqiLO-70m-gY9laIQeDqxxTMu-g/edit" },
+        { "t": "doc", "ti": "Fiches d'évaluation TG5 - Peut-on tout connaître (21 copies, exemples réels)", "url": "https://docs.google.com/document/d/1WLp53dltxbB6usHzNdJ1klV_zQkhIj9w4gvsRWNbixw/edit" },
+        { "t": "doc", "ti": "Corrigé - problématiques (PDF)", "url": "https://drive.google.com/file/d/1f47xmMzDCDRAdQvar0BPTkhAtdLX6gNH/view" }
+      ]
+    },
+    {
+      "id": "4.8",
+      "cat": "d4",
+      "x": 930,
+      "y": 1235,
+      "icon": "🔄",
+      "title": "Ne pas transformer le sujet en une autre question",
+      "unlocked": false,
+      "desc": "« On peut se demander si, durant sa seule vie, un homme peut connaître tous les domaines du savoir » n'est pas le sujet « Peut-on tout connaître ? » : le terme qui fait problème (« tout ») a disparu. Reformuler le sujet n'est utile que pour analyser un terme ; remplacer la question par une autre, c'est répondre à un autre sujet. Chaque terme du sujet doit se retrouver dans la problématique.",
+      "seances": [],
+      "ressources": [
+        { "t": "doc", "ti": "TG5 - évaluation - limites de la connaissance (fiches du professeur)", "url": "https://docs.google.com/document/d/12Q85XnMPzbBmQ8eFTqiLO-70m-gY9laIQeDqxxTMu-g/edit" },
+        { "t": "doc", "ti": "Fiches d'évaluation TG5 - Peut-on tout connaître (21 copies, exemples réels)", "url": "https://docs.google.com/document/d/1WLp53dltxbB6usHzNdJ1klV_zQkhIj9w4gvsRWNbixw/edit" },
+        { "t": "doc", "ti": "Corrigé - Peut-on tout connaître (PDF)", "url": "https://drive.google.com/file/d/1jL0ftr_pP_apSJux9SQxkvSth8TCQod6/view" },
+        { "t": "doc", "ti": "Corrigé - problématiques (PDF)", "url": "https://drive.google.com/file/d/1f47xmMzDCDRAdQvar0BPTkhAtdLX6gNH/view" }
+      ]
+    },
+    {
+      "id": "5.8",
+      "cat": "d5",
+      "x": 1220,
+      "y": 1235,
+      "icon": "📄",
+      "title": "Le paragraphe : idée, explication, exemple",
+      "unlocked": false,
+      "desc": "Le paragraphe est l'unité logique du devoir : un seul argument par paragraphe, ouvert par un alinéa, avec son explication et son exemple. On passe une ligne entre l'introduction et le développement, et entre chaque partie. Sans paragraphes, le correcteur ne peut pas repérer l'architecture de la réflexion : la copie devient une suite de phrases.",
+      "seances": [],
+      "ressources": [
+        { "t": "doc", "ti": "TG5 - évaluation - limites de la connaissance (fiches du professeur)", "url": "https://docs.google.com/document/d/12Q85XnMPzbBmQ8eFTqiLO-70m-gY9laIQeDqxxTMu-g/edit" },
+        { "t": "doc", "ti": "TG5 - Meilleure copie (PDF, modèle rédigé)", "url": "https://drive.google.com/file/d/1Xjw-IoJHsVA4PWlP_5tQiOu3N8ReFysH/view" },
+        { "t": "doc", "ti": "Corrigé - Peut-on tout connaître (PDF)", "url": "https://drive.google.com/file/d/1jL0ftr_pP_apSJux9SQxkvSth8TCQod6/view" }
+      ]
+    },
+    {
+      "id": "5.9",
+      "cat": "d5",
+      "x": 1220,
+      "y": 1400,
+      "icon": "📚",
+      "title": "Appuyer chaque argument sur une connaissance précise",
+      "unlocked": false,
+      "desc": "Une idée générale et vague (« l'école permet d'acquérir du savoir », « l'homme s'intéresse à ce qui le passionne ») n'est pas un argument philosophique. Chaque argument doit s'appuyer sur une connaissance précise du cours : une définition, un concept, un auteur, une distinction (ex. Platon : doxa / épistémè ; Kant : phénomène / noumène). Une partie sans connaissance du cours reste une vague opinion, et une idée « hors sujet » (les goûts personnels) ne répond jamais au problème posé.",
+      "seances": [],
+      "ressources": [
+        { "t": "doc", "ti": "TG5 - évaluation - limites de la connaissance (fiches du professeur)", "url": "https://docs.google.com/document/d/12Q85XnMPzbBmQ8eFTqiLO-70m-gY9laIQeDqxxTMu-g/edit" },
+        { "t": "doc", "ti": "Fiches d'évaluation TG5 - Peut-on tout connaître (21 copies, exemples réels)", "url": "https://docs.google.com/document/d/1WLp53dltxbB6usHzNdJ1klV_zQkhIj9w4gvsRWNbixw/edit" },
+        { "t": "doc", "ti": "Corrigé - Peut-on tout connaître (PDF)", "url": "https://drive.google.com/file/d/1jL0ftr_pP_apSJux9SQxkvSth8TCQod6/view" },
+        { "t": "doc", "ti": "TG5 - Meilleure copie (PDF, modèle rédigé)", "url": "https://drive.google.com/file/d/1Xjw-IoJHsVA4PWlP_5tQiOu3N8ReFysH/view" }
+      ]
+    },
+    {
+      "id": "6.5",
+      "cat": "d6",
+      "x": 1510,
+      "y": 1025,
+      "icon": "✒️",
+      "title": "Reformuler les phrases marquées d'une croix",
+      "unlocked": false,
+      "desc": "Toutes les phrases signalées par une petite croix en marge doivent être reformulées correctement, en les recopiant : c'est le travail de remédiation après chaque copie. Une erreur d'expression corrigée à la maison ne se répète pas au devoir suivant ; toute erreur déjà signalée qui se répète est pénalisée.",
+      "seances": [],
+      "ressources": [
+        { "t": "doc", "ti": "TG5 - évaluation - limites de la connaissance (fiches du professeur)", "url": "https://docs.google.com/document/d/12Q85XnMPzbBmQ8eFTqiLO-70m-gY9laIQeDqxxTMu-g/edit" },
+        { "t": "doc", "ti": "Fiches d'évaluation TG5 - Peut-on tout connaître (21 copies, erreur par erreur)", "url": "https://docs.google.com/document/d/1WLp53dltxbB6usHzNdJ1klV_zQkhIj9w4gvsRWNbixw/edit" }
+      ]
+    },
+    {
+      "id": "6.6",
+      "cat": "d6",
+      "x": 1510,
+      "y": 1190,
+      "icon": "🗣️",
+      "title": "Attribuer et expliquer exactement les citations",
+      "unlocked": false,
+      "desc": "« Je sais que je ne sais pas » est de Socrate, rapporté par Platon dans ses dialogues, et non d'Aristote ; la distinction phénomène / noumène est de Kant, et non de Descartes. Une citation mal attribuée décrédibilise toute la copie : le cours doit être appris avec ses auteurs, et toute citation doit être expliquée dans la phrase qui la suit, jamais seulement posée.",
+      "seances": [],
+      "ressources": [
+        { "t": "doc", "ti": "TG5 - évaluation - limites de la connaissance (fiches du professeur)", "url": "https://docs.google.com/document/d/12Q85XnMPzbBmQ8eFTqiLO-70m-gY9laIQeDqxxTMu-g/edit" },
+        { "t": "doc", "ti": "Fiches d'évaluation TG5 - Peut-on tout connaître (21 copies, confusions relevées)", "url": "https://docs.google.com/document/d/1WLp53dltxbB6usHzNdJ1klV_zQkhIj9w4gvsRWNbixw/edit" }
+      ]
+    },
+    {
+      "id": "6.7",
+      "cat": "d6",
+      "x": 1510,
+      "y": 1355,
+      "icon": "📏",
+      "title": "Typographie de la copie",
+      "unlocked": false,
+      "desc": "Aucune espace entre le mot et le signe de ponctuation qui le suit ; jamais de tiret long : utiliser la virgule, les deux points, des parenthèses ou une nouvelle phrase. Écrire proprement, sans ratures, selon les exigences de l'épreuve du baccalauréat : une copie soignée se lit mieux et se note mieux.",
+      "seances": [],
+      "ressources": [
+        { "t": "doc", "ti": "TG5 - évaluation - limites de la connaissance (fiches du professeur)", "url": "https://docs.google.com/document/d/12Q85XnMPzbBmQ8eFTqiLO-70m-gY9laIQeDqxxTMu-g/edit" },
+        { "t": "doc", "ti": "Fiches d'évaluation TG5 - Peut-on tout connaître (21 copies, fautes relevées)", "url": "https://docs.google.com/document/d/1WLp53dltxbB6usHzNdJ1klV_zQkhIj9w4gvsRWNbixw/edit" }
+      ]
+    },
+    {
+      "id": "4.9",
+      "cat": "d4",
+      "x": 930,
+      "y": 1400,
+      "icon": "🎯",
+      "title": "Reformuler n'est pas problématiser",
+      "unlocked": false,
+      "desc": "Le sujet, c'est la question donnée ; la problématique, c'est le problème que vous en tirez par l'analyse. Reformuler la question, la retourner en son contraire, ou la remplacer par une question voisine (d'où vient la connaissance ? à quoi sert-elle ?) ne montre aucun problème. Et une suite de questions n'est pas une problématique : le problème se formule en phrases affirmatives, appuyées sur la contradiction d'un terme du sujet, puis illustrées par un exemple.",
+      "seances": [],
+      "ressources": [
+        { "t": "doc", "ti": "TG5 - évaluation - limites de la connaissance (fiches du professeur)", "url": "https://docs.google.com/document/d/12Q85XnMPzbBmQ8eFTqiLO-70m-gY9laIQeDqxxTMu-g/edit" },
+        { "t": "doc", "ti": "Corrigé - problématiques (PDF)", "url": "https://drive.google.com/file/d/1f47xmMzDCDRAdQvar0BPTkhAtdLX6gNH/view" }
+      ]
+    },
+    {
+      "id": "4.10",
+      "cat": "d4",
+      "x": 930,
+      "y": 1565,
+      "icon": "❓",
+      "title": "Partir de la question dans l'introduction",
+      "unlocked": false,
+      "desc": "Impossible de problématiser une question qu'on n'a pas d'abord comprise et énoncée : l'introduction part de la question elle-même, jamais d'associations d'idées libres (la culture, l'école, la mémoire) ni d'un problème de fait (le stockage, la curiosité, l'éducation). Avant d'écrire, se demander noir sur blanc : quel terme fait problème ? que signifie-t-il ? quelle contradiction implique-t-il ? quel exemple la rend sensible ?",
+      "seances": [],
+      "ressources": [
+        { "t": "doc", "ti": "TG5 - évaluation - limites de la connaissance (fiches du professeur)", "url": "https://docs.google.com/document/d/12Q85XnMPzbBmQ8eFTqiLO-70m-gY9laIQeDqxxTMu-g/edit" },
+        { "t": "doc", "ti": "Corrigé - problématiques (PDF)", "url": "https://drive.google.com/file/d/1f47xmMzDCDRAdQvar0BPTkhAtdLX6gNH/view" }
+      ]
+    },
+    {
+      "id": "5.10",
+      "cat": "d5",
+      "x": 1220,
+      "y": 1565,
+      "icon": "🗂️",
+      "title": "Découper le plan selon les perspectives",
+      "unlocked": false,
+      "desc": "Les parties du développement peuvent explorer les cadres du programme : limites épistémologiques (les conditions mêmes de la connaissance), limites de l'existence humaine et de la culture (la finitude du connaissant), limites morales et politiques (la légitimité du savoir, le savoir comme pouvoir). Chaque perspective offre une réponse différente au problème, et ce découpage évite le plan binaire. Au brouillon, les titres complets servent de test de clarté ; sur la copie, au baccalauréat, aucun titre ni plan apparent : tout est rédigé, les parties s'enchaînent par des transitions.",
+      "seances": [],
+      "ressources": [
+        { "t": "doc", "ti": "TG5 - évaluation - limites de la connaissance (fiches du professeur)", "url": "https://docs.google.com/document/d/12Q85XnMPzbBmQ8eFTqiLO-70m-gY9laIQeDqxxTMu-g/edit" },
+        { "t": "doc", "ti": "TG5 - Meilleure copie (PDF, modèle rédigé)", "url": "https://drive.google.com/file/d/1Xjw-IoJHsVA4PWlP_5tQiOu3N8ReFysH/view" }
+      ]
+    },
+    {
+      "id": "6.8",
+      "cat": "d6",
+      "x": 1510,
+      "y": 1520,
+      "icon": "✍️",
+      "title": "Style rédigé, pas style oral",
+      "unlocked": false,
+      "desc": "La dissertation est un genre écrit : bannir les tournures orales, les phrases tronquées et les séries de questions. Une idée par phrase, des phrases courtes et complètes (une phrase de neuf lignes ne peut être suivie par personne), la ponctuation pour guider le lecteur, et une relecture à voix haute avant de rendre : si une phrase sonne faux, on la réécrit.",
+      "seances": [],
+      "ressources": [
+        { "t": "doc", "ti": "TG5 - évaluation - limites de la connaissance (fiches du professeur)", "url": "https://docs.google.com/document/d/12Q85XnMPzbBmQ8eFTqiLO-70m-gY9laIQeDqxxTMu-g/edit" }
+      ]
+    }
+  ],
+  "edges": [
+    [
+      "1.1",
+      "1.2"
+    ],
+    [
+      "4.5",
+      "4.6"
+    ],
+    [
+      "4.6",
+      "4.7"
+    ],
+    [
+      "4.7",
+      "4.8"
+    ],
+    [
+      "5.7",
+      "5.8"
+    ],
+    [
+      "5.8",
+      "5.9"
+    ],
+    [
+      "6.4",
+      "6.5"
+    ],
+    [
+      "6.5",
+      "6.6"
+    ],
+    [
+      "6.6",
+      "6.7"
+    ],
+    [
+      "4.8",
+      "4.9"
+    ],
+    [
+      "4.9",
+      "4.10"
+    ],
+    [
+      "5.9",
+      "5.10"
+    ],
+    [
+      "6.7",
+      "6.8"
+    ],
+    [
+      "1.2",
+      "1.3"
+    ],
+    [
+      "1.3",
+      "1.4"
+    ],
+    [
+      "1.4",
+      "2.1"
+    ],
+    [
+      "2.1",
+      "2.2"
+    ],
+    [
+      "2.2",
+      "2.3"
+    ],
+    [
+      "2.3",
+      "2.4"
+    ],
+    [
+      "2.4",
+      "2.5"
+    ],
+    [
+      "2.2",
+      "3.1"
+    ],
+    [
+      "3.1",
+      "3.2"
+    ],
+    [
+      "3.1",
+      "3.3"
+    ],
+    [
+      "3.3",
+      "3.4"
+    ],
+    [
+      "3.4",
+      "3.5"
+    ],
+    [
+      "3.5",
+      "3.6"
+    ],
+    [
+      "2.4",
+      "4.1"
+    ],
+    [
+      "4.1",
+      "4.2"
+    ],
+    [
+      "4.2",
+      "4.3"
+    ],
+    [
+      "4.3",
+      "4.4"
+    ],
+    [
+      "3.5",
+      "4.4"
+    ],
+    [
+      "3.5",
+      "5.1"
+    ],
+    [
+      "5.1",
+      "5.2"
+    ],
+    [
+      "5.2",
+      "5.3"
+    ],
+    [
+      "3.6",
+      "5.4"
+    ],
+    [
+      "5.3",
+      "5.4"
+    ],
+    [
+      "5.4",
+      "5.5"
+    ],
+    [
+      "5.5",
+      "5.6"
+    ],
+    [
+      "3.2",
+      "5.6"
+    ],
+    [
+      "3.3",
+      "6.1"
+    ],
+    [
+      "5.1",
+      "6.1"
+    ],
+    [
+      "5.6",
+      "6.2"
+    ],
+    [
+      "6.1",
+      "6.2"
+    ],
+    [
+      "2.5",
+      "6.2"
+    ],
+    [
+      "1.4",
+      "1.5"
+    ],
+    [
+      "1.5",
+      "2.6"
+    ],
+    [
+      "2.2",
+      "2.6"
+    ],
+    [
+      "4.4",
+      "4.5"
+    ],
+    [
+      "5.5",
+      "5.7"
+    ],
+    [
+      "5.7",
+      "6.3"
+    ],
+    [
+      "6.1",
+      "6.3"
+    ],
+    [
+      "6.3",
+      "6.4"
+    ],
+    [
+      "6.2",
+      "6.4"
+    ]
+  ]
+};
+
+const QCM_METHOD = {"1.1": [{"q": "Quelle est la fonction du cahier de philosophie ?", "c": ["Une fin en soi, à soigner pour elle-même", "Un simple outil d'apprentissage au service de la réflexion", "Un document à exposer aux examinateurs"], "a": 1, "e": "Le cahier est un outil ; le but ultime est la qualité de la réflexion sur la copie d'examen."}, {"q": "Le but ultime du travail en philosophie est :", "c": ["Faire le plus beau cahier possible", "La qualité de la réflexion sur la copie d'examen", "Mémoriser tout le cours par cœur"], "a": 1, "e": "Tout ce qui est fait au cahier prépare la réflexion à venir sur la copie."}, {"q": "Le cahier est considéré comme :", "c": ["un outil d'apprentissage qui prépare la réflexion", "un document administratif obligatoire", "une œuvre littéraire"], "a": 0, "e": "C'est un instrument de travail au service de la réflexion."}], "1.2": [{"q": "Pendant le cours, surligner les idées importantes est :", "c": ["indispensable pour se concentrer", "une perte de temps : le surlignage se réserve aux révisions", "obligatoire pour réussir"], "a": 1, "e": "En classe, on ne perd pas de temps à surligner : on écoute et on note."}, {"q": "Quand mettre le cours en valeur visuellement ?", "c": ["Pendant le cours", "À la maison, lors de l'apprentissage et des révisions", "Jamais, c'est interdit"], "a": 1, "e": "La mise en valeur visuelle appartient au travail de révision à la maison."}, {"q": "Surligner en classe fait perdre du temps surtout parce que :", "c": ["on surligne pendant que l'explication se poursuit et on cesse d'écouter", "les surligneurs coûtent cher", "les professeurs l'interdisent"], "a": 0, "e": "Pendant qu'on surligne, on n'écoute plus l'explication en cours."}], "1.3": [{"q": "Le minimum obligatoire à noter au cahier :", "c": ["seulement le titre du chapitre", "tout ce qui est écrit au tableau", "uniquement ce que dit l'enseignant"], "a": 1, "e": "Le tableau est le minimum obligatoire, à compléter ensuite."}, {"q": "Que faut-il ajouter au-delà du tableau ?", "c": ["Rien, le tableau suffit", "Les remarques orales, questions posées, éclaircissements, exercices, recherches personnelles", "Uniquement les définitions"], "a": 1, "e": "Le cours complet = tableau + éléments oraux + travail personnel."}, {"q": "Les recherches personnelles dans le cahier :", "c": ["interdites", "souhaitables : elles complètent le cours", "à faire sur une feuille séparée"], "a": 1, "e": "Le cahier est enrichi par ses propres recherches et exercices."}], "1.4": [{"q": "L'ordre correct des 3 étapes de la prise de notes :", "c": ["Écrire, questionner, écouter", "Écouter, questionner, écrire", "Questionner, écrire, écouter"], "a": 1, "e": "Écouter, puis questionner, puis écrire."}, {"q": "Pourquoi attendre la fin de l'explication d'une idée avant d'écrire ?", "c": ["Pour saisir la portée globale de l'idée au lieu de transcrire mot à mot", "Pour gagner du temps au brouillon", "Parce que l'enseignant parle trop vite"], "a": 0, "e": "On attend l'explication complète pour en saisir la portée globale."}, {"q": "Écrire, c'est rédiger :", "c": ["le cours complet mot à mot", "de manière synthétique et rapide, avec des abréviations", "uniquement les exemples"], "a": 1, "e": "Écrire de manière synthétique et rapide, avec des abréviations."}], "1.5": [{"q": "Pourquoi numéroter les pages du cahier ?", "c": ["Pour l'esthétique", "Pour que les fiches de citation renvoient à la page où la citation est expliquée", "C'est une obligation administrative"], "a": 1, "e": "Les fiches de citation renvoient au n° de page du cahier où se trouve l'explication."}, {"q": "Le numéro de page sur une fiche de citation sert à :", "c": ["retrouver l'explication de la citation dans son contexte", "compter les séances", "ranger le cahier"], "a": 0, "e": "Il permet de relire la citation expliquée dans son contexte."}, {"q": "On numérote les pages du cahier :", "c": ["lors des révisions", "à la fin de l'année seulement", "jamais"], "a": 0, "e": "Numéroter lors des révisions, pour que chaque fiche puisse renvoyer au cahier."}], "2.1": [{"q": "Quand assimiler le cours ?", "c": ["À la fin du chapitre", "Régulièrement, sans attendre la fin du chapitre", "La veille du contrôle"], "a": 1, "e": "L'assimilation doit être régulière, chapitre en cours."}, {"q": "Pourquoi réviser juste après le cours ?", "c": ["Parce que le souvenir frais de ce qui a été compris en classe facilite l'assimilation", "Parce que le programme l'exige", "Pour éviter les oublis de cahier"], "a": 0, "e": "On s'appuie sur le souvenir frais de ce qui a été compris en classe."}, {"q": "Réviser régulièrement s'appuie sur :", "c": ["ce qu'on a compris en classe", "les résumés trouvés sur internet", "les fiches des autres élèves"], "a": 0, "e": "La révision prolonge ce qui a été compris en classe."}], "2.2": [{"q": "Les trois éléments à travailler régulièrement :", "c": ["connaissances, méthodes, questions directrices", "cahier, manuel, internet", "définitions, dates, auteurs"], "a": 0, "e": "Savoirs, savoir-faire méthodologiques et questions directrices."}, {"q": "Dans les « connaissances », que révise-t-on ?", "c": ["Uniquement les citations", "Définitions des concepts et repères, thèses, citations courtes d'auteurs (1 à 2 lignes)", "La biographie des auteurs"], "a": 1, "e": "Concepts, repères, thèses et citations courtes."}, {"q": "Les « questions directrices » sont :", "c": ["les questions posées par les autres élèves", "les problèmes clés abordés en cours", "les questions de l'examen"], "a": 1, "e": "Ce sont les problèmes clés travaillés en cours."}], "2.3": [{"q": "Première étape de la carte mentale :", "c": ["recopier le plan du cours", "tracer une mini-carte rapide de mémoire avant de relire le cours", "surligner le cours"], "a": 1, "e": "D'abord une mini-carte de mémoire, ensuite on améliore."}, {"q": "Traits pleins et pointillés :", "c": ["pleins = rapports directs du document ; pointillés = liens indirects et idées nouvelles", "pleins = idées principales ; pointillés = exemples", "aucune différence"], "a": 0, "e": "Pleins pour le document, pointillés pour les liens personnels."}, {"q": "La carte mentale doit :", "c": ["répliquer linéairement le texte", "regrouper par grands axes logiques, comme on classe une liste de courses par rayons", "être décorée"], "a": 1, "e": "On regroupe par axes logiques, jamais linéairement."}], "2.4": [{"q": "Sur CNRTL, que faire de la définition ?", "c": ["la recopier machinalement", "repérer et extraire les termes essentiels qui définissent le concept", "la traduire en anglais"], "a": 1, "e": "Extraire les termes essentiels, ne pas recopier."}, {"q": "Pour « idéal », les termes essentiels extraits sont :", "c": ["parfait, beau, grand", "perfection, finalité, norme pour la pensée et l'action", "idéalisme, idée, identité"], "a": 1, "e": "Perfection, finalité, norme pour la pensée et l'action."}, {"q": "Le but de la recherche lexicale est :", "c": ["de remplir le cahier", "de saisir le concept par ses termes essentiels", "de vérifier l'orthographe"], "a": 1, "e": "Saisir le concept, pas recopier la définition."}], "2.5": [{"q": "Que faire des appréciations de copies ?", "c": ["les jeter", "les coller dans le cahier et les retravailler chez soi", "les mémoriser sans les coller"], "a": 1, "e": "On les colle au cahier et on les retravaille chez soi."}, {"q": "Le retravail des annotations porte sur :", "c": ["uniquement l'orthographe", "français, grammaire, orthographe, syntaxe, idées ou exemples à approfondir, présentation", "la note obtenue"], "a": 1, "e": "Toutes les erreurs relevées, dans toutes leurs dimensions."}, {"q": "Une erreur déjà signalée qui se répète au devoir suivant :", "c": ["est sans conséquence", "est pénalisée", "est récompensée"], "a": 1, "e": "Toute erreur répétée lors des devoirs suivants est pénalisée."}], "2.6": [{"q": "Le recto de la fiche de citation contient :", "c": ["la citation avec son auteur", "la citation seule, sans l'auteur", "l'explication complète"], "a": 1, "e": "Recto : la citation seule, pour forcer l'effort de mémoire."}, {"q": "Le verso de la fiche contient :", "c": ["l'auteur et une explication très résumée (2-3 phrases max), avec le n° de page du cahier", "le prix du livre", "la biographie de l'auteur"], "a": 0, "e": "Auteur + explication très résumée + renvoi à la page du cahier."}, {"q": "La fiche doit demander un effort de mémoire :", "c": ["on cherche de mémoire, on ne relit pas machinalement", "on relit la fiche en boucle", "on recopie la citation"], "a": 0, "e": "On cherche de mémoire : c'est l'effort de mémoire qui fait apprendre."}], "3.1": [{"q": "Répartition du temps sur les 4 heures d'épreuve :", "c": ["1h de préparation, 3h de rédaction", "2h à 2h30 de préparation au brouillon, au moins 1h30 de rédaction", "tout au brouillon"], "a": 1, "e": "2h-2h30 de préparation, minimum 1h30 de rédaction."}, {"q": "L'erreur classique de gestion du temps :", "c": ["rédiger trop tôt", "consacrer trop de temps à la préparation au détriment de la rédaction", "finir trop tôt"], "a": 1, "e": "Trop de préparation écourte la rédaction : il faut garder 1h30."}, {"q": "La rédaction doit conserver au moins :", "c": ["30 minutes", "1h30", "15 minutes"], "a": 1, "e": "Au moins 1h30 exclusivement pour la rédaction."}], "3.2": [{"q": "Pendant la rédaction, il faut :", "c": ["continuer à chercher des idées nouvelles", "ne plus réfléchir au sujet, plan ou transitions : seulement écrire clairement", "relire ses sources"], "a": 1, "e": "À la fin de la préparation, on ne réfléchit plus : on écrit."}, {"q": "Le temps de rédaction sert à :", "c": ["prouver sa vitesse", "soigner l'orthographe, la syntaxe et le choix exact des mots", "improviser"], "a": 1, "e": "Écrire clairement en soignant orthographe, syntaxe et mots exacts."}, {"q": "Continuer à réfléchir pendant la rédaction risque :", "c": ["d'améliorer le devoir", "de faire perdre du temps et de brouiller le plan établi", "de plaire au correcteur"], "a": 1, "e": "Cela retarde et désorganise : la réflexion est terminée."}], "3.3": [{"q": "Au début de l'épreuve, il faut consacrer :", "c": ["5 à 10 minutes à lire attentivement les trois sujets sans rien rédiger", "1h à choisir au hasard", "30 secondes par sujet"], "a": 0, "e": "5 à 10 minutes de lecture attentive, avec temps de décantation."}, {"q": "Après avoir choisi le sujet :", "c": ["relire les deux autres", "ne plus faire marche arrière", "commencer par l'introduction au propre"], "a": 1, "e": "Une fois le sujet choisi, on ne revient pas en arrière."}, {"q": "La décantation, c'est :", "c": ["des temps de pause qui laissent les idées se déposer", "une punition", "une relecture du cahier"], "a": 0, "e": "Laisser les idées se déposer sans les forcer."}], "3.4": [{"q": "La feuille 1 du brouillon sert à :", "c": ["rédiger l'introduction", "noter au kilomètre toutes les idées, intuitions, exemples, souvenirs de cours et citations", "faire le plan détaillé"], "a": 1, "e": "Le « désordre fécond » : tout noter, sans censure."}, {"q": "Le « désordre fécond » signifie :", "c": ["écrire n'importe comment", "noter tout ce qui vient sans souci de style ni de linéarité", "déranger ses camarades"], "a": 1, "e": "On note tout ce qui vient, sans style ni linéarité."}, {"q": "Faut-il censurer ses idées sur la feuille 1 ?", "c": ["Oui, ne garder que les bonnes", "Non, sans censure : le tri vient ensuite", "Oui, sauf les exemples"], "a": 1, "e": "Aucune censure en feuille 1 : le tri se fait en feuille 2."}], "3.5": [{"q": "La feuille 2 du brouillon sert à :", "c": ["rédiger la copie", "rapprocher les idées convergentes, isoler les oppositions, regrouper en paquets titrés", "compter les mots"], "a": 1, "e": "Tri, regroupement par grandes thèses et hiérarchisation."}, {"q": "Nombre maximum de codes couleurs au brouillon :", "c": ["10", "3", "1"], "a": 1, "e": "3 codes couleurs maximum, ex. : exemples, concepts, connecteurs logiques."}, {"q": "Exemple de trois codes couleurs utiles :", "c": ["rouge, vert, bleu par ordre d'arrivée", "exemples, concepts, connecteurs logiques", "titre, sous-titre, paragraphe"], "a": 1, "e": "Exemples, concepts, connecteurs logiques : trois types d'éléments à distinguer."}], "3.6": [{"q": "La feuille 3 du brouillon établit :", "c": ["l'architecture définitive des parties, les titres complets et les transitions", "la liste des erreurs à éviter", "le brouillon intégral du devoir"], "a": 0, "e": "Plan définitif, titres rédigés et transitions."}, {"q": "Les titres de parties doivent être :", "c": ["des mots isolés", "des phrases affirmatives complètes", "des questions"], "a": 1, "e": "Sujet + verbe + complément : phrase affirmative complète."}, {"q": "Faut-il rédiger tout le devoir au brouillon ?", "c": ["Oui, par sécurité", "Non : plan, titres et transitions suffisent", "Seulement la conclusion"], "a": 1, "e": "On ne rédige pas tout au brouillon : le temps manque."}], "4.1": [{"q": "Une question technique se reconnaît à :", "c": ["une réponse unique par calcul, fait établi ou algorithme", "plusieurs thèses opposées", "l'absence de réponse"], "a": 0, "e": "Elle ne pose pas problème : une seule réponse."}, {"q": "Une question philosophique :", "c": ["admet plusieurs thèses recevables si elles sont argumentées", "a une seule réponse exacte", "ne peut pas être traitée"], "a": 0, "e": "Elle fait débat : plusieurs thèses recevables argumentées."}, {"q": "« Quel est le carré de 144 ? » est :", "c": ["une question philosophique", "une question technique qui ne pose pas problème", "une question piège"], "a": 1, "e": "Réponse unique par calcul : question technique."}], "4.2": [{"q": "Les trois perspectives du programme :", "c": ["morale, politique, religion", "existence humaine et culture, morale et politique, connaissance", "nature, culture, liberté"], "a": 1, "e": "Existence humaine et culture ; morale et politique ; connaissance."}, {"q": "Un sujet principal dans une perspective :", "c": ["peut déborder sur une seconde perspective", "reste purement technique", "concerne une seule thèse"], "a": 0, "e": "Repérer le débordement sur une seconde perspective fait émerger d'autres réponses."}, {"q": "Repérer la perspective d'un sujet sert à :", "c": ["faire émerger d'autres réponses possibles", "limiter sa réponse à une seule thèse", "éviter le travail"], "a": 0, "e": "Identifier la perspective ouvre l'éventail des réponses."}], "4.3": [{"q": "La problématique est :", "c": ["une reformulation du sujet", "ni une reformulation du sujet ni une liste de petites questions : un raisonnement rédigé", "une liste de petites questions"], "a": 1, "e": "Un raisonnement rédigé d'environ une demi-page dans l'introduction."}, {"q": "Où s'expose le problème dans le devoir ?", "c": ["en conclusion", "dans un raisonnement rédigé d'environ une demi-page dans l'introduction", "dans une note de bas de page"], "a": 1, "e": "Dans l'introduction, en raisonnement rédigé."}, {"q": "Les principes de méthode sont :", "c": ["des recettes à appliquer aveuglément", "des repères qui supposent d'abord une réflexion personnelle sur le sujet", "interdits le jour de l'examen"], "a": 1, "e": "Rien de mécanique : la méthode suppose une réflexion personnelle d'abord."}], "4.4": [{"q": "Quels termes du sujet faut-il analyser ?", "c": ["tous les termes", "seulement ceux qui font problème", "aucun"], "a": 1, "e": "Ex. dans « Peut-on être heureux quand les autres ne le sont pas ? », seul « quand les autres ne le sont pas » fait problème."}, {"q": "Le dilemme s'explicite en :", "c": ["un paragraphe rédigé exposant deux thèses opposées mais valables", "un tableau à double entrée", "une citation d'auteur"], "a": 0, "e": "Deux thèses opposées mais valables, en paragraphe rédigé."}, {"q": "La troisième étape de la problématique :", "c": ["illustrer le problème par un exemple concret analysé", "rédiger la conclusion", "compter les mots"], "a": 0, "e": "Un exemple concret, puisé dans le sujet, et analysé."}], "4.5": [{"q": "Dans « Peut-on être libre sans avoir le choix ? », le présupposé est :", "c": ["avoir le choix, une alternative, serait la condition de la liberté", "la liberté est impossible", "le choix n'existe pas"], "a": 0, "e": "Plus de choix = plus de liberté : voilà le présupposé à remettre en cause."}, {"q": "Le présupposé d'une question :", "c": ["doit être accepté tel quel", "incarne souvent l'opinion commune que la réflexion doit remettre en cause", "est toujours exact"], "a": 1, "e": "Le présupposé est l'opinion commune cachée dans la question."}, {"q": "Que faire du présupposé repéré ?", "c": ["le recopier dans l'introduction", "le remettre en cause", "le surligner"], "a": 1, "e": "Repérer puis remettre en cause : c'est là que naît le problème."}], "5.1": [{"q": "L'idée, au brouillon, est :", "c": ["une affirmation ferme", "la matière brute : intuition ou exemple surgissant au brouillon", "une raison logique"], "a": 1, "e": "L'idée est la matière brute du brouillon."}, {"q": "Combien de thèses par devoir environ ?", "c": ["1", "3 à 5", "20"], "a": 1, "e": "3 à 5 thèses : une affirmation ferme répondant au sujet."}, {"q": "La thèse n'est pas un avis personnel, car :", "c": ["on doit pouvoir défendre une thèse contraire à son opinion", "c'est l'enseignant qui décide", "l'opinion suffit"], "a": 0, "e": "On peut défendre une thèse contraire à son opinion : c'est une réponse à démontrer."}], "5.2": [{"q": "Un plan binaire type est :", "c": ["thèse / antithèse, avantages / inconvénients", "un examen sous conditions", "une problématique"], "a": 0, "e": "Thèse/antithèse et avantages/inconvénients juxtaposent les contraires."}, {"q": "Que préférer au plan binaire ?", "c": ["L'examen sous conditions (« oui, mais selon quelles limites... », « non, sauf si... »)", "Une liste d'arguments", "La neutralité"], "a": 0, "e": "Oui, mais selon quelles limites... ; non, sauf si... : on examine les conditions."}, {"q": "Le défaut des plans « avantages / inconvénients » :", "c": ["ils juxtaposent les contraires sans les approfondir", "ils sont trop longs", "ils manquent d'exemples"], "a": 0, "e": "Une juxtaposition mécanique qui n'analyse rien."}], "5.3": [{"q": "Par quelle thèse ouvrir le devoir ?", "c": ["la plus savante", "la plus simple, la plus facile à comprendre et à expliquer, donc la plus convaincante", "la plus originale"], "a": 1, "e": "Le premier coup aux échecs : la thèse la plus simple à expliquer."}, {"q": "Vers quoi progresse le devoir ?", "c": ["au hasard", "des thèses simples vers l'approfondissement le plus large (souvent politique)", "en cercle"], "a": 1, "e": "Des réponses immédiates vers l'approfondissement le plus large."}, {"q": "L'ordre des thèses est :", "c": ["mécanique", "rigoureusement réfléchi pour convaincre le lecteur", "alphabétique"], "a": 1, "e": "Un ordre réfléchi pour convaincre : pas de mécanique."}], "5.4": [{"q": "Un titre de grande partie doit être :", "c": ["un mot isolé", "une phrase affirmative complète (sujet + verbe + complément)", "une question"], "a": 1, "e": "La phrase complète sert d'auto-test de clarté."}, {"q": "Si le titre ne vient pas sous forme de phrase complète :", "c": ["on écrit un mot isolé", "les idées ne sont pas claires : revenir au brouillon", "on saute le titre"], "a": 1, "e": "L'impossibilité de rédiger la phrase révèle le défaut de clarté des idées."}, {"q": "Une annonce de plan creuse est :", "c": ["« nous verrons des arguments pour puis contre... »", "un résumé de l'idée directrice de chaque étape", "une problématique"], "a": 0, "e": "Il faut résumer l'idée directrice réelle de chaque partie."}], "5.5": [{"q": "Un exemple est :", "c": ["une affirmation générale", "un cas singulier concret qui illustre une idée générale", "une preuve suffisante à lui seul"], "a": 1, "e": "Le cas singulier illustre l'idée générale ; il ne prouve pas seul."}, {"q": "« L'homme respecte des lois » est :", "c": ["un exemple", "une affirmation", "une citation"], "a": 1, "e": "Une affirmation n'est pas un exemple ; l'exemple serait : « la naissance doit être déclarée en mairie »."}, {"q": "Quels exemples privilégier ?", "c": ["les exemples enfantins du quotidien", "littérature, histoire, sciences ou droit", "les exemples de la télévision"], "a": 1, "e": "Des exemples riches : littérature, histoire, sciences, droit."}], "5.6": [{"q": "« La morale » et « le moral » :", "c": ["signifient la même chose", "se distinguent : sens philosophique exact contre état d'esprit", "sont interchangeables"], "a": 1, "e": "Rigueur lexicale : chaque terme a son sens philosophique exact."}, {"q": "L'alinéa matérialise :", "c": ["chaque paragraphe", "chaque phrase", "chaque page"], "a": 0, "e": "Un alinéa par paragraphe."}, {"q": "Employer les termes dans leur sens philosophique exact est :", "c": ["une option", "une exigence de rigueur", "réservé aux professeurs"], "a": 1, "e": "Ex. distinguer « absolu » et « relatif » : c'est la rigueur même."}], "5.7": [{"q": "Première manière de traiter un exemple :", "c": ["l'exemple vient après un argument, pour l'illustrer et le rendre plus convaincant", "l'exemple remplace l'argument", "l'exemple est interdit"], "a": 0, "e": "D'abord l'argument (les raisons enchaînées), puis l'exemple en illustration."}, {"q": "Deuxième manière :", "c": ["l'argumentation est construite sur un exemple développé (ex. la fausse promesse chez Kant)", "on cite l'exemple en note de bas de page", "l'exemple n'occupe qu'une ligne"], "a": 0, "e": "L'exemple est développé sur plusieurs lignes et chaque point s'y ramène."}, {"q": "Ce qui vaut pour la dissertation :", "c": ["vaut aussi pour l'explication de texte : les deux exercices sont complémentaires", "ne vaut que pour la dissertation", "ne vaut que pour l'oral"], "a": 0, "e": "Les deux manières d'exploiter l'exemple valent pour les deux exercices."}], "6.1": [{"q": "Toute explication de texte commence par :", "c": ["la paraphrase", "la recherche de la thèse de l'auteur", "la biographie de l'auteur"], "a": 1, "e": "On cherche d'abord la thèse : l'affirmation principale du texte."}, {"q": "Une thèse philosophique :", "c": ["est une vérité absolue", "est discutable : toute thèse pose problème", "ne se conteste jamais"], "a": 1, "e": "Toute thèse philosophique est discutable ; les philosophes se contestent entre eux."}, {"q": "Hiérarchie de preuve :", "c": ["l'exemple prouve", "seule une raison prouve ; l'exemple illustre", "l'autorité de l'auteur prouve"], "a": 1, "e": "Une raison prouve, un exemple illustre : il ne prouve pas."}], "6.2": [{"q": "La doxa est :", "c": ["la connaissance scientifique", "l'opinion commune", "une école philosophique"], "a": 1, "e": "Penser par soi-même, c'est sortir de l'opinion commune."}, {"q": "Le doute méthodique sert à :", "c": ["ne plus rien croire", "suspendre ses préjugés pour fonder son propre jugement", "détester la philosophie"], "a": 1, "e": "Suspendre les préjugés pour fonder son jugement."}, {"q": "Apprendre de ses erreurs rectifiées :", "c": ["est une faiblesse", "est la voie d'un jugement fondé par soi-même", "est interdit"], "a": 1, "e": "L'erreur rectifiée est une étape du jugement qui se fonde."}], "6.3": [{"q": "Citer le texte, c'est :", "c": ["indiquer un numéro de ligne", "citer les mots du texte entre guillemets « »", "recopier tout le paragraphe"], "a": 1, "e": "Jamais seulement un n° de ligne : toujours les mots du texte, entre « »."}, {"q": "Raccourcir une citation trop longue :", "c": ["avec la convention [...], à condition de conserver son sens", "en supprimant des mots au hasard", "en changeant les termes"], "a": 0, "e": "Les trois points entre crochets [...], sans altérer le sens."}, {"q": "Une citation approximative :", "c": ["passe inaperçue", "décrédibilise l'explication", "impressionne le correcteur"], "a": 1, "e": "La citation exacte est la preuve du travail sur le texte."}], "6.4": [{"q": "Agir méthodiquement, c'est :", "c": ["demander aux autres", "savoir ce que l'on fait et si ce que l'on fait est bien, sans demander aux autres", "improviser"], "a": 1, "e": "L'auto-évaluation : savoir ce que l'on fait, et si c'est bien."}, {"q": "Si le titre du plan ne vient pas sous forme de phrase complète :", "c": ["on écrit un mot isolé", "les idées ne sont pas claires : revenir au brouillon", "on saute le titre"], "a": 1, "e": "Le principe de méthode est un instrument d'auto-évaluation."}, {"q": "La méthode n'est pas une recette, mais :", "c": ["la discipline d'un jugement qui se contrôle lui-même", "une punition", "un formulaire"], "a": 0, "e": "La méthode est la discipline d'un jugement qui se contrôle lui-même."}]};
+const QCM_APPLI = {"5.7": [{"q": "Comment qualifier l'exemple de l'homme qui emprunte de l'argent en promettant de le rendre alors qu'il sait que tel ne sera jamais le cas ?", "c": ["C'est l'exemple d'une escroquerie organisée par un homme malhonnête qui détourne de l'argent.", "C'est l'exemple d'un homme qui demande de l'argent par plaisir, pour des raisons futiles.", "C'est l'exemple d'une promesse politique qu'un candidat sait ne pas pouvoir réaliser.", "C'est l'exemple d'une fausse promesse, c'est-à-dire d'un mensonge, commis pour répondre à un besoin d'argent."], "a": 3, "src": "Kant"}, {"q": "Quelle est la contradiction au cœur de l'exemple de la fausse promesse ?", "c": ["L'homme fait une promesse de remboursement tout en sachant très bien qu'il ne pourra pas rembourser.", "L'homme veut emprunter alors qu'il n'a pas besoin d'argent et pourrait s'en passer.", "L'homme rembourse son emprunt alors qu'il avait promis de ne jamais le rendre.", "L'homme refuse de faire une promesse alors même qu'il sait qu'on lui accordera le prêt."], "a": 0, "src": "Kant"}], "2.6": [{"q": "Quelle est la thèse de Kant dans le texte 3, donnée dès la première ligne ?", "c": ["Il faut toujours chercher son intérêt personnel et son bien-être futur dans l'action morale.", "Une promesse mensongère peut être justifiée lorsque l'on est dans le besoin et que l'on agit pour de bonnes raisons.", "Le devoir se définit uniquement par les conséquences de nos actions sur le bien-être du plus grand nombre.", "Il n'y a qu'un unique impératif catégorique : « Agis seulement d'après la maxime grâce à laquelle tu peux vouloir en même temps qu'elle devienne une loi universelle. »"], "a": 3, "src": "Kant"}], "6.1": [{"q": "Selon la définition donnée en classe, qu'est-ce qu'une thèse philosophique ?", "c": ["La phrase principale du texte, celle à laquelle toutes les autres parties sont subordonnées, et qui pose toujours problème.", "La première phrase du texte, qui annonce le sujet et sert d'introduction à l'argumentation.", "N'importe quelle phrase du texte qui contient un concept important du programme.", "La phrase que l'auteur répète le plus souvent dans le texte."], "a": 0, "src": "Marx"}, {"q": "Pour vérifier que l'on a bien trouvé la thèse du texte de Marx, que faut-il faire avec les mots clés de la phrase ?", "c": ["Chercher leur définition dans un dictionnaire de philosophie et la recopier dans l'introduction.", "Compter le nombre de fois où ils apparaissent pour classer les phrases par ordre d'importance.", "Souligner uniquement les mots clés dans la thèse, sans s'occuper du reste du texte.", "Vérifier, par écrit, au brouillon, qu'ils se retrouvent ailleurs dans le texte, sous une forme ou sous une autre, dans l'argumentation."], "a": 3, "src": "Marx"}, {"q": "Selon Descartes, quelle est la différence entre l'indifférence et le libre arbitre ?", "c": ["Le libre arbitre consiste à se décider (au hasard ou contre ce que la raison recommande), l'indifférence à ne pas se décider, ne rien choisir : mais dans les deux cas, c'est le plus bas degré de liberté.", "Le libre arbitre est l'indifférence : les deux mots désignent le fait de ne pas se décider entre plusieurs possibilités.", "L'indifférence est le plus haut degré de liberté, le libre arbitre seulement un degré intermédiaire.", "Le libre arbitre consiste à suivre toujours sa raison, l'indifférence à suivre ses désirs."], "a": 0, "src": "Descartes"}], "4.2": [{"q": "Dans quelle perspective du programme peut-on situer le texte de Marx étudié en classe ?", "c": ["La justice : le texte porte sur les rapports juridiques entre les hommes dans la société.", "Le devoir : le texte définit les obligations morales que la société impose à chacun.", "La religion : le texte analyse les croyances et leur fonction sociale.", "La culture : la culture, en un sens, est l'ensemble de la production matérielle de l'existence humaine."], "a": 3, "src": "Marx"}], "4.3": [{"q": "Quelle contradiction le texte de Freud pose-t-il ?", "c": ["La culture prétend satisfaire les besoins humains mais en réalité elle ne produit aucun bien pour les hommes.", "La culture est naturelle alors que les pulsions humaines sont artificielles et instituées.", "La culture a deux faces : elle sert à satisfaire les besoins humains, mais elle s'oppose aussi à la satisfaction des pulsions, c'est un ensemble d'interdits.", "Les hommes choisissent librement leur culture mais refusent de s'y soumettre en pratique."], "a": 2, "src": "Freud"}], "4.5": [{"q": "Quel est le plus haut degré de liberté selon Descartes ?", "c": ["Le moment où la volonté suit la raison : je fais ce que ma raison me recommande, la volonté est entièrement déterminée par la perception du vrai ou du bien.", "Le moment où je choisis librement de faire le contraire de ce que ma raison me recommande.", "Le moment où je m'en remets au hasard : ne rien réviser, tenter sa chance, « on verra bien le jour J ».", "Le moment où je fais tout ce que je veux, autant que possible, jusqu'à l'excès."], "a": 0, "src": "Descartes"}]};
+
+// ---------------------------------------------------------------- Jeu QCM
+let GAME = (() => {
+  try { const g = JSON.parse(localStorage.getItem("philo_arbre_game")); if (g && typeof g.xp === "number") return g; } catch(e) {}
+  return { xp: 0, badges: [], done: {}, bonus: {} };
+})();
+function saveGame() { localStorage.setItem("philo_arbre_game", JSON.stringify(GAME)); updateHeaderXP(); }
+
+const BADGES = [
+  { id: "premier", icon: "🌱", label: "Premier pas — 1re compétence validée" },
+  { id: "d1", icon: "📓", label: "Domaine 1 complet — Cahier & Notes" },
+  { id: "d2", icon: "🧠", label: "Domaine 2 complet — Révisions & Carte" },
+  { id: "d3", icon: "⏳", label: "Domaine 3 complet — Temps & Brouillon" },
+  { id: "d4", icon: "❓", label: "Domaine 4 complet — Problématisation" },
+  { id: "d5", icon: "⚖️", label: "Domaine 5 complet — Plan & Exemples" },
+  { id: "d6", icon: "🦉", label: "Domaine 6 complet — Texte & Autonomie" },
+  { id: "dix", icon: "🔥", label: "10 compétences validées" },
+  { id: "vingt", icon: "⚡", label: "20 compétences validées" },
+  { id: "maitre", icon: "🏆", label: "Arbre complet — les 45 compétences !" },
+  { id: "kant", icon: "🏛️", label: "Mission Kant — impératif catégorique" },
+  { id: "marx", icon: "⚙️", label: "Mission Marx — méthode de l'explication" },
+  { id: "freud", icon: "🌋", label: "Mission Freud — culture et pulsions" },
+  { id: "descartes", icon: "🧭", label: "Mission Descartes — les degrés de liberté" }
+];
+
+function updateHeaderXP() {
+  const el = document.getElementById("xp-count");
+  if (el) el.textContent = GAME.xp;
+}
+updateHeaderXP();
+
+function grantBadge(id) {
+  if (!GAME.badges.includes(id)) {
+    GAME.badges.push(id);
+    saveGame();
+    const b = BADGES.find(x => x.id === id);
+    if (b) toastBadge(b);
+  }
+}
+function toastBadge(b) {
+  const t = document.createElement("div");
+  t.textContent = b.icon + " Badge obtenu : " + b.label;
+  t.style.cssText = "position:fixed;bottom:22px;left:50%;transform:translateX(-50%);background:#161b22;border:1px solid var(--gold);color:var(--text);padding:10px 18px;border-radius:10px;font-weight:700;z-index:200;box-shadow:0 8px 30px rgba(0,0,0,.5)";
+  document.body.appendChild(t);
+  setTimeout(() => t.remove(), 4200);
+}
+function checkMilestoneBadges() {
+  const n = state.nodes.filter(x => x.unlocked).length;
+  if (n >= 1) grantBadge("premier");
+  if (n >= 10) grantBadge("dix");
+  if (n >= 20) grantBadge("vingt");
+  if (n === state.nodes.length) grantBadge("maitre");
+  ["d1","d2","d3","d4","d5","d6"].forEach(d => {
+    const domNodes = state.nodes.filter(x => x.cat === d);
+    if (domNodes.length && domNodes.every(x => x.unlocked)) grantBadge(d);
+  });
+}
+
+let qcmCurrent = null;
+function closeQCM() {
+  document.getElementById("qcm-overlay").classList.remove("open");
+  qcmCurrent = null;
+  render();
+}
+function shuffleIdx(n) {
+  const arr = [...Array(n).keys()];
+  for (let i = arr.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [arr[i], arr[j]] = [arr[j], arr[i]]; }
+  return arr;
+}
+
+function openQCM(nodeId) {
+  const node = state.nodes.find(n => n.id === nodeId);
+  const questions = QCM_METHOD[nodeId] || [];
+  if (!node || questions.length === 0) {
+    if (node) { node.unlocked = true; saveState(); render(); selectNode(node.id); }
+    return;
+  }
+  const order = shuffleIdx(questions.length);
+  qcmCurrent = { nodeId, order, answers: new Array(order.length).fill(-1), validated: false };
+  const modal = document.getElementById("qcm-modal");
+  let h = '<h3>🔒 ' + node.icon + ' ' + escapeHtml(node.title) + '</h3>';
+  h += '<div class="qcm-sub">Réponds aux ' + order.length + ' questions. Il faut au moins 2 bonnes réponses sur 3 pour valider la compétence. (+10 XP)</div>';
+  h += '<details><summary style="cursor:pointer;color:var(--muted);font-size:12px;margin-bottom:10px">📚 Réviser avant de répondre (afficher le principe de méthode)</summary><div class="qcm-revise">' + escapeHtml(node.desc || "") + '</div></details>';
+  order.forEach((qi, disp) => {
+    const q = questions[qi];
+    h += '<div class="qcm-q" data-qi="' + disp + '"><div class="qtxt">' + (disp + 1) + '. ' + escapeHtml(q.q) + '</div>';
+    q.c.forEach((choice, ci) => {
+      h += '<label class="qcm-opt" data-qi="' + disp + '" data-ci="' + ci + '" onclick="pickQCM(' + disp + ',' + ci + ')">' + escapeHtml(choice) + '</label>';
+    });
+    h += '</div>';
+  });
+  h += '<div id="qcm-result"></div>';
+  h += '<div class="qcm-actions"><button onclick="closeQCM()">Fermer</button><button class="primary" id="btn-validate-qcm" onclick="validateQCM()">Valider mes réponses</button></div>';
+  modal.innerHTML = h;
+  document.getElementById("qcm-overlay").classList.add("open");
+}
+
+function pickQCM(disp, ci) {
+  if (!qcmCurrent || qcmCurrent.validated) return;
+  qcmCurrent.answers[disp] = ci;
+  document.querySelectorAll('.qcm-opt[data-qi="' + disp + '"]').forEach(el => el.classList.remove("sel"));
+  const el = document.querySelector('.qcm-opt[data-qi="' + disp + '"][data-ci="' + ci + '"]');
+  if (el) el.classList.add("sel");
+}
+
+
+/* ---- V5 : compétences validées automatiquement par réussite aux apps QCM (même origine) ---- */
+const QCM_SEUIL = 80; // pourcentage requis pour valider les compétences liées
+function syncQCMExt(){
+  const newly=[];
+  if (typeof localStorage === "undefined") return newly;
+  for (let i=0;i<localStorage.length;i++){
+    const k=localStorage.key(i);
+    if(!k || k.indexOf("qcmres_")!==0) continue;
+    let r=null; try{ r=JSON.parse(localStorage.getItem(k)); }catch(e){ continue; }
+    if(!r || typeof r.pct!=="number" || r.pct < QCM_SEUIL) continue;
+    const src=k.slice(8);
+    (Array.isArray(r.comps)?r.comps:[]).forEach(cid=>{
+      const node=state.nodes.find(n=>n.id===cid);
+      if(!node || node.unlocked) return;
+      node.unlocked=true;
+      if(!GAME.done[cid]){ GAME.done[cid]={ score:"QCM "+src, pct:r.pct, ext:true }; GAME.xp+=10; newly.push(node.title+" (QCM "+src+" : "+r.pct+" %)"); }
+    });
+  }
+  if(newly.length){ saveState(); saveGame(); checkMilestoneBadges(); }
+  return newly;
+}
+function showQCMSync(){
+  const newly=syncQCMExt();
+  const modal=document.getElementById("qcm-modal");
+  let h='<h3>✅ QCM des séances</h3><div class="qcm-sub">Seuil de validation : '+QCM_SEUIL+' % à un QCM de séance (même navigateur).</div>';
+  if(newly.length) h+='<div class="qcm-res ok">Compétences validées :<br>'+newly.map(t=>"• "+t).join("<br>")+'</div>';
+  else h+='<div class="qcm-res ko" style="background:transparent;border:1px solid var(--line);color:inherit">Aucun nouveau résultat. Faites un QCM de séance (page de même origine) puis revenez actualiser.</div>';
+  h+='<div class="qcm-actions"><button class="primary" onclick="closeQCM()">Fermer</button></div>';
+  modal.innerHTML=h;
+  document.getElementById("qcm-overlay").classList.add("open");
+}
+
+function validateQCM() {
+  if (!qcmCurrent || qcmCurrent.validated) return;
+  const questions = QCM_METHOD[qcmCurrent.nodeId];
+  let score = 0;
+  qcmCurrent.order.forEach((qi, disp) => {
+    const q = questions[qi];
+    const chosen = qcmCurrent.answers[disp];
+    if (chosen === q.a) score++;
+    document.querySelectorAll('.qcm-opt[data-qi="' + disp + '"]').forEach(el => {
+      const ci = parseInt(el.dataset.ci, 10);
+      el.style.cursor = "default";
+      el.onclick = null;
+      if (ci === q.a) el.classList.add("ok");
+      else if (ci === chosen) el.classList.add("ko");
+    });
+  });
+  qcmCurrent.validated = true;
+  const node = state.nodes.find(n => n.id === qcmCurrent.nodeId);
+  const passed = score >= 2;
+  const res = document.getElementById("qcm-result");
+  document.getElementById("btn-validate-qcm").style.display = "none";
+  if (passed) {
+    const firstTime = !GAME.done[qcmCurrent.nodeId];
+    node.unlocked = true;
+    saveState();
+    if (firstTime) { GAME.done[qcmCurrent.nodeId] = { score: score }; GAME.xp += 10; saveGame(); }
+    checkMilestoneBadges();
+    res.innerHTML = '<div class="qcm-res ok">✅ Validé ! Score : ' + score + ' / ' + questions.length + (firstTime ? ' • +10 XP' : ' (compétence déjà validée : pas de XP supplémentaire)') + '</div>';
+    const bonus = (QCM_APPLI[qcmCurrent.nodeId] || []).filter(bq => !GAME.bonus[qcmCurrent.nodeId + '|' + bq.q]);
+    if (bonus.length > 0) {
+      const bq = bonus[0];
+      res.innerHTML += '<div style="margin-top:12px;font-size:13px;font-weight:700">🎯 Mission d\'application bonus (' + escapeHtml(bq.src || "contenu du cours") + ') — +5 XP</div>'
+        + '<div class="qcm-q" style="margin-top:8px"><div class="qtxt">' + escapeHtml(bq.q) + '</div>'
+        + bq.c.map((c, i) => '<label class="qcm-opt" id="bopt-' + i + '" onclick="answerBonus(' + i + ',' + bq.a + ',this)">' + escapeHtml(c) + '</label>').join("")
+        + '</div><div id="bonus-result"></div>';
+    }
+  } else {
+    res.innerHTML = '<div class="qcm-res ko">❌ Score : ' + score + ' / ' + questions.length + ' — il faut au moins 2 / 3. Déplie « Réviser » en haut, relis le principe, puis retente !</div>'
+      + '<div class="qcm-actions"><button class="primary" onclick="retryQCM()">↺ Réessayer</button></div>';
+  }
+}
+
+function retryQCM() {
+  if (!qcmCurrent) return;
+  const nodeId = qcmCurrent.nodeId;
+  closeQCM();
+  openQCM(nodeId);
+}
+
+function answerBonus(ci, ai, el) {
+  if (!qcmCurrent) return;
+  const bq = (QCM_APPLI[qcmCurrent.nodeId] || []).find(b => !GAME.bonus[qcmCurrent.nodeId + '|' + b.q]);
+  if (!bq) return;
+  document.querySelectorAll('[id^="bopt-"]').forEach(o => { o.style.cursor = "default"; o.onclick = null; });
+  if (ci === ai) {
+    el.classList.add("ok");
+    GAME.bonus[qcmCurrent.nodeId + '|' + bq.q] = true;
+    GAME.xp += 5;
+    saveGame();
+    const mid = { Kant: "kant", Marx: "marx", Freud: "freud", Descartes: "descartes" }[bq.src];
+    if (mid) grantBadge(mid);
+    document.getElementById("bonus-result").innerHTML = '<div class="qcm-res ok">🎯 Mission réussie ! +5 XP</div>';
+  } else {
+    el.classList.add("ko");
+    const good = document.getElementById("bopt-" + ai);
+    if (good) good.classList.add("ok");
+    document.getElementById("bonus-result").innerHTML = '<div class="qcm-res ko">Mission non réussie : la bonne réponse est affichée en vert. Tu pourras la retenter plus tard.</div>';
+  }
+}
+
+function showBadges() {
+  const modal = document.getElementById("qcm-modal");
+  const n = state.nodes.filter(x => x.unlocked).length;
+  let h = '<h3>🏅 Badges & XP</h3><div class="qcm-sub">Compétences validées : ' + n + ' / ' + state.nodes.length + ' • XP total : <strong>' + GAME.xp + '</strong></div>';
+  BADGES.forEach(b => {
+    const got = GAME.badges.includes(b.id);
+    h += '<div class="badge-item' + (got ? '' : ' locked') + '"><span style="font-size:20px">' + (got ? b.icon : '🔒') + '</span><span>' + b.label + '</span></div>';
+  });
+  h += '<div class="qcm-actions"><button class="primary" onclick="closeQCM()">Fermer</button></div>';
+  modal.innerHTML = h;
+  document.getElementById("qcm-overlay").classList.add("open");
+}
+
+let state = JSON.parse(localStorage.getItem("philo_tronc_commun_v1")) || null;
+const ARBRE_VERSION = 5;
+function fmtTs(s) { const m = Math.floor(s / 60); const r = Math.floor(s % 60); return m + ":" + (r < 10 ? "0" : "") + r; }
+if (state && state.nodes && state.edges) {
+  // Migration v2 (une seule fois) : met à jour les 27 nœuds et ajoute les 6 nouveaux, en conservant la progression (unlocked), les positions et les liens personnalisés.
+  if ((JSON.parse(localStorage.getItem("philo_tronc_commun_version")) || 1) < ARBRE_VERSION) {
+    DEFAULT_DATA.nodes.forEach(dn => {
+      const ex = state.nodes.find(n => n.id === dn.id);
+      if (ex) {
+        ex.title = dn.title; ex.desc = dn.desc; ex.icon = dn.icon; ex.cat = dn.cat; ex.seances = dn.seances; ex.ressources = dn.ressources || [];
+      } else {
+        state.nodes.push(structuredClone(dn));
+      }
+    });
+    DEFAULT_DATA.edges.forEach(de => {
+      if (!state.edges.some(e => e[0] === de[0] && e[1] === de[1])) state.edges.push([de[0], de[1]]);
+    });
+    localStorage.setItem("philo_tronc_commun_version", JSON.stringify(ARBRE_VERSION));
+    saveState();
+  }
+} else {
+  localStorage.setItem("philo_tronc_commun_version", JSON.stringify(ARBRE_VERSION));
+  state = structuredClone(DEFAULT_DATA);
+}
+state.nodes.forEach(n => { const d = DEFAULT_DATA.nodes.find(x => x.id === n.id); if (d) { n.seances = d.seances; n.ressources = d.ressources || []; } });
+let qcmSyncResults = syncQCMExt();
+let selectedId = null;
+let playerMode = false;
+let linkMode = false;
+let linkSourceId = null;
+
+let panX = 25, panY = 15, scale = 0.78;
+let isPanning = false, startPanX = 0, startPanY = 0;
+let dragNode = null, dragOffsetX = 0, dragOffsetY = 0;
+
+const world = document.getElementById("world");
+const headersLayer = document.getElementById("headers-layer");
+const nodesLayer = document.getElementById("nodes-layer");
+const edgesSvg = document.getElementById("edges");
+const container = document.getElementById("canvas-container");
+
+function saveState() {
+  localStorage.setItem("philo_tronc_commun_v1", JSON.stringify(state));
+}
+
+function updateTransform() {
+  world.style.transform = `translate(${panX}px, ${panY}px) scale(${scale})`;
+}
+
+function isAvailable(nodeId) {
+  const parents = state.edges.filter(e => e[1] === nodeId).map(e => e[0]);
+  if (parents.length === 0) return true;
+  return parents.some(pid => {
+    const p = state.nodes.find(n => n.id === pid);
+    return p && p.unlocked;
+  });
+}
+
+function render() {
+  headersLayer.innerHTML = "";
+  nodesLayer.innerHTML = "";
+  edgesSvg.innerHTML = "";
+
+  Object.values(DOMAINS).forEach(d => {
+    const h = document.createElement("div");
+    h.className = "col-header";
+    h.style.left = d.x + "px";
+    h.style.color = d.color;
+    h.style.borderColor = d.color + "66";
+    h.textContent = d.label;
+    headersLayer.appendChild(h);
+  });
+
+  state.edges.forEach(([fromId, toId], idx) => {
+    const from = state.nodes.find(n => n.id === fromId);
+    const to = state.nodes.find(n => n.id === toId);
+    if (!from || !to) return;
+
+    const x1 = from.x + 115, y1 = from.y + 62;
+    const x2 = to.x + 115, y2 = to.y + 62;
+    const dx = Math.abs(x2 - x1) * 0.45;
+    const d = (Math.abs(x2 - x1) < 30)
+      ? `M ${x1} ${y1} L ${x2} ${y2}`
+      : `M ${from.x + 230} ${y1} C ${from.x + 230 + dx} ${y1}, ${to.x - dx} ${y2}, ${to.x} ${y2}`;
+
+    const path = document.createElementNS("http://www.w3.org/2000/svg", "path");
+    path.setAttribute("d", d);
+    const active = from.unlocked && to.unlocked;
+    const ready = from.unlocked && !to.unlocked;
+    path.setAttribute("stroke", active ? "#e0b354" : (ready ? "#58a6ff" : "#30363d"));
+    if (ready) path.setAttribute("stroke-dasharray", "6,4");
+    path.onclick = (e) => {
+      e.stopPropagation();
+      if (!playerMode && confirm("Supprimer ce lien ?")) {
+        state.edges.splice(idx, 1);
+        saveState();
+        render();
+      }
+    };
+    edgesSvg.appendChild(path);
+  });
+
+  let unlockedCount = 0;
+  state.nodes.forEach(node => {
+    if (node.unlocked) unlockedCount++;
+    const avail = isAvailable(node.id);
+    const dom = DOMAINS[node.cat] || DOMAINS.d1;
+
+    const el = document.createElement("div");
+    el.className = "node " + (node.unlocked ? "unlocked" : (avail ? "available" : "locked"));
+    if (node.id === selectedId) el.classList.add("selected");
+    if (node.id === linkSourceId) el.classList.add("link-source");
+    el.style.left = node.x + "px";
+    el.style.top = node.y + "px";
+
+    el.innerHTML = `
+      <div class="node-header">
+        <span class="node-badge" style="background:${dom.color}22; color:${dom.color}; border:1px solid ${dom.color}55;">
+          ${dom.label}
+        </span>
+        <span style="font-size:15px">${node.icon || "📘"}</span>
+      </div>
+      <div class="node-title">${escapeHtml(node.title)}</div>
+      <div class="node-desc">${escapeHtml(node.desc)}</div>
+      <div class="node-footer">
+        <span>
+          <span class="status-dot" style="background:${node.unlocked ? '#e0b354' : (avail ? '#58a6ff' : '#484f58')}"></span>
+          ${node.unlocked ? "Acquis" : (avail ? "Disponible" : "Verrouillé")}
+        </span>
+        <span style="color:var(--muted)">[${node.id}]</span>
+      </div>
+    `;
+
+    el.onmousedown = (e) => {
+      e.stopPropagation();
+      if (linkMode) {
+        handleLinkClick(node.id);
+        return;
+      }
+      selectNode(node.id);
+      if (playerMode) {
+        if (node.unlocked) {
+          node.unlocked = false;
+          saveState();
+          render();
+          selectNode(node.id);
+        } else if (isAvailable(node.id)) {
+          openQCM(node.id);
+        } else {
+          toastLocked();
+        }
+        return;
+      }
+      dragNode = node;
+      dragOffsetX = (e.clientX - panX) / scale - node.x;
+      dragOffsetY = (e.clientY - panY) / scale - node.y;
+    };
+
+    nodesLayer.appendChild(el);
+  });
+
+  document.getElementById("unlocked-count").textContent = `${unlockedCount} / ${state.nodes.length}`;
+  updateTransform();
+}
+
+function escapeHtml(str) {
+  return String(str).replace(/[&<>"']/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
+}
+
+function selectNode(id) {
+  selectedId = id;
+  const node = state.nodes.find(n => n.id === id);
+  document.querySelectorAll(".node").forEach(el => el.classList.remove("selected"));
+  if (!node) {
+    document.getElementById("no-selection").style.display = "block";
+    document.getElementById("editor-form").style.display = "none";
+    return;
+  }
+  document.getElementById("no-selection").style.display = "none";
+  document.getElementById("editor-form").style.display = "flex";
+  document.getElementById("edit-title").value = node.title;
+  document.getElementById("edit-cat").value = node.cat;
+  document.getElementById("edit-icon").value = node.icon || "";
+  document.getElementById("edit-desc").value = node.desc;
+  const list = (node.seances || []).map(s =>
+    `<div><strong style="color:var(--gold)">${s.dfr}</strong> — ${s.cl.join(", ")}<br><span style="font-size:11px">${escapeHtml(s.ti)}</span></div>`
+  ).join("");
+  document.getElementById("seances-list").innerHTML = list || "<em>Aucune séance associée pour le moment.</em>";
+  const rlist = (node.ressources || []).map(r => {
+    const url = r.url + (r.ts && /youtu/.test(r.url) ? ((r.url.includes("?") ? "&" : "?") + "t=" + r.ts) : "");
+    const time = (r.ts ? " ⏱ " + fmtTs(r.ts) : "");
+    const badge = (r.t === "video" ? "🎬" : "📄");
+    const target = (r.ts && !/youtu/.test(r.url) ? ' title="La vidéo ne démarre pas automatiquement à ce minutage : se déplacer à ' + fmtTs(r.ts) + '"' : "");
+    return '<div><a href="' + escapeHtml(url) + '" target="_blank" rel="noopener" style="color:var(--cyan);text-decoration:none"' + target + '>' + badge + " " + escapeHtml(r.ti || r.url) + time + " ↗</a></div>";
+  }).join("");
+  document.getElementById("resources-list").innerHTML = rlist || "<em style='font-style:italic'>Aucune ressource associée pour le moment.</em>";
+  const btn = document.getElementById("btn-toggle-unlock");
+  btn.textContent = node.unlocked ? "✅ Compétence acquise (Verrouiller)" : "🔒 Verrouillée (Débloquer)";
+  btn.className = node.unlocked ? "primary" : "";
+}
+
+function updateSelected() {
+  const node = state.nodes.find(n => n.id === selectedId);
+  if (!node) return;
+  node.title = document.getElementById("edit-title").value;
+  node.cat = document.getElementById("edit-cat").value;
+  node.icon = document.getElementById("edit-icon").value;
+  node.desc = document.getElementById("edit-desc").value;
+  saveState();
+  render();
+}
+
+function toggleUnlockSelected() {
+  const node = state.nodes.find(n => n.id === selectedId);
+  if (!node) return;
+  node.unlocked = !node.unlocked;
+  saveState();
+  render();
+  selectNode(node.id);
+}
+
+function addNewNode() {
+  const id = "custom_" + Date.now().toString().slice(-4);
+  const newNode = {
+    id,
+    x: Math.round((250 - panX) / scale),
+    y: Math.round((200 - panY) / scale),
+    cat: "d4",
+    icon: "✨",
+    title: "Nouvelle compétence",
+    unlocked: false,
+    desc: "Saisissez ici le principe méthodologique."
+  };
+  state.nodes.push(newNode);
+  if (selectedId) state.edges.push([selectedId, id]);
+  saveState();
+  render();
+  selectNode(id);
+}
+
+function deleteSelected() {
+  if (!selectedId) return;
+  state.nodes = state.nodes.filter(n => n.id !== selectedId);
+  state.edges = state.edges.filter(e => e[0] !== selectedId && e[1] !== selectedId);
+  selectedId = null;
+  saveState();
+  render();
+  selectNode(null);
+}
+
+function toggleLinkMode() {
+  linkMode = !linkMode;
+  linkSourceId = null;
+  const btn = document.getElementById("btn-link");
+  btn.classList.toggle("active-mode", linkMode);
+  btn.textContent = linkMode ? "🔗 Clic SOURCE..." : "🔗 Relier";
+  render();
+}
+
+function handleLinkClick(nodeId) {
+  if (!linkSourceId) {
+    linkSourceId = nodeId;
+    document.getElementById("btn-link").textContent = "🔗 Clic CIBLE...";
+    render();
+  } else {
+    if (linkSourceId !== nodeId) {
+      const exists = state.edges.some(e => e[0] === linkSourceId && e[1] === nodeId);
+      if (!exists) state.edges.push([linkSourceId, nodeId]);
+      saveState();
+    }
+    toggleLinkMode();
+  }
+}
+
+function toggleMode() {
+  playerMode = !playerMode;
+  const btn = document.getElementById("btn-mode");
+  const lbl = document.getElementById("mode-label");
+  if (playerMode) {
+    btn.textContent = "✏️ Mode Édition";
+    btn.classList.add("primary");
+    lbl.textContent = "Joueur";
+  } else {
+    btn.textContent = "🎮 Mode Joueur";
+    btn.classList.remove("primary");
+    lbl.textContent = "Édition";
+  }
+  render();
+}
+
+function toastLocked() {
+  const t = document.createElement("div");
+  t.textContent = "🔒 Cette compétence n'est pas encore accessible : acquiers d'abord une compétence qui y mène.";
+  t.style.cssText = "position:fixed;bottom:22px;left:50%;transform:translateX(-50%);background:#161b22;border:1px solid #f85149;color:var(--text);padding:10px 18px;border-radius:10px;font-weight:700;z-index:200;box-shadow:0 8px 30px rgba(0,0,0,.5)";
+  document.body.appendChild(t);
+  setTimeout(() => t.remove(), 3600);
+}
+function toggleFullscreen() {
+  if (!document.fullscreenElement) {
+    document.documentElement.requestFullscreen().catch(() => {
+      alert("Le plein écran est bloqué dans cet aperçu : téléchargez le fichier et ouvrez-le dans votre navigateur (ou appuyez sur F11).");
+    });
+  } else {
+    document.exitFullscreen();
+  }
+}
+
+function autoLayout() {
+  const counts = { d1: 0, d2: 0, d3: 0, d4: 0, d5: 0, d6: 0 };
+  state.nodes.forEach(n => {
+    const c = n.cat in DOMAINS ? n.cat : "d1";
+    n.x = DOMAINS[c].x;
+    n.y = 80 + counts[c] * 165;
+    counts[c]++;
+  });
+  panX = 25; panY = 15; scale = 0.78;
+  saveState();
+  render();
+}
+
+function exportJSON() {
+  const blob = new Blob([JSON.stringify(state, null, 2)], { type: "application/json" });
+  const a = document.createElement("a");
+  a.href = URL.createObjectURL(blob);
+  a.download = "arbre_competences_philosophie_tc.json";
+  a.click();
+}
+
+function importJSON(event) {
+  const file = event.target.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = (e) => {
+    try {
+      const parsed = JSON.parse(e.target.result);
+      if (parsed.nodes && parsed.edges) {
+        state = parsed;
+        selectedId = null;
+        saveState();
+        render();
+        selectNode(null);
+      }
+    } catch (err) {
+      alert("Fichier JSON invalide.");
+    }
+  };
+  reader.readAsText(file);
+}
+
+function resetDefault() {
+  if (confirm("Restaurer les 45 compétences de philosophie d'origine ?")) {
+    state = structuredClone(DEFAULT_DATA);
+    selectedId = null;
+    saveState();
+    render();
+    selectNode(null);
+  }
+}
+
+window.addEventListener("mousemove", (e) => {
+  if (dragNode) {
+    dragNode.x = Math.round(((e.clientX - panX) / scale - dragOffsetX) / 10) * 10;
+    dragNode.y = Math.round(((e.clientY - panY) / scale - dragOffsetY) / 10) * 10;
+    render();
+  } else if (isPanning) {
+    panX = e.clientX - startPanX;
+    panY = e.clientY - startPanY;
+    updateTransform();
+  }
+});
+
+window.addEventListener("mouseup", () => {
+  if (dragNode) { dragNode = null; saveState(); }
+  isPanning = false;
+});
+
+container.addEventListener("mousedown", (e) => {
+  if (e.target === container || e.target === world || e.target === edgesSvg) {
+    isPanning = true;
+    startPanX = e.clientX - panX;
+    startPanY = e.clientY - panY;
+  }
+});
+
+container.addEventListener("wheel", (e) => {
+  e.preventDefault();
+  const zoomFactor = e.deltaY < 0 ? 1.08 : 0.92;
+  const rect = container.getBoundingClientRect();
+  const mx = e.clientX - rect.left;
+  const my = e.clientY - rect.top;
+  const newScale = Math.min(2, Math.max(0.3, scale * zoomFactor));
+  panX = mx - (mx - panX) * (newScale / scale);
+  panY = my - (my - panY) * (newScale / scale);
+  scale = newScale;
+  updateTransform();
+}, { passive: false });
+
+render();
+</script>
+</body>
+</html>
