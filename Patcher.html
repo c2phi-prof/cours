@@ -1,0 +1,420 @@
+
+Patcher — App étude critique — IA Mistral + recherche académique
+
+100 %
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Patch — IA Mistral + recherche académique pour l'app Étude critique</title>
+<style>
+  :root{ --acc:#1c5d99; --acc2:#3f8fd6; --ink:#1b2a3a; --line:#c4d4e8; }
+  *{box-sizing:border-box}
+  body{font-family:Verdana,Geneva,sans-serif;background:#eaf2fb;color:var(--ink);margin:0;padding:32px 18px;}
+  .wrap{max-width:860px;margin:0 auto}
+  h1{font-size:1.25em;margin-bottom:6px;color:var(--acc)}
+  p{line-height:1.6}
+  .card{background:#fff;border:1px solid var(--line);border-radius:12px;padding:24px;margin-bottom:18px;box-shadow:0 3px 10px rgba(28,93,153,.12)}
+  ol{line-height:1.8;padding-left:22px}
+  #drop{border:2px dashed var(--acc2);border-radius:10px;padding:28px;text-align:center;background:#f6fafe;cursor:pointer;transition:all .25s}
+  #drop:hover,#drop.actif{background:color-mix(in srgb,var(--acc) 8%,#f6fafe);transform:scale(1.01)}
+  #drop input{display:none}
+  #statut{margin-top:14px;padding:12px 14px;border-radius:8px;display:none;line-height:1.6}
+  .ok{background:#e9f7ee;border:1px solid #2e7d32;color:#1e5c24;display:block !important}
+  .ko{background:#fdeaea;border:1px solid #b03030;color:#8f2626;display:block !important}
+  code{background:#eef4fb;border:1px solid var(--line);border-radius:4px;padding:1px 5px;font-size:.9em}
+  .bouton{display:inline-block;font-weight:700;background:linear-gradient(135deg,var(--acc),var(--acc2));color:#fff;border:none;border-radius:9px;padding:13px 26px;cursor:pointer;font-size:1em;box-shadow:0 4px 14px rgba(28,93,153,.3);transition:transform .2s}
+  .bouton:hover{transform:translateY(-2px)}
+  #telecharger{display:none;margin-top:10px}
+  ul.verif{list-style:none;padding:0}
+  ul.verif li{padding:3px 0}
+  .log-fichier{display:none;margin-top:10px;max-height:220px;overflow:auto;background:#f4f7fb;border:1px solid var(--line);border-radius:8px;padding:12px;font-size:.82em;line-height:1.5}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>Patch : IA Mistral + recherche académique</h1>
+  <p>Cette page applique automatiquement les modifications demandées à votre application
+  <code>gemini-code-*.html</code> (étude critique — L'homme vaut-il plus qu'un animal ?) :
+  case de recherche après chaque réponse du QCM, réponse académique Mistral affichée sous la case,
+  limitation des ressources par les spécifications de la question, une consultation par réponse,
+  contenu copiable, boutons de transfert agrandis, sélections et affichage dynamiques.</p>
+
+  <div class="card">
+    <h2 style="margin-top:0">Étapes</h2>
+    <ol>
+      <li>Cliquez sur la zone ci-dessous et sélectionnez votre fichier HTML original (celui téléversé depuis Gemini).</li>
+      <li>Le patch vérifie chaque modification et affiche le détail.</li>
+      <li>Cliquez sur <strong>Télécharger la version modifiée</strong> : vous obtenez le fichier HTML complet, prêt à ouvrir dans un navigateur.</li>
+    </ol>
+    <label id="drop" for="fichier">
+      ➕ Cliquez ici pour choisir votre fichier <code>.html</code>
+      <input type="file" id="fichier" accept=".html,.htm,text/html">
+    </label>
+    <div id="statut"></div>
+    <div class="log-fichier" id="log"></div>
+    <button type="button" class="bouton" id="telecharger">⬇ Télécharger la version modifiée</button>
+  </div>
+
+  <div class="card">
+    <h2 style="margin-top:0">Après le patch</h2>
+    <ul>
+      <li>Répondez à une question du QCM : sous la réponse apparaît la <strong>case de recherche</strong>.</li>
+      <li>Au premier usage, votre clé API Mistral (<code>console.mistral.ai/api-keys</code>) vous sera demandée — elle reste enregistrée dans le navigateur uniquement.</li>
+      <li>Une seule consultation Mistral par réponse ; la réponse académique s'affiche sous la case, copiable (« Copier la réponse ») et transférable dans le document (bouton vert « ↳ Insérer dans le document », nettement agrandi).</li>
+      <li>Sélections et affichage sont désormais dynamiques (animations de sélection, validation, barre de progression).</li>
+    </ul>
+  </div>
+</div>
+
+<script>
+"use strict";
+
+/* ---------- PATCH 1 : CSS boutons de transfert agrandis + dynamisme + zone IA ---------- */
+const CSS_ANCIEN = `.bloc-copiable{position:relative;padding-right:30px}
+.btn-inserer-curseur{
+  position:absolute;top:4px;right:4px;width:22px;height:22px;margin:0 !important;padding:0 !important;
+  border-radius:4px !important;background:transparent !important;color:var(--ink) !important;
+  border:1px solid transparent !important;font-size:13px !important;line-height:1 !important;
+  opacity:.32;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;
+}
+.bloc-copiable:hover .btn-inserer-curseur{opacity:.95;color:var(--acc) !important;border-color:var(--line) !important;background:var(--papier) !important}
+.btn-inserer-curseur:hover{background:var(--acc) !important;color:#ffffff !important;border-color:var(--acc) !important}`;
+
+const CSS_NOUVEAU = `.bloc-copiable{position:relative;padding-right:6px}
+.btn-inserer-curseur{
+  position:static !important;width:auto !important;min-height:44px !important;
+  margin:8px 8px 2px 0 !important;padding:11px 24px !important;
+  border-radius:11px !important;
+  background:linear-gradient(135deg,var(--acc),var(--acc2)) !important;color:#ffffff !important;
+  border:1px solid transparent !important;font-family:var(--font);font-size:.9em !important;
+  font-weight:700 !important;line-height:1.2 !important;letter-spacing:.3px;
+  opacity:1 !important;cursor:pointer;vertical-align:middle;
+  display:inline-flex;align-items:center;justify-content:center;gap:9px;
+  box-shadow:0 4px 14px var(--shadow);
+  transition:transform .22s cubic-bezier(.4,0,.2,1),box-shadow .22s,filter .22s;
+  animation:boutonDocPop .5s cubic-bezier(.34,1.56,.64,1);
+}
+@keyframes boutonDocPop{from{transform:scale(.7);opacity:0}to{transform:scale(1);opacity:1}}
+.btn-inserer-curseur::before{content:"\\21b3";font-size:1.3em;line-height:1}
+.btn-inserer-curseur:hover{transform:translateY(-3px) scale(1.05);box-shadow:0 9px 24px var(--shadow);filter:brightness(1.12)}
+.btn-inserer-curseur:active{transform:translateY(0) scale(.97)}
+
+/* ---------- Dynamisme: selections & affichage ---------- */
+label.opt,div.opt{transition:transform .22s cubic-bezier(.4,0,.2,1),border-color .22s,box-shadow .22s,background .22s}
+label.opt:hover,div.opt:hover{transform:translateX(7px);box-shadow:0 6px 18px var(--shadow);border-color:var(--acc2)}
+label.opt.sel,div.opt.sel{animation:selPulse .8s ease}
+@keyframes selPulse{0%{box-shadow:0 0 0 0 color-mix(in srgb,var(--acc) 50%,transparent)}70%{box-shadow:0 0 0 10px transparent}100%{box-shadow:0 0 0 0 transparent}}
+label.opt.good,div.opt.good{animation:okPing 1s ease}
+@keyframes okPing{0%,100%{transform:scale(1)}40%{transform:scale(1.014)}}
+label.opt.bad,div.opt.bad{animation:badShake .55s ease}
+@keyframes badShake{0%,100%{transform:translateX(0)}25%{transform:translateX(-6px)}50%{transform:translateX(5px)}75%{transform:translateX(-3px)}}
+.progbar{background-image:linear-gradient(90deg,var(--acc),var(--acc2),var(--acc));background-size:200% 100%;animation:progFlow 2.6s linear infinite}
+@keyframes progFlow{0%{background-position:0 0}100%{background-position:200% 0}}
+.card{transition:box-shadow .35s}
+.card:hover{box-shadow:0 9px 28px var(--shadow)}
+.qtext.bloc-copiable,.fb{transition:background .3s,border-radius .3s}
+.qtext.bloc-copiable:hover,.fb:hover{background:color-mix(in srgb,var(--acc) 5%,transparent);border-radius:6px}
+
+/* ---------- Zone de recherche IA Mistral ---------- */
+.ia-zone{margin-top:16px;padding:16px 16px 14px;border-radius:14px;border:1.5px dashed var(--acc2);background:color-mix(in srgb,var(--acc) 4%,var(--card));animation:cardIn .5s ease}
+.ia-titre{display:flex;align-items:center;gap:9px;font-weight:700;font-size:.9em;color:var(--acc);margin-bottom:11px}
+.ia-titre .ia-dot{width:9px;height:9px;border-radius:50%;background:var(--acc);animation:iaBlink 1.6s ease infinite}
+@keyframes iaBlink{0%,100%{opacity:.25}50%{opacity:1}}
+.ia-ligne{display:flex;gap:8px;flex-wrap:wrap}
+.ia-ligne input{flex:1 1 250px;font-family:var(--font);font-size:1em;color:var(--ink);border:1px solid var(--line);border-radius:9px;padding:12px 14px;background:var(--papier);transition:border-color .25s,box-shadow .25s}
+.ia-ligne input:focus{outline:none;border-color:var(--acc);box-shadow:0 0 0 4px color-mix(in srgb,var(--acc) 16%,transparent)}
+.ia-btn{font-family:var(--font);font-size:.95em;font-weight:700;background:linear-gradient(135deg,var(--acc),var(--acc2));color:#fff;border:none;border-radius:9px;padding:12px 22px;cursor:pointer;box-shadow:0 4px 14px var(--shadow);transition:transform .2s,box-shadow .2s,filter .2s}
+.ia-btn:hover{transform:translateY(-2px);box-shadow:0 8px 22px var(--shadow);filter:brightness(1.1)}
+.ia-btn:disabled{opacity:.45;cursor:not-allowed;transform:none;filter:grayscale(.5)}
+.ia-note{font-size:.8em;opacity:.78;margin-top:9px;line-height:1.5}
+.ia-reponse{margin-top:14px;padding:16px;border-radius:12px;background:var(--papier);border:1px solid var(--acc2);animation:cardIn .55s ease}
+.ia-reponse .ia-chapeau{display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap;font-size:.8em;font-weight:700;color:var(--acc);margin-bottom:9px}
+.ia-texte{line-height:1.75;font-size:.97em;white-space:pre-wrap}
+.ia-chargement{margin-top:12px;font-size:.9em;opacity:.85;display:flex;align-items:center;gap:11px}
+.ia-spinner{width:17px;height:17px;border:3px solid var(--line);border-top-color:var(--acc);border-radius:50%;animation:iaSpin .8s linear infinite;flex-shrink:0}
+@keyframes iaSpin{to{transform:rotate(360deg)}}
+.btn-copier-presse{font-family:var(--font);font-size:.85em;font-weight:700;background:var(--card);color:var(--acc);border:1px solid var(--acc2);border-radius:8px;padding:9px 16px;cursor:pointer;transition:all .22s}
+.btn-copier-presse:hover{background:var(--acc);color:#fff;transform:translateY(-1px)}`;
+
+/* ---------- PATCH 2 : priorité des boutons IA sur le style générique .card button ---------- */
+const CSS2_ANCIEN = `@media (max-width:960px){
+  #plateau{flex-direction:column}`;
+const CSS2_NOUVEAU = `/* ---------- Priorite aux boutons IA (surcharge du style generique .card button) ---------- */
+.card button.ia-btn{
+  background:linear-gradient(135deg,var(--acc),var(--acc2));
+  color:#ffffff;border:none;border-radius:9px;padding:12px 22px;
+  margin:8px 0 0;font-family:var(--font);font-size:.95em;font-weight:700;
+}
+.card button.btn-copier-presse{
+  background:var(--card);color:var(--acc);border:1px solid var(--acc2);
+  border-radius:8px;padding:9px 16px;margin:0;font-family:var(--font);
+  font-size:.85em;font-weight:700;
+}
+
+@media (max-width:960px){
+  #plateau{flex-direction:column}`;
+
+/* ---------- PATCH 3 : libellé du bouton de transfert (agrandi, visible) ---------- */
+const BTN_ANCIEN = `btn-inserer-curseur" onclick="copierBlocVersCurseur(event, this)" title="Insérer au curseur dans le document">` + String.fromCharCode(8629) + `</button>';
+const BTN_NOUVEAU = `btn-inserer-curseur" onclick="copierBlocVersCurseur(event, this)" title="Insérer au curseur dans le document">Insérer dans le document</button>';
+
+/* ---------- PATCH 4 : insertion de la zone IA après la réponse du QCM ---------- */
+const VALIDATE_ANCIEN = `  h += '<button class="ghost" onclick="redoQ()" style="margin-top:10px">`;
+const VALIDATE_NOUVEAU = `  h += construireZoneIA();
+  h += '<button class="ghost" onclick="redoQ()" style="margin-top:10px">`;
+
+/* ---------- PATCH 5 : copie du contenu IA vers le document ---------- */
+const COPIE_ANCIEN = `function copierBlocVersCurseur(e, btn){
+  if(e){ e.preventDefault(); e.stopPropagation(); }
+  const conteneur = btn.closest(".bloc-copiable");
+  if(!conteneur) return;
+`;
+const COPIE_NOUVEAU = `function copierBlocVersCurseur(e, btn){
+  if(e){ e.preventDefault(); e.stopPropagation(); }
+  const conteneur = btn.closest(".bloc-copiable");
+  if(!conteneur) return;
+  if(conteneur.hasAttribute("data-ia-source")){
+    const zoneIA = document.getElementById("ia-reponse-zone");
+    const texteIA = zoneIA ? zoneIA.querySelector(".ia-texte") : null;
+    if(texteIA){ insererAuCurseur(texteIA.textContent); return; }
+  }
+`;
+
+/* ---------- PATCH 6 : moteur IA Mistral (consultation unique, specs de la question) ---------- */
+const RESTART_ANCIEN = `function restartQCM(){
+  etat.qIndex = 0; etat.score = 0; etat.ans = {};
+  renderQCM();
+}`;
+const JS_IA = `function restartQCM(){
+  etat.qIndex = 0; etat.score = 0; etat.ans = {};
+  renderQCM();
+}
+
+/* ==========================================================================
+   ZONE DE RECHERCHE IA MISTRAL — une consultation par question répondue
+   ========================================================================== */
+function construireZoneIA(){
+  let h = '<div class="ia-zone">';
+  h += '<div class="ia-titre"><span class="ia-dot"></span>Recherche académique Mistral — une consultation par réponse</div>';
+  h += '<div class="ia-ligne">';
+  h += '<input type="text" id="ia-question" placeholder="Approfondir cette réponse : posez votre question académique…" onkeydown="if(event.key===\\'Enter\\'){event.preventDefault();envoyerQuestionIA();}">';
+  h += '<button type="button" class="ia-btn" id="ia-envoyer" onclick="envoyerQuestionIA()">Interroger Mistral</button>';
+  h += '</div>';
+  h += '<div class="ia-note" id="ia-note">La requête est traitée par l\\'API Mistral en style académique, avec limitation des ressources : la consultation s\\'appuie exclusivement sur les spécifications identifiées de la question (énoncé, réponse exacte, explication officielle, verbatim de l\\'émission). Une seule consultation par réponse.</div>';
+  h += '<div id="ia-reponse-zone"></div>';
+  h += '</div>';
+  return h;
+}
+
+function construireSpecsQuestion_(q){
+  let specs = "Énoncé de la question : " + q.name + "\\n";
+  if(q.type === "single" || q.type === "multi"){
+    specs += "Type : QCM (" + (q.type === "single" ? "réponse unique" : "réponses multiples") + ")\\n";
+    const corr = q.options.filter(o => o.correct);
+    specs += "Réponse(s) exacte(s) : " + corr.map(o => o.text).join(" | ") + "\\n";
+    specs += "Explication officielle : " + corr.map(o => o.feedback || "").join(" / ") + "\\n";
+  } else if(q.type === "short"){
+    specs += "Type : réponse courte\\nRéponses acceptées : " + (q.answers || []).join(" | ") + "\\n";
+    if(q.feedback) specs += "Explication officielle : " + q.feedback + "\\n";
+  } else if(q.type === "matching"){
+    specs += "Type : associations\\nCorrespondances exactes : " + q.pairs.map(p => p.q + " → " + p.a).join(" ; ") + "\\n";
+  } else if(q.type === "cloze"){
+    specs += "Type : texte à trous\\nTexte complet attendu : " + q.segs.map(s => s.blank !== undefined ? s.blank[0] : s.t).join("") + "\\n";
+  }
+  if(q.scenario) specs += "Scénario pédagogique : " + nettoyerTitreScenario(q.scenario) + "\\n";
+  specs += "Ressource complémentaire identifiée — verbatim de l'émission : " + String(SUPPORT_VIDEO.verbatim || "").substring(0, 600);
+  return specs;
+}
+
+function obtenirCleMistral_(){
+  let cle = localStorage.getItem("mistral_api_key");
+  if(cle) return cle;
+  cle = (prompt("Clé API Mistral requise pour la recherche académique.\\nCréez une clé sur https://console.mistral.ai/api-keys\\nElle sera enregistrée uniquement dans ce navigateur (localStorage).") || "").trim();
+  if(!cle){
+    alert("Sans clé API Mistral, la recherche académique ne peut pas fonctionner.");
+    return null;
+  }
+  localStorage.setItem("mistral_api_key", cle);
+  return cle;
+}
+
+async function appelerMistral_(question, specs){
+  const cle = localStorage.getItem("mistral_api_key");
+  const rep = await fetch("https://api.mistral.ai/v1/chat/completions", {
+    method: "POST",
+    headers: { "Content-Type": "application/json", "Authorization": "Bearer " + cle },
+    body: JSON.stringify({
+      model: "mistral-small-latest",
+      messages: [
+        { role: "system", content: "Tu es un assistant académique. Rédige en français, dans un style académique et structuré : une thèse claire, deux ou trois développements argumentés, une ouverture finale. Utilise un vocabulaire conceptuel exact et ne cite que les auteurs et références présents dans les ressources identifiées. Limite absolue : n'exploite aucune ressource extérieure aux spécifications fournies." },
+        { role: "user", content: "Question : " + question + "\\n\\nRessources identifiées de la consultation (cadre exclusif) :\\n" + specs }
+      ]
+    })
+  });
+  if(!rep.ok){
+    const t = await rep.text();
+    throw new Error("API Mistral (" + rep.status + ") : " + t.substring(0, 180));
+  }
+  const data = await rep.json();
+  const txt = data.choices && data.choices[0] && data.choices[0].message && data.choices[0].message.content ? data.choices[0].message.content : "";
+  if(!txt) throw new Error("réponse vide de l'API.");
+  return txt.trim();
+}
+
+function rendreReponseIA_(question, texte){
+  let h = '<div class="ia-reponse">';
+  h += '<div class="ia-chapeau"><span>Réponse académique de la requête</span><button type="button" class="btn-copier-presse" onclick="copierTexteIA(this)">Copier la réponse</button></div>';
+  h += '<div class="ia-texte">' + esc(texte) + '</div>';
+  h += '<div class="bloc-copiable" data-ia-source="1" style="margin-top:12px">' + boutonCopieDiscret() + '</div>';
+  h += '</div>';
+  return h;
+}
+
+function copierTexteIA(btn){
+  const bloc = btn.closest(".ia-reponse");
+  const texte = bloc ? (bloc.querySelector(".ia-texte").textContent || "") : "";
+  copierPressePapiers_(texte).then(()=>{
+    btn.textContent = "Copié ✓";
+    setTimeout(()=>{ btn.textContent = "Copier la réponse"; }, 1700);
+  });
+}
+
+function copierPressePapiers_(texte){
+  if(navigator.clipboard && navigator.clipboard.writeText) return navigator.clipboard.writeText(texte);
+  return new Promise(res => {
+    const ta = document.createElement("textarea");
+    ta.value = texte;
+    document.body.appendChild(ta);
+    ta.select();
+    document.execCommand("copy");
+    ta.remove();
+    res();
+  });
+}
+
+async function envoyerQuestionIA(){
+  const inp = document.getElementById("ia-question");
+  const btn = document.getElementById("ia-envoyer");
+  if(!inp || inp.disabled) return;
+  const question = (inp.value || "").trim();
+  const note = document.getElementById("ia-note");
+  const zoneReponse = document.getElementById("ia-reponse-zone");
+  if(!zoneReponse) return;
+  if(!question){ note.textContent = "Saisissez d'abord votre question dans la case de recherche."; return; }
+  if(!obtenirCleMistral_()) return;
+
+  const Q = obtenirQcmActifs();
+  const q = Q[etat.qIndex];
+  const specs = construireSpecsQuestion_(q);
+
+  inp.disabled = true;
+  if(btn) btn.disabled = true;
+  note.textContent = "Consultation en cours — limitation stricte aux ressources identifiées par les spécifications de la question…";
+  zoneReponse.innerHTML = '<div class="ia-chargement"><span class="ia-spinner"></span>Mistral rédige une réponse académique…</div>';
+
+  try{
+    const reponseTxt = await appelerMistral_(question, specs);
+    note.textContent = "Consultation unique consommée pour cette réponse. Le contenu ci-dessous est copiable et transférable dans le document.";
+    zoneReponse.innerHTML = rendreReponseIA_(question, reponseTxt);
+    zoneReponse.scrollIntoView({ behavior: "smooth", block: "nearest" });
+  }catch(err){
+    inp.disabled = false;
+    if(btn) btn.disabled = false;
+    note.textContent = "Erreur : " + err.message + " — vous pouvez réessayer.";
+    zoneReponse.innerHTML = "";
+  }
+}`;
+
+/* ---------- Application des patches ---------- */
+const PATCHES = [
+  { nom: "Style : boutons de transfert agrandis + dynamisme + zone IA", ancien: CSS_ANCIEN, nouveau: CSS_NOUVEAU },
+  { nom: "Style : priorité des boutons IA", ancien: CSS2_ANCIEN, nouveau: CSS2_NOUVEAU },
+  { nom: "Bouton de transfert : libellé visible et élargi", ancien: BTN_ANCIEN, nouveau: BTN_NOUVEAU },
+  { nom: "QCM : case de recherche insérée après la réponse", ancien: VALIDATE_ANCIEN, nouveau: VALIDATE_NOUVEAU },
+  { nom: "Copie : transfert du contenu IA vers le document", ancien: COPIE_ANCIEN, nouveau: COPIE_NOUVEAU },
+  { nom: "Moteur IA : consultation Mistral (specs, une par réponse, copie)", ancien: RESTART_ANCIEN, nouveau: JS_IA }
+];
+
+let contenuFinal = "";
+let nomSortie = "app-etude-critique-IA.html";
+
+const drop = document.getElementById("drop");
+const statut = document.getElementById("statut");
+const log = document.getElementById("log");
+const btnTelecharger = document.getElementById("telecharger");
+
+document.getElementById("fichier").addEventListener("change", function(){
+  const f = this.files && this.files[0];
+  if(!f) return;
+  const lecteur = new FileReader();
+  lecteur.onload = ()=> appliquerPatches(String(lecteur.result || ""), f.name);
+  lecteur.readAsText(f, "utf-8");
+});
+drop.addEventListener("dragover", (e)=>{ e.preventDefault(); drop.classList.add("actif"); });
+drop.addEventListener("dragleave", ()=> drop.classList.remove("actif"));
+drop.addEventListener("drop", (e)=>{
+  e.preventDefault();
+  drop.classList.remove("actif");
+  const f = e.dataTransfer.files && e.dataTransfer.files[0];
+  if(!f) return;
+  const lecteur = new FileReader();
+  lecteur.onload = ()=> appliquerPatches(String(lecteur.result || ""), f.name);
+  lecteur.readAsText(f, "utf-8");
+});
+
+function appliquerPatches(contenu, nomFichier){
+  nomSortie = (nomFichier || "app").replace(/\.html?$/i, "") + "-IA-mistral.html";
+  let out = contenu;
+  let echecs = [];
+  let dejaLa = [];
+  log.innerHTML = "";
+
+  PATCHES.forEach(p => {
+    if(out.includes(p.nouveau)){
+      dejaLa.push(p.nom);
+      log.innerHTML += "<div>✔ Déjà appliqué : " + p.nom + "</div>";
+    } else if(out.includes(p.ancien)){
+      out = out.replace(p.ancien, p.nouveau);
+      log.innerHTML += "<div>✔ Appliqué : " + p.nom + "</div>";
+    } else {
+      echecs.push(p.nom);
+      log.innerHTML += "<div>✘ Introuvable : " + p.nom + "</div>";
+    }
+  });
+
+  log.style.display = "block";
+
+  if(echecs.length > 0){
+    statut.className = "ko";
+    statut.innerHTML = "<strong>Patch incomplet (" + echecs.length + " modification(s) non appliquée(s)).</strong><br>" +
+      "Vérifiez que vous avez sélectionné le bon fichier HTML (l'original généré par Gemini contenant « function boutonCopieDiscret » et « function restartQCM »). " +
+      "Aucun fichier n'a été modifié.";
+    btnTelecharger.style.display = "none";
+    contenuFinal = "";
+    return;
+  }
+
+  contenuFinal = out;
+  statut.className = "ok";
+  statut.innerHTML = "<strong>✓ Toutes les modifications ont été appliquées" +
+    (dejaLa.length ? "(" + dejaLa.length + " déjà présentes)" : "") +
+    ".</strong><br>Votre fichier transformé est prêt : cliquez sur le bouton ci-dessous pour le télécharger.";
+  btnTelecharger.style.display = "inline-block";
+}
+
+btnTelecharger.addEventListener("click", ()=>{
+  if(!contenuFinal) return;
+  const blob = new Blob([contenuFinal], { type: "text/html;charset=utf-8" });
+  const a = document.createElement("a");
+  a.href = URL.createObjectURL(blob);
+  a.download = nomSortie;
+  document.body.appendChild(a);
+  a.click();
+  a.remove();
+});
+</script>
+</body>
+</html>
+Affichage de Patcher — App étude critique — IA Mistral + recherche académique
