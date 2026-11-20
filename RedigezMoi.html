@@ -3,1067 +3,1528 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>La Feuille Blanche — Étude documentaire &amp; Saisie au kilomètre (Pronote)</title>
+<title>RédigezMoi — Atelier d'aide à la rédaction (dissertation, explication de texte, essai)</title>
 <style>
 :root{
+  --bg:#ffffff;
+  --card:#fafafa;
+  --ink:#333333;
+  --acc:#006400;
+  --acc2:#4a9d4a;
+  --ok:#2e7d32;
+  --bad:#b03030;
+  --line:#c9c9c9;
+  --font:Arial,Helvetica,'Segoe UI',sans-serif;
+  --shadow:rgba(0,0,0,.08);
   --papier:#ffffff;
-  --fond:#e9eef2;
-  --encre:#1f2d3d;
-  --encre-esprit:#1f6f50;
-  --accent-pronote:#2b8a64;
-  --accent-pronote-clair:#e6f3ed;
-  --encre-fantome:#9fb0bf;
-  --filet:#cfd9e2;
   --taille-corps:18px;
   --interligne:1.72;
-  --police-principale:"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
+body[data-theme="pronote"]{--bg:#ffffff;--card:#fafafa;--ink:#333333;--acc:#006400;--acc2:#4a9d4a;--ok:#2e7d32;--bad:#b03030;--line:#c9c9c9;--font:Arial,Helvetica,'Segoe UI',sans-serif;--shadow:rgba(0,0,0,.08);--papier:#ffffff}
+body[data-theme="moderne"]{--bg:#eaf2fb;--card:#ffffff;--ink:#1b2a3a;--acc:#1c5d99;--acc2:#3f8fd6;--ok:#1e7a46;--bad:#c0392b;--line:#c4d4e8;--font:Verdana,Geneva,sans-serif;--shadow:rgba(28,93,153,.15);--papier:#ffffff}
+body[data-theme="machine"]{--bg:#e6e6e2;--card:#f7f7f2;--ink:#222222;--acc:#0a6b3c;--acc2:#0e8f54;--ok:#0a6b3c;--bad:#b03030;--line:#b8b8ae;--font:'Courier New',Courier,monospace;--shadow:rgba(0,0,0,.12);--papier:#fdfdf9}
+body[data-theme="manuscrit"]{--bg:#f0e6d6;--card:#fbf3e4;--ink:#3b2f1e;--acc:#7a5b1e;--acc2:#a3823a;--ok:#4e6b2f;--bad:#8f3a2a;--line:#d9c9a8;--font:Georgia,'Times New Roman',serif;--shadow:rgba(90,70,40,.15);--papier:#fdf9f0}
+body[data-theme="nuit"]{--bg:#12141a;--card:#1c1f28;--ink:#e8e6e0;--acc:#7fa8ff;--acc2:#a8c2ff;--ok:#7fd695;--bad:#ff8a8a;--line:#343947;--font:'Segoe UI',Helvetica,Arial,sans-serif;--shadow:rgba(0,0,0,.5);--papier:#181b23}
+
 *{box-sizing:border-box;margin:0;padding:0}
 html,body{height:100%}
 body{
-  background:linear-gradient(180deg,#eef3f7 0%,var(--fond) 45%,#dfe7ee 100%);
-  font-family:var(--police-principale);
-  color:var(--encre);
-  overflow-x:hidden;
+  font-family:var(--font);
+  background:var(--bg);
+  color:var(--ink);
+  transition:background .3s,color .3s;
 }
 
-/* ---------- Bandeau institutionnel Pronote ---------- */
-#barre-pronote{
-  position:fixed;top:0;left:0;right:0;height:44px;z-index:42;
-  background:var(--encre-esprit);color:#ffffff;
-  display:flex;align-items:center;justify-content:space-between;
-  padding:0 24px;font-size:13px;letter-spacing:.03em;
-  box-shadow:0 2px 8px rgba(20,45,35,.15);
+#plateau{
+  display:flex;
+  width:100%;
+  min-height:100vh;
+  align-items:stretch;
 }
-#barre-pronote .titre-app{display:flex;align-items:center;gap:10px;font-weight:600}
-#barre-pronote .badge{
-  background:rgba(255,255,255,.18);padding:2px 8px;border-radius:3px;
-  font-size:11px;text-transform:uppercase;letter-spacing:.08em;font-weight:500;
-}
-#couche{display:flex;align-items:center;gap:14px}
-#commandes,#gestes{display:flex;gap:10px;align-items:center}
-#commandes button,#gestes button{
-  background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.25);border-radius:3px;
-  cursor:pointer;font-family:inherit;font-size:11.5px;letter-spacing:.05em;text-transform:uppercase;
-  color:#ffffff;padding:4px 10px;
-  transition:background .2s ease,border-color .2s ease;
-  display:flex;align-items:center;gap:6px;
-}
-#commandes button:hover,#gestes button:hover{background:rgba(255,255,255,.26);border-color:#ffffff}
-#gestes svg{width:13px;height:13px;stroke:currentColor;fill:none;stroke-width:1.6}
 
-/* Menu des apparences */
-#menu-modeles{
-  position:fixed;top:52px;right:24px;z-index:45;width:330px;
-  background:var(--papier);border:1px solid var(--filet);border-radius:4px;
-  box-shadow:0 12px 32px rgba(25,40,55,.16);
-  padding:18px 20px 14px;
-}
-#menu-modeles[hidden]{display:none}
-#menu-modeles h3{
-  font-weight:600;font-size:11.5px;letter-spacing:.12em;text-transform:uppercase;
-  color:var(--encre-esprit);margin-bottom:10px;
-}
-#menu-modeles .item{
-  display:block;width:100%;text-align:left;background:none;border:none;cursor:pointer;
-  font-family:inherit;padding:8px 4px;border-top:1px solid var(--filet);
-}
-#menu-modeles .item:hover{padding-left:8px;background:var(--accent-pronote-clair)}
-#menu-modeles .item .nom{font-size:.92em;font-weight:600;color:var(--encre)}
-#menu-modeles .item .devise{font-size:.8em;color:#5a6b7c}
-#menu-modeles .item.actif .nom::after{content:"  ●";font-size:.7em;color:var(--encre-esprit)}
-
-/* ---------- La scène et le plateau ---------- */
-#scene{padding:68px 24px 120px}
-#plateau{display:flex;gap:28px;align-items:flex-start;justify-content:center;flex-wrap:wrap;max-width:1360px;margin:0 auto}
-
-/* ---------- La feuille centrale ---------- */
+/* ---------- Colonne de gauche : La Feuille ---------- */
 #feuille{
-  position:relative;max-width:820px;flex:1 1 580px;min-height:84vh;
+  position:relative;
+  flex:1 1 56%;
+  min-width:0;
+  min-height:100vh;
   background:var(--papier);
-  border:1px solid var(--filet);
-  border-top:4px solid var(--encre-esprit);
-  padding:46px 70px 92px 74px;
-  box-shadow:0 4px 18px rgba(31,45,61,.07);
-  border-radius:3px;
+  border-right:1px solid var(--line);
+  padding:42px 54px 72px 58px;
   cursor:text;
 }
-/* Règles graduées */
-#regle-h,#regle-v{position:absolute;user-select:none;pointer-events:none;color:var(--encre-fantome)}
-#regle-h{top:12px;left:74px;right:70px;height:18px}
-#regle-v{left:14px;top:46px;bottom:60px;width:18px}
-.graduation{position:absolute;background:var(--encre-fantome);opacity:.7}
+#regle-h,#regle-v{position:absolute;user-select:none;pointer-events:none;color:var(--ink);opacity:.32}
+#regle-h{top:10px;left:58px;right:126px;height:16px}
+#regle-v{left:12px;top:42px;bottom:42px;width:16px}
+.graduation{position:absolute;background:currentColor}
 #regle-h .graduation{bottom:0;width:1px;height:5px}
 #regle-h .graduation.majeure{height:9px}
 #regle-v .graduation{right:0;height:1px;width:5px}
 #regle-v .graduation.majeure{width:9px}
-.nombre{position:absolute;font-size:8.5px;transform:translateX(-50%)}
+.nombre{position:absolute;font-size:8px;transform:translateX(-50%)}
 
-/* ---------- Menu-Titre pleine largeur au-dessus du texte ---------- */
+#commandes-historique{
+  position:absolute;
+  top:7px;
+  right:54px;
+  display:flex;
+  gap:4px;
+  z-index:20;
+  user-select:none;
+}
+#commandes-historique button{
+  width:24px;
+  height:22px;
+  margin:0;
+  padding:0;
+  background:var(--card);
+  color:var(--ink);
+  border:1px solid var(--line);
+  border-radius:4px;
+  font-family:var(--font);
+  font-size:12px;
+  font-weight:700;
+  line-height:1;
+  cursor:pointer;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+}
+#commandes-historique button:hover:not(:disabled){border-color:var(--acc);color:var(--acc)}
+#commandes-historique button:disabled{opacity:.35;cursor:default}
+
 #bloc-titre-sujet{
   position:relative;
   width:100%;
-  margin-bottom:1.2em;
-  border-bottom:2px solid var(--encre-esprit);
-  padding-bottom:10px;
+  margin-bottom:16px;
   user-select:none;
-}
-.barre-meta-sujet{
-  display:flex;justify-content:space-between;align-items:center;
-  font-size:11px;text-transform:uppercase;letter-spacing:.08em;
-  color:var(--encre-esprit);font-weight:700;margin-bottom:6px;
 }
 .btn-titre-pleine-ligne{
   width:100%;
-  display:flex;align-items:center;justify-content:space-between;gap:14px;
-  background:var(--accent-pronote-clair);
-  border:1px solid #b5d8c8;
-  border-radius:4px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:16px;
+  background:var(--card);
+  border:1px solid var(--line);
+  border-left:4px solid var(--acc);
+  border-radius:6px;
   padding:14px 18px;
   text-align:left;
   cursor:pointer;
   font-family:inherit;
-  color:var(--encre);
-  transition:all .2s ease;
+  color:var(--ink);
 }
-.btn-titre-pleine-ligne:hover{
-  background:#d5ece1;border-color:var(--encre-esprit);
-}
+.btn-titre-pleine-ligne:hover{border-color:var(--acc)}
 .btn-titre-pleine-ligne .texte-titre{
-  font-size:1.38em;
+  font-size:1.35em;
   font-weight:700;
-  line-height:1.28;
-  letter-spacing:-.01em;
+  line-height:1.3;
+  color:var(--acc);
   flex:1;
 }
-.btn-titre-pleine-ligne .icone-menu{
-  font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;
-  background:var(--encre-esprit);color:#ffffff;padding:5px 10px;border-radius:3px;
-  white-space:nowrap;
+.btn-titre-pleine-ligne .fleche-titre{
+  font-size:1.1em;
+  color:var(--acc);
+  font-weight:700;
 }
 #liste-sujets-generes{
-  position:absolute;top:100%;left:0;right:0;z-index:35;
-  background:#ffffff;border:1px solid var(--encre-esprit);border-top:none;
-  border-radius:0 0 4px 4px;
-  box-shadow:0 16px 36px rgba(25,40,55,.18);
-  max-height:420px;overflow-y:auto;
+  position:absolute;
+  top:calc(100% + 4px);
+  left:0;
+  right:0;
+  z-index:35;
+  background:var(--papier);
+  border:1px solid var(--line);
+  border-radius:6px;
+  box-shadow:0 10px 28px var(--shadow);
+  max-height:62vh;
+  overflow-y:auto;
 }
 #liste-sujets-generes[hidden]{display:none}
 .option-sujet{
-  width:100%;text-align:left;background:#ffffff;border:none;border-bottom:1px solid #e6edf3;
-  padding:12px 18px;cursor:pointer;font-family:inherit;display:block;
-  transition:background .15s ease;
+  width:100%;
+  text-align:left;
+  background:transparent;
+  border:none;
+  border-bottom:1px solid var(--line);
+  padding:12px 16px;
+  cursor:pointer;
+  font-family:inherit;
+  color:var(--ink);
+  display:block;
 }
-.option-sujet:hover{background:var(--accent-pronote-clair)}
-.option-sujet.actif{background:#eaf5f0;border-left:4px solid var(--encre-esprit)}
-.option-sujet .type-sujet{
-  display:inline-block;font-size:10px;text-transform:uppercase;letter-spacing:.08em;
-  font-weight:700;color:var(--encre-esprit);background:#dceee5;padding:2px 6px;border-radius:2px;
-  margin-bottom:4px;
-}
-.option-sujet .intitule-sujet{
-  display:block;font-size:1.05em;font-weight:700;color:var(--encre);line-height:1.35;
-}
-.option-sujet .cibles-sujet{
-  display:block;font-size:11.5px;color:#5a6b7c;margin-top:4px;
-}
+.option-sujet:last-child{border-bottom:none}
+.option-sujet:hover{background:color-mix(in srgb,var(--acc) 8%,var(--papier))}
+.option-sujet.actif{background:color-mix(in srgb,var(--acc) 12%,var(--papier));border-left:4px solid var(--acc)}
+.option-sujet .intitule-sujet{font-size:1em;font-weight:700;line-height:1.35;display:block}
 
-/* Extrait du documentaire repliable */
 details.extrait-doc{
-  background:#f6f9fb;
-  border:1px solid var(--filet);
-  border-left:3px solid var(--encre-esprit);
-  padding:9px 14px;margin-bottom:1.1em;border-radius:0 3px 3px 0;
-  font-size:.84em;line-height:1.52;color:#2b3e50;
+  background:var(--card);
+  border:1px solid var(--line);
+  border-left:3px solid var(--acc);
+  padding:10px 14px;
+  margin-bottom:22px;
+  border-radius:0 5px 5px 0;
+  font-size:.88em;
+  line-height:1.55;
+  color:var(--ink);
 }
 details.extrait-doc summary{
-  cursor:pointer;font-weight:700;color:var(--encre-esprit);
-  font-size:.86em;text-transform:uppercase;letter-spacing:.05em;
-}
-details.extrait-doc blockquote{font-style:italic;margin-top:7px;color:#1f2d3d}
-
-/* ---------- Nuage de tags dynamique au-dessus de l'éditeur ---------- */
-#zone-nuage-tags{
-  background:#f8fbfa;
-  border:1px solid #d4e4dc;
-  border-radius:4px;
-  padding:11px 14px;
-  margin-bottom:1.3em;
+  cursor:pointer;
+  font-weight:700;
+  color:var(--acc);
   user-select:none;
 }
-.entete-nuage{
-  display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;
-  margin-bottom:8px;
+.grille-support{
+  display:flex;
+  gap:16px;
+  margin-top:12px;
+  align-items:flex-start;
+  flex-wrap:wrap;
 }
-.entete-nuage .titre-nuage{
-  font-size:11px;text-transform:uppercase;letter-spacing:.08em;font-weight:700;color:var(--encre-esprit);
+.bloc-video-mini{
+  flex:0 0 280px;
+  width:280px;
+  display:flex;
+  flex-direction:column;
+  gap:6px;
 }
-.actions-nuage{display:flex;gap:8px;align-items:center}
-#btn-valider-tags{
-  background:var(--encre-esprit);color:#ffffff;border:none;border-radius:3px;
-  padding:5px 12px;font-family:inherit;font-size:11.5px;font-weight:700;
-  letter-spacing:.05em;text-transform:uppercase;cursor:pointer;
-  transition:background .2s ease,transform .1s ease;
+.cadre-player{
+  position:relative;
+  width:100%;
+  aspect-ratio:16/9;
+  background:#111;
+  border-radius:5px;
+  overflow:hidden;
+  border:1px solid var(--line);
 }
-#btn-valider-tags:hover{background:var(--accent-pronote)}
-#btn-valider-tags:active{transform:scale(.98)}
-#btn-vider-tags{
-  background:transparent;color:#5a6b7c;border:1px solid var(--filet);border-radius:3px;
-  padding:4px 9px;font-family:inherit;font-size:11px;cursor:pointer;
+.cadre-player iframe{
+  position:absolute;
+  inset:0;
+  width:100%;
+  height:100%;
+  border:0;
 }
-#btn-vider-tags:hover{border-color:#5a6b7c;color:var(--encre)}
-#nuage-tags{
-  display:flex;flex-wrap:wrap;gap:6px;align-items:center;
+.vignette-repli{
+  position:relative;
+  width:100%;
+  height:100%;
+  cursor:pointer;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background:#181818;
 }
-.tag-nuage{
-  background:#ffffff;border:1px solid #c5d6ce;border-radius:14px;
-  padding:4px 11px;font-family:inherit;color:#2c3e50;
-  cursor:pointer;touch-action:manipulation;
-  transition:all .18s ease;
-  line-height:1.2;
+.vignette-repli img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  display:block;
 }
-.tag-nuage:hover{border-color:var(--encre-esprit);background:#eef7f3}
-.tag-nuage.active-texte{
-  border-style:solid;border-color:#52a37f;background:#f0f9f5;color:#185a3f;
+.vignette-repli .btn-play-overlay{
+  position:absolute;
+  width:46px;
+  height:32px;
+  border-radius:8px;
+  background:rgba(0,0,0,.78);
+  color:#fff;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:15px;
+  border:1px solid rgba(255,255,255,.35);
 }
-.tag-nuage.selectionne{
-  background:var(--encre-esprit) !important;
-  color:#ffffff !important;
-  border-color:var(--encre-esprit) !important;
+.vignette-repli:hover .btn-play-overlay{background:var(--acc)}
+.controles-timestamps{
+  display:flex;
+  flex-wrap:wrap;
+  gap:4px;
+}
+.btn-ts{
+  background:var(--papier);
+  border:1px solid var(--line);
+  border-radius:4px;
+  padding:2px 6px;
+  font-family:inherit;
+  font-size:.78em;
+  color:var(--acc);
   font-weight:700;
-  box-shadow:0 2px 6px rgba(31,111,80,.25);
+  cursor:pointer;
+}
+.btn-ts:hover{background:var(--acc);color:#fff;border-color:var(--acc)}
+.bloc-texte-support{flex:1 1 240px;min-width:0}
+.bloc-texte-support blockquote{font-style:italic;margin-bottom:8px}
+.lien-source-yt{
+  display:inline-block;
+  font-size:.82em;
+  color:var(--acc);
+  text-decoration:none;
+  border-bottom:1px dotted var(--acc);
 }
 
-/* ---------- Éditeur continu au kilomètre ---------- */
 #editeur-km{
+  position:relative;
   outline:none;
-  min-height:46vh;
+  min-height:58vh;
   font-size:var(--taille-corps);
   line-height:var(--interligne);
-  color:var(--encre);
-  caret-color:var(--encre-esprit);
+  color:var(--ink);
+  caret-color:transparent;
   white-space:pre-wrap;
   word-wrap:break-word;
 }
-#editeur-km p{
-  margin:0 0 .85em;
-  text-indent:1.25em;
-}
-#editeur-km:empty::before{
-  content:"Rédigez votre dissertation, essai ou explication de texte au kilomètre ici (Entrée pour changer de paragraphe)...";
-  color:var(--encre-fantome);
-  font-style:italic;
+#editeur-km p{margin:0 0 .9em;text-indent:1.25em}
+#curseur-bloc{
+  position:absolute;
+  width:10px;
+  height:1.12em;
+  background:var(--acc);
+  opacity:.82;
   pointer-events:none;
+  z-index:15;
+  animation:curseurCarre 1s steps(1,end) infinite;
+  display:none;
 }
+@keyframes curseurCarre{0%,49%{opacity:.82}50%,100%{opacity:0}}
 .insertion-fraiche{
-  background:var(--accent-pronote-clair);
+  background:color-mix(in srgb,var(--acc) 16%,var(--papier));
   border-radius:2px;
-  transition:background 1.6s ease;
+  transition:background 1.4s ease;
 }
 
-/* Barre de statut bas de feuille */
-#statut-frappe{
-  position:absolute;bottom:14px;right:26px;left:74px;
-  display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;
-  font-size:11.5px;color:#6c7e90;pointer-events:none;
-  border-top:1px solid #eef2f6;padding-top:8px;
+/* ---------- Colonne de droite ---------- */
+#volet-droit{
+  flex:1 1 44%;
+  min-width:340px;
+  min-height:100vh;
+  background:var(--bg);
+  padding:18px 22px 48px;
+  display:flex;
+  flex-direction:column;
+  gap:16px;
 }
-#statut-frappe .etat-sync{display:flex;align-items:center;gap:6px}
-#statut-frappe .point{
-  width:7px;height:7px;border-radius:50%;background:var(--accent-pronote);
-}
-#statut-frappe.en-frappe .point{opacity:.45;transform:scale(.8)}
 
-/* ---------- Volet de droite : QCM filtrés & vérification ---------- */
-#zone-esprit{
-  position:sticky;top:60px;
-  flex:0 0 415px;width:415px;
-  padding:20px 20px 18px;
-  background:var(--papier);
-  border:1px solid var(--filet);
-  border-top:4px solid var(--accent-pronote);
-  border-radius:3px;
-  box-shadow:0 4px 18px rgba(31,45,61,.08);
-  max-height:calc(100vh - 76px);
+.entete-volet-droit{
+  display:flex;
+  align-items:flex-start;
+  justify-content:space-between;
+  gap:12px;
+}
+
+#zone-cascade-tags{
+  flex:1;
+  min-height:40px;
+  display:flex;
+  flex-direction:column;
+  gap:8px;
+}
+#cascade-liste{
+  display:flex;
+  flex-direction:column;
+  gap:7px;
+  max-height:240px;
   overflow-y:auto;
+  padding-right:4px;
 }
-.entete-qcm{
-  display:flex;justify-content:space-between;align-items:center;gap:8px;
-  margin-bottom:10px;padding-bottom:8px;border-bottom:1px solid var(--filet);
-  font-size:11px;text-transform:uppercase;letter-spacing:.07em;font-weight:700;
-  color:var(--encre-esprit);
+.strate-tags{
+  display:flex;
+  flex-wrap:wrap;
+  gap:6px;
+  align-items:center;
+  transition:opacity .35s ease;
 }
-.nav-qcm-rapide{display:flex;align-items:center;gap:5px}
-.btn-nav-qcm{
-  background:#f1f6f9;border:1px solid var(--filet);border-radius:3px;
-  padding:3px 8px;font-family:inherit;font-size:11px;font-weight:700;
-  color:var(--encre);cursor:pointer;
+.tag-nuage{
+  background:var(--card);
+  border:1px solid var(--line);
+  border-radius:14px;
+  padding:5px 11px;
+  font-family:var(--font);
+  font-size:.86em;
+  color:var(--ink);
+  cursor:pointer;
+  touch-action:manipulation;
 }
-.btn-nav-qcm:hover{background:var(--encre-esprit);color:#ffffff;border-color:var(--encre-esprit)}
-.select-qcm-direct{
-  font-family:inherit;font-size:11px;padding:3px 6px;max-width:165px;
-  border:1px solid var(--filet);border-radius:3px;background:#f7fafc;color:var(--encre);
+.tag-nuage:hover{border-color:var(--acc)}
+.tag-nuage.selectionne{
+  background:var(--acc);
+  color:#ffffff;
+  border-color:var(--acc);
+  font-weight:700;
+}
+.actions-cascade{display:flex;gap:8px;align-items:center}
+#btn-selectionner-tags{
+  margin:0;
+  background:var(--acc);
+  color:#ffffff;
+  border:none;
+  border-radius:6px;
+  padding:7px 14px;
+  font-family:var(--font);
+  font-size:.85em;
+  font-weight:700;
+  cursor:pointer;
+}
+#btn-deselectionner-tags{
+  margin:0;
+  background:var(--card);
+  color:var(--ink);
+  border:1px solid var(--line);
+  border-radius:6px;
+  padding:6px 10px;
+  font-family:var(--font);
+  font-size:.82em;
   cursor:pointer;
 }
 
-/* Panneau de vérification de la réponse écrite par rapport au sujet choisi */
-.verif-sujet{
-  background:#f5f9f7;border:1px solid #cde2d7;border-radius:3px;
-  padding:9px 11px;margin-bottom:10px;font-size:12px;
+.actions-droite-haut{
+  display:flex;
+  align-items:center;
+  gap:8px;
+  flex-shrink:0;
 }
-.verif-sujet .verif-header{
-  display:flex;justify-content:space-between;align-items:center;
-  font-size:10.5px;text-transform:uppercase;letter-spacing:.07em;font-weight:700;
-  color:var(--encre-esprit);margin-bottom:5px;
+.badge-google{
+  display:inline-flex;
+  align-items:center;
+  gap:7px;
+  padding:5px 12px 5px 8px;
+  border-radius:18px;
+  border:1px solid var(--line);
+  background:var(--card);
+  font-size:.82em;
+  font-weight:600;
+  color:var(--ink);
+  cursor:pointer;
+  max-width:225px;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap;
 }
-.jauge-barre{
-  height:6px;background:#dce8e2;border-radius:3px;overflow:hidden;margin-bottom:6px;
+.badge-google:hover{border-color:var(--acc);color:var(--acc)}
+.badge-google .point-g{
+  width:8px;height:8px;border-radius:50%;background:var(--line);flex-shrink:0;
 }
-.jauge-remplissage{
-  height:100%;background:var(--encre-esprit);transition:width .35s ease;
-}
-.verif-detail{font-size:11.5px;line-height:1.42;color:#2c3e50}
+.badge-google.connecte{border-color:var(--ok)}
+.badge-google.connecte .point-g{background:var(--ok)}
+.badge-google.syncing .point-g{background:#e09f1f}
 
-/* Petits tags affichés dans le volet de droite pour le QCM actif */
-.tags-volet-droit{
-  display:flex;flex-wrap:wrap;gap:4px;margin-bottom:10px;
+button.burgerbtn{
+  margin:0;
+  width:38px;
+  height:38px;
+  flex-shrink:0;
+  padding:0;
+  border-radius:9px;
+  background:var(--card);
+  color:var(--ink);
+  border:1px solid var(--line);
+  font:700 1.15em/1 var(--font);
+  cursor:pointer;
+  box-shadow:0 1px 4px var(--shadow);
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
 }
+button.burgerbtn:hover{border-color:var(--acc);color:var(--acc)}
+
+.menuwrap{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.45);
+  z-index:60;
+  display:flex;
+  align-items:flex-start;
+  justify-content:flex-end;
+  padding:56px 18px 18px;
+  overflow:auto;
+}
+.menubox{
+  background:var(--card);
+  color:var(--ink);
+  border:1px solid var(--line);
+  border-radius:14px;
+  min-width:265px;
+  max-width:320px;
+  padding:10px;
+  box-shadow:0 12px 40px rgba(0,0,0,.4);
+  font-family:var(--font);
+}
+.menubox .mtitle{
+  font-weight:700;
+  padding:8px 12px 6px;
+  border-bottom:1px solid var(--line);
+  margin-bottom:6px;
+  display:flex;
+  align-items:center;
+  gap:8px;
+}
+.menubox button{
+  display:flex;
+  width:100%;
+  margin:0;
+  background:transparent;
+  color:var(--ink);
+  border:none;
+  border-radius:8px;
+  padding:10px 12px;
+  font-size:.92em;
+  text-align:left;
+  align-items:center;
+  gap:10px;
+  cursor:pointer;
+}
+.menubox button:hover{
+  background:color-mix(in srgb,var(--acc) 10%,var(--card));
+  color:var(--acc);
+}
+.menubox .mic{width:20px;text-align:center;font-weight:700}
+
+/* ---------- Carte QCM ---------- */
+#zone-qcm-wrapper{display:flex;flex-direction:column;gap:10px}
+#zone-qcm-wrapper[hidden]{display:none}
+.barre-qcm-meta{display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap}
+.mini-tags-qcm{display:flex;flex-wrap:wrap;gap:4px;flex:1}
 .mini-tag{
-  font-size:10px;padding:2px 6px;border-radius:10px;
-  background:#eef3f7;color:#4a5d70;border:1px solid #d5dfe8;
+  font-size:.74em;
+  padding:2px 7px;
+  border-radius:10px;
+  background:var(--card);
+  border:1px solid var(--line);
+  color:var(--ink);
+  opacity:.85;
 }
-.mini-tag.match{
-  background:var(--accent-pronote-clair);color:var(--encre-esprit);border-color:#9fd0ba;font-weight:700;
+.mini-tag.actif{border-color:var(--acc);color:var(--acc);font-weight:700;opacity:1}
+.nav-qcm-btns{display:flex;align-items:center;gap:4px}
+.nav-qcm-btns button{
+  margin:0;padding:4px 9px;font-size:.82em;background:var(--card);color:var(--ink);
+  border:1px solid var(--line);border-radius:5px;cursor:pointer;
+}
+.nav-qcm-btns button:hover{border-color:var(--acc);color:var(--acc)}
+
+.card{
+  background:var(--card);
+  border:1px solid var(--line);
+  border-radius:6px;
+  padding:20px 22px 22px;
+  box-shadow:0 3px 10px var(--shadow);
+  animation:cardIn .45s ease;
+}
+@keyframes cardIn{from{opacity:0;transform:translateY(14px) scale(.99)}to{opacity:1;transform:none}}
+
+.qcm-header-graphique{
+  display:flex;
+  flex-direction:column;
+  gap:10px;
+  margin-bottom:16px;
+  padding-bottom:12px;
+  border-bottom:1px solid var(--line);
+}
+.qcm-header-top{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:10px;
+}
+.qcm-titre-court{
+  font-size:1.02em;
+  font-weight:700;
+  color:var(--acc);
+  line-height:1.25;
+  flex:1;
+}
+.qcm-actions-header{
+  display:flex;
+  align-items:center;
+  gap:6px;
+  flex-shrink:0;
+}
+.badge-cat-graphique{
+  display:inline-flex;
+  align-items:center;
+  gap:5px;
+  padding:3px 9px;
+  border-radius:12px;
+  font-size:.74em;
+  font-weight:700;
+  letter-spacing:.02em;
+  background:color-mix(in srgb,var(--cat-color,var(--acc)) 14%,var(--papier));
+  color:var(--cat-color,var(--acc));
+  border:1px solid color-mix(in srgb,var(--cat-color,var(--acc)) 45%,transparent);
+}
+.badge-cat-graphique .dot-cat{
+  width:7px;height:7px;border-radius:50%;background:var(--cat-color,var(--acc));
+}
+.btn-favori-qcm{
+  margin:0 !important;
+  padding:3px 9px !important;
+  border-radius:12px !important;
+  font-size:.8em !important;
+  font-weight:700 !important;
+  background:var(--papier) !important;
+  color:var(--ink) !important;
+  border:1px solid var(--line) !important;
+  cursor:pointer;
+  display:inline-flex;
+  align-items:center;
+  gap:4px;
+  transition:all .18s ease;
+}
+.btn-favori-qcm:hover{
+  border-color:#e09f1f !important;
+  color:#b87d0a !important;
+}
+.btn-favori-qcm.actif{
+  background:#fff8e6 !important;
+  border-color:#e09f1f !important;
+  color:#b87d0a !important;
 }
 
-#zone-esprit .sujet{font-size:.93em;font-weight:700;line-height:1.38;margin-bottom:.5em;color:var(--encre)}
-#zone-esprit .vignette{
-  font-size:.8em;line-height:1.45;background:#f4f7f9;padding:7px 10px;
-  border-radius:3px;margin-bottom:.75em;color:#3d4f60;
+.jauge-segments{
+  display:flex;
+  align-items:center;
+  gap:4px;
+  width:100%;
+  height:7px;
 }
-#zone-esprit .reponse{
-  font-size:.83em;line-height:1.48;margin-bottom:.85em;padding:9px 11px;
-  background:var(--accent-pronote-clair);border-left:3px solid var(--encre-esprit);
-  border-radius:0 3px 3px 0;color:#173b2d;
+.segment-prog{
+  flex:1;
+  height:100%;
+  border-radius:4px;
+  background:var(--line);
+  cursor:pointer;
+  transition:background .3s ease,transform .15s ease;
 }
-.btn-inserer-amorce{
-  display:inline-flex;align-items:center;gap:5px;
-  margin-top:6px;background:#ffffff;border:1px solid var(--encre-esprit);
-  color:var(--encre-esprit);border-radius:3px;padding:4px 9px;
-  font-family:inherit;font-size:11px;font-weight:600;cursor:pointer;
-}
-.btn-inserer-amorce:hover{background:var(--encre-esprit);color:#ffffff}
+.segment-prog:hover{transform:scaleY(1.35)}
+.segment-prog.fait-ok{background:var(--ok)}
+.segment-prog.fait-ko{background:var(--bad)}
+.segment-prog.courant{background:var(--cat-color,var(--acc));box-shadow:0 0 0 1px color-mix(in srgb,var(--cat-color,var(--acc)) 40%,transparent)}
 
-/* ---------- Barre de recherche IA (1 question par question QCM) ---------- */
-.zone-ia-qcm{
+.bloc-copiable{position:relative;padding-right:30px}
+.btn-inserer-curseur{
+  position:absolute;top:4px;right:4px;width:22px;height:22px;margin:0 !important;padding:0 !important;
+  border-radius:4px !important;background:transparent !important;color:var(--ink) !important;
+  border:1px solid transparent !important;font-size:13px !important;line-height:1 !important;
+  opacity:.32;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;
+}
+.bloc-copiable:hover .btn-inserer-curseur{opacity:.95;color:var(--acc) !important;border-color:var(--line) !important;background:var(--papier) !important}
+.btn-inserer-curseur:hover{background:var(--acc) !important;color:#ffffff !important;border-color:var(--acc) !important}
+
+.qtext{font-size:1.08em;margin:0 0 14px;line-height:1.5}
+label.opt,div.opt{
+  display:block;border:1px solid var(--line);border-radius:5px;
+  padding:10px 34px 10px 12px;margin:8px 0;cursor:pointer;line-height:1.4;
+}
+label.opt.sel,div.opt.sel{border-color:var(--acc);background:color-mix(in srgb,var(--acc) 10%,var(--card))}
+label.opt.good,div.opt.good{border-color:var(--ok);background:color-mix(in srgb,var(--ok) 15%,var(--card))}
+label.opt.bad,div.opt.bad{border-color:var(--bad);background:color-mix(in srgb,var(--bad) 12%,var(--card))}
+
+input[type=text],input[type=email]{
+  font-family:var(--font);font-size:1em;color:var(--ink);
+  border:1px solid var(--line);border-radius:7px;padding:9px 11px;width:100%;background:var(--card);
+}
+.blank input{display:inline-block;min-width:120px;padding:7px 9px;border:1px solid var(--line);border-radius:6px;background:var(--card);color:var(--ink)}
+select.pairsel{width:100%;margin:6px 0;padding:9px;border:1px solid var(--line);border-radius:7px;background:var(--card);color:var(--ink);font-family:var(--font)}
+
+.card button:not(.btn-inserer-curseur):not(.btn-favori-qcm):not(.btn-demander-ia){
+  font-family:var(--font);font-size:1em;font-weight:bold;background:var(--acc);color:#fff;
+  border:none;border-radius:6px;padding:11px 24px;cursor:pointer;margin-top:14px;
+}
+.card button.ghost{background:var(--ink)}
+
+.fb{
+  margin-top:14px;padding:12px 34px 12px 14px;border-radius:9px;line-height:1.5;font-size:.95em;
+}
+.fb.ok{background:color-mix(in srgb,var(--ok) 14%,var(--card));border:1px solid var(--ok)}
+.fb.no{background:color-mix(in srgb,var(--bad) 12%,var(--card));border:1px solid var(--bad)}
+
+/* ---------- Barre de recherche IA + indications supplémentaires (1 requête max / question) ---------- */
+.barre-recherche-ia{
+  margin-top:14px;
+  padding-top:12px;
+  border-top:1px dashed color-mix(in srgb,var(--acc) 35%,var(--line));
+  display:flex;
+  flex-direction:column;
+  gap:6px;
+}
+.entete-recherche-ia{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  font-size:.76em;
+  font-weight:700;
+  text-transform:uppercase;
+  letter-spacing:.04em;
+  color:var(--acc);
+}
+.ligne-saisie-ia{
+  display:flex;
+  gap:8px;
+  align-items:stretch;
+}
+.ligne-saisie-ia input[type="text"]{
+  flex:1;
+  min-width:0;
+  padding:8px 11px !important;
+  font-size:.9em !important;
+  border-radius:6px !important;
+  background:var(--papier) !important;
+}
+.ligne-saisie-ia input[type="text"]:disabled{
+  opacity:.65;
+  cursor:not-allowed;
+}
+button.btn-demander-ia{
+  margin:0 !important;
+  padding:8px 16px !important;
+  font-family:var(--font) !important;
+  font-size:.88em !important;
+  font-weight:700 !important;
+  background:var(--acc) !important;
+  color:#ffffff !important;
+  border:none !important;
+  border-radius:6px !important;
+  cursor:pointer;
+  white-space:nowrap;
+}
+button.btn-demander-ia:hover:not(:disabled){
+  background:var(--acc2) !important;
+}
+button.btn-demander-ia:disabled{
+  opacity:.5;
+  cursor:not-allowed;
+}
+.ligne-indications-ia{
+  display:flex;
+  align-items:stretch;
+}
+.ligne-indications-ia input[type="text"]{
+  width:100%;
+  padding:7px 11px !important;
+  font-size:.84em !important;
+  border-radius:6px !important;
+  border-style:dashed !important;
+  background:color-mix(in srgb,var(--acc) 3%,var(--papier)) !important;
+}
+.ligne-indications-ia input[type="text"]:disabled{
+  opacity:.65;
+  cursor:not-allowed;
+}
+
+.reponse-ia-academique{
+  margin-top:8px;
+  padding:12px 34px 12px 14px;
+  border-radius:7px;
+  background:var(--papier);
+  border:1px solid var(--line);
+  border-left:3px solid var(--acc);
+  font-size:.92em;
+  line-height:1.62;
+  color:var(--ink);
+}
+.reponse-ia-academique .titre-ia-term{
+  display:block;
+  font-size:.78em;
+  font-weight:700;
+  text-transform:uppercase;
+  letter-spacing:.04em;
+  color:var(--acc);
+  margin-bottom:6px;
+}
+.reponse-ia-academique p{
+  margin-bottom:8px;
+}
+.reponse-ia-academique p:last-child{
+  margin-bottom:0;
+}
+
+/* Signature du modèle : vignette graphique + identifiant du modèle */
+.signature-modele-ia{
   margin-top:10px;
-  padding-top:9px;
-  border-top:1px dashed #b5d8c8;
+  padding-top:8px;
+  border-top:1px solid var(--line);
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  font-size:.78em;
+  color:var(--ink);
+  opacity:.88;
 }
-.ia-entete{
+.vignette-logo-llm{
+  width:22px;
+  height:22px;
+  border-radius:5px;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  background:color-mix(in srgb,var(--acc) 12%,var(--card));
+  border:1px solid color-mix(in srgb,var(--acc) 35%,var(--line));
+  flex-shrink:0;
+}
+.signature-modele-ia code{
+  font-family:'Courier New',Courier,monospace;
+  font-size:.95em;
+  font-weight:700;
+  color:var(--acc);
+}
+
+.score{font-size:1.25em;text-align:center;margin:10px 0}
+.score .big{font-size:2em;color:var(--acc);display:block}
+.bar{height:12px;background:var(--line);border-radius:6px;overflow:hidden;margin:14px 0}
+.bar>div{height:100%;background:var(--ok);transition:width 1.1s cubic-bezier(.25,.9,.3,1)}
+.rq{border:1px solid var(--line);border-radius:10px;padding:14px;margin:14px 0;background:color-mix(in srgb,var(--acc) 3%,var(--card))}
+
+/* Fenêtre de connexion RédigezMoi & Modales */
+.modalwrap{
+  position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:65;
+  display:flex;align-items:flex-start;justify-content:center;padding:38px 16px;overflow:auto;
+}
+.modalbox{
+  background:var(--card);color:var(--ink);border:1px solid var(--line);
+  border-radius:12px;max-width:560px;width:100%;padding:28px 30px;
+  box-shadow:0 14px 42px rgba(0,0,0,.35);font-family:var(--font);
+}
+.entete-app-modale{
+  display:flex;
+  align-items:center;
+  gap:14px;
+  padding-bottom:14px;
+  margin-bottom:14px;
+  border-bottom:1px solid var(--line);
+}
+.logo-c2phi{
+  width:46px;
+  height:46px;
+  flex-shrink:0;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+}
+.logo-c2phi-mini{
+  width:20px;
+  height:20px;
+  flex-shrink:0;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+}
+.titre-app-modale h2{
+  font-size:1.35em;
+  color:var(--acc);
+  margin:0 0 2px;
+  line-height:1.2;
+}
+.titre-app-modale .sous-titre-app{
+  font-size:.84em;
+  color:var(--ink);
+  opacity:.78;
+  margin:0;
+}
+.titre-app-modale a{
+  color:var(--acc);
+  text-decoration:none;
+  border-bottom:1px dotted var(--acc);
+}
+.presentation-app{
+  font-size:.92em;
+  line-height:1.6;
+  color:var(--ink);
+  margin-bottom:14px;
+}
+.presentation-app strong{color:var(--acc)}
+.modalbox p,.modalbox div{line-height:1.55;margin-bottom:10px}
+.modalbox button{
+  font-family:var(--font);font-size:.94em;font-weight:bold;background:var(--acc);
+  color:#fff;border:none;border-radius:6px;padding:10px 18px;cursor:pointer;margin-right:8px;margin-top:6px;
+}
+.modalbox button.ghost{background:var(--ink)}
+.modalbox button.danger{background:var(--bad)}
+.btn-google-officiel{
+  width:100%;
+  display:flex !important;
+  align-items:center;
+  justify-content:center;
+  gap:10px;
+  background:#ffffff !important;
+  color:#3c4043 !important;
+  border:1px solid #dadce0 !important;
+  border-radius:6px !important;
+  padding:11px 16px !important;
+  font-size:.98em !important;
+  box-shadow:0 1px 3px rgba(0,0,0,.08);
+}
+.btn-google-officiel:hover{
+  background:#f8f9fa !important;
+  border-color:#c6c9ce !important;
+}
+.val-param{
+  background:color-mix(in srgb,var(--acc) 12%,var(--card));
+  color:var(--acc);border:1px solid var(--acc);border-radius:4px;
+  padding:2px 8px;font-weight:bold;cursor:pointer;
+}
+.champ-config{margin:10px 0}
+.champ-config label{display:block;font-size:.86em;font-weight:700;margin-bottom:4px}
+.statut-drive{
+  padding:10px 12px;border-radius:6px;font-size:.9em;
+  background:color-mix(in srgb,var(--acc) 8%,var(--papier));
+  border:1px solid var(--line);
+}
+.liste-fichiers-drive{
+  max-height:170px;overflow-y:auto;border:1px solid var(--line);
+  border-radius:6px;background:var(--papier);margin-top:8px;
+}
+.item-fichier-drive{
   display:flex;justify-content:space-between;align-items:center;
-  font-size:10px;text-transform:uppercase;letter-spacing:.07em;
-  font-weight:700;color:var(--encre-esprit);margin-bottom:6px;
+  padding:8px 12px;border-bottom:1px solid var(--line);font-size:.86em;
 }
-.ia-form-ligne{
-  display:flex;gap:6px;align-items:stretch;
-}
-.ia-input{
-  flex:1;min-width:0;
-  background:#ffffff;border:1px solid #b5d8c8;border-radius:3px;
-  padding:6px 9px;font-family:inherit;font-size:12px;color:var(--encre);
-  outline:none;
-}
-.ia-input:focus{border-color:var(--encre-esprit);box-shadow:0 0 0 2px rgba(31,111,80,.12)}
-.ia-input:disabled{background:#edf3f0;color:#6c7e90;cursor:not-allowed}
-.ia-btn{
-  background:var(--encre-esprit);color:#ffffff;border:none;border-radius:3px;
-  padding:6px 11px;font-family:inherit;font-size:11px;font-weight:700;
-  letter-spacing:.04em;text-transform:uppercase;cursor:pointer;white-space:nowrap;
-  transition:background .18s ease;
-}
-.ia-btn:hover:not(:disabled){background:var(--accent-pronote)}
-.ia-btn:disabled{background:#8fa99e;cursor:not-allowed}
-.ia-reponse-academique{
-  margin-top:8px;padding:9px 11px;
-  background:#ffffff;border:1px solid #cde2d7;border-left:3px solid var(--accent-pronote);
-  border-radius:3px;font-size:12.2px;line-height:1.55;color:var(--encre);
-}
-.ia-reponse-academique .ia-badge-prof{
-  display:block;font-size:10px;text-transform:uppercase;letter-spacing:.07em;
-  font-weight:700;color:var(--encre-esprit);margin-bottom:4px;
-}
-.ia-reponse-academique p{margin-bottom:6px}
-.ia-reponse-academique p:last-child{margin-bottom:0}
+.item-fichier-drive:last-child{border-bottom:none}
+.item-fichier-drive button{margin:0;padding:4px 10px;font-size:.82em}
 
-#zone-esprit .question{font-size:.9em;font-weight:600;line-height:1.45;margin-bottom:.65em}
-#zone-esprit .qcm{display:flex;flex-direction:column;gap:6px}
-#zone-esprit .choix{
-  background:#f8fafc;border:1px solid var(--filet);border-radius:3px;
-  cursor:pointer;font-family:inherit;text-align:left;
-  font-size:12.2px;line-height:1.36;color:var(--encre);
-  padding:7px 10px;transition:all .18s ease;
-}
-#zone-esprit .choix:hover{
-  background:var(--accent-pronote-clair);border-color:var(--encre-esprit);padding-left:13px;
-}
-
-/* Variantes visuelles */
-.modele-pronote{color:var(--encre)}
-.modele-enigme{background:#1e262c !important;color:#e6eef4 !important;border-top-color:#48b88a !important}
-.modele-enigme .sujet{color:#ffffff !important}
-.modele-enigme .vignette,.modele-enigme .verif-sujet{background:#28333b !important;color:#bfd0de !important;border-color:#3b4a56 !important}
-.modele-enigme .verif-detail{color:#d5e2ec !important}
-.modele-enigme .reponse{background:#213a31 !important;color:#bfe8d5 !important}
-.modele-enigme .ia-reponse-academique{background:#28333b !important;color:#e6eef4 !important;border-color:#3b4a56 !important}
-.modele-enigme .ia-input{background:#1e262c !important;color:#ffffff !important;border-color:#3b4a56 !important}
-.modele-enigme .choix{background:#28333b !important;border-color:#3b4a56 !important;color:#e6eef4 !important}
-.modele-cartel{background:#ffffff !important;color:#111111 !important;border:2px solid #111111 !important;font-family:Georgia,serif}
-.modele-voix{background:#f9fbf9 !important;border:1px dashed var(--encre-esprit) !important;font-family:Georgia,serif;font-style:italic}
-.modele-maitre{border:3px double var(--encre-esprit) !important;font-family:Georgia,serif}
-
-/* ---------- Panneau du contrat ---------- */
-#panneau{
-  position:fixed;inset:0;z-index:50;display:flex;align-items:flex-start;justify-content:center;
-  background:rgba(31,45,61,.55);backdrop-filter:blur(5px);
-  overflow-y:auto;padding:64px 24px;
-}
-#panneau[hidden]{display:none}
-#panneau .plume{
-  background:var(--papier);max-width:740px;width:100%;border-radius:4px;
-  border-top:4px solid var(--encre-esprit);
-  padding:34px 44px 32px;box-shadow:0 14px 40px rgba(20,35,50,.22);
-}
-.petit-capital{
-  font-size:12px;letter-spacing:.14em;text-transform:uppercase;
-  color:var(--encre-esprit);margin-bottom:1em;font-weight:700;
-}
-.article-param{font-size:.9em;line-height:1.58;margin:.55em 0}
-.valeur{
-  background:var(--accent-pronote-clair);border:1px solid #b5d8c8;border-radius:3px;
-  cursor:pointer;font-family:inherit;font-size:inherit;font-weight:600;
-  color:var(--encre-esprit);padding:1px 7px;
-}
-.stats-perf{
-  margin-top:1em;padding:12px 14px;background:#f4f8fa;border:1px solid var(--filet);
-  border-radius:4px;font-size:.85em;line-height:1.6;
-}
-.actions-contrat{margin-top:1.4em;padding-top:1em;border-top:1px solid var(--filet);display:flex;flex-wrap:wrap;gap:10px 16px}
-.action{
-  background:#f2f6f9;border:1px solid var(--filet);border-radius:3px;cursor:pointer;font-family:inherit;
-  font-size:11.5px;letter-spacing:.08em;text-transform:uppercase;font-weight:600;color:var(--encre);
-  padding:6px 12px;
-}
-.action:hover{background:var(--encre-esprit);color:#ffffff;border-color:var(--encre-esprit)}
-.action.dangereuse:hover{background:#b83b2b;border-color:#b83b2b;color:#ffffff}
-
-@media (max-width:1140px){
-  #zone-esprit{position:static;flex-basis:100%;width:100%;max-height:none}
-  #feuille{min-height:55vh}
-}
-@media (max-width:640px){
-  #feuille{padding:40px 20px 64px}
-  #regle-h{left:20px;right:20px}
+@media (max-width:960px){
+  #plateau{flex-direction:column}
+  #feuille,#volet-droit{flex:none;width:100%;min-height:auto}
+  #feuille{border-right:none;border-bottom:1px solid var(--line);padding:36px 24px 48px}
+  #regle-h{left:24px;right:96px}
+  #commandes-historique{right:24px}
   #regle-v{display:none}
-  #barre-pronote .badge{display:none}
-  .btn-titre-pleine-ligne .texte-titre{font-size:1.1em}
+  .bloc-video-mini{flex:1 1 100%;width:100%}
 }
 </style>
 </head>
-<body>
+<body data-theme="pronote">
 
-<header id="barre-pronote">
-  <div class="titre-app">
-    <span>Espace Philosophie &amp; Analyse Média</span>
-    <span class="badge">Pronote · Frappe km</span>
-  </div>
-  <div id="couche">
-    <div id="commandes"></div>
-    <div id="gestes">
-      <button id="btn-importer" title="Importer et fusionner une base JSON">
-        <svg viewBox="0 0 16 16"><path d="M8 2v8M4.5 6.5 8 10l3.5-3.5M2.5 12.5h11"/></svg>Importer (+Base)
-      </button>
-      <input type="file" id="fichier" accept=".json,application/json" hidden>
-      <button id="btn-sauvegarder" title="Exporter performances, choix, textes et base QCM (JSON)">
-        <svg viewBox="0 0 16 16"><path d="M8 12V4M4.5 7.5 8 4l3.5 3.5M2.5 13.5h11" transform="scale(1,-1) translate(0,16)"/></svg>Sauvegarder
-      </button>
+<div id="plateau">
+  <div id="feuille">
+    <div id="regle-h"></div>
+    <div id="regle-v"></div>
+
+    <div id="commandes-historique">
+      <button type="button" id="btn-undo" title="Annuler (Ctrl+Z)" disabled>↶</button>
+      <button type="button" id="btn-redo" title="Rétablir (Ctrl+Y)" disabled>↷</button>
     </div>
+
+    <div id="bloc-titre-sujet">
+      <button type="button" class="btn-titre-pleine-ligne" id="btn-ouvrir-sujets" aria-expanded="false">
+        <span class="texte-titre" id="titre-sujet-actif"></span>
+        <span class="fleche-titre">▾</span>
+      </button>
+      <div id="liste-sujets-generes" hidden></div>
+    </div>
+
+    <details class="extrait-doc" id="extrait-container"></details>
+
+    <div id="editeur-km" contenteditable="true" spellcheck="true"></div>
+    <div id="curseur-bloc" aria-hidden="true"></div>
   </div>
-</header>
 
-<div id="menu-modeles" hidden>
-  <h3>Apparence de la zone QCM</h3>
-  <div id="liste-modeles"></div>
-</div>
-
-<div id="scene">
-  <div id="plateau">
-    <div id="feuille">
-      <div id="regle-h"></div>
-      <div id="regle-v"></div>
-
-      <!-- 1. Menu-Titre pleine largeur généré algorithmiquement à partir des QCM -->
-      <div id="bloc-titre-sujet">
-        <div class="barre-meta-sujet">
-          <span id="meta-type-sujet">Sujet de rédaction (généré depuis la base QCM)</span>
-          <span id="meta-nb-sujets"></span>
+  <div id="volet-droit">
+    <div class="entete-volet-droit">
+      <div id="zone-cascade-tags">
+        <div id="cascade-liste"></div>
+        <div class="actions-cascade" id="actions-cascade" hidden>
+          <button type="button" id="btn-selectionner-tags">Sélectionner</button>
+          <button type="button" id="btn-deselectionner-tags">Désélectionner</button>
         </div>
-        <button type="button" class="btn-titre-pleine-ligne" id="btn-ouvrir-sujets" aria-expanded="false">
-          <span class="texte-titre" id="titre-sujet-actif">Chargement du sujet...</span>
-          <span class="icone-menu">Changer de sujet ▾</span>
+      </div>
+      <div class="actions-droite-haut">
+        <button type="button" class="badge-google" id="btn-google-badge" title="Connexion à RédigezMoi">
+          <span class="logo-c2phi-mini" id="badge-logo-slot"></span>
+          <span class="point-g"></span>
+          <span id="label-google">Se connecter</span>
         </button>
-        <div id="liste-sujets-generes" hidden></div>
-      </div>
-
-      <!-- 2. Extrait de référence du documentaire -->
-      <details class="extrait-doc" id="extrait-container"></details>
-
-      <!-- 3. Nuage de tags dynamique issu des QCM + bouton Sélectionner -->
-      <div id="zone-nuage-tags">
-        <div class="entete-nuage">
-          <span class="titre-nuage">Nuage de concepts &amp; tags (cliquez ou touchez plusieurs tags)</span>
-          <div class="actions-nuage">
-            <button type="button" id="btn-vider-tags" title="Désélectionner tous les tags">Tout effacer</button>
-            <button type="button" id="btn-valider-tags">Sélectionner</button>
-          </div>
-        </div>
-        <div id="nuage-tags"></div>
-      </div>
-
-      <!-- 4. Zone de frappe au kilomètre -->
-      <div id="editeur-km" contenteditable="true" spellcheck="true" aria-label="Feuille d'écriture au kilomètre"></div>
-
-      <div id="statut-frappe">
-        <span class="etat-sync"><span class="point"></span><span id="libelle-sync">Frappe au kilomètre active</span></span>
-        <span id="score-inline">QCM : 0/0</span>
-        <span id="compteur-mots">0 mot</span>
+        <button type="button" class="burgerbtn" id="btn-hamburger" aria-label="Menu">☰</button>
       </div>
     </div>
 
-    <!-- Volet de droite : vérification du texte & QCM filtrés -->
-    <div id="zone-esprit" class="zone-esprit modele-pronote"></div>
+    <div id="zone-qcm-wrapper" hidden>
+      <div class="barre-qcm-meta">
+        <div class="mini-tags-qcm" id="mini-tags-qcm"></div>
+        <div class="nav-qcm-btns" id="nav-qcm-btns"></div>
+      </div>
+      <div class="card" id="quizcard"></div>
+    </div>
   </div>
 </div>
 
-<div id="panneau" hidden>
-  <div class="plume">
-    <h2 class="petit-capital">Contrat pédagogique, Performances &amp; Base de données</h2>
-    <div id="articles-contrat"></div>
-    <div class="stats-perf" id="stats-perf"></div>
-    <div class="actions-contrat" id="actions-contrat"></div>
-  </div>
-</div>
+<input type="file" id="fichier-import" accept=".json,application/json" hidden>
+<script src="https://accounts.google.com/gsi/client" async defer></script>
 
 <script>
 "use strict";
 
-const VERSION = 3;
-const CLE_API_GEMINI = "AQ.Ab8RN6J_jhRoWQfLy-9LVg1Ak0ULT7j2npAFQq41rR3rWEj-2w";
-
-const SEQUENCE_DOC = {
-  titre: "La connerie sacrée des clowns (Tracks — ARTE)",
-  sequence: "Séquence 07:09 – 09:35 : L'incorporation du « maître fou » et la « transe contrôlée »",
-  intervenants: "Bérangère Lacaze (clown et formatrice) & Stéphane Lévy (clown, duo Les Schmoun)",
-  verbatim: "« Avant d'aller jouer, on incorpore notre allié. Je suis remplie par maîtresse folle par exemple. Des pieds jusqu'à la tête, c'est elle qui gouverne. En gros, je mets mon corps à disposition de cet esprit, de cet allié, de cette énergie. [...] C'est rentrer dans un état qui est appelé transe mais contrôlée, c'est-à-dire je perds pas conscience de moi-même. Ça me permet d'avoir des forces qui s'expriment à travers mon corps qui sont des forces qui sont refrénées en temps ordinaire. Ça me permet de m'oublier. »"
+/* ==========================================================================
+   IDENTITÉ DE L'APPLICATION : RédigezMoi — c2phi.fr / github.com/c2phi-prof
+   ========================================================================== */
+const APP_META = {
+  nom: "RédigezMoi",
+  siteUrl: "https://c2phi.fr",
+  githubUrl: "https://github.com/c2phi-prof",
+  githubPagesOrigin: "https://c2phi-prof.github.io"
 };
 
-/* ---------- Base initiale des QCM (extensible par import JSON) ---------- */
+const CLE_API_GEMINI = "AQ.Ab8RN6J_jhRoWQfLy-9LVg1Ak0ULT7j2npAFQq41rR3rWEj-2w";
+const INDICATIONS_DEFAUT = "Indications supplémentaire...";
+
+function svgLogoC2Phi(taillePx){
+  const s = taillePx || 44;
+  return `<svg width="${s}" height="${s}" viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg" aria-label="Logo RédigezMoi — c2phi.fr">
+    <path d="M58 12 A48 48 0 0 0 12 58 L28 58 A32 32 0 0 1 58 28 Z" fill="#8bc34a"/>
+    <polygon points="10,36 22,22 30,34" fill="#8bc34a"/>
+    <path d="M62 12 A48 48 0 0 1 108 58 L92 58 A32 32 0 0 0 62 28 Z" fill="#4aa3df"/>
+    <polygon points="86,10 100,22 88,30" fill="#4aa3df"/>
+    <path d="M12 62 A48 48 0 0 0 58 108 L58 92 A32 32 0 0 1 28 62 Z" fill="#e05a2b"/>
+    <polygon points="34,110 20,98 32,90" fill="#e05a2b"/>
+    <path d="M108 62 A48 48 0 0 1 62 108 L62 92 A32 32 0 0 0 92 62 Z" fill="#f39c12"/>
+    <polygon points="110,84 98,98 90,86" fill="#f39c12"/>
+  </svg>`;
+}
+
+function svgVignetteModele(modelId){
+  const id = String(modelId || "gemini");
+  return `<span class="vignette-logo-llm" title="Modèle : ${id}">
+    <svg width="16" height="16" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-label="${id}">
+      <path d="M12 2 C12.6 8.2 15.8 11.4 22 12 C15.8 12.6 12.6 15.8 12 22 C11.4 15.8 8.2 12.6 2 12 C8.2 11.4 11.4 8.2 12 2 Z" fill="currentColor"/>
+    </svg>
+  </span>`;
+}
+
+const GOOGLE_CLIENT_ID = "";
+const APPS_SCRIPT_URL  = "";
+
+const SUPPORT_VIDEO = {
+  videoId: "KCFMg5Hh3qE",
+  url: "https://youtu.be/KCFMg5Hh3qE?si=4Q3Q-YvIWQJ_hHX0&t=143",
+  watchBase: "https://www.youtube.com/watch?v=KCFMg5Hh3qE",
+  startDefault: 143,
+  titre: "L'HOMME vaut-il plus qu'un ANIMAL ? — France Culture (Question du soir : le débat)",
+  verbatim: "« Le spécisme, c'est le système social qui organise la domination des humains sur tous les individus d'autres espèces... Et donc l'antispécisme, c'est ce qui s'oppose à ce système-là, qui le dénonce et qui le combat. [...] L'antispécisme dit qu'on va intégrer les autres espèces non seulement dans notre communauté morale mais aussi dans notre communauté politique. »",
+  timestamps: [
+    { sec: 90,   label: "01:30 Couvoir" },
+    { sec: 143,  label: "02:23 Spécisme" },
+    { sec: 210,  label: "03:30 Humanisme" },
+    { sec: 350,  label: "05:50 Logos" },
+    { sec: 805,  label: "13:25 Sentience" },
+    { sec: 854,  label: "14:14 Rawls" },
+    { sec: 1517, label: "25:17 Juste/Injuste" },
+    { sec: 1950, label: "32:30 Autrui" }
+  ],
+  transcript: [
+    { t: "00:00", s: "Débat consacré au combat en faveur des animaux : ce combat s'oppose-t-il à la cause humaine ? Faut-il placer animaux et humains sur un même plan moral ?" },
+    { t: "01:30", s: "Extrait de Le monde après le spécisme : témoignage d'un ouvrier de couvoir sur le broyage des poussins et canetons et le double standard avec les animaux familiers." },
+    { t: "02:23", s: "Victor Duran-Le Peuch définit le spécisme comme le système social qui organise la domination des humains sur tous les individus d'autres espèces, et l'antispécisme comme ce qui le combat." },
+    { t: "03:30", s: "Réjane Sénac distingue l'humanisme des Lumières (universalisme kantien, limiter la violence) d'une humanité mortifère qui s'arroge le pouvoir de tuer au nom du logos." },
+    { t: "05:50", s: "Ariane Nicolas souligne le paradoxe de l'antispécisme : revendiquer l'égalité tout en faisant appel à la seule responsabilité morale et au logos humains, et le qualifie d'idéologie (au sens d'Hannah Arendt)." },
+    { t: "07:30", s: "Victor Duran-Le Peuch distingue au sein de l'humanisme l'héritage égalitaire des Lumières et le suprémacisme humain qui fonde l'égalité des hommes sur l'exclusion des autres espèces." },
+    { t: "09:49", s: "Réjane Sénac définit l'égalité politique non comme l'uniformité mais comme un horizon contre les rapports de domination, intégrant les animaux dans la communauté morale et politique." },
+    { t: "13:25", s: "Débat sur la sentience (capacité subjective de sentir souffrance et plaisir) comme critère d'égalité morale contre les trois critères contractualistes de John Rawls avancés par Ariane Nicolas." },
+    { t: "18:28", s: "Discussion sur les droits de la nature et des écosystèmes versus l'égalité de considération des intérêts des individus sentients, et critique de la réification moderne du vivant." },
+    { t: "21:18", s: "Ariane Nicolas défend le libéralisme politique et la pluralité des conceptions du bien contre une société antispéciste jugée coercitive." },
+    { t: "22:31", s: "Débat sur la singularité humaine : Victor Duran-Le Peuch critique l'instrumentalisation des propres de l'homme pour légitimer une hiérarchie d'essence." },
+    { t: "25:17", s: "Réjane Sénac mobilise Aristote (distinction du juste et de l'injuste) et Achille Mbembe (nécropouvoir) pour affirmer que la singularité humaine engage une responsabilité politique envers les autres espèces." },
+    { t: "28:59", s: "Ariane Nicolas évoque la perfectibilité chez Rousseau (capacité du meilleur comme du pire) et soutient que les droits des animaux sont conventionnels et positifs plutôt qu'inaliénables." },
+    { t: "32:30", s: "Question d'autrui et de l'animalicide : Ariane Nicolas estime que l'animal est trop différent pour être autrui ; Victor Duran-Le Peuch soutient que parler de meurtre révèle la violence masquée derrière l'abattage." },
+    { t: "35:34", s: "Conclusion sur l'émancipation partagée (Réjane Sénac) et la réforme de l'agro-industrie sans mise en concurrence des humains et des animaux (Ariane Nicolas)." }
+  ]
+};
+
+/* ---------- Palette graphique par catégorie ---------- */
+const COULEURS_CATEGORIES = {
+  "Concepts":     "#2e7d32",
+  "Humanisme":    "#1c5d99",
+  "Politique":    "#8a4b08",
+  "Singularité":  "#6a1bb0",
+  "Favoris":      "#b87d0a"
+};
+
 const BASE_QCM_INITIALE = [
   {
-    id: "qcm-1",
-    axe: "Pratique scénique & décentrement",
-    question: "Comment le documentaire distingue-t-il l'improvisation du clown classique de la pratique du « clown chaman » ?",
-    vignette: "07:09 — « Là où le clown classique improvise spontanément à partir de son imagination, le clown chaman va plus loin... »",
-    amorceInsertion: "À la différence du clown classique qui puise dans sa seule imagination individuelle, le clown chaman opère un décentrement : il prête son corps à une figure extérieure (« allié » ou « maître fou ») qui gouverne le jeu.",
+    id: "sc1-q1",
+    categorie: "Concepts",
+    scenario: "Concepts fondateurs & double standard",
+    type: "single",
+    name: "Que révèle l'extrait du documentaire « Le monde après le spécisme » (01:30 – 02:23) sur notre rapport ordinaire aux animaux ?",
     options: [
       {
-        texte: "Le clown chaman prépare un texte écrit à l'avance pour éviter tout débordement émotionnel.",
-        correct: false,
-        feedback: "Inexact : la pratique repose sur l'abandon du contrôle rationnel ordinaire via le voyage au tambour."
-      },
-      {
-        texte: "Il prête son corps à une figure extérieure (« allié », « maître fou » ou « trickster ») qui gouverne le jeu.",
+        text: "Un « double standard » moral : on réifie des milliers de poussins et canetons comme des objets industriels tout en s'émouvant du sort d'un chat ou d'une mésange.",
         correct: true,
-        feedback: "Exact. L'artiste opère un décentrement subjectif en mettant son corps au service d'une altérité symbolique."
+        feedback: "L'ancien ouvrier de couvoir décrit une contradiction morale quotidienne (un « double standard ») : le détachement professionnel transforme l'animal de rente en simple objet broyé à la chaîne, alors que l'animal familier suscite affection et pitié."
       },
       {
-        texte: "Il refuse toute interaction avec le public pour rester dans un recueillement silencieux.",
+        text: "Une indifférence totale et uniforme de l'être humain envers toutes les espèces animales sans exception.",
         correct: false,
-        feedback: "Inexact : Stéphane Lévy souligne au contraire l'élan de « venir bousculer » et « titiller » l'entourage."
+        feedback: "L'ancien ouvrier de couvoir décrit une contradiction morale quotidienne (un « double standard ») : le détachement professionnel transforme l'animal de rente en simple objet broyé à la chaîne, alors que l'animal familier suscite affection et pitié."
+      },
+      {
+        text: "L'impossibilité technique d'éprouver de l'empathie lorsqu'on travaille dans l'agriculture.",
+        correct: false,
+        feedback: "L'ancien ouvrier de couvoir décrit une contradiction morale quotidienne (un « double standard ») : le détachement professionnel transforme l'animal de rente en simple objet broyé à la chaîne, alors que l'animal familier suscite affection et pitié."
       }
     ]
   },
   {
-    id: "qcm-2",
-    axe: "Analyse critique du lexique",
-    question: "Dans l'expression « mettre mon corps à disposition de cet esprit, de cet allié, de cette énergie » (Bérangère Lacaze), que révèle l'accumulation des trois termes ?",
-    vignette: "07:53 — « Je mets mon corps à disposition de cet esprit, de cet allié, de cette énergie. »",
-    amorceInsertion: "Sur le plan critique, l'accumulation lexicale de Bérangère Lacaze (« cet esprit, cet allié, cette énergie ») trahit une hésitation significative entre une croyance animiste littérale et une métaphore psychocorporelle du jeu d'acteur.",
+    id: "sc1-q2",
+    categorie: "Concepts",
+    scenario: "Concepts fondateurs & double standard",
+    type: "single",
+    name: "Comment Victor Duran-Le Peuch définit-il le spécisme (02:41) ?",
     options: [
       {
-        texte: "Une hésitation théorique entre une lecture animiste littérale (« esprit ») et une métaphore psychocorporelle (« énergie »).",
+        text: "Comme un système social d'oppression qui organise la domination des humains sur les individus d'autres espèces et légitime l'appropriation de leurs corps.",
         correct: true,
-        feedback: "Pertinent. Ce glissement lexical montre comment des artistes contemporains construisent un cadre hybride entre rite traditionnel et technique corporelle."
+        feedback: "Le spécisme n'est pas réduit à un simple préjugé individuel : il est analysé comme un système social structurel d'oppression (élevage, pêche, expérimentation, divertissement) qui repose sur le critère arbitraire de l'appartenance d'espèce."
       },
       {
-        texte: "La preuve que les intervenants appartiennent à une tradition religieuse dogmatique stricte.",
+        text: "Comme la reconnaissance biologique objective que chaque espèce possède des instincts différents.",
         correct: false,
-        feedback: "Critique fragile : aucun dogme n'est revendiqué ; chaque praticien entretient une relation singulière avec cette énergie."
+        feedback: "Le spécisme n'est pas réduit à un simple préjugé individuel : il est analysé comme un système social structurel d'oppression (élevage, pêche, expérimentation, divertissement) qui repose sur le critère arbitraire de l'appartenance d'espèce."
       },
       {
-        texte: "Une simple figure de style sans aucun effet réel sur le corps de l'acteur.",
+        text: "Comme une doctrine écologique visant uniquement à protéger les espèces sauvages en voie d'extinction.",
         correct: false,
-        feedback: "Insuffisant : le travail au tambour modifie réellement la posture, le tonus et les inhibitions du comédien."
+        feedback: "Le spécisme n'est pas réduit à un simple préjugé individuel : il est analysé comme un système social structurel d'oppression (élevage, pêche, expérimentation, divertissement) qui repose sur le critère arbitraire de l'appartenance d'espèce."
       }
     ]
   },
   {
-    id: "qcm-3",
-    axe: "Théorisation de la conscience",
-    question: "Quel paradoxe philosophique Stéphane Lévy formule-t-il lorsqu'il décrit la « transe contrôlée » (09:10) ?",
-    vignette: "09:13 — « C'est-à-dire je perds pas conscience de moi-même [...] Ça me permet de m'oublier. »",
-    amorceInsertion: "La notion de « transe contrôlée » révèle ainsi un dédoublement de la conscience : loin d'une abolition de la lucidité, la conscience réflexive demeure vigilante (« je ne perds pas conscience de moi-même ») tandis que seul le moi social inhibé s'efface (« s'oublier »).",
+    id: "sc2-q1",
+    categorie: "Humanisme",
+    scenario: "L'antispécisme face à l'humanisme",
+    type: "single",
+    name: "Quelle distinction Réjane Sénac et Victor Duran-Le Peuch opèrent-ils au sein de la notion d'humanisme (03:30 – 09:20) ?",
     options: [
       {
-        texte: "Il affirme être totalement inconscient tout en dirigeant la mise en scène.",
-        correct: false,
-        feedback: "Non : il précise explicitement qu'il ne perd pas conscience de lui-même."
-      },
-      {
-        texte: "La conscience réflexive demeure vigilante (« je perds pas conscience ») tandis que le moi social inhibé s'efface (« m'oublier »).",
+        text: "Ils distinguent l'humanisme émancipateur des Lumières (élargissement de l'égalité et refus de la violence) du « suprémacisme humain » qui fonde l'égalité humaine sur l'exclusion des autres animaux.",
         correct: true,
-        feedback: "Exact. La conscience se dédouble entre une instance de veille (qui garantit le cadre du jeu) et le lâcher-prise du moi ordinaire."
+        feedback: "Plutôt que de rejeter en bloc l'humanisme, ils en montrent l'ambivalence : si l'humanisme consiste à universaliser la justice et à limiter la violence (dans une démarche kantienne), l'antispécisme le prolonge en dénonçant l'exceptionnalisme ou « suprémacisme humain »."
       },
       {
-        texte: "Il démontre que la conscience est une illusion biologique produite par le tambour.",
+        text: "Ils affirment que l'humanisme doit être totalement aboli car les droits humains sont incompatibles avec la protection animale.",
         correct: false,
-        feedback: "Hors-sujet : la conscience reste au contraire le garde-fou qui distingue la transe scénique de la perte de contrôle."
+        feedback: "Plutôt que de rejeter en bloc l'humanisme, ils en montrent l'ambivalence : si l'humanisme consiste à universaliser la justice et à limiter la violence (dans une démarche kantienne), l'antispécisme le prolonge en dénonçant l'exceptionnalisme ou « suprémacisme humain »."
+      },
+      {
+        text: "Ils soutiennent que la Révolution française avait déjà pleinement réalisé l'égalité universelle pour tous les êtres vivants.",
+        correct: false,
+        feedback: "Plutôt que de rejeter en bloc l'humanisme, ils en montrent l'ambivalence : si l'humanisme consiste à universaliser la justice et à limiter la violence (dans une démarche kantienne), l'antispécisme le prolonge en dénonçant l'exceptionnalisme ou « suprémacisme humain »."
       }
     ]
   },
   {
-    id: "qcm-4",
-    axe: "Normes sociales & transgression",
-    question: "Quelle fonction anthropologique et sociale le praticien attribue-t-il aux « forces refrénées en temps ordinaire » ?",
-    vignette: "09:23 — « Des forces qui sont refrénées en temps ordinaire. »",
-    amorceInsertion: "En libérant des « forces refrénées en temps ordinaire », le dispositif rituel du clown chaman institue un espace légitime de transgression des normes sociales et des censures intériorisées par l'individu.",
+    id: "sc2-q2",
+    categorie: "Humanisme",
+    scenario: "L'antispécisme face à l'humanisme",
+    type: "single",
+    name: "Quel paradoxe Ariane Nicolas relève-t-elle dans l'antispécisme en mobilisant Hannah Arendt (05:50 – 07:09) ?",
     options: [
       {
-        texte: "Le rite scénique offre un espace légitime pour lever les inhibitions imposées par les normes sociales.",
+        text: "Revendiquer une égalité morale entre espèces tout en faisant appel à la seule responsabilité morale et au logos de l'être humain, et vouloir appliquer directement une idée morale pure au domaine politique (définition arendtienne de l'idéologie).",
         correct: true,
-        feedback: "Juste. Le « maître fou » (trickster) autorise l'expression d'attitudes socialement censurées dans un cadre délimité."
+        feedback: "Ariane Nicolas souligne une asymétrie fondamentale : même pour défendre l'égalité des animaux, l'antispécisme mobilise la raison (logos) et la responsabilité morale proprement humaines, puisqu'aucune réciprocité n'est possible de la part des animaux. En outre, vouloir déduire tout l'ordre politique d'une seule idée morale relève selon elle de l'idéologie (la « logique d'une idée » chez Arendt)."
       },
       {
-        texte: "Il s'agit d'éliminer définitivement toute règle de vie en société.",
+        text: "Défendre les animaux sauvages tout en autorisant l'élevage industriel intensif.",
         correct: false,
-        feedback: "Non : la transgression s'opère dans le temps et l'espace circonscrits de la performance."
+        feedback: "Ariane Nicolas souligne une asymétrie fondamentale : même pour défendre l'égalité des animaux, l'antispécisme mobilise la raison (logos) et la responsabilité morale proprement humaines, puisqu'aucune réciprocité n'est possible de la part des animaux. En outre, vouloir déduire tout l'ordre politique d'une seule idée morale relève selon elle de l'idéologie (la « logique d'une idée » chez Arendt)."
       },
       {
-        texte: "Ces forces servent uniquement à impressionner physiquement les journalistes.",
+        text: "Nier que les animaux puissent ressentir la moindre douleur physique.",
         correct: false,
-        feedback: "Réducteur : la démonstration illustre une préparation régulière avant toute représentation."
+        feedback: "Ariane Nicolas souligne une asymétrie fondamentale : même pour défendre l'égalité des animaux, l'antispécisme mobilise la raison (logos) et la responsabilité morale proprement humaines, puisqu'aucune réciprocité n'est possible de la part des animaux. En outre, vouloir déduire tout l'ordre politique d'une seule idée morale relève selon elle de l'idéologie (la « logique d'une idée » chez Arendt)."
       }
     ]
   },
   {
-    id: "qcm-5",
-    axe: "Critique de l'illusion consolatrice",
-    question: "Pourquoi Stéphane Lévy met-il en garde contre le recours au « maître fou » en disant : « ça va pas être dans le doudou » (08:58) ?",
-    vignette: "08:53 — « Faut être prêt à en assumer les conséquences, c'est-à-dire ça va pas être dans le doudou... »",
-    amorceInsertion: "En avertissant que la rencontre avec le « maître fou » n'est pas « dans le doudou », Stéphane Lévy écarte toute lecture purement consolatrice ou naïve de la pratique : la mise à nu de soi confronte le sujet à ses propres résistances.",
+    id: "sc3-q1",
+    categorie: "Politique",
+    scenario: "Sentience et communauté politique",
+    type: "single",
+    name: "Pourquoi l'antispécisme retient-il le critère de la « sentience » plutôt que celui du langage ou de la raison (13:25 – 18:20) ?",
     options: [
       {
-        texte: "Parce que le spectacle est réservé à un public adulte averti.",
-        correct: false,
-        feedback: "Contresens : il évoque celui qui interroge un maître fou pour son propre quotidien."
-      },
-      {
-        texte: "Il critique une vision édulcorée du développement personnel : l'introspection rituelle confronte le sujet à ses résistances.",
+        text: "Parce que la sentience (capacité subjective à éprouver souffrance et plaisir) est la condition même pour qu'un individu ait des intérêts propres à vivre et à ne pas souffrir.",
         correct: true,
-        feedback: "Excellente analyse. Le praticien refuse l'instrumentalisation rassurante (« doudou ») de la pratique."
+        feedback: "Pour Victor Duran-Le Peuch, la sentience fonde la considération morale : dès qu'un être ressent subjectivement le bien et le mal, il possède des intérêts propres qu'il est injuste d'ignorer au prétexte qu'il ne maîtrise pas le langage humain."
       },
       {
-        texte: "Parce que les costumes en peau animale sont inconfortables.",
+        text: "Parce que tous les êtres vivants, y compris les pierres et les plantes, possèdent une conscience réflexive identique.",
         correct: false,
-        feedback: "Confusion de séquence : les peaux animales concernent Olivier Clément plus tôt dans le film."
+        feedback: "Pour Victor Duran-Le Peuch, la sentience fonde la considération morale : dès qu'un être ressent subjectivement le bien et le mal, il possède des intérêts propres qu'il est injuste d'ignorer au prétexte qu'il ne maîtrise pas le langage humain."
+      },
+      {
+        text: "Parce que la douleur est plus facile à mesurer techniquement que l'intelligence.",
+        correct: false,
+        feedback: "Pour Victor Duran-Le Peuch, la sentience fonde la considération morale : dès qu'un être ressent subjectivement le bien et le mal, il possède des intérêts propres qu'il est injuste d'ignorer au prétexte qu'il ne maîtrise pas le langage humain."
       }
     ]
   },
   {
-    id: "qcm-6",
-    axe: "Paradoxe du comédien & philosophie",
-    question: "À quelle thèse philosophique classique sur la conscience scénique la « transe contrôlée » fait-elle directement écho ?",
-    vignette: "Synthèse : conscience immédiate, conscience réflexive et paradoxe du comédien (Diderot).",
-    amorceInsertion: "Cette dualité rejoint dès lors le paradoxe du comédien analysé par Diderot : l'acteur mobilise des forces expressives intenses tout en maintenant un « spectateur intérieur » qui contrôle la justesse du jeu.",
+    id: "sc3-q2",
+    categorie: "Politique",
+    scenario: "Sentience et communauté politique",
+    type: "multi",
+    name: "Quels sont les trois critères contractualistes (inspirés de John Rawls et Aristote) qu'Ariane Nicolas avance pour limiter la communauté politique aux seuls humains (14:14 – 15:44) ? (plusieurs réponses)",
     options: [
       {
-        texte: "Au paradoxe du comédien (Diderot) : l'acteur mobilise une énergie intense tout en conservant un spectateur intérieur qui maîtrise le jeu.",
+        text: "Le partage et l'allocation de biens sociaux communs (école, hôpital, routes).",
         correct: true,
-        feedback: "Remarquable ouverture. Là où Diderot parlait de sang-froid, le clown chaman théorise ce même dédoublement sous le nom de « transe contrôlée »."
+        feedback: "Dans la tradition contractualiste (Rawls, Aristote), la cité humaine repose sur trois piliers : le partage d'institutions et de biens sociaux, la réciprocité civique entre gouvernants et gouvernés, et une communauté biologique et historique qui se projette entre générations."
       },
       {
-        texte: "Au déterminisme mécanique : l'acteur n'est qu'un automate privé de toute représentation mentale.",
-        correct: false,
-        feedback: "Contredit par le témoignage : l'acteur maintient une vigilance consciente."
+        text: "La répartition des charges politiques impliquant une réciprocité entre gouvernants et gouvernés.",
+        correct: true,
+        feedback: "Dans la tradition contractualiste (Rawls, Aristote), la cité humaine repose sur trois piliers : le partage d'institutions et de biens sociaux, la réciprocité civique entre gouvernants et gouvernés, et une communauté biologique et historique qui se projette entre générations."
       },
       {
-        texte: "Au solipsisme : l'acteur nie l'existence du public et du monde extérieur.",
+        text: "L'existence d'une communauté sexuelle et historique porteuse d'une mémoire et d'un héritage transmis entre générations.",
+        correct: true,
+        feedback: "Dans la tradition contractualiste (Rawls, Aristote), la cité humaine repose sur trois piliers : le partage d'institutions et de biens sociaux, la réciprocité civique entre gouvernants et gouvernés, et une communauté biologique et historique qui se projette entre générations."
+      },
+      {
+        text: "L'absence totale de toute sensibilité chez les mammifères.",
         correct: false,
-        feedback: "Inexact : la pratique vise au contraire la relation au public."
+        feedback: "Dans la tradition contractualiste (Rawls, Aristote), la cité humaine repose sur trois piliers : le partage d'institutions et de biens sociaux, la réciprocité civique entre gouvernants et gouvernés, et une communauté biologique et historique qui se projette entre générations."
       }
+    ]
+  },
+  {
+    id: "sc4-q1",
+    categorie: "Singularité",
+    scenario: "Singularité humaine, nécropouvoir et droits",
+    type: "single",
+    name: "Comment Réjane Sénac retourne-t-elle l'argument du « propre de l'homme » comme animal politique distinguant le juste et l'injuste (25:17 – 27:37) ?",
+    options: [
+      {
+        text: "Si la singularité humaine consiste à distinguer le juste et l'injuste, elle engage une responsabilité politique pour remettre en cause le droit de mise à mort (nécropouvoir) des autres espèces.",
+        correct: true,
+        feedback: "Réjane Sénac mobilise Aristote et Achille Mbembe (« nécropouvoir ») : assumer véritablement la singularité morale de l'humain oblige à étendre la question de la justice à notre cohabitation avec les autres espèces plutôt qu'à légitimer leur sacrifice."
+      },
+      {
+        text: "Elle conclut que la distinction entre le juste et l'injuste est une illusion qui doit disparaître.",
+        correct: false,
+        feedback: "Réjane Sénac mobilise Aristote et Achille Mbembe (« nécropouvoir ») : assumer véritablement la singularité morale de l'humain oblige à étendre la question de la justice à notre cohabitation avec les autres espèces plutôt qu'à légitimer leur sacrifice."
+      },
+      {
+        text: "Elle affirme que les choix alimentaires relèvent uniquement de préférences privées sans portée politique.",
+        correct: false,
+        feedback: "Réjane Sénac mobilise Aristote et Achille Mbembe (« nécropouvoir ») : assumer véritablement la singularité morale de l'humain oblige à étendre la question de la justice à notre cohabitation avec les autres espèces plutôt qu'à légitimer leur sacrifice."
+      }
+    ]
+  },
+  {
+    id: "sc4-q2",
+    categorie: "Singularité",
+    scenario: "Singularité humaine, nécropouvoir et droits",
+    type: "single",
+    name: "Quelle nature juridique Ariane Nicolas attribue-t-elle aux droits reconnus aux animaux, en s'appuyant sur la perfectibilité chez Rousseau (28:59 – 31:20) ?",
+    options: [
+      {
+        text: "Ce sont des droits positifs et conventionnels (organisant une codépendance respectueuse), et non des droits naturels inaliénables opposables à l'homme.",
+        correct: true,
+        feedback: "Pour Ariane Nicolas, l'être humain est un être de nature qui est par nature un être de culture, doué de perfectibilité (Rousseau : capable du meilleur comme du pire). Il a la responsabilité d'organiser une cohabitation respectueuse avec les animaux par des droits conventionnels (positifs), mais ces droits ne sont pas inaliénables."
+      },
+      {
+        text: "Ce sont des droits naturels sacrés qui interdisent absolument toute domestication ou élevage.",
+        correct: false,
+        feedback: "Pour Ariane Nicolas, l'être humain est un être de nature qui est par nature un être de culture, doué de perfectibilité (Rousseau : capable du meilleur comme du pire). Il a la responsabilité d'organiser une cohabitation respectueuse avec les animaux par des droits conventionnels (positifs), mais ces droits ne sont pas inaliénables."
+      },
+      {
+        text: "Aucun droit ne devrait jamais encadrer les pratiques de l'agro-industrie.",
+        correct: false,
+        feedback: "Pour Ariane Nicolas, l'être humain est un être de nature qui est par nature un être de culture, doué de perfectibilité (Rousseau : capable du meilleur comme du pire). Il a la responsabilité d'organiser une cohabitation respectueuse avec les animaux par des droits conventionnels (positifs), mais ces droits ne sont pas inaliénables."
+      }
+    ]
+  },
+  {
+    id: "sc4-q3",
+    categorie: "Singularité",
+    scenario: "Singularité humaine, nécropouvoir et droits",
+    type: "matching",
+    name: "Associez chaque référence philosophique du débat à la thèse qu'elle éclaire dans l'émission.",
+    pairs: [
+      { q: "John Rawls", a: "La communauté politique suppose le partage de biens sociaux et la réciprocité entre citoyens" },
+      { q: "Hannah Arendt", a: "L'idéologie se définit comme la « logique d'une idée » appliquée sans nuance au politique" },
+      { q: "Achille Mbembe", a: "Le « nécropouvoir » désigne l'exercice du droit de tuer ou de laisser vivre" },
+      { q: "Jean-Jacques Rousseau", a: "La perfectibilité rend l'homme capable de s'élever moralement comme de tomber plus bas que la bête" }
     ]
   }
 ];
 
 /* ==========================================================================
-   ALGORITHME 1 : EXTRACTION DES TAGS & CONCEPTS DEPUIS LES QCM
+   INDEXATION DES TAGS & GÉNÉRATION DES SUJETS
    ========================================================================== */
 const STOPWORDS = new Set([
   "dans","pour","avec","sans","sous","vers","chez","entre","comme","ainsi","donc","mais","or","ni","car",
-  "que","qui","quoi","dont","où","quel","quelle","quels","quelles","lequel","laquelle","lesquels",
-  "les","des","une","uns","unes","aux","par","sur","est","sont","être","avoir","fait","faire","peut",
-  "plus","moins","très","tout","tous","toute","toutes","autre","autres","même","mêmes","leur","leurs",
+  "que","qui","quoi","dont","quel","quelle","quels","quelles","lequel","laquelle","lesquels",
+  "les","des","une","uns","unes","aux","par","sur","est","sont","etre","avoir","fait","faire","peut",
+  "plus","moins","tres","tout","tous","toute","toutes","autre","autres","meme","memes","leur","leurs",
   "cette","cet","ces","celui","celle","ceux","celles","notre","votre","mon","ton","son","ses","nos","vos",
   "dire","dit","parler","parle","permet","permettre","mettre","met","aller","va","vont","venir","vient",
   "alors","tandis","lorsque","quand","comment","pourquoi","combien","seulement","uniquement","vraiment",
-  "exact","inexact","pertinent","non","oui","critique","analyse","question","réponse","texte","documentaire"
+  "question","reponse","texte","documentaire","difference","maniere","facon","cela","ceci","aussi","bien",
+  "plusieurs","reponses","chaque","reference","emission","debat"
 ]);
 
-function normaliserMot(m){
-  return m.toLowerCase()
-    .normalize("NFD").replace(/[\u0300-\u036f]/g, "")
-    .replace(/[^a-z0-9-]/g, "");
+function norm(s){
+  return String(s||"")
+    .replace(/[\u00A0\u202F]/g," ")
+    .toLowerCase()
+    .normalize("NFD").replace(/[\u0300-\u036f]/g,"")
+    .replace(/[''`’]/g," ")
+    .replace(/[^a-z0-9 -]/g,"")
+    .replace(/\s+/g," ")
+    .trim();
 }
 
-function extraireTagsDepuisBase(baseQCM){
-  const mapTags = new Map();
+function extraireTokensSignificatifs(texte){
+  const mots = String(texte||"").match(/[A-Za-zÀ-ÖØ-öø-ÿ-]{4,}/g) || [];
+  const res = [];
+  mots.forEach(m => {
+    const clean = m.toLowerCase();
+    const n = norm(clean);
+    if(n.length >= 4 && !STOPWORDS.has(n)){
+      res.push({ label: clean, radical: n.slice(0, 6) });
+    }
+  });
+  return res;
+}
 
+function construireIndexTags(baseQCM, transcript){
+  const map = new Map();
   baseQCM.forEach(qcm => {
-    const bonneRep = qcm.options.find(o => o.correct) || qcm.options[0];
-    const sources = [
-      { texte: bonneRep ? bonneRep.texte : "", poids: 3 },
-      { texte: bonneRep ? bonneRep.feedback : "", poids: 2 },
-      { texte: qcm.question + " " + qcm.axe, poids: 2 }
-    ];
+    const sources = [qcm.name];
+    if(Array.isArray(qcm.options)){
+      qcm.options.forEach(o => { if(o.correct) sources.push(o.text, o.feedback || ""); });
+    }
+    if(Array.isArray(qcm.answers)) sources.push(qcm.answers.join(" "), qcm.feedback || "");
+    if(Array.isArray(qcm.pairs)) qcm.pairs.forEach(p => sources.push(p.q, p.a));
+    if(Array.isArray(qcm.segs)) qcm.segs.forEach(s => sources.push(s.t || (s.blank ? s.blank.join(" ") : "")));
 
-    sources.forEach(src => {
-      const tokens = src.texte.match(/[A-Za-zÀ-ÖØ-öø-ÿ-]{4,}/g) || [];
-      tokens.forEach(tok => {
-        const clean = tok.toLowerCase();
-        const norm = normaliserMot(clean);
-        if(norm.length < 4 || STOPWORDS.has(clean) || STOPWORDS.has(norm)) return;
-
-        const cle = norm.slice(0, 6);
-        if(!mapTags.has(cle)){
-          mapTags.set(cle, {
-            cle,
-            label: clean,
-            poids: 0,
-            qcmIds: new Set(),
-            formes: new Set()
-          });
+    sources.forEach((src, sIdx) => {
+      extraireTokensSignificatifs(src).forEach(t => {
+        if(!map.has(t.radical)){
+          map.set(t.radical, { radical: t.radical, label: t.label, poids: 0, qcmIds: new Set() });
         }
-        const entry = mapTags.get(cle);
-        entry.poids += src.poids;
+        const entry = map.get(t.radical);
+        entry.poids += (sIdx === 0 ? 2 : 3);
         entry.qcmIds.add(qcm.id);
-        entry.formes.add(clean);
-        if(clean.length < entry.label.length) entry.label = clean;
+        if(t.label.length < entry.label.length) entry.label = t.label;
       });
     });
   });
 
-  return Array.from(mapTags.values())
-    .sort((a, b) => b.poids - a.poids)
-    .slice(0, 36);
+  if(Array.isArray(transcript)){
+    transcript.forEach(seg => {
+      const normSeg = norm(seg.s);
+      map.forEach(entry => { if(normSeg.includes(entry.radical)) entry.poids += 1; });
+    });
+  }
+  return Array.from(map.values()).sort((a, b) => b.poids - a.poids);
 }
 
-/* ==========================================================================
-   ALGORITHME 2 : GÉNÉRATION DES SUJETS DE RÉDACTION
-   ========================================================================== */
 function genererSujetsDepuisQCM(baseQCM){
   const sujets = [];
+  const vus = new Set();
 
-  baseQCM.forEach((q) => {
-    const bonne = q.options.find(o => o.correct) || q.options[0];
-    const motsCles = extraireMotsClesItem(q);
+  function ajouterSujet(id, titre, qcmIds, attendusTexte){
+    const cle = norm(titre);
+    if(!cle || vus.has(cle)) return;
+    vus.add(cle);
+    const motsCles = Array.from(new Set(extraireTokensSignificatifs(attendusTexte).map(t => t.radical)));
+    sujets.push({ id, titre, qcmIds, motsCles });
+  }
 
-    const titreDissert = q.question.endsWith("?")
-      ? `${q.axe} : ${q.question}`
-      : `Peut-on soutenir que ${bonne.texte.charAt(0).toLowerCase() + bonne.texte.slice(1).replace(/\.$/, "")} ?`;
+  if(baseQCM.length >= 2){
+    const tousIds = baseQCM.map(q => q.id);
+    const toutCorpus = baseQCM.map(q => q.name + " " + (q.options ? (q.options.find(o => o.correct)?.feedback || "") : "")).join(" ");
+    ajouterSujet("s-principal", "L'homme vaut-il plus qu'un animal ?", tousIds, toutCorpus);
+  }
 
-    sujets.push({
-      id: `sujet-unit-${q.id}`,
-      type: "Question problématisée",
-      titre: titreDissert,
-      qcmIds: [q.id],
-      attendus: [bonne.texte, bonne.feedback],
-      motsCles
-    });
+  const parScenario = new Map();
+  baseQCM.forEach(q => {
+    const sc = q.scenario || "Parcours général";
+    if(!parScenario.has(sc)) parScenario.set(sc, []);
+    parScenario.get(sc).push(q);
+  });
+  parScenario.forEach((qs, nomSc) => {
+    const ids = qs.map(x => x.id);
+    const corpus = qs.map(x => x.name + " " + (x.options ? (x.options.find(o => o.correct)?.text || "") : "")).join(" ");
+    const titreCourt = nomSc.replace(/^Scénario \d+\s*—\s*/i, "");
+    ajouterSujet(`s-sc-${ids[0]}`, `${titreCourt} : quelle place pour l'animal dans notre communauté morale et politique ?`, ids, corpus);
+  });
 
-    if(q.vignette){
-      const citation = q.vignette.replace(/^[0-9:]+\s*—\s*/, "");
-      sujets.push({
-        id: `sujet-expl-${q.id}`,
-        type: "Explication de témoignage",
-        titre: `Expliquez et discutez : ${citation}`,
-        qcmIds: [q.id],
-        attendus: [bonne.texte, bonne.feedback],
-        motsCles
-      });
+  baseQCM.forEach((q, idx) => {
+    let bonneRep = "", explication = "";
+    if(Array.isArray(q.options)){
+      const b = q.options.find(o => o.correct) || q.options[0];
+      bonneRep = b ? b.text : "";
+      explication = b ? (b.feedback || "") : "";
+    } else if(Array.isArray(q.answers)){
+      bonneRep = q.answers[0] || "";
+      explication = q.feedback || "";
+    } else if(Array.isArray(q.pairs)){
+      bonneRep = q.pairs.map(p => `${p.q} : ${p.a}`).join(" ; ");
+    }
+
+    const corpus = `${q.name} ${bonneRep} ${explication}`;
+    const titrePropre = q.name.replace(/\s*\([0-9: –-]+\)/g, "").replace(/\s*\(plusieurs réponses\)/gi, "");
+    ajouterSujet(`s-q-${idx}`, titrePropre, [q.id], corpus);
+
+    if(bonneRep && q.type !== "matching"){
+      const prop = bonneRep.charAt(0).toLowerCase() + bonneRep.slice(1).replace(/\.$/, "");
+      ajouterSujet(`s-d-${idx}`, `Peut-on soutenir que ${prop} ?`, [q.id], corpus);
+    }
+    if(explication){
+      const premierePhrase = explication.split(/[.!?]/)[0].trim();
+      if(premierePhrase.length > 25){
+        ajouterSujet(`s-e-${idx}`, `Expliquez et discutez : « ${premierePhrase}. »`, [q.id], corpus);
+      }
     }
   });
 
   for(let i = 0; i < baseQCM.length - 1; i++){
-    const q1 = baseQCM[i];
-    const q2 = baseQCM[i + 1];
-    const b1 = q1.options.find(o => o.correct) || q1.options[0];
-    const b2 = q2.options.find(o => o.correct) || q2.options[0];
-    const mots12 = Array.from(new Set([...extraireMotsClesItem(q1), ...extraireMotsClesItem(q2)]));
-
-    sujets.push({
-      id: `sujet-croise-${q1.id}-${q2.id}`,
-      type: "Dissertation croisée (2 axes)",
-      titre: `De « ${q1.axe.toLowerCase()} » à « ${q2.axe.toLowerCase()} » : comment penser l'articulation entre pratique et conscience ?`,
-      qcmIds: [q1.id, q2.id],
-      attendus: [b1.texte, b1.feedback, b2.texte, b2.feedback],
-      motsCles: mots12
-    });
+    const q1 = baseQCM[i], q2 = baseQCM[i + 1];
+    const t1 = extraireTokensSignificatifs(q1.name).slice(0, 2).map(x => x.label).join(" et ");
+    const t2 = extraireTokensSignificatifs(q2.name).slice(0, 2).map(x => x.label).join(" et ");
+    if(t1 && t2){
+      const b1 = q1.options ? (q1.options.find(o => o.correct)?.text || "") : "";
+      const b2 = q2.options ? (q2.options.find(o => o.correct)?.text || "") : "";
+      ajouterSujet(`s-x-${i}`, `Quel rapport établir entre ${t1} et ${t2} ?`, [q1.id, q2.id], `${q1.name} ${b1} ${q2.name} ${b2}`);
+    }
   }
-
-  if(baseQCM.length >= 3){
-    const tousIds = baseQCM.map(q => q.id);
-    const tousAttendus = baseQCM.flatMap(q => {
-      const b = q.options.find(o => o.correct);
-      return b ? [b.texte, b.feedback] : [];
-    });
-    const tousMots = Array.from(new Set(baseQCM.flatMap(q => extraireMotsClesItem(q))));
-    sujets.push({
-      id: "sujet-synthese-globale",
-      type: "Essai / Dissertation intégrale",
-      titre: "La mise en scène d'une « transe contrôlée » abolit-elle la conscience de soi ou révèle-t-elle son dédoublement ?",
-      qcmIds: tousIds,
-      attendus: tousAttendus,
-      motsCles: tousMots
-    });
-  }
-
   return sujets;
 }
 
-function extraireMotsClesItem(qcm){
-  const bonne = qcm.options.find(o => o.correct) || qcm.options[0];
-  const brut = `${qcm.question} ${bonne ? bonne.texte + " " + bonne.feedback : ""}`;
-  const tokens = brut.match(/[A-Za-zÀ-ÖØ-öø-ÿ-]{4,}/g) || [];
-  const uniques = new Map();
-  tokens.forEach(t => {
-    const clean = t.toLowerCase();
-    const norm = normaliserMot(clean);
-    if(norm.length >= 4 && !STOPWORDS.has(clean) && !STOPWORDS.has(norm)){
-      uniques.set(norm.slice(0, 6), clean);
-    }
-  });
-  return Array.from(uniques.values());
-}
-
-/* ==========================================================================
-   ALGORITHME 3 : VÉRIFICATION DE LA RÉPONSE ÉCRITE CONTRE LES QCM ATTENDUS
-   ========================================================================== */
-function verifierTexteContreSujet(texteUtilisateur, sujetActif){
-  const normTexte = normaliserMot(texteUtilisateur);
-  if(!sujetActif || !sujetActif.motsCles || sujetActif.motsCles.length === 0){
-    return { score: 0, trouves: [], manquants: [] };
-  }
-  const trouves = [];
-  const manquants = [];
-  sujetActif.motsCles.forEach(mot => {
-    const radical = normaliserMot(mot).slice(0, 6);
-    if(radical && normTexte.includes(radical)){
-      trouves.push(mot);
-    } else {
-      manquants.push(mot);
-    }
-  });
-  const score = Math.round((trouves.length / sujetActif.motsCles.length) * 100);
-  return { score, trouves, manquants };
-}
-
-/* ==========================================================================
-   MODULE IA : INTERROGATION ACADÉMIQUE TERMINALE PHILO (1 QUESTION PAR QCM)
-   ========================================================================== */
-let requeteIaEnCours = false;
-
-async function interrogerIaPhilosophie(qcmCourant, questionEleve){
-  const qNettoyee = (questionEleve || "").trim();
-  if(!qNettoyee || requeteIaEnCours) return;
-  if(etat.performances.recherchesIA && etat.performances.recherchesIA[qcmCourant.id]) return;
-
-  requeteIaEnCours = true;
-  rendreVoletDroit();
-
-  const bonneRep = qcmCourant.options.find(o => o.correct);
-  const consignesSysteme = [
-    "Tu es un professeur agrégé de philosophie en classe de Terminale (lycée français).",
-    "Réponds dans un style académique rigoureux, structuré et limpide, parfaitement adapté à un élève de Terminale préparant le baccalauréat de philosophie.",
-    "Appuie-toi sur la distinction conceptuelle précise, l'analyse du lexique et les repères philosophiques du programme (conscience, inconscient, liberté, art, culture, vérité), en lien direct avec la question du QCM étudiée.",
-    "Rédige 2 paragraphes denses et pédagogiques (130 à 190 mots maximum), sans listes à puces ni titres Markdown."
-  ].join(" ");
-
-  const contexteQuestion = [
-    `Support documentaire : ${SEQUENCE_DOC.titre} (${SEQUENCE_DOC.sequence}).`,
-    `Axe d'étude : ${qcmCourant.axe}.`,
-    `Extrait : ${qcmCourant.vignette || SEQUENCE_DOC.verbatim}.`,
-    `Question du QCM : ${qcmCourant.question}`,
-    `Réponse attendue au QCM : ${bonneRep ? bonneRep.texte : ""} (${bonneRep ? bonneRep.feedback : ""}).`,
-    `Réponse choisie par l'élève : ${etat.dernierFeedback || "non précisée"}.`,
-    `Question complémentaire posée par l'élève : « ${qNettoyee} »`
-  ].join("\n");
-
-  const payload = {
-    systemInstruction: { parts: [{ text: consignesSysteme }] },
-    contents: [{ role: "user", parts: [{ text: contexteQuestion }] }],
-    generationConfig: {
-      temperature: 0.45,
-      maxOutputTokens: 450
-    }
-  };
-
-  let texteReponse = "";
-  const modeles = ["gemini-2.5-flash", "gemini-2.0-flash"];
-
-  for(const modele of modeles){
-    try{
-      const url = `https://generativelanguage.googleapis.com/v1beta/models/${modele}:generateContent?key=${encodeURIComponent(CLE_API_GEMINI)}`;
-      const res = await fetch(url, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(payload)
-      });
-      if(!res.ok){
-        const errData = await res.json().catch(()=>({}));
-        throw new Error(errData.error?.message || `Erreur HTTP ${res.status}`);
-      }
-      const data = await res.json();
-      const candidat = data?.candidates?.[0]?.content?.parts?.map(p => p.text).join("") || "";
-      if(candidat.trim()){
-        texteReponse = candidat.trim();
-        break;
-      }
-    }catch(err){
-      texteReponse = `Impossible de joindre le service d'analyse philosophique (${err.message}). Vérifiez la connexion réseau ou la validité de la clé API.`;
-    }
-  }
-
-  if(!etat.performances.recherchesIA) etat.performances.recherchesIA = {};
-  etat.performances.recherchesIA[qcmCourant.id] = {
-    question: qNettoyee,
-    reponse: texteReponse,
-    date: new Date().toISOString()
-  };
-
-  requeteIaEnCours = false;
-  magasin.save();
-  rendreVoletDroit();
-}
-
-/* ---------- Modèles d'apparence ---------- */
-const MARQUAGES = {"vert-pronote":"#1f6f50", "bleu-ardoise":"#2b547e", "sépia":"#6d5b41"};
-const PAPIERS = {"blanc-pronote":"#ffffff", "ivoire":"#fdfcf8"};
-const MODELES = {
-  pronote: { nom:"Pronote (Défaut)", devise:"institutionnel, clair, vert sauge" },
-  enigme:  { nom:"L’Énigme", devise:"fond sombre, contraste fort" },
-  cartel:  { nom:"Le Cartel", devise:"affiche analytique, filet net" },
-  voix:    { nom:"La Voix", devise:"italienne, épurée, cadre pointillé" },
-  maitre:  { nom:"Le Maître", devise:"double filet académique" }
-};
-
-/* ---------- État global persistant & transférable ---------- */
-const CLE_STORAGE = "feuille-blanche-pronote-v3";
+/* ---------- État de l'application ---------- */
+const CLE_STORAGE = "redigezmoi-antispecisme-v2";
 let etat = {
-  version: VERSION,
-  params: {
-    marquage: "vert-pronote",
-    papier: "blanc-pronote",
-    modele: "pronote",
-    regle: true,
-    taille: 18,
-    interligne: 1.72
-  },
+  theme: "pronote",
+  regle: true,
+  taille: 18,
   baseQCM: JSON.parse(JSON.stringify(BASE_QCM_INITIALE)),
   sujetActifId: null,
-  tagsSelectionnes: [],
-  tagsPreselectionnes: [],
-  qcmFiltresIds: [],
-  indexQcmCourant: 0,
-  dernierFeedback: "",
   contenuHTML: "",
+  stratesTags: [],
+  tagsSelectionnes: [],
+  favorisQcmIds: [],
+  qcmActifsIds: [],
+  qIndex: 0,
+  score: 0,
+  answered: false,
+  perm: null,
+  ans: {},
   performances: {
-    reponsesQCM: {},
-    recherchesIA: {},
-    historiqueChoix: [],
-    meilleurScoreRedaction: 0
+    historique: [],
+    reponses: {},
+    recherchesIA: {}
+  },
+  googleConfig: {
+    dossierDrive: "RédigezMoi_Philosophie",
+    email: "",
+    nomUtilisateur: "",
+    driveFileId: "",
+    dernierSync: ""
   }
 };
 
-let catalogueTags = [];
-let catalogueSujets = [];
-let timerFrappe = null;
-let derniereSelectionRange = null;
+let googleAccessToken = "";
+let googleTokenExpiration = 0;
 
-const magasin = {
-  save(){ try{ localStorage.setItem(CLE_STORAGE, JSON.stringify(etat)); }catch(e){} },
-  load(){ try{ return JSON.parse(localStorage.getItem(CLE_STORAGE)); }catch(e){ return null; } },
-  clear(){ try{ localStorage.removeItem(CLE_STORAGE); }catch(e){} }
-};
+let indexTags = [];
+let listeSujets = [];
+let nbParagraphesPrecedents = 0;
+let derniereSelectionRange = null;
+let requeteIaEnCours = false;
+
+/* ---------- Pile d'historique Ctrl+Z / Ctrl+Y ---------- */
+const pileUndo = [];
+const pileRedo = [];
+let ignoreHistorique = false;
+let timerSnapshot = null;
+
+function enregistrerSnapshot(force = false){
+  if(ignoreHistorique) return;
+  const html = editeur.innerHTML;
+  if(!force && pileUndo.length > 0 && pileUndo[pileUndo.length - 1] === html) return;
+  pileUndo.push(html);
+  if(pileUndo.length > 80) pileUndo.shift();
+  pileRedo.length = 0;
+  majBoutonsHistorique();
+}
+
+function majBoutonsHistorique(){
+  const bU = document.getElementById("btn-undo");
+  const bR = document.getElementById("btn-redo");
+  if(bU) bU.disabled = pileUndo.length <= 1;
+  if(bR) bR.disabled = pileRedo.length === 0;
+}
+
+function executerUndo(){
+  if(pileUndo.length <= 1) return;
+  pileRedo.push(pileUndo.pop());
+  const precedent = pileUndo[pileUndo.length - 1];
+  ignoreHistorique = true;
+  editeur.innerHTML = precedent;
+  etat.contenuHTML = precedent;
+  sauverEtat();
+  ignoreHistorique = false;
+  majBoutonsHistorique();
+  editeur.focus();
+  placerCurseurBloc();
+}
+
+function executerRedo(){
+  if(pileRedo.length === 0) return;
+  const suivant = pileRedo.pop();
+  pileUndo.push(suivant);
+  ignoreHistorique = true;
+  editeur.innerHTML = suivant;
+  etat.contenuHTML = suivant;
+  sauverEtat();
+  ignoreHistorique = false;
+  majBoutonsHistorique();
+  editeur.focus();
+  placerCurseurBloc();
+}
+
+function sauverEtat(){
+  try{ localStorage.setItem(CLE_STORAGE, JSON.stringify(etat)); }catch(e){}
+}
+function chargerEtat(){
+  try{ return JSON.parse(localStorage.getItem(CLE_STORAGE)); }catch(e){ return null; }
+}
 
 /* ---------- Références DOM ---------- */
-const editeur = document.getElementById("editeur-km");
 const feuille = document.getElementById("feuille");
-const zoneEsprit = document.getElementById("zone-esprit");
+const editeur = document.getElementById("editeur-km");
+const curseurBloc = document.getElementById("curseur-bloc");
 const btnOuvrirSujets = document.getElementById("btn-ouvrir-sujets");
 const titreSujetActif = document.getElementById("titre-sujet-actif");
-const metaTypeSujet = document.getElementById("meta-type-sujet");
-const metaNbSujets = document.getElementById("meta-nb-sujets");
 const listeSujetsGeneres = document.getElementById("liste-sujets-generes");
-const conteneurNuage = document.getElementById("nuage-tags");
-const btnValiderTags = document.getElementById("btn-valider-tags");
-const btnViderTags = document.getElementById("btn-vider-tags");
-const statutFrappe = document.getElementById("statut-frappe");
-const libelleSync = document.getElementById("libelle-sync");
-const scoreInline = document.getElementById("score-inline");
-const compteurMots = document.getElementById("compteur-mots");
-const panneau = document.getElementById("panneau");
-const menuModeles = document.getElementById("menu-modeles");
+const cascadeListe = document.getElementById("cascade-liste");
+const actionsCascade = document.getElementById("actions-cascade");
+const btnSelectionnerTags = document.getElementById("btn-selectionner-tags");
+const btnDeselectionnerTags = document.getElementById("btn-deselectionner-tags");
+const zoneQcmWrapper = document.getElementById("zone-qcm-wrapper");
+const miniTagsQcm = document.getElementById("mini-tags-qcm");
+const navQcmBtns = document.getElementById("nav-qcm-btns");
+const card = document.getElementById("quizcard");
 
-/* ---------- Reconstruction des index dérivés ---------- */
-function reconstruireCatalogues(){
-  catalogueTags = extraireTagsDepuisBase(etat.baseQCM);
-  catalogueSujets = genererSujetsDepuisQCM(etat.baseQCM);
-
-  if(!etat.sujetActifId || !catalogueSujets.some(s => s.id === etat.sujetActifId)){
-    etat.sujetActifId = catalogueSujets[0] ? catalogueSujets[0].id : null;
-  }
-  if(!etat.qcmFiltresIds || etat.qcmFiltresIds.length === 0){
-    const sujet = obtenirSujetActif();
-    etat.qcmFiltresIds = sujet ? [...sujet.qcmIds] : etat.baseQCM.map(q => q.id);
+function reconstruireIndex(){
+  indexTags = construireIndexTags(etat.baseQCM, SUPPORT_VIDEO.transcript);
+  listeSujets = genererSujetsDepuisQCM(etat.baseQCM);
+  if(!etat.sujetActifId || !listeSujets.some(s => s.id === etat.sujetActifId)){
+    etat.sujetActifId = listeSujets[0] ? listeSujets[0].id : null;
   }
   if(!etat.performances.recherchesIA){
     etat.performances.recherchesIA = {};
   }
 }
 
-function obtenirSujetActif(){
-  return catalogueSujets.find(s => s.id === etat.sujetActifId) || catalogueSujets[0] || null;
-}
-
-/* ---------- Rendu de l'apparence & des règles ---------- */
-function appliquerParams(p){
-  const r = document.documentElement.style;
-  r.setProperty("--encre-esprit", MARQUAGES[p.marquage] || p.marquage);
-  r.setProperty("--interligne", p.interligne);
-  r.setProperty("--taille-corps", p.taille + "px");
-  r.setProperty("--papier", PAPIERS[p.papier] || "#ffffff");
-  document.getElementById("regle-h").style.display = p.regle ? "" : "none";
-  document.getElementById("regle-v").style.display = p.regle ? "" : "none";
+function appliquerApparence(){
+  document.body.setAttribute("data-theme", etat.theme || "pronote");
+  document.documentElement.style.setProperty("--taille-corps", (etat.taille || 18) + "px");
+  document.getElementById("regle-h").style.display = etat.regle ? "" : "none";
+  document.getElementById("regle-v").style.display = etat.regle ? "" : "none";
+  majBadgeGoogle();
 }
 
 function dessinerRegles(){
@@ -1071,8 +1532,8 @@ function dessinerRegles(){
   const h = document.getElementById("regle-h");
   const v = document.getElementById("regle-v");
   h.innerHTML = ""; v.innerHTML = "";
-  const largCm = Math.floor((feuille.clientWidth - 144) / px);
-  const hautCm = Math.floor((feuille.clientHeight - 108) / px);
+  const largCm = Math.floor((feuille.clientWidth - 184) / px);
+  const hautCm = Math.floor((feuille.clientHeight - 84) / px);
   for(let c=0; c<=largCm; c++){
     const t = document.createElement("div");
     t.className = "graduation" + (c%2===0 ? " majeure" : "");
@@ -1093,41 +1554,58 @@ function dessinerRegles(){
   }
 }
 
-/* ---------- Rendu du Menu-Titre pleine largeur au-dessus du texte ---------- */
-function rendreMenuSujets(){
-  const sujetActif = obtenirSujetActif();
-  if(sujetActif){
-    titreSujetActif.textContent = sujetActif.titre;
-    metaTypeSujet.textContent = `${sujetActif.type} · Base : ${etat.baseQCM.length} QCM`;
+function placerCurseurBloc(){
+  const sel = window.getSelection();
+  if(!sel || sel.rangeCount === 0 || document.activeElement !== editeur){
+    curseurBloc.style.display = "none";
+    return;
   }
-  metaNbSujets.textContent = `${catalogueSujets.length} sujets disponibles`;
+  const range = sel.getRangeAt(0);
+  if(!editeur.contains(range.commonAncestorContainer)){
+    curseurBloc.style.display = "none";
+    return;
+  }
+  const clone = range.cloneRange();
+  clone.collapse(true);
+  let rect = clone.getBoundingClientRect();
+
+  if(!rect || (rect.width === 0 && rect.height === 0)){
+    const repere = document.createElement("span");
+    repere.textContent = "\u200B";
+    clone.insertNode(repere);
+    rect = repere.getBoundingClientRect();
+    repere.remove();
+    sel.removeAllRanges();
+    sel.addRange(range);
+  }
+
+  const feuilleRect = feuille.getBoundingClientRect();
+  curseurBloc.style.left = (rect.left - feuilleRect.left) + "px";
+  curseurBloc.style.top = (rect.top - feuilleRect.top) + "px";
+  curseurBloc.style.display = "block";
+}
+
+function rendreMenuTitres(){
+  const actif = listeSujets.find(s => s.id === etat.sujetActifId) || listeSujets[0];
+  if(actif) titreSujetActif.textContent = actif.titre;
 
   listeSujetsGeneres.innerHTML = "";
-  catalogueSujets.forEach(sujet => {
+  listeSujets.forEach(sujet => {
     const btn = document.createElement("button");
     btn.type = "button";
     btn.className = "option-sujet" + (sujet.id === etat.sujetActifId ? " actif" : "");
-    btn.innerHTML = `
-      <span class="type-sujet">${sujet.type}</span>
-      <span class="intitule-sujet">${sujet.titre}</span>
-      <span class="cibles-sujet">QCM associés : ${sujet.qcmIds.length} · Notions clés : ${sujet.motsCles.slice(0, 5).join(", ")}</span>
-    `;
+    btn.innerHTML = `<span class="intitule-sujet">${esc(sujet.titre)}</span>`;
     btn.addEventListener("click", ()=>{
       etat.sujetActifId = sujet.id;
-      etat.qcmFiltresIds = [...sujet.qcmIds];
-      etat.indexQcmCourant = 0;
-      etat.dernierFeedback = "";
-      etat.performances.historiqueChoix.push({
-        type: "choix_sujet",
-        sujetId: sujet.id,
-        titre: sujet.titre,
+      etat.performances.historique.push({
+        action: "choix_sujet",
+        sujet: sujet.titre,
         date: new Date().toISOString()
       });
       listeSujetsGeneres.hidden = true;
       btnOuvrirSujets.setAttribute("aria-expanded", "false");
-      magasin.save();
-      rendreMenuSujets();
-      rendreVoletDroit();
+      sauverEtat();
+      rendreMenuTitres();
     });
     listeSujetsGeneres.appendChild(btn);
   });
@@ -1145,118 +1623,147 @@ document.addEventListener("click", (e)=>{
     listeSujetsGeneres.hidden = true;
     btnOuvrirSujets.setAttribute("aria-expanded", "false");
   }
-  if(!menuModeles.hidden && !menuModeles.contains(e.target) && !e.target.closest("#commandes")){
-    menuModeles.hidden = true;
-  }
 });
 
-/* ---------- Rendu de l'extrait documentaire ---------- */
-function rendreExtrait(){
+function rendreSupport(){
   const det = document.getElementById("extrait-container");
+  const vid = SUPPORT_VIDEO.videoId;
+  const thumbMax = `https://i.ytimg.com/vi/${vid}/hqdefault.jpg`;
+  const estFichierLocal = (window.location.protocol === "file:" || !window.location.origin || window.location.origin === "null");
+
   det.innerHTML = `
-    <summary>Support d'étude : ${SEQUENCE_DOC.titre} (${SEQUENCE_DOC.sequence}) — Afficher l'extrait</summary>
-    <blockquote>${SEQUENCE_DOC.verbatim}</blockquote>
+    <summary>Support d'étude : ${esc(SUPPORT_VIDEO.titre)}</summary>
+    <div class="grille-support">
+      <div class="bloc-video-mini">
+        <div class="cadre-player" id="cadre-yt">
+          <div class="vignette-repli" id="vignette-yt" title="Lire la séquence à 02:23">
+            <img src="${thumbMax}" alt="${esc(SUPPORT_VIDEO.titre)}" onerror="this.style.display='none'">
+            <span class="btn-play-overlay">▶</span>
+          </div>
+        </div>
+        <div class="controles-timestamps">
+          ${SUPPORT_VIDEO.timestamps.map(ts => `<button type="button" class="btn-ts" data-sec="${ts.sec}">${esc(ts.label)}</button>`).join("")}
+        </div>
+      </div>
+      <div class="bloc-texte-support">
+        <blockquote>${esc(SUPPORT_VIDEO.verbatim)}</blockquote>
+        <a class="lien-source-yt" href="${SUPPORT_VIDEO.url}" target="_blank" rel="noopener">${SUPPORT_VIDEO.url}</a>
+      </div>
+    </div>
   `;
-}
 
-/* ---------- Rendu du Nuage de tags dynamique ---------- */
-function rendreNuageTags(){
-  const texteActuel = normaliserMot(editeur.innerText || "");
-  conteneurNuage.innerHTML = "";
-
-  const tagsDynamiques = catalogueTags.map(tag => {
-    let presentDansTexte = false;
-    for(const f of tag.formes){
-      if(texteActuel.includes(normaliserMot(f))){
-        presentDansTexte = true;
-        break;
-      }
+  function ouvrirSequence(sec){
+    const cadre = document.getElementById("cadre-yt");
+    if(estFichierLocal){
+      window.open(`${SUPPORT_VIDEO.watchBase}&t=${sec}s`, "_blank", "noopener");
+      return;
     }
-    return {
-      ...tag,
-      presentDansTexte,
-      scoreDynamique: tag.poids + (presentDansTexte ? 6 : 0)
-    };
-  }).sort((a, b) => b.scoreDynamique - a.scoreDynamique);
+    if(!cadre) return;
+    const src = `https://www.youtube.com/embed/${vid}?start=${sec}&autoplay=1&playsinline=1&rel=0`;
+    cadre.innerHTML = `<iframe src="${src}" title="${esc(SUPPORT_VIDEO.titre)}" referrerpolicy="strict-origin-when-cross-origin" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>`;
+  }
 
-  const maxScore = Math.max(...tagsDynamiques.map(t => t.scoreDynamique), 1);
-
-  tagsDynamiques.forEach(tag => {
-    const btn = document.createElement("button");
-    btn.type = "button";
-    const estPreselect = etat.tagsPreselectionnes.includes(tag.cle);
-    btn.className = "tag-nuage"
-      + (tag.presentDansTexte ? " active-texte" : "")
-      + (estPreselect ? " selectionne" : "");
-
-    const ratio = tag.scoreDynamique / maxScore;
-    const taillePx = Math.round(11.5 + ratio * 5);
-    btn.style.fontSize = taillePx + "px";
-    btn.textContent = tag.label;
-    btn.title = `${tag.qcmIds.size} QCM lié(s) — cliquez ou touchez pour sélectionner/désélectionner`;
-
-    btn.addEventListener("click", ()=>{
-      const pos = etat.tagsPreselectionnes.indexOf(tag.cle);
-      if(pos >= 0){
-        etat.tagsPreselectionnes.splice(pos, 1);
-      } else {
-        etat.tagsPreselectionnes.push(tag.cle);
-      }
-      rendreNuageTags();
-    });
-
-    conteneurNuage.appendChild(btn);
+  const vig = document.getElementById("vignette-yt");
+  if(vig) vig.addEventListener("click", ()=> ouvrirSequence(SUPPORT_VIDEO.startDefault));
+  det.querySelectorAll(".btn-ts").forEach(btn => {
+    btn.addEventListener("click", ()=> ouvrirSequence(Number(btn.dataset.sec) || 0));
   });
-
-  const nb = etat.tagsPreselectionnes.length;
-  btnValiderTags.textContent = nb > 0 ? `Sélectionner (${nb})` : "Sélectionner";
 }
 
-btnValiderTags.addEventListener("click", ()=>{
-  etat.tagsSelectionnes = [...etat.tagsPreselectionnes];
-  if(etat.tagsSelectionnes.length === 0){
-    const sujet = obtenirSujetActif();
-    etat.qcmFiltresIds = sujet ? [...sujet.qcmIds] : etat.baseQCM.map(q => q.id);
-  } else {
-    const idsSet = new Set();
-    etat.tagsSelectionnes.forEach(cle => {
-      const tagObj = catalogueTags.find(t => t.cle === cle);
-      if(tagObj){
-        tagObj.qcmIds.forEach(id => idsSet.add(id));
-      }
-    });
-    etat.qcmFiltresIds = idsSet.size > 0 ? Array.from(idsSet) : etat.baseQCM.map(q => q.id);
+/* ==========================================================================
+   FRAPPE AU KILOMÈTRE, CURSEUR CARRÉ & INSERTION QCM
+   ========================================================================== */
+function sauverPositionCurseur(){
+  const sel = window.getSelection();
+  if(sel && sel.rangeCount > 0){
+    const r = sel.getRangeAt(0);
+    if(editeur.contains(r.commonAncestorContainer)){
+      derniereSelectionRange = r.cloneRange();
+    }
   }
-  etat.indexQcmCourant = 0;
-  etat.dernierFeedback = "";
-  etat.performances.historiqueChoix.push({
-    type: "selection_tags",
-    tags: [...etat.tagsSelectionnes],
-    qcmCibles: [...etat.qcmFiltresIds],
-    date: new Date().toISOString()
+  placerCurseurBloc();
+}
+
+function insererAuCurseur(texteBrut){
+  const propre = String(texteBrut || "").replace(/\s+/g, " ").trim();
+  if(!propre) return;
+
+  enregistrerSnapshot(true);
+  editeur.focus();
+  const sel = window.getSelection();
+  let range = derniereSelectionRange;
+
+  if(!range || !editeur.contains(range.commonAncestorContainer)){
+    range = document.createRange();
+    range.selectNodeContents(editeur);
+    range.collapse(false);
+  }
+
+  sel.removeAllRanges();
+  sel.addRange(range);
+
+  let prefixe = "";
+  const sc = range.startContainer;
+  const so = range.startOffset;
+  if(sc.nodeType === Node.TEXT_NODE && so > 0){
+    const ch = sc.textContent[so - 1];
+    if(ch && !/\s/.test(ch)) prefixe = " ";
+  }
+
+  const span = document.createElement("span");
+  span.className = "insertion-fraiche";
+  span.textContent = prefixe + propre + " ";
+
+  range.deleteContents();
+  range.insertNode(span);
+
+  const apres = document.createRange();
+  apres.setStartAfter(span);
+  apres.collapse(true);
+  sel.removeAllRanges();
+  sel.addRange(apres);
+  derniereSelectionRange = apres.cloneRange();
+  placerCurseurBloc();
+
+  setTimeout(()=> span.classList.remove("insertion-fraiche"), 1400);
+
+  etat.contenuHTML = editeur.innerHTML;
+  enregistrerSnapshot(true);
+  sauverEtat();
+  planifierSyncDrive();
+}
+
+function analyserParagrapheEtAjouterStrate(texteParagraphe){
+  const clean = norm(texteParagraphe);
+  if(clean.length < 3) return;
+
+  const matches = indexTags.filter(t => clean.includes(t.radical));
+  if(matches.length === 0) return;
+
+  const rads = matches.slice(0, 6).map(m => m.radical);
+  const derniere = etat.stratesTags[etat.stratesTags.length - 1];
+  if(derniere && derniere.tags.join(",") === rads.join(",")) return;
+
+  etat.stratesTags.push({
+    id: Date.now() + Math.random(),
+    extrait: texteParagraphe.slice(0, 60),
+    tags: rads
   });
-  magasin.save();
-  rendreVoletDroit();
-});
 
-btnViderTags.addEventListener("click", ()=>{
-  etat.tagsPreselectionnes = [];
-  etat.tagsSelectionnes = [];
-  const sujet = obtenirSujetActif();
-  etat.qcmFiltresIds = sujet ? [...sujet.qcmIds] : etat.baseQCM.map(q => q.id);
-  etat.indexQcmCourant = 0;
-  etat.dernierFeedback = "";
-  magasin.save();
-  rendreNuageTags();
-  rendreVoletDroit();
-});
+  sauverEtat();
+  rendreCascadeTags();
+}
 
-/* ---------- Éditeur continu au kilomètre ---------- */
-function initialiserEditeurKm(){
+function initialiserEditeur(){
   try{ document.execCommand("defaultParagraphSeparator", false, "p"); }catch(e){}
   if(etat.contenuHTML){
     editeur.innerHTML = etat.contenuHTML;
   }
+  nbParagraphesPrecedents = editeur.querySelectorAll("p").length;
+  enregistrerSnapshot(true);
+
+  document.getElementById("btn-undo").addEventListener("click", executerUndo);
+  document.getElementById("btn-redo").addEventListener("click", executerRedo);
 
   feuille.addEventListener("click", (e)=>{
     if(e.target === feuille){
@@ -1268,550 +1775,1330 @@ function initialiserEditeurKm(){
       sel.removeAllRanges();
       sel.addRange(range);
       derniereSelectionRange = range.cloneRange();
+      placerCurseurBloc();
     }
   });
 
-  const sauverCurseur = ()=>{
-    const sel = window.getSelection();
-    if(sel && sel.rangeCount > 0){
-      const r = sel.getRangeAt(0);
-      if(editeur.contains(r.commonAncestorContainer)){
-        derniereSelectionRange = r.cloneRange();
+  editeur.addEventListener("keyup", sauverPositionCurseur);
+  editeur.addEventListener("mouseup", sauverPositionCurseur);
+  editeur.addEventListener("focus", sauverPositionCurseur);
+  editeur.addEventListener("blur", ()=>{ curseurBloc.style.display = "none"; });
+  window.addEventListener("resize", placerCurseurBloc);
+
+  editeur.addEventListener("keydown", (e)=>{
+    if((e.ctrlKey || e.metaKey) && !e.altKey){
+      if(e.key.toLowerCase() === "z"){
+        e.preventDefault();
+        if(e.shiftKey) executerRedo();
+        else executerUndo();
+        return;
+      }
+      if(e.key.toLowerCase() === "y"){
+        e.preventDefault();
+        executerRedo();
+        return;
       }
     }
-  };
-  editeur.addEventListener("keyup", sauverCurseur);
-  editeur.addEventListener("mouseup", sauverCurseur);
-  editeur.addEventListener("focus", sauverCurseur);
+
+    if(e.key === "Enter" && !e.shiftKey){
+      enregistrerSnapshot(true);
+      const sel = window.getSelection();
+      let texteBloc = "";
+      if(sel && sel.rangeCount > 0){
+        let node = sel.getRangeAt(0).startContainer;
+        while(node && node !== editeur && node.nodeName !== "P" && node.nodeName !== "DIV"){
+          node = node.parentNode;
+        }
+        if(node && node !== editeur){
+          texteBloc = node.innerText || node.textContent || "";
+        } else {
+          const lignes = (editeur.innerText || "").split("\n").filter(Boolean);
+          texteBloc = lignes[lignes.length - 1] || "";
+        }
+      }
+      setTimeout(()=>{
+        analyserParagrapheEtAjouterStrate(texteBloc);
+        sauverPositionCurseur();
+        etat.contenuHTML = editeur.innerHTML;
+        enregistrerSnapshot(true);
+        sauverEtat();
+        planifierSyncDrive();
+      }, 20);
+    }
+  });
 
   editeur.addEventListener("input", ()=>{
-    statutFrappe.classList.add("en-frappe");
-    libelleSync.textContent = "Frappe au kilomètre en cours...";
-    majCompteurs();
+    sauverPositionCurseur();
+    etat.contenuHTML = editeur.innerHTML;
+    clearTimeout(timerSnapshot);
+    timerSnapshot = setTimeout(()=> enregistrerSnapshot(false), 600);
 
-    clearTimeout(timerFrappe);
-    timerFrappe = setTimeout(()=>{
-      etat.contenuHTML = editeur.innerHTML;
-      magasin.save();
-      statutFrappe.classList.remove("en-frappe");
-      libelleSync.textContent = "Analyse & nuage de tags synchronisés";
-      rendreNuageTags();
-      rendreVoletDroit();
-    }, 550);
+    const paras = Array.from(editeur.querySelectorAll("p, div"));
+    if(paras.length > nbParagraphesPrecedents && paras.length >= 2){
+      const avantDernier = paras[paras.length - 2];
+      analyserParagrapheEtAjouterStrate(avantDernier.innerText || "");
+    }
+    nbParagraphesPrecedents = paras.length;
+    sauverEtat();
+    planifierSyncDrive();
+  });
+}
+
+/* ==========================================================================
+   NUAGE DE TAGS EN CASCADE HISTORIQUE
+   ========================================================================== */
+function rendreCascadeTags(){
+  cascadeListe.innerHTML = "";
+  const totalStrates = etat.stratesTags.length;
+
+  if(totalStrates === 0){
+    actionsCascade.hidden = true;
+    return;
+  }
+
+  actionsCascade.hidden = false;
+
+  etat.stratesTags.forEach((strate, idx) => {
+    const distanceDuPresent = (totalStrates - 1) - idx;
+    const opacite = Math.max(0.32, 1 - distanceDuPresent * 0.22);
+
+    const ligne = document.createElement("div");
+    ligne.className = "strate-tags";
+    ligne.style.opacity = opacite.toFixed(2);
+
+    strate.tags.forEach(rad => {
+      const info = indexTags.find(t => t.radical === rad);
+      if(!info) return;
+      const btn = document.createElement("button");
+      btn.type = "button";
+      const estSel = etat.tagsSelectionnes.includes(rad);
+      btn.className = "tag-nuage" + (estSel ? " selectionne" : "");
+      btn.textContent = info.label;
+      btn.addEventListener("click", ()=>{
+        const pos = etat.tagsSelectionnes.indexOf(rad);
+        if(pos >= 0){
+          etat.tagsSelectionnes.splice(pos, 1);
+        } else {
+          etat.tagsSelectionnes.push(rad);
+        }
+        sauverEtat();
+        rendreCascadeTags();
+      });
+      ligne.appendChild(btn);
+    });
+
+    cascadeListe.appendChild(ligne);
   });
 
-  majCompteurs();
+  cascadeListe.scrollTop = cascadeListe.scrollHeight;
 }
 
-function majCompteurs(){
-  const txt = (editeur.innerText || "").trim();
-  const nbMots = txt ? txt.split(/\s+/).length : 0;
-  compteurMots.textContent = nbMots + (nbMots > 1 ? " mots" : " mot");
-
-  const reponses = Object.values(etat.performances.reponsesQCM || {});
-  const nbBonnes = reponses.filter(r => r.correct).length;
-  scoreInline.textContent = `QCM : ${nbBonnes}/${reponses.length} réussi(s)`;
-}
-
-function insererDansTexte(phrase){
-  editeur.focus();
-  const sel = window.getSelection();
-  let range = derniereSelectionRange;
-  if(!range || !editeur.contains(range.commonAncestorContainer)){
-    range = document.createRange();
-    range.selectNodeContents(editeur);
-    range.collapse(false);
+btnSelectionnerTags.addEventListener("click", ()=>{
+  if(etat.tagsSelectionnes.length === 0){
+    etat.qcmActifsIds = [];
+    zoneQcmWrapper.hidden = true;
+    sauverEtat();
+    return;
   }
-  sel.removeAllRanges();
-  sel.addRange(range);
 
-  const span = document.createElement("span");
-  span.className = "insertion-fraiche";
-  span.textContent = " " + phrase + " ";
-  range.deleteContents();
-  range.insertNode(span);
+  const idsSet = new Set();
+  etat.tagsSelectionnes.forEach(rad => {
+    const info = indexTags.find(t => t.radical === rad);
+    if(info) info.qcmIds.forEach(id => idsSet.add(id));
+  });
 
-  const apres = document.createRange();
-  apres.setStartAfter(span);
-  apres.collapse(true);
-  sel.removeAllRanges();
-  sel.addRange(apres);
-  derniereSelectionRange = apres.cloneRange();
+  etat.qcmActifsIds = Array.from(idsSet);
+  etat.qIndex = 0;
+  etat.score = 0;
+  etat.ans = {};
+  etat.answered = false;
 
-  setTimeout(()=> span.classList.remove("insertion-fraiche"), 1600);
-  etat.contenuHTML = editeur.innerHTML;
-  magasin.save();
-  majCompteurs();
-  rendreNuageTags();
-  rendreVoletDroit();
+  etat.performances.historique.push({
+    action: "validation_tags",
+    tags: [...etat.tagsSelectionnes],
+    qcmIds: [...etat.qcmActifsIds],
+    date: new Date().toISOString()
+  });
+
+  sauverEtat();
+  if(etat.qcmActifsIds.length > 0){
+    zoneQcmWrapper.hidden = false;
+    renderQCM();
+  } else {
+    zoneQcmWrapper.hidden = true;
+  }
+});
+
+btnDeselectionnerTags.addEventListener("click", ()=>{
+  etat.tagsSelectionnes = [];
+  etat.qcmActifsIds = [];
+  zoneQcmWrapper.hidden = true;
+  sauverEtat();
+  rendreCascadeTags();
+});
+
+/* ==========================================================================
+   RECHERCHE IA ACADÉMIQUE TERMINALE PHILO (1 QUESTION MAX / QUESTION QCM)
+   ========================================================================== */
+function obtenirReponseIaParagraphes(texteBrut){
+  return String(texteBrut || "")
+    .split(/\n+/)
+    .map(p => p.trim())
+    .filter(Boolean)
+    .map(p => `<p>${esc(p)}</p>`)
+    .join("");
 }
 
-/* ---------- Volet de droite : vérification du devoir + QCM ciblés + barre de recherche IA ---------- */
-function rendreVoletDroit(){
-  zoneEsprit.className = "zone-esprit modele-" + (etat.params.modele || "pronote");
-  zoneEsprit.innerHTML = "";
+function construireSignatureModele(modeleId){
+  const idPropre = String(modeleId || "gemini-2.5-flash");
+  return `
+    <div class="signature-modele-ia">
+      ${svgVignetteModele(idPropre)}
+      <span>Modèle utilisé : <code>${esc(idPropre)}</code></span>
+    </div>
+  `;
+}
 
-  const qcmList = etat.qcmFiltresIds
+function construireBlocReponseIaComplete(dataIa){
+  return `
+    <div class="reponse-ia-academique bloc-copiable">
+      <span class="titre-ia-term">Éclairage philosophique · Terminale</span>
+      ${obtenirReponseIaParagraphes(dataIa.reponse)}
+      ${construireSignatureModele(dataIa.modeleId)}
+      ${boutonCopieDiscret()}
+    </div>
+  `;
+}
+
+function construireBlocRechercheIa(qcm){
+  if(!etat.performances.recherchesIA) etat.performances.recherchesIA = {};
+  const dejaPosee = etat.performances.recherchesIA[qcm.id] || null;
+  const quotaTexte = dejaPosee ? "1 / 1 question posée" : "1 question disponible";
+
+  const blocReponseIa = dejaPosee
+    ? `<div id="rep-ia-${esc(qcm.id)}">${construireBlocReponseIaComplete(dejaPosee)}</div>`
+    : `<div id="rep-ia-${esc(qcm.id)}"></div>`;
+
+  const valeurIndications = dejaPosee
+    ? (dejaPosee.indications || "")
+    : INDICATIONS_DEFAUT;
+
+  return `
+    <div class="barre-recherche-ia" id="zone-ia-${esc(qcm.id)}">
+      <div class="entete-recherche-ia">
+        <span>Question complémentaire (IA · Terminale Philo)</span>
+        <span id="quota-ia-${esc(qcm.id)}">${quotaTexte}</span>
+      </div>
+      <div class="ligne-saisie-ia">
+        <input
+          type="text"
+          id="input-ia-${esc(qcm.id)}"
+          placeholder="${dejaPosee ? "Quota atteint pour cette question QCM (1/1)" : "Ex. : Quelle distinction conceptuelle fonder ici au bac ?"}"
+          value="${dejaPosee ? esc(dejaPosee.question) : ""}"
+          ${dejaPosee || requeteIaEnCours ? "disabled" : ""}
+          onkeydown="if(event.key==='Enter'){event.preventDefault();soumettreRechercheIa('${esc(qcm.id)}');}"
+        >
+        <button
+          type="button"
+          class="btn-demander-ia"
+          id="btn-ia-${esc(qcm.id)}"
+          ${dejaPosee || requeteIaEnCours ? "disabled" : ""}
+          onclick="soumettreRechercheIa('${esc(qcm.id)}')"
+        >${requeteIaEnCours ? "Analyse..." : "Demander"}</button>
+      </div>
+      <div class="ligne-indications-ia">
+        <input
+          type="text"
+          id="indications-ia-${esc(qcm.id)}"
+          aria-label="Indications supplémentaires"
+          value="${esc(valeurIndications)}"
+          ${dejaPosee || requeteIaEnCours ? "disabled" : ""}
+          onfocus="if(!this.disabled && this.value==='${INDICATIONS_DEFAUT}'){this.value='';}"
+          onblur="if(!this.disabled && !this.value.trim()){this.value='${INDICATIONS_DEFAUT}';}"
+          onkeydown="if(event.key==='Enter'){event.preventDefault();soumettreRechercheIa('${esc(qcm.id)}');}"
+        >
+      </div>
+      ${blocReponseIa}
+    </div>
+  `;
+}
+
+async function soumettreRechercheIa(qcmId){
+  if(requeteIaEnCours) return;
+  if(!etat.performances.recherchesIA) etat.performances.recherchesIA = {};
+  if(etat.performances.recherchesIA[qcmId]) return;
+
+  const qcm = etat.baseQCM.find(x => x.id === qcmId);
+  if(!qcm) return;
+
+  const inputEl = document.getElementById("input-ia-" + qcmId);
+  const indEl = document.getElementById("indications-ia-" + qcmId);
+  const btnEl = document.getElementById("btn-ia-" + qcmId);
+  const repContainer = document.getElementById("rep-ia-" + qcmId);
+  const quotaEl = document.getElementById("quota-ia-" + qcmId);
+
+  const questionEleve = (inputEl ? inputEl.value : "").trim();
+  const brutIndications = (indEl ? indEl.value : "").trim();
+  const indicationsEleve = (brutIndications && brutIndications !== INDICATIONS_DEFAUT) ? brutIndications : "";
+
+  if(!questionEleve && !indicationsEleve){
+    if(inputEl) inputEl.focus();
+    return;
+  }
+
+  requeteIaEnCours = true;
+  if(inputEl) inputEl.disabled = true;
+  if(indEl) indEl.disabled = true;
+  if(btnEl){
+    btnEl.disabled = true;
+    btnEl.textContent = "Analyse...";
+  }
+  if(repContainer){
+    repContainer.innerHTML = `<div class="reponse-ia-academique"><span class="titre-ia-term">Éclairage philosophique · Terminale</span><p>Rédaction de l'analyse en cours…</p></div>`;
+  }
+
+  let bonneRepTexte = "";
+  let feedbackTexte = "";
+  if(Array.isArray(qcm.options)){
+    const b = qcm.options.find(o => o.correct) || qcm.options[0];
+    bonneRepTexte = b ? b.text : "";
+    feedbackTexte = b ? (b.feedback || "") : "";
+  } else if(Array.isArray(qcm.answers)){
+    bonneRepTexte = qcm.answers.join(" ; ");
+    feedbackTexte = qcm.feedback || "";
+  } else if(Array.isArray(qcm.pairs)){
+    bonneRepTexte = qcm.pairs.map(p => `${p.q} → ${p.a}`).join(" ; ");
+  }
+
+  const sequenceCombinée = [
+    `Thème / Axe : ${qcm.scenario || ""} — Catégorie : ${qcm.categorie || ""}`,
+    `Question du QCM : ${qcm.name}`,
+    `Élément de réponse / corrigé : ${bonneRepTexte} ${feedbackTexte}`.trim(),
+    `Question principale de l'élève : ${questionEleve || "(non précisée)"}`,
+    `Indications supplémentaires : ${indicationsEleve || "Aucune indication complémentaire"}`
+  ].join("\n");
+
+  const systemPrompt = [
+    "Tu es professeur de philosophie en classe de Terminale (système éducatif français).",
+    "Réponds dans un style académique clair, rigoureux et nuancé, conçu pour faire comprendre et exploiter la notion à un élève de Terminale préparant l'épreuve de philosophie.",
+    "Explicite les distinctions conceptuelles, la portée problématique et les enjeux philosophiques en lien direct avec la question du QCM, la question de l'élève et les indications supplémentaires.",
+    "Rédige exactement 2 paragraphes denses et pédagogiques (130 à 190 mots environ), sans listes à puces ni titres."
+  ].join(" ");
+
+  const bodyPayload = {
+    systemInstruction: { parts: [{ text: systemPrompt }] },
+    contents: [{ role: "user", parts: [{ text: sequenceCombinée }] }],
+    generationConfig: {
+      temperature: 0.4,
+      maxOutputTokens: 420
+    }
+  };
+
+  let reponseFinale = "";
+  let modeleUtiliseId = "gemini-2.5-flash";
+  let succesRequete = false;
+  const modelesCandidats = ["gemini-2.5-flash", "gemini-2.0-flash"];
+
+  for(const modele of modelesCandidats){
+    modeleUtiliseId = modele;
+    try{
+      const endpoint = `https://generativelanguage.googleapis.com/v1beta/models/${modele}:generateContent?key=${encodeURIComponent(CLE_API_GEMINI)}`;
+      const res = await fetch(endpoint, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(bodyPayload)
+      });
+      if(!res.ok){
+        const errObj = await res.json().catch(()=>({}));
+        throw new Error(errObj.error?.message || `HTTP ${res.status}`);
+      }
+      const json = await res.json();
+      const idRecu = json?.modelVersion || modele;
+      const texteGenere = json?.candidates?.[0]?.content?.parts?.map(p => p.text || "").join("").trim();
+      if(texteGenere){
+        modeleUtiliseId = idRecu;
+        reponseFinale = texteGenere;
+        succesRequete = true;
+        break;
+      }
+    }catch(err){
+      reponseFinale = `L'analyse académique n'a pas pu aboutir (${err.message}). Vérifiez la connectivité ou la clé API configurée.`;
+    }
+  }
+
+  requeteIaEnCours = false;
+
+  if(succesRequete){
+    const entryIa = {
+      question: questionEleve,
+      indications: indicationsEleve,
+      reponse: reponseFinale,
+      modeleId: modeleUtiliseId,
+      date: new Date().toISOString()
+    };
+    etat.performances.recherchesIA[qcmId] = entryIa;
+    sauverEtat();
+    planifierSyncDrive();
+    if(quotaEl) quotaEl.textContent = "1 / 1 question posée";
+    if(inputEl) inputEl.disabled = true;
+    if(indEl) indEl.disabled = true;
+    if(btnEl){
+      btnEl.disabled = true;
+      btnEl.textContent = "Demander";
+    }
+    if(repContainer){
+      repContainer.innerHTML = construireBlocReponseIaComplete(entryIa);
+    }
+  } else {
+    if(inputEl) inputEl.disabled = false;
+    if(indEl) indEl.disabled = false;
+    if(btnEl){
+      btnEl.disabled = false;
+      btnEl.textContent = "Demander";
+    }
+    if(repContainer){
+      repContainer.innerHTML = `<div class="reponse-ia-academique"><span class="titre-ia-term">Éclairage philosophique · Terminale</span><p>${esc(reponseFinale)}</p>${construireSignatureModele(modeleUtiliseId)}</div>`;
+    }
+  }
+}
+
+/* ==========================================================================
+   MOTEUR DE QCM : TITRE RÉDUIT + JAUGE GRAPHIQUE + CATÉGORIE + FAVORIS
+   ========================================================================== */
+function obtenirQcmActifs(){
+  return etat.qcmActifsIds
     .map(id => etat.baseQCM.find(q => q.id === id))
     .filter(Boolean);
+}
 
-  const listeActive = qcmList.length > 0 ? qcmList : etat.baseQCM;
-  if(etat.indexQcmCourant >= listeActive.length) etat.indexQcmCourant = 0;
-  const qcmCourant = listeActive[etat.indexQcmCourant];
+function nettoyerTitreScenario(sc){
+  return String(sc || "").replace(/^Scénario\s*\d*\s*[—:-]\s*/i, "").trim();
+}
 
-  /* 1. Barre de bascule rapide d'un QCM à l'autre */
-  const entete = document.createElement("div");
-  entete.className = "entete-qcm";
+function basculerFavoriQcm(qcmId){
+  if(!Array.isArray(etat.favorisQcmIds)) etat.favorisQcmIds = [];
+  const idx = etat.favorisQcmIds.indexOf(qcmId);
+  if(idx >= 0){
+    etat.favorisQcmIds.splice(idx, 1);
+  } else {
+    etat.favorisQcmIds.push(qcmId);
+  }
+  sauverEtat();
+  planifierSyncDrive();
+  renderQCM();
+}
 
-  const navBox = document.createElement("div");
-  navBox.className = "nav-qcm-rapide";
+function ouvrirFavorisQcm(){
+  if(!Array.isArray(etat.favorisQcmIds) || etat.favorisQcmIds.length === 0){
+    alert("Aucun QCM enregistré dans vos favoris pour le moment.");
+    return;
+  }
+  etat.qcmActifsIds = [...etat.favorisQcmIds];
+  etat.qIndex = 0;
+  etat.score = 0;
+  etat.ans = {};
+  etat.answered = false;
+  sauverEtat();
+  zoneQcmWrapper.hidden = false;
+  renderQCM();
+}
 
-  const btnPrev = document.createElement("button");
-  btnPrev.className = "btn-nav-qcm";
-  btnPrev.textContent = "◀";
-  btnPrev.title = "QCM précédent";
-  btnPrev.addEventListener("click", ()=>{
-    etat.indexQcmCourant = (etat.indexQcmCourant - 1 + listeActive.length) % listeActive.length;
-    etat.dernierFeedback = "";
-    magasin.save();
-    rendreVoletDroit();
-  });
+function nbsp(s){
+  return String(s).replace(/ ([;:!?])/g,"\u00A0$1").replace(/« /g,"«\u00A0").replace(/ »/g,"\u00A0»");
+}
+function esc(s){
+  return nbsp(String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;"));
+}
+function shuffle(a){
+  for(let i=a.length-1;i>0;i--){
+    const j=Math.floor(Math.random()*(i+1)), t=a[i];
+    a[i]=a[j]; a[j]=t;
+  }
+  return a;
+}
+function melangeOptions(opts){
+  const perm = shuffle(opts.map((o,k)=>k));
+  const nbGood = opts.filter(o=>o.correct).length;
+  if(nbGood >= opts.length) return perm;
+  let essais = 0;
+  while(essais < 20){
+    let firstGood = perm.length;
+    for(let i=0;i<perm.length;i++){ if(opts[perm[i]].correct){ firstGood=i; break; } }
+    if(firstGood > 0) return perm;
+    const bads = [];
+    for(let j=1;j<perm.length;j++){ if(!opts[perm[j]].correct) bads.push(j); }
+    if(!bads.length) return perm;
+    const pick = bads[Math.floor(Math.random()*bads.length)];
+    const t = perm[0]; perm[0] = perm[pick]; perm[pick] = t;
+    essais++;
+  }
+  return perm;
+}
 
-  const indicateur = document.createElement("span");
-  indicateur.textContent = `QCM ${etat.indexQcmCourant + 1}/${listeActive.length}`;
+function boutonCopieDiscret(){
+  return '<button type="button" class="btn-inserer-curseur" onclick="copierBlocVersCurseur(event, this)" title="Insérer au curseur dans le document">↵</button>';
+}
 
-  const btnNext = document.createElement("button");
-  btnNext.className = "btn-nav-qcm";
-  btnNext.textContent = "▶";
-  btnNext.title = "QCM suivant";
-  btnNext.addEventListener("click", ()=>{
-    etat.indexQcmCourant = (etat.indexQcmCourant + 1) % listeActive.length;
-    etat.dernierFeedback = "";
-    magasin.save();
-    rendreVoletDroit();
-  });
+function copierBlocVersCurseur(e, btn){
+  if(e){ e.preventDefault(); e.stopPropagation(); }
+  const conteneur = btn.closest(".bloc-copiable");
+  if(!conteneur) return;
 
-  navBox.appendChild(btnPrev);
-  navBox.appendChild(indicateur);
-  navBox.appendChild(btnNext);
+  const clone = conteneur.cloneNode(true);
+  clone.querySelectorAll(".btn-inserer-curseur, input, select, .barre-recherche-ia, .titre-ia-term, .signature-modele-ia").forEach(el => el.remove());
 
-  const selectDirect = document.createElement("select");
-  selectDirect.className = "select-qcm-direct";
-  selectDirect.title = "Basculer directement vers un QCM";
-  listeActive.forEach((item, i) => {
-    const opt = document.createElement("option");
-    opt.value = i;
-    opt.textContent = `${i + 1}. ${item.axe}`;
-    if(i === etat.indexQcmCourant) opt.selected = true;
-    selectDirect.appendChild(opt);
-  });
-  selectDirect.addEventListener("change", (e)=>{
-    etat.indexQcmCourant = Number(e.target.value);
-    etat.dernierFeedback = "";
-    magasin.save();
-    rendreVoletDroit();
-  });
-
-  entete.appendChild(navBox);
-  entete.appendChild(selectDirect);
-  zoneEsprit.appendChild(entete);
-
-  /* 2. Vérification de la réponse écrite */
-  const sujetActif = obtenirSujetActif();
-  const verif = verifierTexteContreSujet(editeur.innerText || "", sujetActif);
-  if(verif.score > (etat.performances.meilleurScoreRedaction || 0)){
-    etat.performances.meilleurScoreRedaction = verif.score;
+  const titreFb = clone.querySelector("strong");
+  if(titreFb && /^(Réponse acceptée|Explication)/i.test(titreFb.textContent.trim())){
+    const nextBr = titreFb.nextSibling;
+    if(nextBr && nextBr.nodeName === "BR") nextBr.remove();
+    titreFb.remove();
   }
 
-  const blocVerif = document.createElement("div");
-  blocVerif.className = "verif-sujet";
-  blocVerif.innerHTML = `
-    <div class="verif-header">
-      <span>Vérification du texte / Sujet</span>
-      <span>${verif.score}% des notions attendues</span>
+  const texte = (clone.textContent || "").replace(/^[✔✖]\s*/, "").replace(/\s*\(votre réponse\)\s*$/i, "").trim();
+  insererAuCurseur(texte);
+}
+
+function rendreBarreMetaQCM(listeQcm, qCourant){
+  miniTagsQcm.innerHTML = "";
+  const tagsLies = indexTags.filter(t => t.qcmIds.has(qCourant.id)).slice(0, 7);
+  tagsLies.forEach(t => {
+    const sp = document.createElement("span");
+    const estMatch = etat.tagsSelectionnes.includes(t.radical);
+    sp.className = "mini-tag" + (estMatch ? " actif" : "");
+    sp.textContent = t.label;
+    miniTagsQcm.appendChild(sp);
+  });
+
+  navQcmBtns.innerHTML = "";
+  if(listeQcm.length > 1){
+    const bPrev = document.createElement("button");
+    bPrev.type = "button"; bPrev.textContent = "◀";
+    bPrev.addEventListener("click", ()=>{
+      etat.qIndex = (etat.qIndex - 1 + listeQcm.length) % listeQcm.length;
+      renderQCM();
+    });
+    const bNext = document.createElement("button");
+    bNext.type = "button"; bNext.textContent = "▶";
+    bNext.addEventListener("click", ()=>{
+      etat.qIndex = (etat.qIndex + 1) % listeQcm.length;
+      renderQCM();
+    });
+    navQcmBtns.appendChild(bPrev);
+    navQcmBtns.appendChild(bNext);
+  }
+}
+
+function renderQCM(){
+  const Q = obtenirQcmActifs();
+  if(Q.length === 0){ zoneQcmWrapper.hidden = true; return; }
+  zoneQcmWrapper.hidden = false;
+  if(etat.qIndex >= Q.length) etat.qIndex = 0;
+
+  etat.answered = false;
+  const q = Q[etat.qIndex];
+  rendreBarreMetaQCM(Q, q);
+
+  const titreCourt = nettoyerTitreScenario(q.scenario) || "Questionnaire";
+  const cat = q.categorie || "Concepts";
+  const couleurCat = COULEURS_CATEGORIES[cat] || "var(--acc)";
+  const estFavori = Array.isArray(etat.favorisQcmIds) && etat.favorisQcmIds.includes(q.id);
+
+  const segmentsHTML = Q.map((item, idx) => {
+    const rep = etat.ans[idx];
+    let cls = "segment-prog";
+    if(idx === etat.qIndex) cls += " courant";
+    else if(rep && rep.ok) cls += " fait-ok";
+    else if(rep && !rep.ok) cls += " fait-ko";
+    return `<span class="${cls}" data-qidx="${idx}" title="Question ${idx + 1}/${Q.length}"></span>`;
+  }).join("");
+
+  let h = `<div class="qcm-header-graphique" style="--cat-color:${couleurCat}">
+    <div class="qcm-header-top">
+      <span class="qcm-titre-court">${esc(titreCourt)}</span>
+      <div class="qcm-actions-header">
+        <span class="badge-cat-graphique"><span class="dot-cat"></span>${esc(cat)}</span>
+        <button type="button" class="btn-favori-qcm ${estFavori ? "actif" : ""}" id="btn-toggle-favori" title="Ajouter ou retirer des favoris">
+          ${estFavori ? "★ Favori" : "☆ Favori"}
+        </button>
+      </div>
     </div>
-    <div class="jauge-barre"><div class="jauge-remplissage" style="width:${verif.score}%"></div></div>
-    <div class="verif-detail">
-      ${verif.trouves.length > 0
-        ? `<strong>Concepts repérés :</strong> ${verif.trouves.slice(0, 6).join(", ")}.<br>`
-        : `<strong>En attente :</strong> commencez à rédiger pour comparer votre texte aux attendus.<br>`}
-      ${verif.manquants.length > 0
-        ? `<strong>À mobiliser :</strong> ${verif.manquants.slice(0, 5).join(", ")}.`
-        : `Tous les concepts attendus pour ce sujet sont présents !`}
+    <div class="jauge-segments" aria-label="Progression">${segmentsHTML}</div>
+  </div>`;
+
+  if(q.type === "single" || q.type === "multi"){
+    etat.perm = melangeOptions(q.options);
+    h += '<p class="qtext bloc-copiable">' + esc(q.name) + boutonCopieDiscret() + '</p>';
+    etat.perm.forEach((orig, d) => {
+      h += '<label class="opt bloc-copiable" id="opt' + d + '"><input type="' + (q.type === "single" ? "radio" : "checkbox") + '" name="q" value="' + d + '" onchange="markSel()"> ' + esc(q.options[orig].text) + boutonCopieDiscret() + '</label>';
+    });
+  } else if(q.type === "short"){
+    h += '<p class="qtext bloc-copiable">' + esc(q.name) + boutonCopieDiscret() + '</p><input type="text" id="shortin" onkeydown="if(event.key===\'Enter\'){event.preventDefault();validate();}">';
+  } else if(q.type === "matching"){
+    h += '<p class="qtext bloc-copiable">' + esc(q.name) + boutonCopieDiscret() + '</p>';
+    const pool = shuffle(q.pairs.map(p => p.a));
+    q.pairs.forEach((p, k) => {
+      h += '<div class="bloc-copiable" style="margin:10px 0"><strong>' + esc(p.q) + '</strong>' + boutonCopieDiscret() + '<select class="pairsel" id="sel' + k + '"><option value="">— Choisir —</option>' + pool.map(a => '<option>' + esc(a) + '</option>').join("") + '</select></div>';
+    });
+  } else if(q.type === "cloze"){
+    h += '<p class="qtext bloc-copiable" style="white-space:pre-wrap">';
+    q.segs.forEach((s, k) => {
+      if(s.t !== undefined) h += esc(s.t);
+      else h += '<span class="blank"><input type="text" id="cz' + k + '" onkeydown="if(event.key===\'Enter\'){event.preventDefault();validate();}"></span>';
+    });
+    h += boutonCopieDiscret() + '</p>';
+  }
+
+  h += '<button id="valbtn" onclick="validate()">Valider</button>';
+  card.innerHTML = h;
+
+  const btnFav = document.getElementById("btn-toggle-favori");
+  if(btnFav) btnFav.addEventListener("click", ()=> basculerFavoriQcm(q.id));
+
+  card.querySelectorAll(".segment-prog").forEach(seg => {
+    seg.addEventListener("click", ()=>{
+      etat.qIndex = Number(seg.dataset.qidx);
+      renderQCM();
+    });
+  });
+}
+
+function markSel(){
+  document.querySelectorAll("label.opt").forEach(l => l.classList.remove("sel"));
+  document.querySelectorAll("input[name=q]").forEach(inp => {
+    if(inp.checked) inp.closest("label").classList.add("sel");
+  });
+}
+
+function validate(){
+  if(etat.answered) return;
+  const Q = obtenirQcmActifs();
+  const q = Q[etat.qIndex];
+  let ok = false, fb = "";
+
+  if(q.type === "single" || q.type === "multi"){
+    const selD = [].slice.call(document.querySelectorAll("input[name=q]:checked")).map(i => +i.value);
+    const sel = selD.map(d => etat.perm[d]);
+    const corr = q.options.map((o, k) => o.correct ? k : -1).filter(k => k >= 0);
+    if(q.type === "single") ok = sel.length === 1 && corr.indexOf(sel[0]) >= 0;
+    else ok = sel.length === corr.length && sel.every(s => corr.indexOf(s) >= 0);
+
+    etat.perm.forEach((orig, d) => {
+      const el = document.getElementById("opt" + d);
+      if(q.options[orig].correct) el.classList.add("good");
+      else if(selD.indexOf(d) >= 0) el.classList.add("bad");
+      el.querySelector("input").disabled = true;
+    });
+    etat.ans[etat.qIndex] = { ok, given: sel };
+    fb = corr.map(k => q.options[k].feedback || "").join("<br><br>") || ("Réponse attendue : " + corr.map(k => q.options[k].text).join(" ; "));
+  } else if(q.type === "short"){
+    const inp = document.getElementById("shortin");
+    ok = q.answers.some(a => norm(a) === norm(inp.value));
+    inp.disabled = true;
+    etat.ans[etat.qIndex] = { ok, given: inp.value };
+    fb = q.feedback || ("Réponses acceptées : " + q.answers.join(" ; "));
+  } else if(q.type === "matching"){
+    let allOk = true;
+    q.pairs.forEach((p, k) => {
+      const v = document.getElementById("sel" + k).value;
+      if(norm(v) !== norm(p.a)) allOk = false;
+      document.getElementById("sel" + k).disabled = true;
+    });
+    ok = allOk;
+    etat.ans[etat.qIndex] = { ok, given: q.pairs.map((p, k) => document.getElementById("sel" + k).value) };
+    fb = "Associations correctes : " + q.pairs.map(p => p.q + " → " + p.a).join(" ; ");
+  } else if(q.type === "cloze"){
+    let allOk2 = true;
+    q.segs.forEach((s, k) => {
+      if(s.blank === undefined) return;
+      const gv = document.getElementById("cz" + k).value;
+      if(!s.blank.some(a => norm(a) === norm(gv))) allOk2 = false;
+      document.getElementById("cz" + k).disabled = true;
+    });
+    ok = allOk2;
+    etat.ans[etat.qIndex] = { ok, given: q.segs.map((s, k) => s.blank === undefined ? null : document.getElementById("cz" + k).value) };
+    fb = "La réponse complète : « " + q.segs.map(s => s.blank !== undefined ? s.blank[0] : s.t).join("") + " »";
+  }
+
+  if(ok) etat.score++;
+  etat.answered = true;
+  etat.performances.reponses[q.id] = { ok, question: q.name, date: new Date().toISOString() };
+
+  const segCourant = card.querySelector(`.segment-prog[data-qidx="${etat.qIndex}"]`);
+  if(segCourant){
+    segCourant.classList.remove("courant");
+    segCourant.classList.add(ok ? "fait-ok" : "fait-ko");
+  }
+
+  sauverEtat();
+  planifierSyncDrive();
+
+  let h = '<div class="fb bloc-copiable ' + (ok ? "ok" : "no") + '"><strong>' + (ok ? "Réponse acceptée. ✅" : "Explication") + '</strong><br>' + fb + boutonCopieDiscret() + construireBlocRechercheIa(q) + '</div>';
+  h += '<button class="ghost" onclick="redoQ()" style="margin-top:10px">← Refaire cette question</button> ';
+  h += '<button onclick="nextQ()">' + (etat.qIndex + 1 < Q.length ? "Question suivante →" : "Voir le score") + '</button>';
+  card.insertAdjacentHTML("beforeend", h);
+}
+
+function redoQ(){
+  const a = etat.ans[etat.qIndex];
+  if(a && a.ok) etat.score--;
+  delete etat.ans[etat.qIndex];
+  renderQCM();
+}
+
+function nextQ(){
+  const Q = obtenirQcmActifs();
+  etat.qIndex++;
+  if(etat.qIndex < Q.length){ renderQCM(); return; }
+  renderScoreQCM();
+}
+
+function renderScoreQCM(){
+  const Q = obtenirQcmActifs();
+  const n = Q.length, s = etat.score, pct = Math.round(100 * s / Math.max(1, n));
+
+  const sujetActif = listeSujets.find(x => x.id === etat.sujetActifId);
+  const normTexte = norm(editeur.innerText || "");
+  let trouves = 0;
+  if(sujetActif && sujetActif.motsCles.length > 0){
+    sujetActif.motsCles.forEach(rad => { if(normTexte.includes(rad)) trouves++; });
+  }
+  const pctTexte = (sujetActif && sujetActif.motsCles.length > 0)
+    ? Math.round((trouves / sujetActif.motsCles.length) * 100) : 0;
+
+  card.innerHTML = `
+    <h2 class="score">${pct >= 80 ? "🏆 " : ""}Score<span class="big">${s} / ${n}</span>${pct}%</h2>
+    <div class="bar"><div id="scorebar" style="width:0%"></div></div>
+    <div class="fb ok bloc-copiable" style="text-align:left">
+      <strong>Concordance texte rédigé / sujet :</strong> ${pctTexte}% des notions clés mobilisées sur la feuille.${boutonCopieDiscret()}
+    </div>
+    <div style="text-align:center">
+      <button onclick="reviewQCM()">Revoir les réponses</button>
+      <button class="ghost" onclick="restartQCM()">Refaire</button>
     </div>
   `;
-  zoneEsprit.appendChild(blocVerif);
+  setTimeout(()=>{ const sb = document.getElementById("scorebar"); if(sb) sb.style.width = pct + "%"; }, 100);
+  planifierSyncDrive();
+}
 
-  /* 3. Petits tags correspondant au QCM affiché */
-  const tagsDuQcm = catalogueTags.filter(t => t.qcmIds.has(qcmCourant.id));
-  if(tagsDuQcm.length > 0){
-    const zonePetitsTags = document.createElement("div");
-    zonePetitsTags.className = "tags-volet-droit";
-    tagsDuQcm.forEach(t => {
-      const sp = document.createElement("span");
-      const estMatch = etat.tagsSelectionnes.includes(t.cle);
-      sp.className = "mini-tag" + (estMatch ? " match" : "");
-      sp.textContent = "#" + t.label;
-      zonePetitsTags.appendChild(sp);
-    });
-    zoneEsprit.appendChild(zonePetitsTags);
-  }
-
-  /* 4. Question QCM active, feedback et barre de recherche IA (limitée à 1 question par question QCM) */
-  const s = document.createElement("p");
-  s.className = "sujet";
-  s.textContent = qcmCourant.axe;
-  zoneEsprit.appendChild(s);
-
-  if(qcmCourant.vignette){
-    const vg = document.createElement("p");
-    vg.className = "vignette";
-    vg.textContent = qcmCourant.vignette;
-    zoneEsprit.appendChild(vg);
-  }
-
-  const rechercheIaExistante = etat.performances.recherchesIA
-    ? etat.performances.recherchesIA[qcmCourant.id]
-    : null;
-
-  if(etat.dernierFeedback || rechercheIaExistante){
-    const rp = document.createElement("div");
-    rp.className = "reponse";
-
-    if(etat.dernierFeedback){
-      const txt = document.createElement("div");
-      txt.textContent = etat.dernierFeedback;
-      rp.appendChild(txt);
-
-      if(qcmCourant.amorceInsertion){
-        const btnIns = document.createElement("button");
-        btnIns.type = "button";
-        btnIns.className = "btn-inserer-amorce";
-        btnIns.textContent = "+ Insérer cette idée au curseur";
-        btnIns.addEventListener("click", ()=> insererDansTexte(qcmCourant.amorceInsertion));
-        rp.appendChild(btnIns);
-      }
-    }
-
-    /* Barre de recherche IA placée directement sous la réponse obtenue après la question QCM */
-    const zoneIa = document.createElement("div");
-    zoneIa.className = "zone-ia-qcm";
-
-    const iaEntete = document.createElement("div");
-    iaEntete.className = "ia-entete";
-    iaEntete.innerHTML = `
-      <span>Approfondissement philosophique (IA)</span>
-      <span>${rechercheIaExistante ? "Quota utilisé (1/1)" : "1 question autorisée"}</span>
-    `;
-    zoneIa.appendChild(iaEntete);
-
-    const formIa = document.createElement("form");
-    formIa.className = "ia-form-ligne";
-
-    const inputIa = document.createElement("input");
-    inputIa.type = "text";
-    inputIa.className = "ia-input";
-    inputIa.placeholder = rechercheIaExistante
-      ? "Question déjà posée pour ce QCM"
-      : "Poser une question philosophique sur cette réponse...";
-    inputIa.disabled = Boolean(rechercheIaExistante) || requeteIaEnCours;
-    if(rechercheIaExistante){
-      inputIa.value = rechercheIaExistante.question;
-    }
-
-    const btnDemander = document.createElement("button");
-    btnDemander.type = "submit";
-    btnDemander.className = "ia-btn";
-    btnDemander.textContent = requeteIaEnCours ? "Analyse..." : "Demander";
-    btnDemander.disabled = Boolean(rechercheIaExistante) || requeteIaEnCours;
-
-    formIa.addEventListener("submit", (e)=>{
-      e.preventDefault();
-      if(!rechercheIaExistante && !requeteIaEnCours && inputIa.value.trim()){
-        interrogerIaPhilosophie(qcmCourant, inputIa.value);
-      }
-    });
-
-    formIa.appendChild(inputIa);
-    formIa.appendChild(btnDemander);
-    zoneIa.appendChild(formIa);
-
-    if(rechercheIaExistante && rechercheIaExistante.reponse){
-      const blocRepIa = document.createElement("div");
-      blocRepIa.className = "ia-reponse-academique";
-
-      const badgeProf = document.createElement("span");
-      badgeProf.className = "ia-badge-prof";
-      badgeProf.textContent = "Éclairage philosophique — Niveau Terminale";
-      blocRepIa.appendChild(badgeProf);
-
-      rechercheIaExistante.reponse.split(/\n+/).filter(Boolean).forEach(para => {
-        const p = document.createElement("p");
-        p.textContent = para;
-        blocRepIa.appendChild(p);
+function reviewQCM(){
+  const Q = obtenirQcmActifs();
+  let h = '<div class="qcm-titre-court" style="margin-bottom:10px">Récapitulatif</div>';
+  Q.forEach((q, k) => {
+    const a = etat.ans[k] || { ok: false, given: null };
+    h += '<div class="rq"><p class="qtext bloc-copiable">' + (k+1) + '. ' + esc(q.name) + boutonCopieDiscret() + '</p>';
+    if(q.type === "single" || q.type === "multi"){
+      q.options.forEach((o, j) => {
+        const picked = a.given && a.given.indexOf(j) >= 0;
+        const cls = o.correct ? "good" : (picked ? "bad" : "");
+        h += '<div class="opt bloc-copiable ' + cls + '">' + (o.correct ? "✔ " : "") + esc(o.text) + (picked ? " <em>(votre réponse)</em>" : "") + boutonCopieDiscret() + '</div>';
       });
-
-      zoneIa.appendChild(blocRepIa);
+      const corrText = q.options.filter(o => o.correct).map(o => o.feedback || o.text).join("<br><br>");
+      h += '<div class="fb bloc-copiable ' + (a.ok ? "ok" : "no") + '">' + corrText + boutonCopieDiscret() + construireBlocRechercheIa(q) + '</div>';
+    } else if(q.type === "matching"){
+      q.pairs.forEach((p, j) => {
+        const gv = a.given ? a.given[j] : "";
+        h += '<p class="bloc-copiable">' + esc(p.q) + ' → <em>' + esc(gv || "—") + '</em>' + (norm(gv) === norm(p.a) ? ' ✔' : ' (' + esc(p.a) + ')') + boutonCopieDiscret() + '</p>';
+      });
     }
+    h += '</div>';
+  });
+  h += '<div style="text-align:center"><button onclick="restartQCM()">Refaire</button> <button class="ghost" onclick="renderScoreQCM()">Retour au score</button></div>';
+  card.innerHTML = h;
+}
 
-    rp.appendChild(zoneIa);
-    zoneEsprit.appendChild(rp);
+function restartQCM(){
+  etat.qIndex = 0; etat.score = 0; etat.ans = {};
+  renderQCM();
+}
+
+/* ==========================================================================
+   FENÊTRE DE CONNEXION RÉDIGEZMOI & SAUVEGARDE GOOGLE DRIVE
+   ========================================================================== */
+document.getElementById("badge-logo-slot").innerHTML = svgLogoC2Phi(18);
+document.getElementById("btn-google-badge").addEventListener("click", ouvrirModalGoogleDrive);
+
+function estConnecteGoogle(){
+  return Boolean(googleAccessToken && Date.now() < googleTokenExpiration);
+}
+
+function majBadgeGoogle(etatSync = ""){
+  const badge = document.getElementById("btn-google-badge");
+  const label = document.getElementById("label-google");
+  const cfg = etat.googleConfig || {};
+
+  badge.classList.remove("connecte", "syncing");
+  if(etatSync === "syncing"){
+    badge.classList.add("syncing");
+    label.textContent = "Enregistrement...";
+    return;
   }
-
-  const q = document.createElement("p");
-  q.className = "question";
-  q.textContent = qcmCourant.question;
-  zoneEsprit.appendChild(q);
-
-  const boite = document.createElement("div");
-  boite.className = "qcm";
-  qcmCourant.options.forEach((opt, optIdx) => {
-    const b = document.createElement("button");
-    b.className = "choix";
-    b.textContent = opt.texte;
-    b.addEventListener("click", ()=>{
-      etat.dernierFeedback = (opt.correct ? "✓ " : "✗ ") + opt.feedback;
-      etat.performances.reponsesQCM[qcmCourant.id] = {
-        optionIndex: optIdx,
-        correct: Boolean(opt.correct),
-        question: qcmCourant.question,
-        date: new Date().toISOString()
-      };
-      magasin.save();
-      majCompteurs();
-      rendreVoletDroit();
-    });
-    boite.appendChild(b);
-  });
-  zoneEsprit.appendChild(boite);
+  if((estConnecteGoogle() || cfg.email) && cfg.email){
+    badge.classList.add("connecte");
+    label.textContent = cfg.email;
+  } else {
+    label.textContent = "Se connecter";
+  }
 }
 
-/* ---------- Menu Apparence ---------- */
-function ouvrirMenuModeles(){
-  const liste = document.getElementById("liste-modeles");
-  liste.innerHTML = "";
-  Object.keys(MODELES).forEach(id => {
-    const M = MODELES[id];
-    const b = document.createElement("button");
-    b.className = "item" + (etat.params.modele === id ? " actif" : "");
-    b.innerHTML = `<span class='nom'>${M.nom}</span><br><span class='devise'>${M.devise}</span>`;
-    b.addEventListener("click", ()=>{
-      etat.params.modele = id;
-      magasin.save();
-      rendreVoletDroit();
-      menuModeles.hidden = true;
-    });
-    liste.appendChild(b);
-  });
-  menuModeles.hidden = false;
-}
-
-/* ---------- Panneau Contrat & Bilan des Performances ---------- */
-const PARAMS_LIBELLES = [
-  {cle:"modele",   intitule:"apparence du volet QCM", options:Object.keys(MODELES)},
-  {cle:"marquage", intitule:"couleur institutionnelle", options:Object.keys(MARQUAGES)},
-  {cle:"regle",    intitule:"règle graduée autour de la feuille", options:[true, false]},
-  {cle:"taille",   intitule:"taille de police (px)", options:[16, 18, 20]},
-  {cle:"papier",   intitule:"fond de feuille", options:Object.keys(PAPIERS)}
-];
-
-function ouvrirPanneau(){
-  const brouillonParams = Object.assign({}, etat.params);
-  const zoneP = document.getElementById("articles-contrat");
-  zoneP.innerHTML = "";
-
-  PARAMS_LIBELLES.forEach((def, idx) => {
-    const ligne = document.createElement("p");
-    ligne.className = "article-param";
-    ligne.innerHTML = `Article ${idx + 1} — ${def.intitule} : `;
-    const val = document.createElement("button");
-    val.className = "valeur";
-    const affiche = ()=>{
-      const v = brouillonParams[def.cle];
-      val.textContent = (typeof v === "boolean") ? (v ? "visible" : "masquée") : String(v);
-    };
-    affiche();
-    val.addEventListener("click", ()=>{
-      const i = def.options.indexOf(brouillonParams[def.cle]);
-      brouillonParams[def.cle] = def.options[(i + 1) % def.options.length];
-      affiche();
-    });
-    ligne.appendChild(val);
-    zoneP.appendChild(ligne);
-  });
-
-  const reps = Object.values(etat.performances.reponsesQCM || {});
-  const bonnes = reps.filter(r => r.correct).length;
-  const nbRecherchesIa = Object.keys(etat.performances.recherchesIA || {}).length;
-  const verif = verifierTexteContreSujet(editeur.innerText || "", obtenirSujetActif());
-  document.getElementById("stats-perf").innerHTML = `
-    <strong>Bilan des performances enregistrées :</strong><br>
-- QCM dans la base active : <strong>${etat.baseQCM.length}</strong> (${catalogueSujets.length} sujets générés)<br>
-- Réponses QCM validées : <strong>${bonnes} / ${reps.length}</strong><br>
-- Questions IA philosophiques utilisées : <strong>${nbRecherchesIa} / ${etat.baseQCM.length}</strong><br>
-- Couverture notionnelle du texte actuel : <strong>${verif.score}%</strong> (record : ${etat.performances.meilleurScoreRedaction || verif.score}%)<br>
-- Actions mémorisées (choix de sujets &amp; sélections de tags) : <strong>${etat.performances.historiqueChoix.length}</strong>
-  `;
-
-  const act = document.getElementById("actions-contrat");
-  act.innerHTML = "";
-  const faire = (txt, fn, cls)=>{
-    const b = document.createElement("button");
-    b.className = "action" + (cls ? " " + cls : "");
-    b.textContent = txt;
-    b.addEventListener("click", fn);
-    act.appendChild(b);
-  };
-  faire("Appliquer", ()=>{
-    etat.params = Object.assign({}, brouillonParams);
-    magasin.save();
-    appliquerParams(etat.params);
-    rendreVoletDroit();
-    panneau.hidden = true;
-  });
-  faire("Réinitialiser tout", ()=>{
-    magasin.clear();
-    location.reload();
-  }, "dangereuse");
-  faire("Fermer", ()=>{ panneau.hidden = true; });
-
-  panneau.hidden = false;
-}
-
-/* ---------- Export & Import JSON avec fusion additive dans la base ---------- */
-function exporter(){
+function construirePayloadSauvegarde(){
   etat.contenuHTML = editeur.innerHTML;
-  const verif = verifierTexteContreSujet(editeur.innerText || "", obtenirSujetActif());
-  const doc = {
-    format: "feuille-blanche-pronote-base",
-    version: VERSION,
+  return {
+    application: APP_META.nom,
+    site: APP_META.siteUrl,
+    github: APP_META.githubUrl,
     date: new Date().toISOString(),
-    params: etat.params,
+    dossierDrive: etat.googleConfig.dossierDrive || "RédigezMoi_Philosophie",
+    utilisateur: {
+      email: etat.googleConfig.email || "",
+      nom: etat.googleConfig.nomUtilisateur || ""
+    },
+    supportVideo: SUPPORT_VIDEO,
     baseQCM: etat.baseQCM,
+    favorisQcmIds: etat.favorisQcmIds || [],
     sujetActifId: etat.sujetActifId,
-    tagsSelectionnes: etat.tagsSelectionnes,
     texteBrut: editeur.innerText,
     contenuHTML: etat.contenuHTML,
-    performances: {
-      ...etat.performances,
-      scoreVerificationActuel: verif.score,
-      conceptsReperes: verif.trouves
+    stratesTags: etat.stratesTags,
+    tagsSelectionnes: etat.tagsSelectionnes,
+    performances: etat.performances
+  };
+}
+
+function lancerAuthentificationGoogle(onSuccess, onError){
+  if(!GOOGLE_CLIENT_ID || GOOGLE_CLIENT_ID.startsWith("REMPLACER_")){
+    if(onError) onError("Saisissez votre adresse courriel ci-dessous pour enregistrer votre espace de travail.");
+    return;
+  }
+  if(!(window.google && google.accounts && google.accounts.oauth2)){
+    if(onError) onError("Le service de connexion Google est indisponible hors ligne.");
+    return;
+  }
+
+  const tokenClient = google.accounts.oauth2.initTokenClient({
+    client_id: GOOGLE_CLIENT_ID,
+    scope: "https://www.googleapis.com/auth/drive.file https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/userinfo.profile",
+    hint: etat.googleConfig.email || undefined,
+    callback: async (resp)=>{
+      if(resp && resp.access_token){
+        googleAccessToken = resp.access_token;
+        googleTokenExpiration = Date.now() + ((Number(resp.expires_in) || 3500) * 1000);
+
+        try{
+          const resUser = await fetch("https://www.googleapis.com/oauth2/v3/userinfo", {
+            headers: { Authorization: "Bearer " + googleAccessToken }
+          });
+          if(resUser.ok){
+            const info = await resUser.json();
+            if(info.email) etat.googleConfig.email = info.email;
+            if(info.name) etat.googleConfig.nomUtilisateur = info.name;
+          }
+        }catch(e){}
+
+        sauverEtat();
+        majBadgeGoogle();
+        if(onSuccess) onSuccess();
+      } else {
+        if(onError) onError("La connexion a été interrompue.");
+      }
+    }
+  });
+
+  tokenClient.requestAccessToken({ prompt: estConnecteGoogle() ? "" : "select_account" });
+}
+
+async function obtenirOuCreerDossierDrive(nomDossier){
+  const headers = { Authorization: "Bearer " + googleAccessToken };
+  const q = encodeURIComponent(`name='${nomDossier.replace(/'/g, "\\'")}' and mimeType='application/vnd.google-apps.folder' and trashed=false`);
+  const res = await fetch(`https://www.googleapis.com/drive/v3/files?q=${q}&fields=files(id,name)`, { headers });
+  if(!res.ok) throw new Error("Accès à Google Drive refusé (" + res.status + ")");
+  const data = await res.json();
+  if(data.files && data.files[0]) return data.files[0].id;
+
+  const createRes = await fetch("https://www.googleapis.com/drive/v3/files", {
+    method: "POST",
+    headers: { ...headers, "Content-Type": "application/json" },
+    body: JSON.stringify({ name: nomDossier, mimeType: "application/vnd.google-apps.folder" })
+  });
+  if(!createRes.ok) throw new Error("Création du répertoire refusée");
+  const created = await createRes.json();
+  return created.id;
+}
+
+async function sauvegarderDansGoogleDrive(msgEl){
+  const cfg = etat.googleConfig;
+  const payload = construirePayloadSauvegarde();
+
+  if(estConnecteGoogle()){
+    majBadgeGoogle("syncing");
+    if(msgEl) msgEl.innerHTML = "Enregistrement sur votre espace Google Drive en cours...";
+
+    const folderId = await obtenirOuCreerDossierDrive(cfg.dossierDrive || "RédigezMoi_Philosophie");
+    const contenuStr = JSON.stringify(payload, null, 2);
+    const identifiantFichier = (cfg.email || "session").split("@")[0];
+    const fileName = `redigezmoi-${identifiantFichier}.json`;
+    const headers = { Authorization: "Bearer " + googleAccessToken };
+    const form = new FormData();
+
+    if(cfg.driveFileId){
+      form.append("metadata", new Blob([JSON.stringify({ name: fileName, mimeType: "application/json" })], { type: "application/json" }));
+      form.append("file", new Blob([contenuStr], { type: "application/json" }));
+      const resPatch = await fetch(`https://www.googleapis.com/upload/drive/v3/files/${cfg.driveFileId}?uploadType=multipart`, {
+        method: "PATCH", headers, body: form
+      });
+      if(!resPatch.ok){
+        cfg.driveFileId = "";
+        return sauvegarderDansGoogleDrive(msgEl);
+      }
+    } else {
+      form.append("metadata", new Blob([JSON.stringify({ name: fileName, mimeType: "application/json", parents: [folderId] })], { type: "application/json" }));
+      form.append("file", new Blob([contenuStr], { type: "application/json" }));
+      const resPost = await fetch("https://www.googleapis.com/upload/drive/v3/files?uploadType=multipart&fields=id,name", {
+        method: "POST", headers, body: form
+      });
+      if(!resPost.ok) throw new Error("Échec de l'envoi vers Google Drive");
+      const createdFile = await resPost.json();
+      cfg.driveFileId = createdFile.id;
+    }
+
+    cfg.dernierSync = new Date().toLocaleString("fr-FR");
+    sauverEtat();
+    majBadgeGoogle();
+    if(msgEl) msgEl.innerHTML = `✓ Travail enregistré sur Google Drive dans <strong>${esc(cfg.dossierDrive)}/${esc(fileName)}</strong>.`;
+    return;
+  }
+
+  if(APPS_SCRIPT_URL){
+    majBadgeGoogle("syncing");
+    if(msgEl) msgEl.innerHTML = "Enregistrement en ligne en cours...";
+    await fetch(APPS_SCRIPT_URL, {
+      method: "POST",
+      mode: "no-cors",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(payload)
+    });
+    cfg.dernierSync = new Date().toLocaleString("fr-FR");
+    sauverEtat();
+    majBadgeGoogle();
+    if(msgEl) msgEl.innerHTML = `✓ Session enregistrée pour <strong>${esc(cfg.email)}</strong> (${esc(cfg.dernierSync)}).`;
+  }
+}
+
+async function listerSauvegardesDrive(){
+  if(!estConnecteGoogle()) return [];
+  const folderId = await obtenirOuCreerDossierDrive(etat.googleConfig.dossierDrive || "RédigezMoi_Philosophie");
+  const q = encodeURIComponent(`'${folderId}' in parents and mimeType='application/json' and trashed=false`);
+  const res = await fetch(`https://www.googleapis.com/drive/v3/files?q=${q}&orderBy=modifiedTime desc&fields=files(id,name,modifiedTime)`, {
+    headers: { Authorization: "Bearer " + googleAccessToken }
+  });
+  if(!res.ok) return [];
+  const data = await res.json();
+  return data.files || [];
+}
+
+async function chargerDepuisGoogleDrive(fileId, msgEl){
+  if(!estConnecteGoogle()) return;
+  if(msgEl) msgEl.innerHTML = "Récupération de votre document depuis Google Drive...";
+  const res = await fetch(`https://www.googleapis.com/drive/v3/files/${fileId}?alt=media`, {
+    headers: { Authorization: "Bearer " + googleAccessToken }
+  });
+  if(!res.ok) throw new Error("Lecture du document impossible");
+  const doc = await res.json();
+  fusionnerDocumentImporte(doc);
+  etat.googleConfig.driveFileId = fileId;
+  sauverEtat();
+  if(msgEl) msgEl.innerHTML = "✓ Document et parcours restaurés depuis Google Drive.";
+}
+
+let timerSyncAuto = null;
+function planifierSyncDrive(){
+  if(!estConnecteGoogle() && !(APPS_SCRIPT_URL && etat.googleConfig.email)) return;
+  clearTimeout(timerSyncAuto);
+  timerSyncAuto = setTimeout(async ()=>{
+    try{ await sauvegarderDansGoogleDrive(null); }catch(e){ majBadgeGoogle(); }
+  }, 3000);
+}
+
+/* ---------- Fenêtre de connexion personnalisée RédigezMoi ---------- */
+function ouvrirModalGoogleDrive(){
+  const cfg = etat.googleConfig || {};
+  const connecte = estConnecteGoogle();
+  const oauthPret = Boolean(GOOGLE_CLIENT_ID && !GOOGLE_CLIENT_ID.startsWith("REMPLACER_"));
+
+  const w = document.createElement("div");
+  w.className = "modalwrap";
+  w.onclick = (e)=>{ if(e.target === w) w.remove(); };
+
+  w.innerHTML = `
+    <div class="modalbox">
+      <div class="entete-app-modale">
+        <div class="logo-c2phi">${svgLogoC2Phi(46)}</div>
+        <div class="titre-app-modale">
+          <h2>RédigezMoi</h2>
+          <p class="sous-titre-app">
+            Atelier d'aide à la rédaction · <a href="${APP_META.siteUrl}" target="_blank" rel="noopener">c2phi.fr</a> · <a href="${APP_META.githubUrl}" target="_blank" rel="noopener">github.com/c2phi-prof</a>
+          </p>
+        </div>
+      </div>
+
+      <p class="presentation-app">
+        <strong>RédigezMoi</strong> est une application conçue pour vous accompagner pas à pas dans la rédaction d'une <strong>dissertation</strong>, d'une <strong>explication de texte</strong>, d'un <strong>essai</strong> ou d'une <strong>analyse critique</strong>. Au fil de votre écriture au kilomètre, l'application repère vos notions clés, propose des questionnaires ciblés et sauvegarde automatiquement vos textes, vos choix et vos performances sur votre espace <strong>Google Drive</strong>.
+      </p>
+
+      <div class="statut-drive" id="statut-drive-msg">
+        ${cfg.email
+          ? `Espace connecté : <strong>${esc(cfg.nomUtilisateur || cfg.email)}</strong> (${esc(cfg.email)})<br>Répertoire de sauvegarde : <strong>${esc(cfg.dossierDrive)}</strong>${cfg.dernierSync ? ` · Dernier enregistrement : ${esc(cfg.dernierSync)}` : ""}`
+          : `Identifiez-vous avec votre compte Google pour enregistrer automatiquement vos écrits et vos résultats en ligne, et les retrouver sur n'importe quel appareil.`}
+      </div>
+
+      ${oauthPret ? `
+        <div style="margin-top:12px">
+          <button type="button" class="btn-google-officiel" id="btn-google-popup">
+            <svg width="18" height="18" viewBox="0 0 48 48"><path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/><path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/><path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/><path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/></svg>
+            <span>${connecte ? "Changer de compte Google" : "Se connecter avec Google"}</span>
+          </button>
+        </div>
+      ` : `
+        <div class="champ-config">
+          <label for="g-email-direct">Votre adresse courriel Google</label>
+          <input type="email" id="g-email-direct" value="${esc(cfg.email || "")}" placeholder="prenom.nom@gmail.com">
+        </div>
+      `}
+
+      <div class="champ-config">
+        <label for="g-dossier">Nom du dossier dans Google Drive</label>
+        <input type="text" id="g-dossier" value="${esc(cfg.dossierDrive || "RédigezMoi_Philosophie")}">
+      </div>
+
+      <div id="zone-fichiers-drive"></div>
+
+      <div style="margin-top:14px">
+        <button type="button" id="btn-g-save">Enregistrer mon travail</button>
+        ${connecte ? `<button type="button" class="ghost" id="btn-g-lister">Ouvrir un document Drive</button>` : ""}
+        ${cfg.email ? `<button type="button" class="danger" id="btn-g-deco">Se déconnecter</button>` : ""}
+        <button type="button" class="ghost" onclick="this.closest('.modalwrap').remove()">Fermer</button>
+      </div>
+    </div>
+  `;
+  document.body.appendChild(w);
+
+  const msgEl = document.getElementById("statut-drive-msg");
+
+  const btnPopup = document.getElementById("btn-google-popup");
+  if(btnPopup){
+    btnPopup.onclick = ()=>{
+      etat.googleConfig.dossierDrive = document.getElementById("g-dossier").value.trim() || "RédigezMoi_Philosophie";
+      sauverEtat();
+      lancerAuthentificationGoogle(
+        async ()=>{
+          try{
+            await sauvegarderDansGoogleDrive(msgEl);
+            w.remove();
+            ouvrirModalGoogleDrive();
+          }catch(err){
+            msgEl.innerHTML = "Erreur lors de l'enregistrement : " + esc(err.message);
+          }
+        },
+        (errMsg)=>{ msgEl.innerHTML = esc(errMsg); }
+      );
+    };
+  }
+
+  document.getElementById("btn-g-save").onclick = async ()=>{
+    etat.googleConfig.dossierDrive = document.getElementById("g-dossier").value.trim() || "RédigezMoi_Philosophie";
+    const emailInp = document.getElementById("g-email-direct");
+    if(emailInp){
+      const val = emailInp.value.trim();
+      if(!val || !val.includes("@")){
+        msgEl.innerHTML = "Veuillez saisir une adresse courriel Google valide.";
+        return;
+      }
+      etat.googleConfig.email = val;
+      majBadgeGoogle();
+    }
+    sauverEtat();
+
+    if(oauthPret && !estConnecteGoogle()){
+      lancerAuthentificationGoogle(
+        async ()=>{ await sauvegarderDansGoogleDrive(msgEl); },
+        (errMsg)=>{ msgEl.innerHTML = esc(errMsg); }
+      );
+      return;
+    }
+
+    try{
+      await sauvegarderDansGoogleDrive(msgEl);
+      if(!oauthPret && !APPS_SCRIPT_URL){
+        exporterJSON();
+        msgEl.innerHTML = `Compte <strong>${esc(etat.googleConfig.email)}</strong> enregistré. Le fichier de sauvegarde a été téléchargé pour le dossier <strong>${esc(etat.googleConfig.dossierDrive)}</strong>.`;
+      }
+    }catch(err){
+      msgEl.innerHTML = "Erreur : " + esc(err.message);
     }
   };
-  const blob = new Blob([JSON.stringify(doc, null, 2)], {type:"application/json"});
-  const url = URL.createObjectURL(blob);
-  const a = document.createElement("a");
-  a.href = url;
-  a.download = "feuille-pronote-session-" + doc.date.slice(0,10) + ".json";
-  document.body.appendChild(a); a.click(); a.remove();
-  setTimeout(()=>URL.revokeObjectURL(url), 2000);
-}
 
-async function importer(file){
-  try{
-    const doc = JSON.parse(await file.text());
-    let ajoutsQCM = 0;
+  const btnLister = document.getElementById("btn-g-lister");
+  if(btnLister){
+    btnLister.onclick = async ()=>{
+      const zoneF = document.getElementById("zone-fichiers-drive");
+      zoneF.innerHTML = "Recherche de vos documents sur Google Drive...";
+      const fichiers = await listerSauvegardesDrive();
+      if(fichiers.length === 0){
+        zoneF.innerHTML = "<p>Aucun document trouvé dans ce répertoire.</p>";
+        return;
+      }
+      zoneF.innerHTML = `<div class="liste-fichiers-drive">${fichiers.map(f => `
+        <div class="item-fichier-drive">
+          <span><strong>${esc(f.name)}</strong> (${new Date(f.modifiedTime).toLocaleString("fr-FR")})</span>
+          <button type="button" data-fid="${esc(f.id)}">Ouvrir</button>
+        </div>
+      `).join("")}</div>`;
 
-    const qcmImportes = Array.isArray(doc.baseQCM) ? doc.baseQCM : (Array.isArray(doc.qcm) ? doc.qcm : []);
-    if(qcmImportes.length > 0){
-      const questionsExistantes = new Set(etat.baseQCM.map(q => q.question.trim().toLowerCase()));
-      qcmImportes.forEach((item, i) => {
-        if(item && item.question && Array.isArray(item.options)){
-          const cleQ = item.question.trim().toLowerCase();
-          if(!questionsExistantes.has(cleQ)){
-            etat.baseQCM.push({
-              id: item.id && !etat.baseQCM.some(e => e.id === item.id) ? item.id : `qcm-imp-${Date.now()}-${i}`,
-              axe: item.axe || "Thème importé",
-              question: item.question,
-              vignette: item.vignette || "",
-              amorceInsertion: item.amorceInsertion || "",
-              options: item.options
-            });
-            questionsExistantes.add(cleQ);
-            ajoutsQCM++;
-          }
-        }
+      zoneF.querySelectorAll("button[data-fid]").forEach(b => {
+        b.onclick = async ()=>{
+          try{ await chargerDepuisGoogleDrive(b.dataset.fid, msgEl); }
+          catch(err){ msgEl.innerHTML = "Erreur : " + esc(err.message); }
+        };
       });
-    }
+    };
+  }
 
-    if(doc.contenuHTML || doc.texteBrut){
-      const blocImport = doc.contenuHTML || `<p>${doc.texteBrut}</p>`;
-      if(editeur.innerText.trim().length > 0){
-        editeur.innerHTML += `<p><em>--- Document importé ---</em></p>` + blocImport;
-      } else {
-        editeur.innerHTML = blocImport;
+  const btnDeco = document.getElementById("btn-g-deco");
+  if(btnDeco){
+    btnDeco.onclick = ()=>{
+      if(googleAccessToken && window.google && google.accounts && google.accounts.oauth2){
+        try{ google.accounts.oauth2.revoke(googleAccessToken, ()=>{}); }catch(e){}
       }
-      etat.contenuHTML = editeur.innerHTML;
-    }
-
-    if(doc.performances){
-      if(doc.performances.reponsesQCM){
-        etat.performances.reponsesQCM = Object.assign({}, etat.performances.reponsesQCM, doc.performances.reponsesQCM);
-      }
-      if(doc.performances.recherchesIA){
-        etat.performances.recherchesIA = Object.assign({}, etat.performances.recherchesIA, doc.performances.recherchesIA);
-      }
-      if(Array.isArray(doc.performances.historiqueChoix)){
-        etat.performances.historiqueChoix.push(...doc.performances.historiqueChoix);
-      }
-    }
-
-    reconstruireCatalogues();
-    magasin.save();
-    majCompteurs();
-    rendreMenuSujets();
-    rendreNuageTags();
-    etat.dernierFeedback = `✓ Import réussi : +${ajoutsQCM} nouveau(x) QCM ajouté(s) à la base (${etat.baseQCM.length} au total) et nouveaux sujets générés.`;
-    rendreVoletDroit();
-  }catch(err){
-    etat.dernierFeedback = "✗ Erreur d'importation : fichier JSON invalide.";
-    rendreVoletDroit();
+      googleAccessToken = "";
+      googleTokenExpiration = 0;
+      etat.googleConfig.email = "";
+      etat.googleConfig.nomUtilisateur = "";
+      etat.googleConfig.driveFileId = "";
+      etat.googleConfig.dernierSync = "";
+      sauverEtat();
+      majBadgeGoogle();
+      w.remove();
+    };
   }
 }
 
-document.addEventListener("keydown", (e)=>{
-  if(e.key === "Escape"){
-    if(!listeSujetsGeneres.hidden){ listeSujetsGeneres.hidden = true; return; }
-    if(!menuModeles.hidden){ menuModeles.hidden = true; return; }
-    if(!panneau.hidden) panneau.hidden = true;
-    else ouvrirPanneau();
-  }
-});
+/* ==========================================================================
+   MENU HAMBURGER
+   ========================================================================== */
+document.getElementById("btn-hamburger").addEventListener("click", ouvrirMenuHamburger);
 
-document.getElementById("btn-sauvegarder").addEventListener("click", exporter);
-document.getElementById("btn-importer").addEventListener("click", ()=>document.getElementById("fichier").click());
-document.getElementById("fichier").addEventListener("change", (e)=>{
-  if(e.target.files[0]) importer(e.target.files[0]);
+function ouvrirMenuHamburger(){
+  fermerMenuHamburger();
+  const nbFav = Array.isArray(etat.favorisQcmIds) ? etat.favorisQcmIds.length : 0;
+  const w = document.createElement("div");
+  w.className = "menuwrap";
+  w.id = "menuwrap";
+  w.onclick = (e)=>{ if(e.target === w) fermerMenuHamburger(); };
+
+  w.innerHTML = `
+    <div class="menubox" role="dialog" aria-label="Menu RédigezMoi">
+      <div class="mtitle">${svgLogoC2Phi(22)}<span>RédigezMoi</span></div>
+      <button type="button" id="m-google"><span class="mic">G</span>Connexion &amp; Google Drive</button>
+      <button type="button" id="m-favoris"><span class="mic">★</span>Mes QCM favoris (${nbFav})</button>
+      <button type="button" id="m-import"><span class="mic">↓</span>Importer (JSON)</button>
+      <button type="button" id="m-export"><span class="mic">↑</span>Sauvegarder (JSON)</button>
+      <button type="button" id="m-bilan"><span class="mic">✓</span>Bilan des performances</button>
+      <button type="button" id="m-parametres"><span class="mic">⚙</span>Paramètres</button>
+    </div>
+  `;
+  document.body.appendChild(w);
+
+  document.getElementById("m-google").onclick = ()=>{ fermerMenuHamburger(); ouvrirModalGoogleDrive(); };
+  document.getElementById("m-favoris").onclick = ()=>{ fermerMenuHamburger(); ouvrirFavorisQcm(); };
+  document.getElementById("m-import").onclick = ()=>{ fermerMenuHamburger(); document.getElementById("fichier-import").click(); };
+  document.getElementById("m-export").onclick = ()=>{ fermerMenuHamburger(); exporterJSON(); };
+  document.getElementById("m-bilan").onclick = ()=>{ fermerMenuHamburger(); ouvrirModalBilan(); };
+  document.getElementById("m-parametres").onclick = ()=>{ fermerMenuHamburger(); ouvrirModalParametres(); };
+}
+
+function fermerMenuHamburger(){
+  const w = document.getElementById("menuwrap");
+  if(w) w.remove();
+}
+
+function ouvrirModalBilan(){
+  const reps = Object.values(etat.performances.reponses || {});
+  const bonnes = reps.filter(r => r.ok).length;
+  const nbIa = Object.keys(etat.performances.recherchesIA || {}).length;
+  const sujetActif = listeSujets.find(x => x.id === etat.sujetActifId);
+  const normTexte = norm(editeur.innerText || "");
+  let trouves = 0;
+  if(sujetActif && sujetActif.motsCles.length > 0){
+    sujetActif.motsCles.forEach(rad => { if(normTexte.includes(rad)) trouves++; });
+  }
+  const pctTexte = (sujetActif && sujetActif.motsCles.length > 0)
+    ? Math.round((trouves / sujetActif.motsCles.length) * 100) : 0;
+
+  const w = document.createElement("div");
+  w.className = "modalwrap";
+  w.onclick = (e)=>{ if(e.target === w) w.remove(); };
+  w.innerHTML = `
+    <div class="modalbox">
+      <h2>Bilan des performances — RédigezMoi</h2>
+      <div>• Compte Google : <strong>${esc(etat.googleConfig.email || "Non connecté")}</strong></div>
+      <div>• Base QCM active : <strong>${etat.baseQCM.length}</strong> questions (${listeSujets.length} sujets générés)</div>
+      <div>• QCM favoris enregistrés : <strong>${(etat.favorisQcmIds || []).length}</strong></div>
+      <div>• QCM réussis : <strong>${bonnes} / ${reps.length}</strong></div>
+      <div>• Questions IA posées : <strong>${nbIa} / ${etat.baseQCM.length}</strong> (1 max par question)</div>
+      <div>• Vérification du texte par rapport au sujet choisi : <strong>${pctTexte}%</strong> (${trouves} / ${sujetActif ? sujetActif.motsCles.length : 0} concepts clés)</div>
+      <div>• Strates de tags générées : <strong>${etat.stratesTags.length}</strong></div>
+      <button type="button" onclick="this.closest('.modalwrap').remove()">Fermer</button>
+    </div>
+  `;
+  document.body.appendChild(w);
+}
+
+function ouvrirModalParametres(){
+  const themes = ["pronote", "moderne", "machine", "manuscrit", "nuit"];
+  const w = document.createElement("div");
+  w.className = "modalwrap";
+  w.onclick = (e)=>{ if(e.target === w) w.remove(); };
+
+  w.innerHTML = `
+    <div class="modalbox">
+      <h2>Paramètres — RédigezMoi</h2>
+      <div>Thème visuel : <button type="button" class="val-param" id="p-theme">${etat.theme}</button></div>
+      <div>Règle graduée : <button type="button" class="val-param" id="p-regle">${etat.regle ? "visible" : "masquée"}</button></div>
+      <div>Taille du texte : <button type="button" class="val-param" id="p-taille">${etat.taille} px</button></div>
+      <div style="margin-top:14px">
+        <button type="button" id="p-google">Compte Google</button>
+        <button type="button" class="danger" id="p-reset">Réinitialiser la session</button>
+        <button type="button" class="ghost" onclick="this.closest('.modalwrap').remove()">Fermer</button>
+      </div>
+    </div>
+  `;
+  document.body.appendChild(w);
+
+  document.getElementById("p-theme").onclick = (e)=>{
+    etat.theme = themes[(themes.indexOf(etat.theme) + 1) % themes.length];
+    e.target.textContent = etat.theme;
+    appliquerApparence(); sauverEtat();
+  };
+  document.getElementById("p-regle").onclick = (e)=>{
+    etat.regle = !etat.regle;
+    e.target.textContent = etat.regle ? "visible" : "masquée";
+    appliquerApparence(); sauverEtat();
+  };
+  document.getElementById("p-taille").onclick = (e)=>{
+    const tailles = [16, 18, 20];
+    etat.taille = tailles[(tailles.indexOf(etat.taille) + 1) % tailles.length];
+    e.target.textContent = etat.taille + " px";
+    appliquerApparence(); sauverEtat();
+  };
+  document.getElementById("p-google").onclick = ()=>{ w.remove(); ouvrirModalGoogleDrive(); };
+  document.getElementById("p-reset").onclick = ()=>{ localStorage.removeItem(CLE_STORAGE); location.reload(); };
+}
+
+/* ==========================================================================
+   EXPORT & IMPORT JSON (FUSION ADDITIVE)
+   ========================================================================== */
+function exporterJSON(){
+  const payload = construirePayloadSauvegarde();
+  const blob = new Blob([JSON.stringify(payload, null, 2)], { type: "application/json" });
+  const a = document.createElement("a");
+  a.href = URL.createObjectURL(blob);
+  a.download = "redigezmoi-" + payload.date.slice(0, 10) + ".json";
+  document.body.appendChild(a);
+  a.click();
+  a.remove();
+}
+
+function fusionnerDocumentImporte(doc){
+  const candidats = Array.isArray(doc.baseQCM) ? doc.baseQCM : (Array.isArray(doc.questions) ? doc.questions : []);
+  const existants = new Set(etat.baseQCM.map(q => norm(q.name)));
+  candidats.forEach((item, i) => {
+    if(item && item.name && !existants.has(norm(item.name))){
+      etat.baseQCM.push({
+        id: item.id && !etat.baseQCM.some(x => x.id === item.id) ? item.id : `qcm-imp-${Date.now()}-${i}`,
+        categorie: item.categorie || "Concepts",
+        scenario: item.scenario || "Parcours importé",
+        type: item.type || "single",
+        name: item.name,
+        options: item.options,
+        answers: item.answers,
+        pairs: item.pairs,
+        segs: item.segs,
+        feedback: item.feedback
+      });
+      existants.add(norm(item.name));
+    }
+  });
+
+  if(Array.isArray(doc.favorisQcmIds)){
+    etat.favorisQcmIds = Array.from(new Set([...(etat.favorisQcmIds || []), ...doc.favorisQcmIds]));
+  }
+
+  if(doc.contenuHTML || doc.texteBrut){
+    enregistrerSnapshot(true);
+    const ajout = doc.contenuHTML || `<p>${esc(doc.texteBrut)}</p>`;
+    editeur.innerHTML = editeur.innerHTML ? (editeur.innerHTML + ajout) : ajout;
+    etat.contenuHTML = editeur.innerHTML;
+    enregistrerSnapshot(true);
+  }
+
+  if(Array.isArray(doc.stratesTags)) etat.stratesTags.push(...doc.stratesTags);
+  if(doc.performances){
+    if(doc.performances.reponses){
+      etat.performances.reponses = Object.assign({}, etat.performances.reponses, doc.performances.reponses);
+    }
+    if(doc.performances.recherchesIA){
+      etat.performances.recherchesIA = Object.assign({}, etat.performances.recherchesIA, doc.performances.recherchesIA);
+    }
+    if(Array.isArray(doc.performances.historique)){
+      etat.performances.historique.push(...doc.performances.historique);
+    }
+  }
+
+  reconstruireIndex();
+  sauverEtat();
+  rendreMenuTitres();
+  rendreCascadeTags();
+}
+
+document.getElementById("fichier-import").addEventListener("change", async (e)=>{
+  const file = e.target.files[0];
   e.target.value = "";
+  if(!file) return;
+  try{
+    fusionnerDocumentImporte(JSON.parse(await file.text()));
+  }catch(err){
+    alert("Fichier JSON invalide.");
+  }
 });
 
-/* ---------- Initialisation ---------- */
-const cmdZone = document.getElementById("commandes");
-const btnApparence = document.createElement("button");
-btnApparence.textContent = "Apparence";
-btnApparence.addEventListener("click", ouvrirMenuModeles);
-cmdZone.appendChild(btnApparence);
-
-const btnContrat = document.createElement("button");
-btnContrat.textContent = "Bilan & Contrat (Échap)";
-btnContrat.addEventListener("click", ouvrirPanneau);
-cmdZone.appendChild(btnContrat);
-
-const sauve = magasin.load();
-if(sauve && sauve.version === VERSION){
+/* ---------- Démarrage ---------- */
+const sauve = chargerEtat();
+if(sauve && Array.isArray(sauve.baseQCM)){
   etat = Object.assign(etat, sauve);
+  if(!Array.isArray(etat.favorisQcmIds)) etat.favorisQcmIds = [];
+  if(!etat.performances) etat.performances = { historique: [], reponses: {}, recherchesIA: {} };
+  if(!etat.performances.recherchesIA) etat.performances.recherchesIA = {};
+  etat.googleConfig = Object.assign({
+    dossierDrive: "RédigezMoi_Philosophie",
+    email: "",
+    nomUtilisateur: "",
+    driveFileId: "",
+    dernierSync: ""
+  }, sauve.googleConfig || {});
 }
 
-reconstruireCatalogues();
-appliquerParams(etat.params);
+reconstruireIndex();
+appliquerApparence();
 window.addEventListener("resize", dessinerRegles);
 
 dessinerRegles();
-rendreExtrait();
-rendreMenuSujets();
-initialiserEditeurKm();
-rendreNuageTags();
-rendreVoletDroit();
+rendreMenuTitres();
+rendreSupport();
+initialiserEditeur();
+rendreCascadeTags();
+
+if(etat.qcmActifsIds && etat.qcmActifsIds.length > 0){
+  renderQCM();
+}
 </script>
 </body>
 </html>
