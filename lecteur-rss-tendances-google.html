@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Lecteur RSS des tendances de recherches Google (France) : les recherches les plus populaires du jour, actualisées en direct.">
+<title>Tendances Google · France</title>
+<style>
+  :root{
+    --ink:#1c2430; --soft:#5b6472; --line:#e3e7ec; --paper:#fdfdfb; --card:#f4f1ea;
+    --acc:#7a5c2e; --acc2:#3d5a5b; --gold:#b08d46; --bad:#b3413c;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;color:var(--ink);background:var(--paper);font-family:Georgia,'Iowan Old Style','Times New Roman',serif;line-height:1.6;font-size:18px}
+  .wrap{max-width:760px;margin:0 auto;padding:0 20px}
+  header.hero{background:linear-gradient(160deg,#3a4b3e 0%,#54604b 55%,#7a6a4a 100%);color:#f5f2ea;padding:56px 0 44px}
+  .kicker{font-family:Verdana,Geneva,sans-serif;font-size:12px;letter-spacing:.22em;text-transform:uppercase;color:#d8c79a;margin-bottom:14px}
+  h1{font-size:clamp(28px,5vw,42px);line-height:1.15;font-weight:600;margin:0 0 12px}
+  .dek{font-style:italic;color:#e8e2d2;font-size:1.08em;margin:0;max-width:600px}
+  .meta{font-family:Verdana,Geneva,sans-serif;font-size:12.5px;color:#c9c2b0;margin-top:20px;letter-spacing:.04em}
+  main{padding:40px 0 24px}
+  .bar{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin:0 0 22px;font-family:Verdana,Geneva,sans-serif;font-size:13px;color:var(--soft)}
+  button{font-family:Verdana,Geneva,sans-serif;font-size:13px;border:0;border-radius:8px;padding:9px 16px;cursor:pointer;background:var(--acc2);color:#fff}
+  button:hover{opacity:.9}
+  button.ghost{background:var(--card);color:var(--acc);border:1px solid var(--line)}
+  select{font-family:Verdana,Geneva,sans-serif;font-size:13px;padding:9px 10px;border-radius:8px;border:1px solid var(--line);background:var(--card);color:var(--ink)}
+  #status{margin-left:auto}
+  ol.trends{list-style:none;margin:0;padding:0;counter-reset:t}
+  li.trend{display:flex;gap:16px;align-items:baseline;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:18px 22px;margin-bottom:12px}
+  li.trend .rank{font-family:Verdana,Geneva,sans-serif;font-size:15px;font-weight:700;color:var(--gold);min-width:34px}
+  li.trend .body{flex:1;min-width:0}
+  li.trend .title{font-family:Georgia,serif;font-size:1.22em;font-weight:600;word-break:break-word}
+  li.trend .title a{color:var(--ink);text-decoration:none}
+  li.trend .title a:hover{text-decoration:underline;color:var(--acc2)}
+  li.trend .sub{font-family:Verdana,Geneva,sans-serif;font-size:12.5px;color:var(--soft);margin-top:5px}
+  .badge{display:inline-block;background:#eee9dd;color:#6a5a33;border-radius:999px;padding:3px 11px;font-family:Verdana,Geneva,sans-serif;font-size:11.5px;letter-spacing:.03em}
+  .err{background:#f8e7e6;border:1px solid #e3b6b3;color:var(--bad);border-radius:10px;padding:16px 20px;font-family:Verdana,Geneva,sans-serif;font-size:13.5px}
+  footer{margin:40px 0 56px;border-top:1px solid var(--line);padding-top:20px;font-family:Verdana,Geneva,sans-serif;font-size:13px;color:var(--soft)}
+  footer a{color:var(--acc2)}
+  .spin{display:inline-block;width:14px;height:14px;border:2px solid var(--line);border-top-color:var(--acc2);border-radius:50%;animation:sp 1s linear infinite;vertical-align:-2px;margin-right:6px}
+  @keyframes sp{to{transform:rotate(360deg)}}
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="wrap">
+    <div class="kicker">Lecteur RSS · Google Trends</div>
+    <h1>Les recherches les plus populaires en France</h1>
+    <p class="dek">Tendances de recherches Google du moment, lues en direct depuis le flux RSS officiel de Google Trends (France). Actualisation automatique toutes les 15 minutes.</p>
+    <div class="meta">Source : trends.google.com/trending/rss?geo=FR</div>
+  </div>
+</header>
+
+<main class="wrap">
+  <div class="bar">
+    <button onclick="load()">↻ Actualiser</button>
+    <select id="geo" onchange="load()">
+      <option value="FR" selected>🇫🇷 France</option>
+      <option value="US">🇺🇸 États-Unis</option>
+      <option value="GB">🇬🇧 Royaume-Uni</option>
+      <option value="DE">🇩🇪 Allemagne</option>
+      <option value="BE">🇧🇪 Belgique</option>
+      <option value="CH">🇨🇭 Suisse</option>
+      <option value="CA">🇨🇦 Canada</option>
+      <option value="IT">🇮🇹 Italie</option>
+      <option value="ES">🇪🇸 Espagne</option>
+    </select>
+    <span id="status"></span>
+  </div>
+  <div id="out"></div>
+</main>
+
+<footer class="wrap">
+  <div>Lecteur RSS autonome (HTML + JavaScript, sans dépendance) · Données : <a href="https://trends.google.com/trending/rss?geo=FR" target="_blank" rel="noopener">Google Trends Daily Search Trends</a>. En cas d'échec du chargement direct, un relais CORS public est utilisé automatiquement.</div>
+</footer>
+
+<script>
+'use strict';
+var FEED='https://trends.google.com/trending/rss?geo=';
+var PROXIES=[
+  function(u){return u;},
+  function(u){return 'https://corsproxy.io/?'+encodeURIComponent(u);},
+  function(u){return 'https://api.allorigins.win/raw?url='+encodeURIComponent(u);}
+];
+var TIMER=null;
+
+function setStatus(msg,spin){
+  var s=document.getElementById('status');
+  s.innerHTML=(spin?'<span class="spin"></span>':'')+ (msg||'');
+}
+function fmtDate(iso){
+  try{
+    var d=new Date(iso);
+    return d.toLocaleDateString('fr-FR',{day:'numeric',month:'long',year:'numeric'})+' à '+d.toLocaleTimeString('fr-FR',{hour:'2-digit',minute:'2-digit'});
+  }catch(e){return iso;}
+}
+function trafficBadge(t){
+  return t?'<span class="badge">'+t.replace(/\+/g,'')+'+ recherches</span>':'';
+}
+function esc(s){
+  return String(s||'').replace(/&(?![a-z#0-9]+;)/gi,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+}
+function fetchFeed(url,i){
+  if(i>=PROXIES.length) return Promise.reject('inaccessible');
+  return fetch(PROXIES[i](url),{cache:'no-store'})
+    .then(function(r){ if(!r.ok) throw new Error('HTTP '+r.status); return r.text(); })
+    .catch(function(){ return fetchFeed(url,i+1); });
+}
+function tval(it,name){
+  var els=it.getElementsByTagName('*');
+  for(var i=0;i<els.length;i++){
+    if(els[i].localName===name||els[i].nodeName.replace(/^.*:/,'')===name)return els[i].textContent||'';
+  }
+  return '';
+}
+function parse(xmlText,geo){
+  var doc=new DOMParser().parseFromString(xmlText,'text/xml');
+  if(doc.querySelector('parsererror')) throw new Error('XML invalide');
+  var items=doc.getElementsByTagName('item');
+  if(!items.length) throw new Error('aucun élément dans le flux');
+  var h='';
+  Array.prototype.forEach.call(items,function(it,k){
+    var title=tval(it,'title');
+    var traffic=tval(it,'approx_traffic');
+    var pub=tval(it,'pubDate');
+    var q='https://www.google.com/search?q='+encodeURIComponent(title);
+    h+='<li class="trend"><span class="rank">'+(k+1)+'</span><div class="body>'
+      +'<div class="title"><a href="'+q+'" target="_blank" rel="noopener">'+esc(title)+'</a></div>'
+      +'<div class="sub">'+trafficBadge(traffic)+(pub?' · mis à jour le '+fmtDate(pub):'')+'</div>'
+      +'</div></li>';
+  });
+  return h;
+}
+function load(){
+  var geo=document.getElementById('geo').value;
+  var url=FEED+encodeURIComponent(geo);
+  var out=document.getElementById('out');
+  setStatus('Chargement…',true);
+  out.innerHTML='';
+  fetchFeed(url,0).then(function(txt){
+    out.innerHTML='<ol class="trends">'+parse(txt,geo)+'</ol>';
+    setStatus('Actualisé à '+new Date().toLocaleTimeString('fr-FR',{hour:'2-digit',minute:'2-digit',second:'2-digit'}));
+  }).catch(function(e){
+    out.innerHTML='<div class="err">Impossible de charger le flux ('
+      +esc(String(e.message||e))
+      +'). Le flux Google Trends est peut-être momentanément indisponible ou bloqué par le réseau.</div>';
+    setStatus('');
+  });
+  if(TIMER)clearInterval(TIMER);
+  TIMER=setInterval(load,15*60*1000);
+}
+load();
+</script>
+
+</body>
+</html>
