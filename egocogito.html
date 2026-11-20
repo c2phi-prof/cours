@@ -1,0 +1,1017 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>La Feuille Blanche — Étude documentaire (Thème Pronote)</title>
+<style>
+:root{
+  --papier:#ffffff;
+  --fond:#e9eef2;
+  --encre:#1f2d3d;
+  --encre-esprit:#1f6f50;
+  --accent-pronote:#2b8a64;
+  --accent-pronote-clair:#e6f3ed;
+  --encre-fantome:#9fb0bf;
+  --filet:#cfd9e2;
+  --taille-corps:18px;
+  --interligne:1.68;
+  --police-principale:"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%}
+body{
+  background:linear-gradient(180deg,#eef3f7 0%,var(--fond) 45%,#dfe7ee 100%);
+  font-family:var(--police-principale);
+  color:var(--encre);
+  overflow-x:hidden;
+}
+/* ---------- Bandeau institutionnel Pronote ---------- */
+#barre-pronote{
+  position:fixed;top:0;left:0;right:0;height:44px;z-index:42;
+  background:var(--encre-esprit);color:#ffffff;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0 24px;font-size:13px;letter-spacing:.03em;
+  box-shadow:0 2px 8px rgba(20,45,35,.15);
+}
+#barre-pronote .titre-app{display:flex;align-items:center;gap:10px;font-weight:600}
+#barre-pronote .badge{
+  background:rgba(255,255,255,.18);padding:2px 8px;border-radius:3px;
+  font-size:11px;text-transform:uppercase;letter-spacing:.08em;font-weight:500;
+}
+/* ---------- La couche des commandes ---------- */
+#couche{
+  display:flex;align-items:center;gap:18px;
+}
+#commandes,#gestes{display:flex;gap:14px;align-items:center}
+#commandes button,#gestes button{
+  background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.25);border-radius:3px;
+  cursor:pointer;font-family:inherit;font-size:11.5px;letter-spacing:.06em;text-transform:uppercase;
+  color:#ffffff;padding:4px 10px;
+  transition:background .25s ease,border-color .25s ease;
+  display:flex;align-items:center;gap:6px;
+}
+#commandes button:hover,#gestes button:hover{background:rgba(255,255,255,.25);border-color:#ffffff}
+#gestes svg{width:13px;height:13px;stroke:currentColor;fill:none;stroke-width:1.6}
+
+/* Menu des modèles */
+#menu-modeles{
+  position:fixed;top:52px;right:24px;z-index:45;width:330px;
+  background:var(--papier);border:1px solid var(--filet);border-radius:4px;
+  box-shadow:0 12px 32px rgba(25,40,55,.16);
+  padding:18px 20px 14px;
+  animation:ascension .35s cubic-bezier(.25,.5,.25,1) both;
+}
+#menu-modeles[hidden]{display:none}
+#menu-modeles h3{
+  font-weight:600;font-size:11.5px;letter-spacing:.12em;text-transform:uppercase;
+  color:var(--encre-esprit);margin-bottom:10px;
+}
+#menu-modeles .item{
+  display:block;width:100%;text-align:left;background:none;border:none;cursor:pointer;
+  font-family:inherit;padding:8px 4px;border-top:1px solid var(--filet);
+  transition:padding .25s ease,background .25s ease;
+}
+#menu-modeles .item:hover{padding-left:8px;background:var(--accent-pronote-clair)}
+#menu-modeles .item .nom{font-size:.92em;font-weight:600;color:var(--encre)}
+#menu-modeles .item .devise{font-size:.8em;color:#5a6b7c}
+#menu-modeles .item.actif .nom::after{content:"  ●";font-size:.7em;color:var(--encre-esprit);vertical-align:middle}
+
+/* ---------- La scène, la feuille, la zone QCM ---------- */
+#scene{padding:76px 24px 120px}
+#plateau{display:flex;gap:30px;align-items:flex-start;justify-content:center;flex-wrap:wrap;max-width:1280px;margin:0 auto}
+#feuille{
+  position:relative;max-width:760px;flex:1 1 540px;min-height:80vh;
+  background:var(--papier);
+  border:1px solid var(--filet);
+  border-top:4px solid var(--encre-esprit);
+  padding:48px 72px 84px 76px;
+  box-shadow:0 4px 18px rgba(31,45,61,.07);
+  border-radius:3px;
+  animation:feuille 1100ms cubic-bezier(.22,.61,.24,1) both;
+}
+@keyframes feuille{
+  0%{opacity:0;transform:translateY(12px)}
+  100%{opacity:1;transform:none}
+}
+/* Règles graduées */
+#regle-h,#regle-v{position:absolute;user-select:none;pointer-events:none;color:var(--encre-fantome)}
+#regle-h{top:14px;left:76px;right:72px;height:18px}
+#regle-v{left:16px;top:48px;bottom:60px;width:18px}
+.graduation{position:absolute;background:var(--encre-fantome);opacity:.7;
+  animation:voile .6s ease both;animation-delay:calc(var(--i)*12ms)}
+#regle-h .graduation{bottom:0;width:1px;height:5px}
+#regle-h .graduation.majeure{height:9px}
+#regle-v .graduation{right:0;height:1px;width:5px}
+#regle-v .graduation.majeure{width:9px}
+.nombre{position:absolute;font-size:8.5px;transform:translateX(-50%);
+  animation:voile .6s ease both;animation-delay:calc(var(--i)*12ms)}
+
+/* ---------- Corps de la feuille ---------- */
+#corps{font-size:var(--taille-corps);line-height:var(--interligne)}
+#corps p{margin:0 0 .45em}
+.extrait-doc{
+  background:var(--accent-pronote-clair);
+  border-left:3px solid var(--encre-esprit);
+  padding:14px 18px;margin-bottom:1.4em;border-radius:0 3px 3px 0;
+  font-size:.86em;line-height:1.58;color:#1e352b;
+}
+.extrait-doc .meta{
+  font-size:.78em;text-transform:uppercase;letter-spacing:.08em;
+  font-weight:700;color:var(--encre-esprit);margin-bottom:6px;display:block;
+}
+.extrait-doc blockquote{font-style:italic;margin:4px 0}
+p.auteur{
+  text-indent:1.1em;margin-bottom:.8em;
+  white-space:pre-wrap;
+}
+p.esprit{color:var(--encre-esprit);margin-bottom:.9em;font-style:italic}
+.petit-capital{
+  font-size:12px;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--encre-esprit);margin:1.8em 0 .8em;font-weight:700;
+}
+.acte{
+  margin:1em 0 1.4em;padding-left:1.2em;
+  border-left:2px solid var(--filet);
+  color:#485a6a;font-size:.84em;line-height:1.65;
+  white-space:pre-wrap;
+}
+.liste-articles{font-size:.88em;line-height:1.6}
+.liste-articles div{margin:.5em 0;padding-left:1.1em;text-indent:-1.1em}
+.carte-contrat{
+  border:1px solid var(--filet);border-radius:4px;
+  padding:16px 20px 14px;margin:0 0 12px;background:#fafcfd;
+  position:relative;transition:border-color .3s ease,transform .3s ease;
+}
+.carte-contrat:hover{border-color:var(--encre-esprit);transform:translateY(-1px)}
+.carte-contrat h3{font-weight:600;font-size:.96em;margin-bottom:.35em}
+.carte-contrat h3 span{letter-spacing:.08em;text-transform:uppercase;font-size:12px;color:var(--encre-esprit);margin-right:.6em}
+.carte-contrat p{font-size:.84em;line-height:1.55;color:#485a6a}
+.signer{
+  background:var(--encre-esprit);border:none;border-radius:3px;cursor:pointer;font-family:inherit;
+  font-size:11px;letter-spacing:.1em;text-transform:uppercase;
+  color:#ffffff;margin-top:10px;padding:6px 12px;
+  transition:background .25s;
+}
+.signer:hover{background:var(--accent-pronote)}
+.carte-contrat.scellee{border-color:var(--encre-esprit);background:var(--accent-pronote-clair)}
+
+/* Brouillon et curseur */
+.ligne-brouillon{position:relative;margin-top:1em}
+#brouillon{
+  outline:none;min-height:2.4em;white-space:pre-wrap;
+  caret-color:var(--encre-esprit);
+  padding:8px 10px;border:1px dashed var(--filet);border-radius:3px;
+  background:#fcfdfe;
+}
+#brouillon:focus{border-color:var(--encre-esprit);background:#ffffff}
+.ligne-brouillon .curseur{
+  position:absolute;left:11px;top:11px;width:2px;height:1.05em;
+  background:var(--encre-esprit);opacity:.85;
+  animation:clignote 1.5s ease-in-out infinite;
+  pointer-events:none;
+}
+.ligne-brouillon.pleine .curseur{display:none}
+@keyframes clignote{0%,45%{opacity:.85}55%,100%{opacity:.08}}
+#sceau{
+  position:absolute;left:-44px;top:10px;width:24px;height:24px;
+  border-radius:4px;border:1px solid var(--encre-esprit);background:var(--encre-esprit);
+  cursor:pointer;opacity:0;transition:opacity .3s ease,transform .3s ease;
+  padding:0;color:#ffffff;
+}
+.ligne-brouillon.pleine #sceau{opacity:.9}
+#sceau:hover{opacity:1;transform:scale(1.08)}
+#sceau::after{
+  content:"✓";position:absolute;inset:0;display:flex;align-items:center;justify-content:center;
+  font-size:13px;font-weight:bold;
+}
+
+/* ---------- Zone de l'esprit / QCM critique ---------- */
+#zone-esprit{
+  flex:0 0 380px;width:380px;min-height:360px;
+  padding:24px 24px 20px;
+  background:var(--papier);
+  border:1px solid var(--filet);
+  border-top:4px solid var(--accent-pronote);
+  border-radius:3px;
+  box-shadow:0 4px 18px rgba(31,45,61,.08);
+  animation:feuille 1200ms cubic-bezier(.22,.61,.24,1) both;
+  animation-delay:250ms;
+}
+#zone-esprit .entete-qcm{
+  display:flex;justify-content:space-between;align-items:center;
+  margin-bottom:12px;padding-bottom:8px;border-bottom:1px solid var(--filet);
+  font-size:11px;text-transform:uppercase;letter-spacing:.08em;font-weight:700;
+  color:var(--encre-esprit);
+}
+#zone-esprit .select-longueur{
+  font-family:inherit;font-size:11px;padding:2px 6px;
+  border:1px solid var(--filet);border-radius:3px;background:#f7fafc;color:var(--encre);
+  cursor:pointer;
+}
+#zone-esprit .sujet{font-size:.98em;font-weight:700;line-height:1.45;margin-bottom:.7em;color:var(--encre)}
+#zone-esprit .vignette{
+  font-size:.83em;line-height:1.5;background:#f4f7f9;padding:9px 11px;
+  border-radius:3px;margin-bottom:.9em;color:#3d4f60;
+}
+#zone-esprit .reponse{
+  font-size:.85em;line-height:1.55;margin-bottom:1em;padding:10px 12px;
+  background:var(--accent-pronote-clair);border-left:3px solid var(--encre-esprit);
+  border-radius:0 3px 3px 0;color:#173b2d;
+}
+#zone-esprit .question{font-size:.93em;font-weight:600;line-height:1.52;margin-bottom:.8em}
+#zone-esprit .qcm-titre{
+  font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;font-weight:700;
+  color:#5a6b7c;margin:.9em 0 .5em;padding-top:.8em;border-top:1px solid var(--filet);
+}
+#zone-esprit .qcm{display:flex;flex-direction:column;gap:7px}
+#zone-esprit .choix{
+  background:#f8fafc;border:1px solid var(--filet);border-radius:3px;
+  cursor:pointer;font-family:inherit;text-align:left;
+  font-size:12.5px;line-height:1.4;color:var(--encre);
+  padding:8px 11px;
+  transition:all .2s ease;
+}
+#zone-esprit .choix:hover{
+  background:var(--accent-pronote-clair);border-color:var(--encre-esprit);padding-left:14px;
+}
+#zone-esprit .choix.nav{
+  background:transparent;border:none;border-bottom:1px dotted var(--encre-esprit);
+  border-radius:0;padding:4px 2px;font-size:11.5px;text-transform:uppercase;
+  letter-spacing:.08em;font-weight:600;color:var(--encre-esprit);margin-top:4px;
+}
+#zone-esprit .choix.nav:hover{background:transparent;padding-left:6px}
+
+/* Variantes visuelles conservées */
+.modele-pronote{color:var(--encre)}
+.modele-enigme{background:#1e262c !important;color:#e6eef4 !important;border-top-color:#48b88a !important}
+.modele-enigme .sujet{color:#ffffff !important}
+.modele-enigme .vignette{background:#28333b !important;color:#bfd0de !important}
+.modele-enigme .reponse{background:#213a31 !important;color:#bfe8d5 !important}
+.modele-enigme .choix{background:#28333b !important;border-color:#3b4a56 !important;color:#e6eef4 !important}
+.modele-cartel{background:#ffffff !important;color:#111111 !important;border:2px solid #111111 !important;font-family:Georgia,serif}
+.modele-cartel .question{text-transform:uppercase;letter-spacing:.05em}
+.modele-voix{background:#f9fbf9 !important;border:1px dashed var(--encre-esprit) !important;font-family:Georgia,serif;font-style:italic}
+.modele-maitre{border:3px double var(--encre-esprit) !important;font-family:Georgia,serif}
+
+/* Animations */
+.apparait{animation:var(--effet) var(--duree) cubic-bezier(.25,.5,.25,1) both}
+@keyframes voile{from{opacity:0}to{opacity:1}}
+@keyframes encre{0%{opacity:0;filter:blur(1.5px)}100%{opacity:1;filter:blur(0)}}
+@keyframes ascension{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+@keyframes miseAuNet{0%{opacity:0;filter:blur(3px);transform:translateY(4px)}100%{opacity:1;filter:blur(0);transform:none}}
+@keyframes tisse{from{opacity:0;letter-spacing:.08em}to{opacity:1;letter-spacing:normal}}
+@keyframes respiration{from{opacity:0;transform:scale(.993)}to{opacity:1;transform:scale(1)}}
+.evanescent{animation:evanescence .6s ease both}
+@keyframes evanescence{to{opacity:0;transform:translateY(5px)}}
+
+/* ---------- Panneau du contrat ---------- */
+#panneau{
+  position:fixed;inset:0;z-index:50;display:flex;align-items:flex-start;justify-content:center;
+  background:rgba(31,45,61,.55);backdrop-filter:blur(5px);
+  overflow-y:auto;padding:64px 24px;
+  animation:voile .35s ease both;
+}
+#panneau[hidden]{display:none}
+#panneau .plume{
+  background:var(--papier);max-width:720px;width:100%;border-radius:4px;
+  border-top:4px solid var(--encre-esprit);
+  padding:36px 46px 34px;box-shadow:0 14px 40px rgba(20,35,50,.22);
+  animation:ascension .45s cubic-bezier(.25,.5,.25,1) both;
+}
+.article-param{font-size:.9em;line-height:1.58;margin:.6em 0}
+.article-param .intitule{color:#485a6a}
+.valeur{
+  background:var(--accent-pronote-clair);border:1px solid #b5d8c8;border-radius:3px;
+  cursor:pointer;font-family:inherit;font-size:inherit;font-weight:600;
+  color:var(--encre-esprit);padding:1px 7px;
+}
+.valeur:hover{background:#d2ebdf}
+.journal{font-size:.82em;color:#485a6a;margin:1.1em 0 0;padding-left:1.2em;border-left:2px solid var(--filet);line-height:1.55}
+.actions-contrat{margin-top:1.6em;padding-top:1em;border-top:1px solid var(--filet);display:flex;flex-wrap:wrap;gap:10px 18px}
+.action{
+  background:#f2f6f9;border:1px solid var(--filet);border-radius:3px;cursor:pointer;font-family:inherit;
+  font-size:11.5px;letter-spacing:.08em;text-transform:uppercase;font-weight:600;color:var(--encre);
+  padding:6px 12px;transition:all .25s;
+}
+.action:hover{background:var(--encre-esprit);color:#ffffff;border-color:var(--encre-esprit)}
+.action.dangereuse:hover{background:#b83b2b;border-color:#b83b2b;color:#ffffff}
+.confirmation-inline{font-size:.84em;color:#b83b2b;margin-top:.6em;width:100%}
+
+@media (max-width:1100px){
+  #zone-esprit{flex-basis:100%;width:100%;min-height:0}
+  #feuille{min-height:55vh}
+}
+@media (max-width:640px){
+  #feuille{padding:44px 24px 64px}
+  #regle-h{left:24px;right:24px}
+  #regle-v{display:none}
+  #sceau{left:-28px}
+  #barre-pronote .badge{display:none}
+}
+</style>
+</head>
+<body>
+
+<header id="barre-pronote">
+  <div class="titre-app">
+    <span>Espace Philosophie &amp; Analyse Média</span>
+    <span class="badge">Thème Pronote</span>
+  </div>
+  <div id="couche">
+    <div id="commandes"></div>
+    <div id="gestes">
+      <button id="btn-importer" title="Importer un document (JSON)">
+        <svg viewBox="0 0 16 16"><path d="M8 2v8M4.5 6.5 8 10l3.5-3.5M2.5 12.5h11"/></svg>Importer
+      </button>
+      <input type="file" id="fichier" accept=".json,application/json" hidden>
+      <button id="btn-sauvegarder" title="Sauvegarder le document (JSON)">
+        <svg viewBox="0 0 16 16"><path d="M8 12V4M4.5 7.5 8 4l3.5 3.5M2.5 13.5h11" transform="scale(1,-1) translate(0,16)"/></svg>Sauvegarder
+      </button>
+    </div>
+  </div>
+</header>
+
+<div id="menu-modeles" hidden>
+  <h3>Apparence de la zone QCM</h3>
+  <div id="liste-modeles"></div>
+</div>
+
+<div id="scene">
+  <div id="plateau">
+    <div id="feuille">
+      <div id="regle-h"></div>
+      <div id="regle-v"></div>
+      <div id="corps"></div>
+    </div>
+    <div id="zone-esprit" class="zone-esprit modele-pronote"></div>
+  </div>
+</div>
+
+<div id="panneau" hidden>
+  <div class="plume">
+    <h2 class="petit-capital">Contrat pédagogique — Consultation et amendement</h2>
+    <div id="articles-contrat"></div>
+    <div class="actions-contrat" id="actions-contrat"></div>
+  </div>
+</div>
+
+<script>
+"use strict";
+
+const VERSION = 1;
+
+const ACTE = `Comment j’ai été visité par un esprit Vaudou alors que je n’y connaissais rien.
+Une app d’exercice à construire avec l’aide. Rédiger sur une feuille blanche à l’écran comme un document simple comme sur cette capture d’écran. Sur laquelle est utilisé un le modèle ia qui consomme le moins de ressources pour interpréter et générer du texte... (Acte fondateur de La Feuille Blanche conservé dans le modèle).`;
+
+/* ---------- Séquence sélectionnée : 07:09 – 09:35 ---------- */
+const SEQUENCE_DOC = {
+  titre: "La connerie sacrée des clowns (Tracks — ARTE)",
+  sequence: "Séquence 07:09 – 09:35 : L'incorporation du « maître fou » et la « transe contrôlée »",
+  intervenants: "Bérangère Lacaze (clown et formatrice) & Stéphane Lévy (clown, duo Les Schmoun)",
+  verbatim: "« Avant d'aller jouer, on incorpore notre allié. Je suis remplie par maîtresse folle par exemple. Des pieds jusqu'à la tête, c'est elle qui gouverne. En gros, je mets mon corps à disposition de cet esprit, de cet allié, de cette énergie. [...] C'est rentrer dans un état qui est appelé transe mais contrôlée, c'est-à-dire je perds pas conscience de moi-même. Ça me permet d'avoir des forces qui s'expriment à travers mon corps qui sont des forces qui sont refrénées en temps ordinaire. Ça me permet de m'oublier. »",
+  amorceAuteur: "Dans la séquence « L'incorporation du maître fou » (07:09 – 09:35), Bérangère Lacaze et Stéphane Lévy théorisent leur pratique scénique en empruntant au vocabulaire du chamanisme (« allié », « incorporer », « voyage au tambour »). Pourtant, Stéphane Lévy introduit une nuance décisive en parlant de « transe contrôlée » où il affirme à la fois « je perds pas conscience de moi-même » et « ça me permet de m'oublier »."
+};
+
+/* ---------- Banque de 7 questions critiques (QCM de longueur variable : 3, 5 ou 7) ---------- */
+const BANQUE_QCM = [
+  {
+    axe: "1. Concept & distinction scénique",
+    question: "Comment le documentaire distingue-t-il l'improvisation du clown classique de la pratique du « clown chaman » dans cette séquence ?",
+    vignette: "07:09 — « Là où le clown classique improvise spontanément à partir de son imagination, le clown chaman va plus loin... »",
+    options: [
+      {
+        texte: "Le clown chaman prépare un texte écrit à l'avance pour éviter tout débordement émotionnel.",
+        correct: false,
+        feedback: "Inexact : la pratique repose au contraire sur l'abandon du contrôle rationnel ordinaire et le recours au « voyage au tambour »."
+      },
+      {
+        texte: "Il prête son corps à une figure extérieure (« allié », « maître fou » ou « trickster ») qui gouverne le jeu.",
+        correct: true,
+        feedback: "Exact. L'artiste opère un décentrement subjectif : il ne puise plus seulement dans sa psychologie individuelle, mais met son corps au service d'une altérité symbolique."
+      },
+      {
+        texte: "Il refuse toute interaction avec le public pour rester dans un recueillement silencieux.",
+        correct: false,
+        feedback: "Inexact : Stéphane Lévy souligne au contraire l'envie de « venir bousculer » et « titiller » l'entourage."
+      }
+    ]
+  },
+  {
+    axe: "2. Analyse critique du témoignage",
+    question: "Dans l'expression « mettre mon corps à disposition de cet esprit, de cet allié, de cette énergie » (Bérangère Lacaze), que révèle l'accumulation des trois termes ?",
+    vignette: "07:53 — « Je mets mon corps à disposition de cet esprit, de cet allié, de cette énergie. »",
+    options: [
+      {
+        texte: "Une hésitation théorique entre une lecture animiste littérale (« esprit ») et une métaphore psychocorporelle (« énergie »).",
+        correct: true,
+        feedback: "Pertinent. Ce glissement lexical montre comment des artistes occidentaux contemporains bricolent un cadre conceptuel hybride entre rite traditionnel et technique d'acteur."
+      },
+      {
+        texte: "La preuve que les intervenants appartiennent à une tradition religieuse dogmatique stricte.",
+        correct: false,
+        feedback: "Critique fragile : aucun dogme n'est revendiqué ; chaque clown entretient selon Camille Voitelier « une relation particulière avec cette énergie-là »."
+      },
+      {
+        texte: "Une simple figure de style sans aucun effet réel sur le corps de l'acteur.",
+        correct: false,
+        feedback: "Insuffisant : la préparation au tambour produit des effets somatiques visibles (postures, tensions, libération des gestes)."
+      }
+    ]
+  },
+  {
+    axe: "3. Théorisation de la pratique & Conscience",
+    question: "Quel paradoxe philosophique Stéphane Lévy formule-t-il lorsqu'il décrit la « transe contrôlée » (09:10) ?",
+    vignette: "09:13 — « C'est-à-dire je perds pas conscience de moi-même [...] Ça me permet de m'oublier. »",
+    options: [
+      {
+        texte: "Il affirme être totalement inconscient tout en dirigeant la mise en scène.",
+        correct: false,
+        feedback: "Non : il précise explicitement qu'il ne perd pas conscience de lui-même."
+      },
+      {
+        texte: "La conscience réflexive demeure vigilante (« je perds pas conscience ») tandis que le moi social inhibé s'efface (« m'oublier »).",
+        correct: true,
+        feedback: "Exact ! C'est le cœur de sa théorisation : la conscience se dédouble entre une instance de veille (qui garantit le cadre du jeu) et le lâcher-prise du moi social."
+      },
+      {
+        texte: "Il démontre que la conscience est une illusion biologique produite par le tambour.",
+        correct: false,
+        feedback: "Hors-sujet par rapport au témoignage : la conscience reste au contraire le garde-fou qui distingue la transe scénique de la perte de contrôle."
+      }
+    ]
+  },
+  {
+    axe: "4. Pratique sociale & transgression",
+    question: "Quelle fonction anthropologique et sociale le praticien attribue-t-il aux « forces refrénées en temps ordinaire » ?",
+    vignette: "09:23 — « Des forces qui sont refrénées en temps ordinaire. »",
+    options: [
+      {
+        texte: "Le rite scénique offre un espace légitime pour lever les inhibitions imposées par les normes sociales.",
+        correct: true,
+        feedback: "Juste. Le « maître fou » (trickster) autorise l'expression de pulsions ou d'attitudes socialement censurées, rejoignant la fonction critique des clowns sacrés."
+      },
+      {
+        texte: "Il s'agit d'éliminer définitivement toute règle de vie en société.",
+        correct: false,
+        feedback: "Non : la transgression s'opère dans le temps et l'espace délimités du jeu ou du rituel."
+      },
+      {
+        texte: "Ces forces servent uniquement à impressionner physiquement les journalistes.",
+        correct: false,
+        feedback: "Réducteur : la démonstration devant la caméra illustre une pratique de travail régulière avant chaque performance."
+      }
+    ]
+  },
+  {
+    axe: "5. Analyse critique des risques & limites",
+    question: "Pourquoi Stéphane Lévy met-il en garde contre le recours au « maître fou » en disant : « ça va pas être dans le doudou » (08:58) ?",
+    vignette: "08:53 — « Faut être prêt à en assumer les conséquences, c'est-à-dire ça va pas être dans le doudou... »",
+    options: [
+      {
+        texte: "Parce que le spectacle est réservé à un public adulte averti.",
+        correct: false,
+        feedback: "Contresens : il parle ici de celui qui « va poser une question à un maître fou pour son quotidien »."
+      },
+      {
+        texte: "Il critique une vision édulcorée du développement personnel : l'introspection rituelle confronte le sujet à ses propres résistances.",
+        correct: true,
+        feedback: "Excellente analyse. Le praticien refuse l'instrumentalisation consolatrice (« doudou ») de la pratique et souligne sa dimension déstabilisante pour l'ego."
+      },
+      {
+        texte: "Parce que les costumes en peau animale sont inconfortables.",
+        correct: false,
+        feedback: "Confusion de séquence : les peaux animales concernent le costume d'Olivier Clément plus tôt dans le reportage."
+      }
+    ]
+  },
+  {
+    axe: "6. Auto-évaluation par le texte",
+    question: "Dans l'amorce rédigée sur la feuille à gauche, quel problème philosophique est dégagé à partir du témoignage de Stéphane Lévy ?",
+    vignette: "Relisez le paragraphe inscrit sur la feuille à gauche.",
+    options: [
+      {
+        texte: "La tension entre l'emprunt d'un lexique religieux (chamanisme) et le maintien d'une conscience critique qui « s'oublie » sans se perdre.",
+        correct: true,
+        feedback: "Parfait. Vous pouvez maintenant rédiger le paragraphe suivant sur la feuille pour approfondir cette dualité de la conscience."
+      },
+      {
+        texte: "L'histoire chronologique du cirque occidental depuis le XIXe siècle.",
+        correct: false,
+        feedback: "Non, l'amorce porte sur l'analyse conceptuelle du témoignage de la séquence 07:09 – 09:35."
+      },
+      {
+        texte: "La biographie détaillée de tous les habitants de Fondrock en Dordogne.",
+        correct: false,
+        feedback: "Non, l'amorce se concentre sur la théorisation de la transe contrôlée."
+      }
+    ]
+  },
+  {
+    axe: "7. Synthèse philosophique (Conscience)",
+    question: "En philosophie, à quelle thèse classique sur la conscience la « transe contrôlée » du clown chaman fait-elle directement écho ?",
+    vignette: "Synthèse : conscience immédiate / conscience réflexive et dédoublement de l'acteur (Diderot).",
+    options: [
+      {
+        texte: "Au paradoxe du comédien (Diderot) : l'acteur mobilise une énergie intense tout en conservant un spectateur intérieur qui maîtrise le jeu.",
+        correct: true,
+        feedback: "Remarquable synthèse. Là où Diderot parlait de sang-froid, le clown chaman théorise ce même dédoublement à travers la métaphore de la « transe contrôlée »."
+      },
+      {
+        texte: "Au déterminisme strict : l'acteur n'est qu'un automate privé de toute représentation mentale.",
+        correct: false,
+        feedback: "Contredit par le témoignage : l'acteur maintient une vigilance consciente (« je perds pas conscience de moi-même »)."
+      },
+      {
+        texte: "Au solipsisme : l'acteur nie l'existence du public et du monde extérieur.",
+        correct: false,
+        feedback: "Inexact : la pratique vise au contraire la relation au public et le « faire tribu »."
+      }
+    ]
+  }
+];
+
+/* ---------- Effets & Modèles ---------- */
+const EFFETS = {
+  "ascension":"ascension", "voile":"voile", "encre":"encre",
+  "mise-au-net":"miseAuNet", "tissé":"tisse", "respiration":"respiration"
+};
+const DUREES  = {"vive":500, "ample":900, "lente":1400};
+const MARQUAGES = {"vert-pronote":"#1f6f50", "bleu-ardoise":"#2b547e", "sépia":"#6d5b41"};
+const PAPIERS = {"blanc-pronote":"#ffffff", "ivoire":"#fdfcf8"};
+
+const MODELES = {
+  pronote: { nom:"Pronote (Défaut)", devise:"institutionnel, clair, vert sauge", qcm:"Choix de réponse :" },
+  enigme:  { nom:"L’Énigme", devise:"fond sombre, contraste fort", qcm:"Trancher l'énigme :" },
+  cartel:  { nom:"Le Cartel", devise:"affiche analytique, filet net", qcm:"Sélection :" },
+  voix:    { nom:"La Voix", devise:"italienne, épurée, cadre pointillé", qcm:"Dans un souffle :" },
+  maitre:  { nom:"Le Maître", devise:"double filet académique", qcm:"Interrogation :" }
+};
+
+const CONTRATS = {
+  "pronote": {
+    nom:"Contrat Pronote (Étude documentaire)", devise:"thème par défaut, QCM modulable",
+    params:{ effet:"ascension", duree:"vive", marquage:"vert-pronote",
+             presence:"ample", regle:true, interligne:1.68, taille:18,
+             papier:"blanc-pronote", modele:"pronote", nbQuestions:5 },
+    resume:"Habillage Pronote par défaut ; étude critique de la séquence 07:09–09:35 ; QCM adaptable (3, 5 ou 7 questions) sur les concepts et la conscience."
+  },
+  "approfondi": {
+    nom:"Contrat Analyse Approfondie (7 questions)", devise:"parcours critique intégral",
+    params:{ effet:"mise-au-net", duree:"ample", marquage:"vert-pronote",
+             presence:"ample", regle:true, interligne:1.7, taille:18,
+             papier:"blanc-pronote", modele:"maitre", nbQuestions:7 },
+    resume:"Déploie les 7 questions du QCM jusqu'à la synthèse philosophique sur le paradoxe du comédien et la conscience réflexive."
+  },
+  "synthese": {
+    nom:"Contrat Synthèse Rapide (3 questions)", devise:"essentiel conceptuel",
+    params:{ effet:"voile", duree:"vive", marquage:"bleu-ardoise",
+             presence:"juste", regle:false, interligne:1.65, taille:18,
+             papier:"blanc-pronote", modele:"pronote", nbQuestions:3 },
+    resume:"Concentre le QCM sur les 3 questions fondamentales : pratique chamanique, analyse lexicale et transe contrôlée."
+  }
+};
+
+/* ---------- État ---------- */
+const CLE = "feuille-blanche-pronote-doc-v1";
+let etat = {
+  version: VERSION, contratId:"pronote",
+  params: Object.assign({}, CONTRATS.pronote.params),
+  qIndex: 0,
+  dernierFeedback: "",
+  paragraphes: []
+};
+
+const magasin = {
+  save(){ try{ localStorage.setItem(CLE, JSON.stringify(etat)); }catch(e){} },
+  load(){ try{ return JSON.parse(localStorage.getItem(CLE)); }catch(e){ return null; } },
+  clear(){ try{ localStorage.removeItem(CLE); }catch(e){} }
+};
+
+const corps = document.getElementById("corps");
+const feuille = document.getElementById("feuille");
+const panneau = document.getElementById("panneau");
+const zone = document.getElementById("zone-esprit");
+const menuModeles = document.getElementById("menu-modeles");
+let brouillon = null, occupee = false;
+
+/* ---------- Application des paramètres ---------- */
+function appliquerParams(p){
+  const r = document.documentElement.style;
+  r.setProperty("--encre-esprit", MARQUAGES[p.marquage] || p.marquage);
+  r.setProperty("--interligne", p.interligne);
+  r.setProperty("--taille-corps", p.taille + "px");
+  r.setProperty("--papier", PAPIERS[p.papier] || "#ffffff");
+  document.getElementById("regle-h").style.display = p.regle ? "" : "none";
+  document.getElementById("regle-v").style.display = p.regle ? "" : "none";
+}
+
+function dessinerRegles(){
+  const px = 37.8;
+  const h = document.getElementById("regle-h");
+  const v = document.getElementById("regle-v");
+  h.innerHTML = ""; v.innerHTML = "";
+  const largCm = Math.floor((feuille.clientWidth - 148) / px);
+  const hautCm = Math.floor((feuille.clientHeight - 108) / px);
+  let i = 0;
+  for(let c=0; c<=largCm; c++){
+    const t = document.createElement("div");
+    t.className = "graduation" + (c%2===0 ? " majeure" : "");
+    t.style.left = (c*px) + "px"; t.style.setProperty("--i", i++);
+    h.appendChild(t);
+    if(c>0 && c%2===0){
+      const n = document.createElement("div");
+      n.className = "nombre"; n.textContent = c;
+      n.style.left = (c*px) + "px"; n.style.setProperty("--i", i++);
+      h.appendChild(n);
+    }
+  }
+  i = 0;
+  for(let c=0; c<=hautCm; c++){
+    const t = document.createElement("div");
+    t.className = "graduation" + (c%2===0 ? " majeure" : "");
+    t.style.top = (c*px) + "px"; t.style.setProperty("--i", i++);
+    v.appendChild(t);
+  }
+}
+
+function faireApparaitre(el, kf, duree){
+  el.classList.add("apparait");
+  el.style.setProperty("--effet", EFFETS[kf] || "ascension");
+  el.style.setProperty("--duree", (DUREES[duree] || 600) + "ms");
+  el.addEventListener("animationend", ()=>{ el.classList.remove("apparait"); el.style.animation=""; }, {once:true});
+}
+
+/* ---------- Feuille d'écriture & Analyse critique ---------- */
+function afficherExtraitSequence(){
+  const box = document.createElement("div");
+  box.className = "extrait-doc";
+  box.innerHTML = `
+    <span class="meta">${SEQUENCE_DOC.titre} — ${SEQUENCE_DOC.sequence}</span>
+    <div><strong>Intervenants :</strong> ${SEQUENCE_DOC.intervenants}</div>
+    <blockquote>${SEQUENCE_DOC.verbatim}</blockquote>
+  `;
+  corps.appendChild(box);
+}
+
+function ajouterAuteur(texte, sauvegarder = true){
+  const p = document.createElement("p");
+  p.className = "auteur";
+  p.textContent = texte;
+  corps.appendChild(p);
+  faireApparaitre(p, "voile", "vive");
+  if(sauvegarder){
+    etat.paragraphes.push({a:"a", t:texte});
+    magasin.save();
+  }
+}
+
+function ouvrirBrouillon(){
+  if(brouillon) return;
+  const ligne = document.createElement("div");
+  ligne.className = "ligne-brouillon";
+  brouillon = document.createElement("div");
+  brouillon.id = "brouillon";
+  brouillon.contentEditable = "true";
+  brouillon.spellcheck = true;
+  brouillon.setAttribute("aria-label", "Rédigez votre analyse critique ici");
+  const sceau = document.createElement("button");
+  sceau.id = "sceau";
+  sceau.title = "Valider ce paragraphe (Ctrl + Entrée)";
+  sceau.addEventListener("click", sceller);
+  brouillon.addEventListener("input", ()=>{
+    ligne.classList.toggle("pleine", brouillon.textContent.trim().length > 0);
+  });
+  brouillon.addEventListener("keydown", (e)=>{
+    if((e.ctrlKey || e.metaKey) && e.key === "Enter"){ e.preventDefault(); sceller(); }
+  });
+  ligne.appendChild(sceau);
+  ligne.appendChild(brouillon);
+  const curseur = document.createElement("span");
+  curseur.className = "curseur";
+  ligne.appendChild(curseur);
+  corps.appendChild(ligne);
+}
+
+function analyserContribution(texte){
+  const t = texte.toLowerCase();
+  const points = [];
+  if(/transe|conscience|oublier|contrôl/.test(t)){
+    points.push("Vous interrogez le dédoublement de la conscience (« transe contrôlée »).");
+  }
+  if(/esprit|allié|énergie|tambour|chaman|animis/.test(t)){
+    points.push("Vous relevez l'emprunt au lexique chamanique pour décrire une technique corporelle.");
+  }
+  if(/norme|social|refrén|transgress|fou/.test(t)){
+    points.push("Vous mettez en lumière la fonction de transgression des normes sociales.");
+  }
+  if(points.length === 0){
+    return "Paragraphe scellé. Pour approfondir la critique, confrontez explicitement le vocabulaire spirituel (« esprit », « allié ») à la maîtrise technique décrite (« transe contrôlée »).";
+  }
+  return "Analyse de votre paragraphe : " + points.join(" ") + " Poursuivez en articulant pratique scénique et statut de la conscience.";
+}
+
+function sceller(){
+  if(occupee || !brouillon) return;
+  const t = brouillon.textContent.trim();
+  if(!t) return;
+  occupee = true;
+  ajouterAuteur(t, true);
+  brouillon.textContent = "";
+  brouillon.parentElement.classList.remove("pleine");
+  etat.dernierFeedback = analyserContribution(t);
+  magasin.save();
+  afficherZone();
+  occupee = false;
+  brouillon.focus();
+}
+
+/* ---------- Zone QCM de longueur variable ---------- */
+function afficherZone(){
+  const M = MODELES[etat.params.modele] || MODELES.pronote;
+  const total = Math.min(Math.max(Number(etat.params.nbQuestions) || 5, 1), BANQUE_QCM.length);
+  if(etat.qIndex >= total) etat.qIndex = 0;
+
+  zone.className = "zone-esprit modele-" + (etat.params.modele || "pronote");
+  zone.innerHTML = "";
+
+  const carte = document.createElement("div");
+  carte.className = "carte";
+
+  /* En-tête avec sélecteur de longueur du QCM */
+  const entete = document.createElement("div");
+  entete.className = "entete-qcm";
+  const prog = document.createElement("span");
+  prog.textContent = `Question ${etat.qIndex + 1} / ${total}`;
+  const sel = document.createElement("select");
+  sel.className = "select-longueur";
+  sel.title = "Modifier la longueur du QCM";
+  [3, 5, 7].forEach(n=>{
+    const opt = document.createElement("option");
+    opt.value = n;
+    opt.textContent = `QCM : ${n} questions`;
+    if(total === n) opt.selected = true;
+    sel.appendChild(opt);
+  });
+  sel.addEventListener("change", (e)=>{
+    etat.params.nbQuestions = Number(e.target.value);
+    if(etat.qIndex >= etat.params.nbQuestions) etat.qIndex = 0;
+    etat.dernierFeedback = "";
+    magasin.save();
+    afficherZone();
+  });
+  entete.appendChild(prog);
+  entete.appendChild(sel);
+  carte.appendChild(entete);
+
+  const item = BANQUE_QCM[etat.qIndex];
+
+  const s = document.createElement("p");
+  s.className = "sujet";
+  s.textContent = item.axe;
+  carte.appendChild(s);
+
+  const vg = document.createElement("p");
+  vg.className = "vignette";
+  vg.textContent = item.vignette;
+  carte.appendChild(vg);
+
+  if(etat.dernierFeedback){
+    const rp = document.createElement("p");
+    rp.className = "reponse";
+    rp.textContent = etat.dernierFeedback;
+    carte.appendChild(rp);
+  }
+
+  const q = document.createElement("p");
+  q.className = "question";
+  q.textContent = item.question;
+  carte.appendChild(q);
+
+  const t = document.createElement("p");
+  t.className = "qcm-titre";
+  t.textContent = M.qcm;
+  carte.appendChild(t);
+
+  const boite = document.createElement("div");
+  boite.className = "qcm";
+
+  item.options.forEach(opt=>{
+    const b = document.createElement("button");
+    b.className = "choix";
+    b.textContent = opt.texte;
+    b.addEventListener("click", ()=>{
+      etat.dernierFeedback = (opt.correct ? "✓ " : "✗ ") + opt.feedback;
+      magasin.save();
+      afficherZone();
+    });
+    boite.appendChild(b);
+  });
+
+  /* Navigation dans le QCM */
+  const btnSuiv = document.createElement("button");
+  btnSuiv.className = "choix nav";
+  btnSuiv.textContent = (etat.qIndex + 1 < total) ? "Question suivante →" : "Reprendre au début du QCM ↺";
+  btnSuiv.addEventListener("click", ()=>{
+    etat.qIndex = (etat.qIndex + 1) % total;
+    etat.dernierFeedback = "";
+    magasin.save();
+    afficherZone();
+  });
+  boite.appendChild(btnSuiv);
+
+  carte.appendChild(boite);
+  zone.appendChild(carte);
+  faireApparaitre(carte, etat.params.effet, etat.params.duree);
+}
+
+/* ---------- Menu des apparences ---------- */
+function ouvrirMenuModeles(){
+  const liste = document.getElementById("liste-modeles");
+  liste.innerHTML = "";
+  Object.keys(MODELES).forEach(id=>{
+    const M = MODELES[id];
+    const b = document.createElement("button");
+    b.className = "item" + (etat.params.modele === id ? " actif" : "");
+    b.innerHTML = "<span class='nom'></span><br><span class='devise'></span>";
+    b.querySelector(".nom").textContent = M.nom;
+    b.querySelector(".devise").textContent = M.devise;
+    b.addEventListener("click", ()=>{
+      etat.params.modele = id;
+      magasin.save();
+      afficherZone();
+      menuModeles.hidden = true;
+    });
+    liste.appendChild(b);
+  });
+  menuModeles.hidden = false;
+}
+
+document.addEventListener("click", (e)=>{
+  if(menuModeles.hidden) return;
+  if(!menuModeles.contains(e.target) && !e.target.closest("#commandes")){
+    menuModeles.hidden = true;
+  }
+});
+
+/* ---------- Panneau du Contrat (Échap) ---------- */
+const PARAMS_LIBELLES = [
+  {cle:"nbQuestions", intitule:"longueur du QCM (nombre de questions)", options:[3, 5, 7]},
+  {cle:"modele",      intitule:"apparence de la zone QCM", options:Object.keys(MODELES)},
+  {cle:"marquage",    intitule:"couleur institutionnelle", options:Object.keys(MARQUAGES)},
+  {cle:"effet",       intitule:"effet d’apparition", options:Object.keys(EFFETS)},
+  {cle:"duree",       intitule:"vitesse d’apparition", options:Object.keys(DUREES)},
+  {cle:"regle",       intitule:"règle graduée autour de la feuille", options:[true, false]},
+  {cle:"taille",      intitule:"corps du texte (px)", options:[16, 18, 20]},
+  {cle:"papier",      intitule:"fond de feuille", options:Object.keys(PAPIERS)}
+];
+
+function ouvrirPanneau(){
+  const brouillonParams = Object.assign({}, etat.params);
+  const zoneP = document.getElementById("articles-contrat");
+  zoneP.innerHTML = "";
+
+  const intro = document.createElement("p");
+  intro.className = "article-param";
+  intro.innerHTML = "Contrat en vigueur : <b></b>. Cliquez sur une valeur pour l'amender. (Raccourcis : <b>Échap</b> pour ouvrir/fermer le contrat ; <b>Ctrl + Entrée</b> pour sceller un paragraphe.)";
+  intro.querySelector("b").textContent = (CONTRATS[etat.contratId] || CONTRATS.pronote).nom;
+  zoneP.appendChild(intro);
+
+  PARAMS_LIBELLES.forEach((def, idx)=>{
+    const ligne = document.createElement("p");
+    ligne.className = "article-param";
+    ligne.innerHTML = `Article ${idx + 1} — <span class='intitule'></span> : `;
+    ligne.querySelector(".intitule").textContent = def.intitule;
+    const val = document.createElement("button");
+    val.className = "valeur";
+    const affiche = ()=>{
+      const v = brouillonParams[def.cle];
+      val.textContent = (typeof v === "boolean") ? (v ? "visible" : "masquée") : String(v);
+    };
+    affiche();
+    val.addEventListener("click", ()=>{
+      const i = def.options.indexOf(brouillonParams[def.cle]);
+      brouillonParams[def.cle] = def.options[(i + 1) % def.options.length];
+      affiche();
+    });
+    ligne.appendChild(val);
+    zoneP.appendChild(ligne);
+  });
+
+  const journal = document.createElement("p");
+  journal.className = "journal";
+  journal.textContent = "Support étudié : « La connerie sacrée des clowns » (Tracks — ARTE), séquence 07:09 – 09:35. Concepts : incorporation, maître fou / trickster, transe contrôlée, dédoublement de la conscience.";
+  zoneP.appendChild(journal);
+
+  const act = document.getElementById("actions-contrat");
+  act.innerHTML = "";
+  const faire = (txt, fn, cls)=>{
+    const b = document.createElement("button");
+    b.className = "action" + (cls ? " " + cls : "");
+    b.textContent = txt;
+    b.addEventListener("click", fn);
+    act.appendChild(b);
+  };
+  faire("Appliquer l'amendement", ()=>{
+    etat.params = Object.assign({}, brouillonParams);
+    magasin.save();
+    appliquerParams(etat.params);
+    afficherZone();
+    panneau.hidden = true;
+  });
+  faire("Réinitialiser l'étude", ()=>{
+    magasin.clear();
+    location.reload();
+  }, "dangereuse");
+  faire("Fermer", ()=>{ panneau.hidden = true; });
+
+  panneau.hidden = false;
+}
+
+/* ---------- Export / Import JSON ---------- */
+function exporter(){
+  const doc = {
+    format:"feuille-blanche-pronote", version: VERSION,
+    date: new Date().toISOString(),
+    sequence: SEQUENCE_DOC.sequence,
+    params: etat.params,
+    qIndex: etat.qIndex,
+    document: etat.paragraphes
+  };
+  const blob = new Blob([JSON.stringify(doc, null, 2)], {type:"application/json"});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = "etude-clowns-chamans-pronote-" + doc.date.slice(0,10) + ".json";
+  document.body.appendChild(a); a.click(); a.remove();
+  setTimeout(()=>URL.revokeObjectURL(url), 2000);
+}
+
+async function importer(file){
+  try{
+    const doc = JSON.parse(await file.text());
+    if(!doc.document) throw new Error("Format invalide");
+    etat.params = Object.assign({}, CONTRATS.pronote.params, doc.params || {});
+    etat.qIndex = doc.qIndex || 0;
+    etat.paragraphes = doc.document;
+    magasin.save();
+    appliquerParams(etat.params);
+    corps.innerHTML = "";
+    brouillon = null;
+    afficherExtraitSequence();
+    etat.paragraphes.forEach(p=>{ if(p.a === "a") ajouterAuteur(p.t, false); });
+    ouvrirBrouillon();
+    afficherZone();
+  }catch(err){
+    etat.dernierFeedback = "Erreur d'importation : fichier JSON incompatible.";
+    afficherZone();
+  }
+}
+
+document.addEventListener("keydown", (e)=>{
+  if(e.key === "Escape"){
+    if(!menuModeles.hidden){ menuModeles.hidden = true; return; }
+    if(!panneau.hidden) panneau.hidden = true;
+    else ouvrirPanneau();
+  }
+});
+
+document.getElementById("btn-sauvegarder").addEventListener("click", exporter);
+document.getElementById("btn-importer").addEventListener("click", ()=>document.getElementById("fichier").click());
+document.getElementById("fichier").addEventListener("change", (e)=>{
+  if(e.target.files[0]) importer(e.target.files[0]);
+  e.target.value = "";
+});
+
+/* ---------- Initialisation ---------- */
+const cmdZone = document.getElementById("commandes");
+const btnApparence = document.createElement("button");
+btnApparence.textContent = "Apparence";
+btnApparence.addEventListener("click", ouvrirMenuModeles);
+cmdZone.appendChild(btnApparence);
+
+const btnContrat = document.createElement("button");
+btnContrat.textContent = "Contrat (Échap)";
+btnContrat.addEventListener("click", ouvrirPanneau);
+cmdZone.appendChild(btnContrat);
+
+appliquerParams(etat.params);
+window.addEventListener("resize", dessinerRegles);
+
+(function demarrer(){
+  dessinerRegles();
+  afficherExtraitSequence();
+  const sauve = magasin.load();
+  if(sauve && Array.isArray(sauve.paragraphes) && sauve.paragraphes.length > 0){
+    etat = Object.assign(etat, sauve);
+    appliquerParams(etat.params);
+    etat.paragraphes.forEach(p=>{ if(p.a === "a") ajouterAuteur(p.t, false); });
+  } else {
+    ajouterAuteur(SEQUENCE_DOC.amorceAuteur, true);
+  }
+  ouvrirBrouillon();
+  afficherZone();
+})();
+</script>
+</body>
+</html>
