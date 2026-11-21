@@ -24,7 +24,6 @@ body {
 p.ligne { margin: 0 0 .15rem 0; white-space: pre-wrap; }
 .prompt { color: #555555; }
 .titre { font-weight: bold; font-size: 1.25rem; }
-.sous-titre { font-size: 1rem; }
 .commentaire { color: #777777; }
 .erreur { color: #8b0000; }
 .curseur { display: inline-block; width: .6em; background: #111111; color: #111111; animation: clignote 1s steps(1) infinite; margin-left: 1px; }
@@ -35,7 +34,6 @@ section.groupe.caché .entete-groupe, section.groupe.caché .barre-filtre, secti
 .barre-filtre {
   font-size: .78rem; color: #888888;
   margin: .15rem 0 .25rem 1.4rem;
-  display: flex; flex-wrap: wrap; gap: .5rem; align-items: center;
   opacity: .55; transition: opacity .25s;
 }
 .barre-filtre:focus-within, .barre-filtre:hover { opacity: 1; }
@@ -46,14 +44,6 @@ section.groupe.caché .entete-groupe, section.groupe.caché .barre-filtre, secti
   color: #111111;
 }
 .barre-filtre input.filtre:focus { border-bottom-color: #111111; }
-.barre-filtre button {
-  font-family: inherit; font-size: .85rem;
-  background: transparent; color: #555555;
-  border: 1px solid #dddddd; border-radius: 2px;
-  padding: .05rem .45rem; cursor: pointer;
-}
-.barre-filtre button:hover { border-color: #111111; color: #111111; }
-.barre-filtre button:disabled { opacity: .4; cursor: default; border-color: #dddddd; color: #999999; }
 ul.liste-cours { list-style: none; padding: 0; margin: 0 0 0 1.4rem; }
 ul.liste-cours li {
   margin: .12rem 0; opacity: 0; visibility: hidden;
@@ -61,21 +51,11 @@ ul.liste-cours li {
 ul.liste-cours li.visible { opacity: 1; visibility: visible; transition: opacity .18s; }
 ul.liste-cours li.masque { display: none; }
 .egal { color: #bbbbbb; user-select: none; }
-li.item label.case { margin-right: .35rem; cursor: pointer; color: #999999; }
-li.item input[type="checkbox"] { accent-color: #111111; vertical-align: -1px; }
 li.item a { color: #111111; text-decoration: none; border-bottom: 1px solid #e0e0e0; }
 li.item a:hover { border-bottom-color: #111111; }
 li.item.vu { opacity: .55; }
 li.item.vu a { color: #777777; }
 li.item.vu.visible { opacity: .55; }
-.vu-marque { color: #5d7a5d; font-size: .78rem; margin-left: .5rem; }
-p.mini { font-size: .8rem; color: #777777; margin-top: 1.2rem; white-space: pre-wrap; }
-button#bouton-zero {
-  font-family: inherit; background: #ffffff; color: #111111;
-  border: 1px solid #111111; padding: .45rem 1rem; cursor: pointer;
-  margin-top: .8rem;
-}
-button#bouton-zero:hover { background: #111111; color: #ffffff; }
 @media (prefers-reduced-motion: reduce) { .curseur { animation: none; } }
 </style>
 </head>
@@ -107,14 +87,10 @@ button#bouton-zero:hover { background: #111111; color: #ffffff; }
         catch (e) { return {}; }
     }
 
-    function ecrireVus(vus) {
-        try { localStorage.setItem(CLE_VUS, JSON.stringify(vus)); } catch (e) {}
-    }
-
     function marquer(nom) {
         var vus = lireVus();
         vus[nom] = new Date().toISOString();
-        ecrireVus(vus);
+        try { localStorage.setItem(CLE_VUS, JSON.stringify(vus)); } catch (e) {}
     }
 
     function sleep(ms) {
@@ -125,12 +101,8 @@ button#bouton-zero:hover { background: #111111; color: #ffffff; }
         return texte.split(' ').filter(function (mot) { return mot !== ''; });
     }
 
-    function deplacerCurseur(el) {
-        if (el) { el.appendChild(curseur); }
-    }
-
     async function typer(el, texte, delaiBase) {
-        deplacerCurseur(el);
+        el.appendChild(curseur);
         var morceaux = instant ? [texte] : decouper(texte);
         for (var i = 0; i < morceaux.length; i++) {
             if (i > 0) { el.insertBefore(document.createTextNode(' '), curseur); }
@@ -147,23 +119,14 @@ button#bouton-zero:hover { background: #111111; color: #ffffff; }
         return p;
     }
 
-    async function typerLigne(texte, classes, delai) {
-        var p = nouvelleLigne(classes);
-        await typer(p, texte, delai);
-        return p;
-    }
-
     function normaliser(s) {
         return (s || '').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
     }
 
-    function extraireClasseEtSlug(nomFichier) {
+    function extraireClasse(nomFichier) {
         var base = nomFichier.replace(/\.html$/i, '');
-        var m = base.match(/^(THLP\d|TG\d?|\dG\d?)(?:\d+)?(?:[-_. ]+(.+))?$/i);
-        if (!m) { return null; }
-        var classe = m[1].toUpperCase();
-        var slug = m[2] ? m[2].replace(/^\d+[-_. ]*/, '') : 'sans-titre';
-        return { classe: classe, slug: slug };
+        var m = base.match(/^(THLP\d|TG\d?|\dG\d?)(?:\d+)?/i);
+        return m ? m[1].toUpperCase() : 'AUTRES';
     }
 
     function construireGroupe(classe, fichiers, vus) {
@@ -182,45 +145,18 @@ button#bouton-zero:hover { background: #111111; color: #ffffff; }
         filtre.className = 'filtre';
         filtre.placeholder = 'filtrer ' + classe + '…';
         filtre.setAttribute('aria-label', 'Filtrer les fichiers de ' + classe);
-
-        var bTout = document.createElement('button');
-        bTout.type = 'button';
-        bTout.textContent = 'tout';
-
-        var bAucun = document.createElement('button');
-        bAucun.type = 'button';
-        bAucun.textContent = 'aucun';
-
-        var bOuvrir = document.createElement('button');
-        bOuvrir.type = 'button';
-        bOuvrir.className = 'b-ouvrir';
-        bOuvrir.disabled = true;
-        bOuvrir.textContent = 'ouvrir ▸ 0';
-
         barre.appendChild(filtre);
-        barre.appendChild(bTout);
-        barre.appendChild(bAucun);
-        barre.appendChild(bOuvrir);
 
         var ul = document.createElement('ul');
         ul.className = 'liste-cours';
 
         var items = [];
         fichiers.forEach(function (f) {
-            var info = extraireClasseEtSlug(f.name);
             var dejaVu = !!vus[f.name];
-            var quand = dejaVu ? new Date(vus[f.name]).toLocaleDateString('fr-FR') : '';
 
             var li = document.createElement('li');
             li.className = 'item' + (dejaVu ? ' vu' : '');
             li.setAttribute('data-nom-normalise', normaliser(f.name));
-
-            var label = document.createElement('label');
-            label.className = 'case';
-            var caseACocher = document.createElement('input');
-            caseACocher.type = 'checkbox';
-            caseACocher.setAttribute('aria-label', 'Sélectionner ' + f.name);
-            label.appendChild(caseACocher);
 
             var egal = document.createElement('span');
             egal.className = 'egal';
@@ -228,72 +164,30 @@ button#bouton-zero:hover { background: #111111; color: #ffffff; }
 
             var a = document.createElement('a');
             a.href = encodeURI(f.name);
-            a.textContent = info ? info.slug : f.name;
+            a.textContent = f.name.replace(/\.html$/i, '');
             a.setAttribute('data-fichier', f.name);
-            a.title = f.name + (dejaVu ? ' · dernier vu le ' + quand : ' · pas encore consulté');
             a.addEventListener('click', function () { marquer(f.name); });
 
             li.appendChild(egal);
-            li.appendChild(label);
             li.appendChild(a);
-            if (dejaVu) {
-                var marque = document.createElement('span');
-                marque.className = 'vu-marque';
-                marque.textContent = '# consulté le ' + quand;
-                li.appendChild(marque);
-            }
 
             ul.appendChild(li);
-            items.push({ li: li, caseACocher: caseACocher, nom: f.name });
+            items.push({ li: li, nom: f.name });
         });
 
         items[items.length - 1].li.querySelector('.egal').textContent = '└── ';
-
-        function majOuvrir() {
-            var n = items.filter(function (it) { return it.caseACocher.checked; }).length;
-            bOuvrir.textContent = 'ouvrir ▸ ' + n;
-            bOuvrir.disabled = n === 0;
-        }
-
-        items.forEach(function (it) {
-            it.caseACocher.addEventListener('change', majOuvrir);
-        });
-
-        bTout.addEventListener('click', function () {
-            var visibles = items.filter(function (it) { return !it.li.classList.contains('masque'); });
-            var tout = visibles.every(function (it) { return it.caseACocher.checked; });
-            visibles.forEach(function (it) { it.caseACocher.checked = !tout; });
-            majOuvrir();
-        });
-
-        bAucun.addEventListener('click', function () {
-            items.forEach(function (it) { it.caseACocher.checked = false; });
-            filtre.value = '';
-            items.forEach(function (it) { it.li.classList.remove('masque'); });
-            majOuvrir();
-        });
 
         filtre.addEventListener('input', function () {
             var q = normaliser(filtre.value.trim());
             items.forEach(function (it) {
                 it.li.classList.toggle('masque', !!q && it.li.getAttribute('data-nom-normalise').indexOf(q) === -1);
             });
-            majOuvrir();
-        });
-
-        bOuvrir.addEventListener('click', function () {
-            items.forEach(function (it) {
-                if (it.caseACocher.checked) {
-                    marquer(it.nom);
-                    window.open(encodeURI(it.nom), '_blank');
-                }
-            });
         });
 
         section.appendChild(entete);
         section.appendChild(barre);
         section.appendChild(ul);
-        return { section: section, entete: entete, items: items };
+        return { section: section, entete: entete, items: items, nombre: fichiers.length };
     }
 
     async function afficher(fichiers) {
@@ -307,47 +201,24 @@ button#bouton-zero:hover { background: #111111; color: #ffffff; }
 
         var pTitre = nouvelleLigne('titre');
         await typer(pTitre, 'C2phi', 28);
-
-        var pSous = nouvelleLigne('sous-titre commentaire');
-        await typer(pSous, '# cours et révisions de philosophie — index du répertoire', 10);
-
-        var resume = nouvelleLigne('commentaire');
-        await typer(resume, '# ' + retenus.length + ' fichier(s) HTML trouvé(s) — groupés par classe', 8);
-        deplacerCurseur(null);
         if (curseur.parentNode) { curseur.parentNode.removeChild(curseur); }
 
         var groupes = {};
         retenus.forEach(function (f) {
-            var info = extraireClasseEtSlug(f.name);
-            var cle = info ? info.classe : 'AUTRES';
+            var cle = extraireClasse(f.name);
             if (!groupes[cle]) { groupes[cle] = []; }
             groupes[cle].push(f);
         });
 
-        var cles = Object.keys(groupes).sort(function (a, b) {
-            return a.localeCompare(b, 'fr', { numeric: true });
-        });
+        var cles = Object.keys(groupes);
 
         for (var g = 0; g < cles.length; g++) {
             var cle = cles[g];
-            var fichiersG = groupes[cle].slice().sort(function (a, b) {
-                var ia = extraireClasseEtSlug(a.name);
-                var ib = extraireClasseEtSlug(b.name);
-                var sa = ia ? ia.slug : a.name;
-                var sb = ib ? ib.slug : b.name;
-                return sa.localeCompare(sb, 'fr');
-            });
-
-            var construit = construireGroupe(cle, fichiersG, vus);
+            var construit = construireGroupe(cle, groupes[cle], vus);
             ecran.appendChild(construit.section);
 
-            await typerLigne('# classe ' + cle + ' · ' + fichiersG.length + ' fichier(s)', 'commentaire', 10);
-
             construit.section.classList.remove('caché');
-            await typer(construit.entete, '▸ ' + cle, 24);
-
-            var egal2 = document.createTextNode('  [' + fichiersG.length + ' entrées]');
-            construit.entete.appendChild(egal2);
+            await typer(construit.entete, '▸ ' + cle + ' (' + construit.nombre + ')', 24);
 
             for (var i = 0; i < construit.items.length; i++) {
                 construit.items[i].li.classList.add('visible');
@@ -355,22 +226,7 @@ button#bouton-zero:hover { background: #111111; color: #ffffff; }
             }
             await sleep(35);
         }
-
-        var pFin1 = nouvelleLigne('mini');
-        await typer(pFin1, '# les fichiers consultés apparaissent estompés · cases à cocher pour une ouverture multiple', 7);
-        var pFin2 = nouvelleLigne('prompt');
-        await typer(pFin2, '$ reset --vus', 12);
-        deplacerCurseur(null);
         if (curseur.parentNode) { curseur.parentNode.removeChild(curseur); }
-
-        var bouton = document.createElement('button');
-        bouton.id = 'bouton-zero';
-        bouton.textContent = 'Tout remettre à neuf';
-        bouton.onclick = function () {
-            ecrireVus({});
-            location.reload();
-        };
-        ecran.appendChild(bouton);
     }
 
     async function afficherErreur() {
@@ -380,7 +236,6 @@ button#bouton-zero:hover { background: #111111; color: #ffffff; }
         await typer(p2, 'erreur : impossible de charger la liste des fichiers.', 16);
         var p3 = nouvelleLigne('commentaire');
         await typer(p3, "# limite de l'API GitHub peut-être atteinte — rechargez la page dans quelques instants.", 7);
-        deplacerCurseur(null);
         if (curseur.parentNode) { curseur.parentNode.removeChild(curseur); }
     }
 
