@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>C2phi</title>
+<meta name="description" content="C2phi — cours et révisions de philosophie">
+<meta name="theme-color" content="#ffffff">
+<link rel="icon" type="image/png" href="favicon.png">
+<link rel="apple-touch-icon" href="favicon.png">
+<style>
+* { box-sizing: border-box; }
+body {
+  font-family: "Courier New", Courier, ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  background: #ffffff;
+  color: #111111;
+  max-width: 860px;
+  margin: 2rem auto;
+  padding: 0 1rem;
+  line-height: 1.5;
+}
+::selection { background: #111111; color: #ffffff; }
+#ecran { white-space: normal; }
+p.ligne { margin: 0 0 .15rem 0; white-space: pre-wrap; }
+.prompt { color: #555555; }
+.titre { font-weight: bold; font-size: 1.25rem; }
+.commentaire { color: #777777; }
+.erreur { color: #8b0000; }
+.maj-ok { color: #2e7d32; }
+.curseur { display: inline-block; width: .6em; background: #111111; color: #111111; animation: clignote 1s steps(1) infinite; margin-left: 1px; }
+@keyframes clignote { 50% { opacity: 0; } }
+a.lien-maj { color: #111111; text-decoration: none; border-bottom: 1px dashed #999999; cursor: pointer; }
+a.lien-maj:hover { border-bottom-style: solid; border-bottom-color: #111111; }
+a.lien-majrotation { display: inline-block; transition: transform .5s ease; }
+a.lien-majrotation:hover { transform: rotate(360deg); }
+section.groupe { margin: 1.2rem 0 .6rem 0; }
+section.groupe.caché .entete-groupe, section.groupe.caché .barre-filtre, section.groupe.caché li { display: none; }
+.entete-groupe { font-weight: bold; margin-bottom: .2rem; }
+.barre-filtre {
+  font-size: .78rem; color: #888888;
+  margin: .15rem 0 .25rem 1.4rem;
+  opacity: .55; transition: opacity .25s;
+}
+.barre-filtre:focus-within, .barre-filtre:hover { opacity: 1; }
+.barre-filtre input.filtre {
+  font-family: inherit; font-size: .9rem;
+  border: none; border-bottom: 1px solid #cccccc;
+  background: transparent; padding: .1rem .2rem; width: 9rem; outline: none;
+  color: #111111;
+}
+.barre-filtre input.filtre:focus { border-bottom-color: #111111; }
+ul.liste-cours { list-style: none; padding: 0; margin: 0 0 0 1.4rem; }
+ul.liste-cours li {
+  margin: .12rem 0; opacity: 0; visibility: hidden;
+}
+ul.liste-cours li.visible { opacity: 1; visibility: visible; transition: opacity .18s; }
+ul.liste-cours li.masque { display: none; }
+.egal { color: #bbbbbb; user-select: none; }
+li.item a { color: #111111; text-decoration: none; border-bottom: 1px solid #e0e0e0; }
+li.item a:hover { border-bottom-color: #111111; }
+li.item.vu { opacity: .55; }
+li.item.vu a { color: #777777; }
+li.item.vu.visible { opacity: .55; }
+@media (prefers-reduced-motion: reduce) { .curseur { animation: none; } }
+</style>
+</head>
+<body>
+<div id="ecran"></div>
+<noscript><p>Activez JavaScript pour afficher la liste des fichiers.</p></noscript>
+<script>
+(function () {
+    var ecran = document.getElementById('ecran');
+    var CLE_VUS = 'c2phi-fichiers-vus';
+    var instant = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var renduRapide = false;
+    var curseur = document.createElement('span');
+    curseur.className = 'curseur';
+    curseur.textContent = '█';
+
+    var maj = {
+        derniere: null,
+        signature: null,
+        spanHorodatage: null,
+        spanCompte: null,
+        DelaiAuto: 10 * 60 * 1000,
+        enCours: false
+    };
+
+    function proprietaireEtDepot() {
+        if (location.hostname.endsWith('.github.io')) {
+            var proprietaire = location.hostname.replace('.github.io', '');
+            return { owner: proprietaire, repo: 'cours' };
+        }
+        return { owner: 'c2phi-prof', repo: 'cours' };
+    }
+
+    var ref = proprietaireEtDepot();
+    var urlApi = 'https://api.github.com/repos/' + ref.owner + '/' + ref.repo + '/contents/?ref=HEAD';
+
+    function lireVus() {
+        try { return JSON.parse(localStorage.getItem(CLE_VUS)) || {}; }
+        catch (e) { return {}; }
+    }
+
+    function marquer(nom) {
+        var vus = lireVus();
+        vus[nom] = new Date().toISOString();
+        try { localStorage.setItem(CLE_VUS, JSON.stringify(vus)); } catch (e) {}
+    }
+
+    function sleep(ms) {
+        if (instant || renduRapide) { return Promise.resolve(); }
+        return new Promise(function (res) { setTimeout(res, ms); });
+    }
+
+    function decouper(texte) {
+        return renduRapide ? [texte] : texte.split(' ').filter(function (mot) { return mot !== ''; });
+    }
+
+    async function typer(el, texte, delaiBase) {
+        el.appendChild(curseur);
+        var morceaux = decouper(texte);
+        for (var i = 0; i < morceaux.length; i++) {
+            if (i > 0) { el.insertBefore(document.createTextNode(' '), curseur); }
+            el.insertBefore(document.createTextNode(morceaux[i]), curseur);
+            await sleep((delaiBase || 18) + Math.random() * (delaiBase || 18));
+        }
+        await sleep(50);
+    }
+
+    function nouvelleLigne(classes) {
+        var p = document.createElement('p');
+        p.className = 'ligne' + (classes ? ' ' + classes : '');
+        ecran.appendChild(p);
+        return p;
+    }
+
+    function normaliser(s) {
+        return (s || '').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+    }
+
+    function formaterDate(d) {
+        var pad = function (n) { return (n < 10 ? '0' : '') + n; };
+        return pad(d.getDate()) + '/' + pad(d.getMonth() + 1) + '/' + d.getFullYear()
+             + ' ' + pad(d.getHours()) + ':' + pad(d.getMinutes());
+    }
+
+    function extraireClasse(nomFichier) {
+        var base = nomFichier.replace(/\.html$/i, '');
+        var m = base.match(/^(THLP\d|TG\d?|\dG\d?)(?:\d+)?/i);
+        return m ? m[1].toUpperCase() : 'AUTRES';
+    }
+
+    function signatureListe(retenus) {
+        return retenus.map(function (f) { return f.name; }).slice().sort().join('|');
+    }
+
+    function construireGroupe(classe, fichiers, vus) {
+        var section = document.createElement('section');
+        section.className = 'groupe caché';
+        section.setAttribute('data-classe', classe);
+
+        var entete = document.createElement('div');
+        entete.className = 'entete-groupe';
+
+        var barre = document.createElement('div');
+        barre.className = 'barre-filtre';
+
+        var filtre = document.createElement('input');
+        filtre.type = 'text';
+        filtre.className = 'filtre';
+        filtre.placeholder = 'filtrer ' + classe + '…';
+        filtre.setAttribute('aria-label', 'Filtrer les fichiers de ' + classe);
+        barre.appendChild(filtre);
+
+        var ul = document.createElement('ul');
+        ul.className = 'liste-cours';
+
+        var items = [];
+        fichiers.forEach(function (f) {
+            var dejaVu = !!vus[f.name];
+
+            var li = document.createElement('li');
+            li.className = 'item' + (dejaVu ? ' vu' : '');
+            li.setAttribute('data-nom-normalise', normaliser(f.name));
+
+            var egal = document.createElement('span');
+            egal.className = 'egal';
+            egal.textContent = '├── ';
+
+            var a = document.createElement('a');
+            a.href = encodeURI(f.name);
+            a.textContent = f.name.replace(/\.html$/i, '');
+            a.setAttribute('data-fichier', f.name);
+            a.addEventListener('click', function () { marquer(f.name); });
+
+            li.appendChild(egal);
+            li.appendChild(a);
+
+            ul.appendChild(li);
+            items.push({ li: li, nom: f.name });
+        });
+
+        items[items.length - 1].li.querySelector('.egal').textContent = '└── ';
+
+        filtre.addEventListener('input', function () {
+            var q = normaliser(filtre.value.trim());
+            items.forEach(function (it) {
+                it.li.classList.toggle('masque', !!q && it.li.getAttribute('data-nom-normalise').indexOf(q) === -1);
+            });
+        });
+
+        section.appendChild(entete);
+        section.appendChild(barre);
+        section.appendChild(ul);
+        return { section: section, entete: entete, items: items, nombre: fichiers.length };
+    }
+
+    function creerLigneMaj(nombre) {
+        var p = nouvelleLigne('commentaire');
+        var horodatage = document.createElement('span');
+        horodatage.textContent = formaterDate(new Date());
+        var compte = document.createElement('span');
+        compte.textContent = nombre + ' fichier' + (nombre > 1 ? 's' : '');
+
+        p.appendChild(document.createTextNode('# actualisé '));
+        p.appendChild(horodatage);
+        p.appendChild(document.createTextNode(' · '));
+        p.appendChild(compte);
+        p.appendChild(document.createTextNode(' · '));
+
+        var lien = document.createElement('a');
+        lien.className = 'lien-maj';
+        lien.href = '#';
+        lien.setAttribute('role', 'button');
+        lien.setAttribute('aria-label', 'Actualiser maintenant la liste des fichiers');
+        lien.addEventListener('click', function (e) {
+            e.preventDefault();
+            relancer(false);
+        });
+        var icone = document.createElement('span');
+        icone.className = 'lien-majrotation';
+        icone.textContent = '↻';
+        lien.appendChild(icone);
+        lien.appendChild(document.createTextNode(' maj'));
+        p.appendChild(lien);
+        p.appendChild(document.createTextNode(' — rafraîchissement auto toutes les ' + (maj.DelaiAuto / 60000) + ' min'));
+
+        maj.spanHorodatage = horodatage;
+        maj.spanCompte = compte;
+        return p;
+    }
+
+    async function afficher(fichiers, notifieNouveaux) {
+        renduRapide = !!(maj.signature && notifieNouveaux);
+        var vus = lireVus();
+        var retenus = fichiers.filter(function (f) {
+            return f.type === 'file' && /\.html$/i.test(f.name) && f.name !== 'index.html';
+        });
+
+        ecran.innerHTML = '';
+        var ancienneSignature = maj.signature;
+        var nouveaux = 0;
+        if (ancienneSignature) {
+            var anciensNoms = ancienneSignature.split('|');
+            retenus.forEach(function (f) {
+                if (anciensNoms.indexOf(f.name) === -1) { nouveaux++; }
+            });
+        }
+
+        var p1 = nouvelleLigne('prompt');
+        await typer(p1, '$ c2phi --ls', 12);
+
+        var pTitre = nouvelleLigne('titre');
+        await typer(pTitre, 'C2phi', 28);
+        if (curseur.parentNode) { curseur.parentNode.removeChild(curseur); }
+
+        creerLigneMaj(retenus.length);
+        await sleep(30);
+
+        if (nouveaux > 0) {
+            var pNouv = nouvelleLigne('maj-ok');
+            await typer(pNouv, '→ ' + nouveaux + ' nouveau' + (nouveaux > 1 ? 'x' : '') + ' fichier' + (nouveaux > 1 ? 's' : '') + ' depuis le dernier affichage.', 8);
+        }
+
+        var groupes = {};
+        retenus.forEach(function (f) {
+            var cle = extraireClasse(f.name);
+            if (!groupes[cle]) { groupes[cle] = []; }
+            groupes[cle].push(f);
+        });
+
+        var cles = Object.keys(groupes);
+
+        for (var g = 0; g < cles.length; g++) {
+            var cle = cles[g];
+            var construit = construireGroupe(cle, groupes[cle], vus);
+            ecran.appendChild(construit.section);
+
+            construit.section.classList.remove('caché');
+            await typer(construit.entete, '▸ ' + cle + ' (' + construit.nombre + ')', 24);
+
+            for (var i = 0; i < construit.items.length; i++) {
+                construit.items[i].li.classList.add('visible');
+                await sleep(18);
+            }
+            await sleep(35);
+        }
+        if (curseur.parentNode) { curseur.parentNode.removeChild(curseur); }
+
+        maj.signature = signatureListe(retenus);
+        renduRapide = false;
+    }
+
+    async function afficherErreur() {
+        var p1 = nouvelleLigne('prompt');
+        await typer(p1, '$ c2phi --ls', 12);
+        var p2 = nouvelleLigne('erreur');
+        await typer(p2, 'erreur : impossible de charger la liste des fichiers.', 16);
+        var p3 = nouvelleLigne('commentaire');
+        await typer(p3, "# limite de l'API GitHub peut-être atteinte — rechargez la page dans quelques instants.", 7);
+        if (curseur.parentNode) { curseur.parentNode.removeChild(curseur); }
+    }
+
+    function relancer(silencieux) {
+        if (maj.enCours) { return; }
+        maj.enCours = true;
+        fetch(urlApi)
+            .then(function (reponse) {
+                if (!reponse.ok) throw new Error('API GitHub');
+                return reponse.json();
+            })
+            .then(function (fichiers) {
+                maj.enCours = false;
+                maj.derniere = Date.now();
+                var tableau = Array.isArray(fichiers) ? fichiers : [];
+                var retenus = tableau.filter(function (f) {
+                    return f.type === 'file' && /\.html$/i.test(f.name) && f.name !== 'index.html';
+                });
+                var signature = signatureListe(retenus);
+                if (signature !== maj.signature) {
+                    afficher(tableau, signature !== null && !!maj.signature);
+                } else if (silencieux && maj.spanHorodatage) {
+                    maj.spanHorodatage.textContent = formaterDate(new Date());
+                }
+            })
+            .catch(function () {
+                maj.enCours = false;
+                if (!maj.signature) { afficherErreur(); }
+            });
+    }
+
+    setInterval(function () { relancer(true); }, maj.DelaiAuto);
+    document.addEventListener('visibilitychange', function () {
+        if (document.visibilityState === 'visible' && maj.derniere && (Date.now() - maj.derniere) > (3 * 60 * 1000)) {
+            relancer(true);
+        }
+    });
+    window.addEventListener('online', function () { relancer(true); });
+
+    relancer(false);
+})();
+</script>
+</body>
+</html>
