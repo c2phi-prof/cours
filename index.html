@@ -1,254 +1,122 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="fr">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>C2phi</title>
-<meta name="description" content="C2phi — cours et révisions de philosophie">
-<meta name="theme-color" content="#ffffff">
-<link rel="icon" type="image/png" href="favicon.png">
-<link rel="apple-touch-icon" href="favicon.png">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TG — Liberté et aliénation chez Marx</title>
 <style>
-* { box-sizing: border-box; }
-body {
-  font-family: "Courier New", Courier, ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
-  background: #ffffff;
-  color: #111111;
-  max-width: 860px;
-  margin: 2rem auto;
-  padding: 0 1rem;
-  line-height: 1.5;
-}
-::selection { background: #111111; color: #ffffff; }
-#ecran { white-space: normal; }
-p.ligne { margin: 0 0 .15rem 0; white-space: pre-wrap; }
-.prompt { color: #555555; }
-.titre { font-weight: bold; font-size: 1.25rem; }
-.commentaire { color: #777777; }
-.erreur { color: #8b0000; }
-.curseur { display: inline-block; width: .6em; background: #111111; color: #111111; animation: clignote 1s steps(1) infinite; margin-left: 1px; }
-@keyframes clignote { 50% { opacity: 0; } }
-section.groupe { margin: 1.2rem 0 .6rem 0; }
-section.groupe.caché .entete-groupe, section.groupe.caché .barre-filtre, section.groupe.caché li { display: none; }
-.entete-groupe { font-weight: bold; margin-bottom: .2rem; }
-.barre-filtre {
-  font-size: .78rem; color: #888888;
-  margin: .15rem 0 .25rem 1.4rem;
-  opacity: .55; transition: opacity .25s;
-}
-.barre-filtre:focus-within, .barre-filtre:hover { opacity: 1; }
-.barre-filtre input.filtre {
-  font-family: inherit; font-size: .9rem;
-  border: none; border-bottom: 1px solid #cccccc;
-  background: transparent; padding: .1rem .2rem; width: 9rem; outline: none;
-  color: #111111;
-}
-.barre-filtre input.filtre:focus { border-bottom-color: #111111; }
-ul.liste-cours { list-style: none; padding: 0; margin: 0 0 0 1.4rem; }
-ul.liste-cours li {
-  margin: .12rem 0; opacity: 0; visibility: hidden;
-}
-ul.liste-cours li.visible { opacity: 1; visibility: visible; transition: opacity .18s; }
-ul.liste-cours li.masque { display: none; }
-.egal { color: #bbbbbb; user-select: none; }
-li.item a { color: #111111; text-decoration: none; border-bottom: 1px solid #e0e0e0; }
-li.item a:hover { border-bottom-color: #111111; }
-li.item.vu { opacity: .55; }
-li.item.vu a { color: #777777; }
-li.item.vu.visible { opacity: .55; }
-@media (prefers-reduced-motion: reduce) { .curseur { animation: none; } }
+:root{--bg:#ffffff;--card:#fafafa;--ink:#333333;--acc:#006400;--acc2:#4a9d4a;--ok:#2e7d32;--bad:#b03030;--line:#c9c9c9;--font:Arial,Helvetica,'Segoe UI',sans-serif;--shadow:rgba(0,0,0,.08);--papier:#ffffff;--taille-corps:18px;--interligne:1.72}
+body[data-theme="moderne"]{--bg:#eaf2fb;--card:#ffffff;--ink:#1b2a3a;--acc:#1c5d99;--acc2:#3f8fd6;--ok:#1e7a46;--bad:#c0392b;--line:#c4d4e8;--font:Verdana,Geneva,sans-serif;--shadow:rgba(28,93,153,.15);--papier:#ffffff}
+body[data-theme="manuscrit"]{--bg:#f0e6d6;--card:#fbf3e4;--ink:#3b2f1e;--acc:#7a5b1e;--acc2:#a3823a;--ok:#4e6b2f;--bad:#8f3a2a;--line:#d9c9a8;--font:Georgia,'Times New Roman',serif;--shadow:rgba(90,70,40,.15);--papier:#fdf9f0}
+body[data-theme="nuit"]{--bg:#12141a;--card:#1c1f28;--ink:#e8e6e0;--acc:#7fa8ff;--acc2:#a8c2ff;--ok:#7fd695;--bad:#ff8a8a;--line:#343947;--font:'Segoe UI',Helvetica,Arial,sans-serif;--shadow:rgba(0,0,0,.5);--papier:#181b23}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:var(--font);background:var(--bg);color:var(--ink);transition:background .3s,color .3s}
+#plateau{display:flex;width:100%;min-height:100vh;align-items:stretch}
+#feuille{position:relative;flex:1 1 56%;min-width:0;min-height:100vh;background:var(--papier);border-right:1px solid var(--line);padding:42px 54px 72px 58px;cursor:text}
+#regle-h{position:absolute;top:10px;left:58px;right:126px;height:16px;color:var(--ink);opacity:.32;user-select:none;pointer-events:none}
+#editeur-km{outline:none;min-height:58vh;font-size:var(--taille-corps);line-height:var(--interligne);white-space:pre-wrap;word-wrap:break-word}
+#editeur-km p{margin:0 0 .9em;text-indent:1.25em}
+#bloc-titre-sujet{margin-bottom:16px;position:relative}
+.btn-titre-pleine-ligne{width:100%;display:flex;align-items:center;justify-content:space-between;gap:16px;background:var(--card);border:1px solid var(--line);border-left:4px solid var(--acc);border-radius:6px;padding:14px 18px;text-align:left;cursor:pointer;font-family:inherit;color:var(--ink)}
+.btn-titre-pleine-ligne:hover{border-color:var(--acc)}
+.texte-titre{font-size:1.30em;font-weight:700;line-height:1.3;color:var(--acc);flex:1}
+.fleche-titre{font-size:1.1em;color:var(--acc);font-weight:700}
+#liste-sujets-generes{position:absolute;top:calc(100% + 4px);left:0;right:0;z-index:35;background:var(--papier);border:1px solid var(--line);border-radius:6px;box-shadow:0 10px 28px var(--shadow);max-height:62vh;overflow-y:auto}
+#liste-sujets-generes[hidden]{display:none}
+.option-sujet{width:100%;text-align:left;background:transparent;border:none;border-bottom:1px solid var(--line);padding:12px 16px;cursor:pointer;font-family:inherit;color:var(--ink);display:block}
+.option-sujet:last-child{border-bottom:none}
+.option-sujet:hover{background:color-mix(in srgb,var(--acc) 8%,var(--papier))}
+.option-sujet.actif{background:color-mix(in srgb,var(--acc) 12%,var(--papier));border-left:4px solid var(--acc)}
+.intitule-sujet{font-size:1em;font-weight:700;line-height:1.35;display:block}
+details.extrait-doc{background:var(--card);border:1px solid var(--line);border-left:3px solid var(--acc);padding:10px 14px;margin-bottom:22px;border-radius:0 5px 5px 0;font-size:.88em;line-height:1.55}
+details.extrait-doc>summary{cursor:pointer;font-weight:700;color:var(--acc);user-select:none}
+details.extrait-doc details{margin:12px 0 4px;padding-left:10px;border-left:2px solid var(--line)}
+details.extrait-doc details summary{font-weight:700;color:var(--acc2);cursor:pointer}
+details.extrait-doc blockquote{font-style:italic;margin:8px 0}
+#volet-droit{flex:1 1 44%;min-width:340px;min-height:100vh;background:var(--bg);padding:18px 22px 48px;display:flex;flex-direction:column;gap:16px}
+.entete-volet-droit{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
+#cascade-liste{display:flex;flex-direction:column;gap:7px;max-height:240px;overflow-y:auto}
+.strate-tags{display:flex;flex-wrap:wrap;gap:6px;transition:opacity .35s ease}
+.tag-nuage{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:5px 11px;font-family:var(--font);font-size:.86em;color:var(--ink);cursor:pointer;touch-action:manipulation}
+.tag-nuage:hover{border-color:var(--acc)}
+.tag-nuage.selectionne{background:var(--acc);color:#fff;border-color:var(--acc);font-weight:700}
+.actions-cascade{display:flex;gap:8px;margin-top:10px}
+.actions-cascade button{background:var(--acc);color:#fff;border:none;border-radius:6px;padding:7px 14px;font-family:var(--font);font-size:.85em;font-weight:700;cursor:pointer}
+.actions-cascade button.ghost{background:var(--card);color:var(--ink);border:1px solid var(--line)}
+button.burgerbtn{width:38px;height:38px;border-radius:9px;background:var(--card);color:var(--ink);border:1px solid var(--line);font:700 1.15em/1 var(--font);cursor:pointer;box-shadow:0 1px 4px var(--shadow)}
+.card{background:var(--card);border:1px solid var(--line);border-radius:6px;padding:20px 22px 22px;box-shadow:0 3px 10px var(--shadow);animation:cardIn .45s ease}
+@keyframes cardIn{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+.qtext{font-size:1.08em;margin:0 0 14px;line-height:1.5}
+label.opt,div.opt{display:block;border:1px solid var(--line);border-radius:5px;padding:10px 12px;margin:8px 0;cursor:pointer;line-height:1.4}
+label.opt.sel{border-color:var(--acc);background:color-mix(in srgb,var(--acc) 10%,var(--card))}
+label.opt.good,div.opt.good{border-color:var(--ok);background:color-mix(in srgb,var(--ok) 15%,var(--card))}
+label.opt.bad,div.opt.bad{border-color:var(--bad);background:color-mix(in srgb,var(--bad) 12%,var(--card))}
+input[type=text]{font-family:var(--font);font-size:1em;color:var(--ink);border:1px solid var(--line);border-radius:7px;padding:9px 11px;width:100%;background:var(--card)}
+.mini{font-size:.82em;opacity:.7}
+.mini-tag{font-size:.74em;padding:2px 7px;border-radius:10px;background:var(--card);border:1px solid var(--line);color:var(--ink);opacity:.85;margin-right:4px}
+select.pairsel{width:100%;margin:6px 0;padding:9px;border:1px solid var(--line);border-radius:7px;background:var(--card);color:var(--ink);font-family:var(--font)}
+.card button{font-family:var(--font);font-size:1em;font-weight:bold;background:var(--acc);color:#fff;border:none;border-radius:6px;padding:11px 24px;cursor:pointer;margin-top:14px}
+.card button.ghost{background:var(--ink)}
+.fb{margin-top:14px;padding:12px 14px;border-radius:9px;line-height:1.5;font-size:.95em}
+.fb.ok{background:color-mix(in srgb,var(--ok) 14%,var(--card));border:1px solid var(--ok)}
+.fb.no{background:color-mix(in srgb,var(--bad) 12%,var(--card));border:1px solid var(--bad)}
+.score{font-size:1.25em;text-align:center;margin:10px 0}
+.score .big{font-size:2em;color:var(--acc);display:block}
+.bar{height:12px;background:var(--line);border-radius:6px;overflow:hidden;margin:14px 0}
+.bar>div{height:100%;background:var(--ok);transition:width 1.1s cubic-bezier(.25,.9,.3,1)}
+.rq{border:1px solid var(--line);border-radius:10px;padding:14px;margin:14px 0;background:color-mix(in srgb,var(--acc) 3%,var(--card))}
+.jauge-segments{display:flex;align-items:center;gap:4px;width:100%;height:7px;margin-bottom:16px}
+.segment-prog{flex:1;height:100%;border-radius:4px;background:var(--line);cursor:pointer;transition:background .3s}
+.segment-prog.fait-ok{background:var(--ok)}
+.segment-prog.fait-ko{background:var(--bad)}
+.segment-prog.courant{background:var(--acc)}
+.menubox{background:var(--card);color:var(--ink);border:1px solid var(--line);border-radius:14px;min-width:250px;padding:10px;box-shadow:0 12px 40px rgba(0,0,0,.4);font-family:var(--font)}
+.menubox button{display:block;width:100%;background:transparent;color:var(--ink);border:none;border-radius:8px;padding:10px 12px;font-size:.92em;text-align:left;cursor:pointer}
+.menubox button:hover{background:color-mix(in srgb,var(--acc) 10%,var(--card));color:var(--acc)}
+.menubox .mtitle{font-weight:700;padding:8px 12px 6px;border-bottom:1px solid var(--line);margin-bottom:6px}
+@media (max-width:960px){#plateau{flex-direction:column}#feuille,#volet-droit{flex:none;width:100%;min-height:auto}#feuille{border-right:none;border-bottom:1px solid var(--line);padding:36px 24px 48px}}
 </style>
 </head>
-<body>
-<div id="ecran"></div>
-<noscript><p>Activez JavaScript pour afficher la liste des fichiers.</p></noscript>
+<body data-theme="pronote">
+<div id="plateau">
+  <div id="feuille">
+    <div id="regle-h"></div>
+    <div id="bloc-titre-sujet">
+      <button type="button" class="btn-titre-pleine-ligne" id="btn-ouvrir-sujets">
+        <span class="texte-titre" id="titre-sujet-actif"></span><span class="fleche-titre">&#9662;</span>
+      </button>
+      <div id="liste-sujets-generes" hidden></div>
+    </div>
+    <details class="extrait-doc" id="extrait-container"></details>
+    <div id="editeur-km" contenteditable="true" spellcheck="true"></div>
+  </div>
+  <div id="volet-droit">
+    <div class="entete-volet-droit">
+      <strong style="color:var(--acc)">TG — Marx : matérialisme historique et aliénation</strong>
+      <button type="button" class="burgerbtn" id="btn-hamburger">&#9776;</button>
+    </div>
+    <div id="zone-cascade-tags">
+      <p class="mini">Mots-clés repérés dans votre rédaction — cliquez pour sélectionner, puis lancez le questionnaire ciblé :</p>
+      <div id="cascade-liste"></div>
+      <div class="actions-cascade" id="actions-cascade">
+        <button type="button" id="btn-selectionner-tags">Sélectionner</button>
+        <button type="button" class="ghost" id="btn-deselectionner-tags">Désélectionner</button>
+      </div>
+    </div>
+    <div id="zone-qcm-wrapper" hidden><div class="card" id="quizcard"></div></div>
+  </div>
+</div>
+<input type="file" id="fichier-import" accept="application/json" hidden>
 <script>
-(function () {
-    var ecran = document.getElementById('ecran');
-    var CLE_VUS = 'c2phi-fichiers-vus';
-    var instant = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    var curseur = document.createElement('span');
-    curseur.className = 'curseur';
-    curseur.textContent = '█';
-
-    function proprietaireEtDepot() {
-        if (location.hostname.endsWith('.github.io')) {
-            var proprietaire = location.hostname.replace('.github.io', '');
-            return { owner: proprietaire, repo: 'cours' };
-        }
-        return { owner: 'c2phi-prof', repo: 'cours' };
-    }
-
-    var ref = proprietaireEtDepot();
-    var urlApi = 'https://api.github.com/repos/' + ref.owner + '/' + ref.repo + '/contents/?ref=HEAD';
-
-    function lireVus() {
-        try { return JSON.parse(localStorage.getItem(CLE_VUS)) || {}; }
-        catch (e) { return {}; }
-    }
-
-    function marquer(nom) {
-        var vus = lireVus();
-        vus[nom] = new Date().toISOString();
-        try { localStorage.setItem(CLE_VUS, JSON.stringify(vus)); } catch (e) {}
-    }
-
-    function sleep(ms) {
-        return new Promise(function (res) { setTimeout(res, instant ? 0 : ms); });
-    }
-
-    function decouper(texte) {
-        return texte.split(' ').filter(function (mot) { return mot !== ''; });
-    }
-
-    async function typer(el, texte, delaiBase) {
-        el.appendChild(curseur);
-        var morceaux = instant ? [texte] : decouper(texte);
-        for (var i = 0; i < morceaux.length; i++) {
-            if (i > 0) { el.insertBefore(document.createTextNode(' '), curseur); }
-            el.insertBefore(document.createTextNode(morceaux[i]), curseur);
-            await sleep((delaiBase || 18) + Math.random() * (delaiBase || 18));
-        }
-        await sleep(50);
-    }
-
-    function nouvelleLigne(classes) {
-        var p = document.createElement('p');
-        p.className = 'ligne' + (classes ? ' ' + classes : '');
-        ecran.appendChild(p);
-        return p;
-    }
-
-    function normaliser(s) {
-        return (s || '').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
-    }
-
-    function extraireClasse(nomFichier) {
-        var base = nomFichier.replace(/\.html$/i, '');
-        var m = base.match(/^(THLP\d|TG\d?|\dG\d?)(?:\d+)?/i);
-        return m ? m[1].toUpperCase() : 'AUTRES';
-    }
-
-    function construireGroupe(classe, fichiers, vus) {
-        var section = document.createElement('section');
-        section.className = 'groupe caché';
-        section.setAttribute('data-classe', classe);
-
-        var entete = document.createElement('div');
-        entete.className = 'entete-groupe';
-
-        var barre = document.createElement('div');
-        barre.className = 'barre-filtre';
-
-        var filtre = document.createElement('input');
-        filtre.type = 'text';
-        filtre.className = 'filtre';
-        filtre.placeholder = 'filtrer ' + classe + '…';
-        filtre.setAttribute('aria-label', 'Filtrer les fichiers de ' + classe);
-        barre.appendChild(filtre);
-
-        var ul = document.createElement('ul');
-        ul.className = 'liste-cours';
-
-        var items = [];
-        fichiers.forEach(function (f) {
-            var dejaVu = !!vus[f.name];
-
-            var li = document.createElement('li');
-            li.className = 'item' + (dejaVu ? ' vu' : '');
-            li.setAttribute('data-nom-normalise', normaliser(f.name));
-
-            var egal = document.createElement('span');
-            egal.className = 'egal';
-            egal.textContent = '├── ';
-
-            var a = document.createElement('a');
-            a.href = encodeURI(f.name);
-            a.textContent = f.name.replace(/\.html$/i, '');
-            a.setAttribute('data-fichier', f.name);
-            a.addEventListener('click', function () { marquer(f.name); });
-
-            li.appendChild(egal);
-            li.appendChild(a);
-
-            ul.appendChild(li);
-            items.push({ li: li, nom: f.name });
-        });
-
-        items[items.length - 1].li.querySelector('.egal').textContent = '└── ';
-
-        filtre.addEventListener('input', function () {
-            var q = normaliser(filtre.value.trim());
-            items.forEach(function (it) {
-                it.li.classList.toggle('masque', !!q && it.li.getAttribute('data-nom-normalise').indexOf(q) === -1);
-            });
-        });
-
-        section.appendChild(entete);
-        section.appendChild(barre);
-        section.appendChild(ul);
-        return { section: section, entete: entete, items: items, nombre: fichiers.length };
-    }
-
-    async function afficher(fichiers) {
-        var vus = lireVus();
-        var retenus = fichiers.filter(function (f) {
-            return f.type === 'file' && /\.html$/i.test(f.name) && f.name !== 'index.html';
-        });
-
-        var p1 = nouvelleLigne('prompt');
-        await typer(p1, '$ c2phi --ls', 12);
-
-        var pTitre = nouvelleLigne('titre');
-        await typer(pTitre, 'C2phi', 28);
-        if (curseur.parentNode) { curseur.parentNode.removeChild(curseur); }
-
-        var groupes = {};
-        retenus.forEach(function (f) {
-            var cle = extraireClasse(f.name);
-            if (!groupes[cle]) { groupes[cle] = []; }
-            groupes[cle].push(f);
-        });
-
-        var cles = Object.keys(groupes);
-
-        for (var g = 0; g < cles.length; g++) {
-            var cle = cles[g];
-            var construit = construireGroupe(cle, groupes[cle], vus);
-            ecran.appendChild(construit.section);
-
-            construit.section.classList.remove('caché');
-            await typer(construit.entete, '▸ ' + cle + ' (' + construit.nombre + ')', 24);
-
-            for (var i = 0; i < construit.items.length; i++) {
-                construit.items[i].li.classList.add('visible');
-                await sleep(18);
-            }
-            await sleep(35);
-        }
-        if (curseur.parentNode) { curseur.parentNode.removeChild(curseur); }
-    }
-
-    async function afficherErreur() {
-        var p1 = nouvelleLigne('prompt');
-        await typer(p1, '$ c2phi --ls', 12);
-        var p2 = nouvelleLigne('erreur');
-        await typer(p2, 'erreur : impossible de charger la liste des fichiers.', 16);
-        var p3 = nouvelleLigne('commentaire');
-        await typer(p3, "# limite de l'API GitHub peut-être atteinte — rechargez la page dans quelques instants.", 7);
-        if (curseur.parentNode) { curseur.parentNode.removeChild(curseur); }
-    }
-
-    fetch(urlApi)
-        .then(function (reponse) {
-            if (!reponse.ok) throw new Error('API GitHub');
-            return reponse.json();
-        })
-        .then(function (fichiers) {
-            afficher(Array.isArray(fichiers) ? fichiers : []);
-        })
-        .catch(function () { afficherErreur(); });
-})();
-</script>
-</body>
-</html>
+"use strict";
+var CLE_STORAGE = "tg-marx-materialisme-v1";
+var TEXTES = [
+  { id:"t1", titre:"Texte 1 — L'être social détermine la conscience (Avant-propos, 1859)",
+    contenu:"Dans la production sociale de leur existence, les hommes entrent en des rapports déterminés, nécessaires, indépendants de leur volonté : rapports de production qui correspondent à un degré déterminé du développement de leurs forces productives matérielles. L'ensemble de ces rapports de production constitue la structure économique de la société, la base réelle sur laquelle s'élève une superstructure juridique et politique et à laquelle correspondent des formes de conscience sociale déterminées. À un certain stade de leur développement, les forces productives matérielles de la société entrent en collision avec les rapports de production existants, ou — ce qui n'en est que l'expression juridique — avec les rapports de propriété au sein desquels elles s'étaient mues jusqu'alors. De formes de développement des forces productives qu'ils étaient, ces rapports se changent en entraves. Alors commence une ère de révolution sociale. Ce n'est pas la conscience des hommes qui détermine leur être ; c'est inversement leur être social qui détermine leur conscience." },
+  { id:"t2", titre:"Texte 2 — L'aliénation du travailleur (Manuscrits, 1844)",
+    contenu:"En quoi consiste l'aliénation du travail ? D'abord dans le fait que le travail est extérieur à l'ouvrier, c'est-à-dire qu'il n'appartient pas à son essence, que donc, dans le travail, celui-ci ne s'affirme pas, mais se nie, ne se sent pas à l'aise, mais malheureux, ne déploie pas une libre activité physique et intellectuelle, mais mortifie son corps et ruine son esprit. En conséquence, l'ouvrier n'a le sentiment d'être auprès de lui-même qu'en dehors du travail, et, dans le travail, il se sent en dehors de soi. Il est comme chez lui quand il ne travaille pas, et quand il travaille, il ne se sent pas chez lui. Son travail n'est donc pas volontaire, mais contraint ; c'est du travail forcé. Il n'est pas la satisfaction d'un besoin, mais seulement un moyen de satisfaire des besoins en dehors du travail. Le caractère étranger du travail apparaît nettement dans le fait que, dès qu'il n'existe pas de contrainte physique ou autre, le travail est fui comme la peste." },
+  { id:"t3", titre:"Texte 3 — Le moyen de travail (Le Capital, livre I)",
+    contenu:"Le moyen de travail est une chose ou un ensemble de choses que l'homme interpose entre lui et l'objet de son travail comme conducteurs de son action. Il se sert des propriétés mécaniques, physiques, chimiques de certaines choses pour les faire agir comme forces sur d'autres choses, conformément à son but. Si nous laissons de côté la prise de possession de subsistances toutes trouvées — la cueillette des fruits par exemple, où ce sont les organes de l'homme qui lui servent d'instrument —, nous voyons que le travailleur s'empare immédiatement, non pas de l'objet, mais du moyen de son travail. Il convertit ainsi des choses extérieures en organes de sa propre activité, organes qu'il ajoute aux siens de manière à allonger, en dépit de la Bible, sa stature naturelle. Comme la terre est son magasin de vivres primitif, elle est aussi l'arsenal primitif de ses moyens de travail. L'emploi et la création de moyens de travail, quoiqu'ils se trouvent en germe chez quelques espèces animales, caractérisent éminemment le travail humain." },
+  { id:"t4", titre:"Texte 4 — L'homme, animal social (Grundrisse)",
+    contenu:"L'homme est, au sens le plus littéral, un zôon politikon, non seulement un animal sociable, mais un animal qui ne peut se constituer comme individu singulier que dans la société. La production réalisée en dehors de la société par cet individu singulier et singularisé — fait exceptionnel qui peut bien arriver à un civilisé transporté par hasard dans un lieu désert et qui possède déjà en puissance les forces propres à la société — est chose aussi absurde que serait le développement du langage sans la présence d'individus vivant et parlant ensemble." }
+];
