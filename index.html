@@ -1,87 +1,3 @@
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>C2phi</title>
-<meta name="description" content="C2phi — cours et révisions de philosophie">
-<meta name="theme-color" content="#ffffff">
-<link rel="icon" type="image/png" href="favicon.png">
-<link rel="apple-touch-icon" href="favicon.png">
-<style>
-* { box-sizing: border-box; }
-body {
-  font-family: "Courier New", Courier, ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
-  background: #ffffff;
-  color: #111111;
-  max-width: 860px;
-  margin: 2rem auto;
-  padding: 0 1rem;
-  line-height: 1.5;
-}
-::selection { background: #111111; color: #ffffff; }
-#ecran { white-space: normal; }
-p.ligne { margin: 0 0 .15rem 0; white-space: pre-wrap; }
-.prompt { color: #555555; }
-.titre { font-weight: bold; font-size: 1.25rem; }
-.sous-titre { font-size: 1rem; }
-.commentaire { color: #777777; }
-.erreur { color: #8b0000; }
-.curseur { display: inline-block; width: .6em; background: #111111; color: #111111; animation: clignote 1s steps(1) infinite; margin-left: 1px; }
-@keyframes clignote { 50% { opacity: 0; } }
-section.groupe { margin: 1.2rem 0 .6rem 0; }
-section.groupe.caché .entete-groupe, section.groupe.caché .barre-filtre, section.groupe.caché li { display: none; }
-.entete-groupe { font-weight: bold; margin-bottom: .2rem; }
-.barre-filtre {
-  font-size: .78rem; color: #888888;
-  margin: .15rem 0 .25rem 1.4rem;
-  display: flex; flex-wrap: wrap; gap: .5rem; align-items: center;
-  opacity: .55; transition: opacity .25s;
-}
-.barre-filtre:focus-within, .barre-filtre:hover { opacity: 1; }
-.barre-filtre input.filtre {
-  font-family: inherit; font-size: .9rem;
-  border: none; border-bottom: 1px solid #cccccc;
-  background: transparent; padding: .1rem .2rem; width: 9rem; outline: none;
-  color: #111111;
-}
-.barre-filtre input.filtre:focus { border-bottom-color: #111111; }
-.barre-filtre button {
-  font-family: inherit; font-size: .85rem;
-  background: transparent; color: #555555;
-  border: 1px solid #dddddd; border-radius: 2px;
-  padding: .05rem .45rem; cursor: pointer;
-}
-.barre-filtre button:hover { border-color: #111111; color: #111111; }
-.barre-filtre button:disabled { opacity: .4; cursor: default; border-color: #dddddd; color: #999999; }
-ul.liste-cours { list-style: none; padding: 0; margin: 0 0 0 1.4rem; }
-ul.liste-cours li {
-  margin: .12rem 0; opacity: 0; visibility: hidden;
-}
-ul.liste-cours li.visible { opacity: 1; visibility: visible; transition: opacity .18s; }
-ul.liste-cours li.masque { display: none; }
-.egal { color: #bbbbbb; user-select: none; }
-li.item label.case { margin-right: .35rem; cursor: pointer; color: #999999; }
-li.item input[type="checkbox"] { accent-color: #111111; vertical-align: -1px; }
-li.item a { color: #111111; text-decoration: none; border-bottom: 1px solid #e0e0e0; }
-li.item a:hover { border-bottom-color: #111111; }
-li.item.vu { opacity: .55; }
-li.item.vu a { color: #777777; }
-li.item.vu.visible { opacity: .55; }
-.vu-marque { color: #5d7a5d; font-size: .78rem; margin-left: .5rem; }
-p.mini { font-size: .8rem; color: #777777; margin-top: 1.2rem; white-space: pre-wrap; }
-button#bouton-zero {
-  font-family: inherit; background: #ffffff; color: #111111;
-  border: 1px solid #111111; padding: .45rem 1rem; cursor: pointer;
-  margin-top: .8rem;
-}
-button#bouton-zero:hover { background: #111111; color: #ffffff; }
-@media (prefers-reduced-motion: reduce) { .curseur { animation: none; } }
-</style>
-</head>
-<body>
-<div id="ecran"></div>
-<noscript><p>Activez JavaScript pour afficher la liste des fichiers.</p></noscript>
 <script>
 (function () {
     var ecran = document.getElementById('ecran');
@@ -121,20 +37,8 @@ button#bouton-zero:hover { background: #111111; color: #ffffff; }
         return new Promise(function (res) { setTimeout(res, instant ? 0 : ms); });
     }
 
-    function decouperMot(mot) {
-        if (mot.length > 5 && Math.random() < 0.35) {
-            var coupe = 1 + Math.floor(Math.random() * (mot.length - 1));
-            return [mot.slice(0, coupe), mot.slice(coupe)];
-        }
-        return [mot];
-    }
-
     function decouper(texte) {
-        var sortie = [];
-        texte.split(' ').forEach(function (mot) {
-            decouperMot(mot).forEach(function (partie) { sortie.push(partie); });
-        });
-        return sortie;
+        return texte.split(' ').filter(function (mot) { return mot !== ''; });
     }
 
     function deplacerCurseur(el) {
@@ -147,9 +51,9 @@ button#bouton-zero:hover { background: #111111; color: #ffffff; }
         for (var i = 0; i < morceaux.length; i++) {
             if (i > 0) { el.insertBefore(document.createTextNode(' '), curseur); }
             el.insertBefore(document.createTextNode(morceaux[i]), curseur);
-            await sleep((delaiBase || 45) + Math.random() * (delaiBase || 45));
+            await sleep((delaiBase || 18) + Math.random() * (delaiBase || 18));
         }
-        await sleep(120);
+        await sleep(50);
     }
 
     function nouvelleLigne(classes) {
@@ -315,16 +219,16 @@ button#bouton-zero:hover { background: #111111; color: #ffffff; }
         });
 
         var p1 = nouvelleLigne('prompt');
-        await typer(p1, '$ c2phi --ls', 30);
+        await typer(p1, '$ c2phi --ls', 12);
 
         var pTitre = nouvelleLigne('titre');
-        await typer(pTitre, 'C2phi', 70);
+        await typer(pTitre, 'C2phi', 28);
 
         var pSous = nouvelleLigne('sous-titre commentaire');
-        await typer(pSous, '# cours et révisions de philosophie — index du répertoire', 25);
+        await typer(pSous, '# cours et révisions de philosophie — index du répertoire', 10);
 
         var resume = nouvelleLigne('commentaire');
-        await typer(resume, '# ' + retenus.length + ' fichier(s) HTML trouvé(s) — groupés par classe', 20);
+        await typer(resume, '# ' + retenus.length + ' fichier(s) HTML trouvé(s) — groupés par classe', 8);
         deplacerCurseur(null);
         if (curseur.parentNode) { curseur.parentNode.removeChild(curseur); }
 
@@ -353,25 +257,25 @@ button#bouton-zero:hover { background: #111111; color: #ffffff; }
             var construit = construireGroupe(cle, fichiersG, vus);
             ecran.appendChild(construit.section);
 
-            await typerLigne('# classe ' + cle + ' · ' + fichiersG.length + ' fichier(s)', 'commentaire', 25);
+            await typerLigne('# classe ' + cle + ' · ' + fichiersG.length + ' fichier(s)', 'commentaire', 10);
 
             construit.section.classList.remove('caché');
-            await typer(construit.entete, '▸ ' + cle, 60);
+            await typer(construit.entete, '▸ ' + cle, 24);
 
             var egal2 = document.createTextNode('  [' + fichiersG.length + ' entrées]');
             construit.entete.appendChild(egal2);
 
             for (var i = 0; i < construit.items.length; i++) {
                 construit.items[i].li.classList.add('visible');
-                await sleep(45);
+                await sleep(18);
             }
-            await sleep(90);
+            await sleep(35);
         }
 
         var pFin1 = nouvelleLigne('mini');
-        await typer(pFin1, '# les fichiers consultés apparaissent estompés · cases à cocher pour une ouverture multiple', 18);
+        await typer(pFin1, '# les fichiers consultés apparaissent estompés · cases à cocher pour une ouverture multiple', 7);
         var pFin2 = nouvelleLigne('prompt');
-        await typer(pFin2, '$ reset --vus', 30);
+        await typer(pFin2, '$ reset --vus', 12);
         deplacerCurseur(null);
         if (curseur.parentNode) { curseur.parentNode.removeChild(curseur); }
 
@@ -387,11 +291,11 @@ button#bouton-zero:hover { background: #111111; color: #ffffff; }
 
     async function afficherErreur() {
         var p1 = nouvelleLigne('prompt');
-        await typer(p1, '$ c2phi --ls', 30);
+        await typer(p1, '$ c2phi --ls', 12);
         var p2 = nouvelleLigne('erreur');
-        await typer(p2, 'erreur : impossible de charger la liste des fichiers.', 40);
+        await typer(p2, 'erreur : impossible de charger la liste des fichiers.', 16);
         var p3 = nouvelleLigne('commentaire');
-        await typer(p3, "# limite de l'API GitHub peut-être atteinte — rechargez la page dans quelques instants.", 18);
+        await typer(p3, "# limite de l'API GitHub peut-être atteinte — rechargez la page dans quelques instants.", 7);
         deplacerCurseur(null);
         if (curseur.parentNode) { curseur.parentNode.removeChild(curseur); }
     }
@@ -407,5 +311,3 @@ button#bouton-zero:hover { background: #111111; color: #ffffff; }
         .catch(function () { afficherErreur(); });
 })();
 </script>
-</body>
-</html>
