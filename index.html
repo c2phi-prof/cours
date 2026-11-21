@@ -62,10 +62,33 @@ li.item.vu { opacity: .55; }
 li.item.vu a { color: #777777; }
 li.item.vu.visible { opacity: .55; }
 @media (prefers-reduced-motion: reduce) { .curseur { animation: none; } }
+/* ---- agenda ICS (calendrier semaine) ---- */
+#agenda { margin: 1.6rem 0 0 0; }
+#agenda .agenda-titre { font-weight: bold; margin: .2rem 0; }
+#agenda .agenda-nav { margin: .35rem 0 .2rem .1rem; user-select: none; }
+#agenda .agenda-nav a {
+  color: #111111; text-decoration: none;
+  border: 1px solid #cccccc; border-radius: 4px;
+  padding: 0 .45rem; margin-right: .3rem; cursor: pointer;
+}
+#agenda .agenda-nav a:hover { border-color: #111111; background: #f3f3f3; }
+#agenda .agenda-semaine { font-size: .82rem; color: #777777; margin-left: .4rem; }
+#agenda ul.agenda-jours { list-style: none; padding: 0; margin: .3rem 0 0 1.4rem; }
+#agenda ul.agenda-jours li.jour { margin: .45rem 0; }
+#agenda .jour-entete { font-weight: bold; }
+#agenda .jour-courant .jour-entete { text-decoration: underline; }
+#agenda ul.evt { list-style: none; padding: 0; margin: .15rem 0 0 1rem; }
+#agenda ul.evt li {
+  margin: .12rem 0; color: #333333;
+  border-left: 3px solid #bbbbbb; padding-left: .55rem;
+}
+#agenda .evt-horaire { color: #777777; }
+#agenda .agenda-vide { color: #999999; margin-left: 1.4rem; }
 </style>
 </head>
 <body>
 <div id="ecran"></div>
+<div id="agenda" hidden></div>
 <noscript><p>Activez JavaScript pour afficher la liste des fichiers.</p></noscript>
 <script>
 (function () {
@@ -359,6 +382,197 @@ li.item.vu.visible { opacity: .55; }
     window.addEventListener('online', function () { relancer(true); });
 
     relancer(false);
+
+    /* ==================================================
+       AGENDA ICS — calendrier semaine (fichier Edt.ics)
+       ================================================== */
+    (function () {
+        var AGENDA_URL = 'Edt.ics';
+        var CLE_CACHE = 'c2phi-agenda-ics';
+        var DELAI_CACHE = 6 * 60 * 60 * 1000;
+        var conteneur = document.getElementById('agenda');
+        var evenements = [];
+        var lundiCourant = null;
+
+        function lundiDe(date) {
+            var d = new Date(date.getFullYear(), date.getMonth(), date.getDate());
+            var ecart = (d.getDay() + 6) % 7;
+            d.setDate(d.getDate() - ecart);
+            return d;
+        }
+
+        function analyserDateICS(valeur) {
+            var m = valeur.match(/^(\d{4})(\d{2})(\d{2})T(\d{2})(\d{2})(\d{2})(Z?)$/);
+            if (!m) { return null; }
+            if (m[7] === 'Z') { return new Date(Date.UTC(+m[1], +m[2] - 1, +m[3], +m[4], +m[5], +m[6])); }
+            return new Date(+m[1], +m[2] - 1, +m[3], +m[4], +m[5], +m[6]);
+        }
+
+        function deplierLignes(texte) {
+            return texte.replace(/\r\n/g, '\n').replace(/\n[ \t]+/g, '');
+        }
+
+        function valProp(ligne) {
+            var i = ligne.indexOf(':');
+            return i === -1 ? '' : ligne.slice(i + 1);
+        }
+
+        function parserEvenements(texteBrut) {
+            var texte = deplierLignes(texteBrut);
+            var lignes = texte.split('\n');
+            var evts = [];
+            var courant = null;
+            lignes.forEach(function (ligne) {
+                ligne = ligne.trim();
+                if (ligne.indexOf('BEGIN:VEVENT') === 0) { courant = {}; }
+                else if (ligne.indexOf('END:VEVENT') === 0) {
+                    if (courant && courant.debut && courant.fin && courant.titre) { evts.push(courant); }
+                    courant = null;
+                } else if (courant) {
+                    var cle = ligne.split(':')[0].split(';')[0].toUpperCase();
+                    if (cle === 'SUMMARY') { courant.titre = valProp(ligne); }
+                    else if (cle === 'DTSTART') { courant.debut = analyserDateICS(valProp(ligne)); }
+                    else if (cle === 'DTEND') { courant.fin = analyserDateICS(valProp(ligne)); }
+                    else if (cle === 'LOCATION') { courant.lieu = valProp(ligne); }
+                    else if (cle === 'DESCRIPTION') { courant.desc = valProp(ligne).replace(/\\n/g, ' · '); }
+                }
+            });
+            return evts;
+        }
+
+        function nomJour(d) {
+            return ['lundi', 'mardi', 'mercredi', 'jeudi', 'vendredi', 'samedi', 'dimanche'][(d.getDay() + 6) % 7];
+        }
+
+        function deux(n) { return (n < 10 ? '0' : '') + n; }
+
+        function heure(d) { return deux(d.getHours()) + ':' + deux(d.getMinutes()); }
+
+        function afficherSemaine() {
+            var voyant = conteneur;
+            voyant.innerHTML = '';
+            voyant.hidden = false;
+
+            var dimanche = new Date(lundiCourant.getTime());
+            dimanche.setDate(dimanche.getDate() + 6);
+
+            var pTitre = document.createElement('p');
+            pTitre.className = 'ligne prompt';
+            pTitre.textContent = '$ c2phi --agenda --semaine';
+            voyant.appendChild(pTitre);
+
+            var pEntete = document.createElement('p');
+            pEntete.className = 'agenda-titre';
+            pEntete.textContent = 'Agenda';
+            voyant.appendChild(pEntete);
+
+            var nav = document.createElement('div');
+            nav.className = 'agenda-nav';
+            [['←', -7], ['aujourd\u2019hui', 0], ['→', 7]].forEach(function (btn) {
+                var a = document.createElement('a');
+                a.textContent = btn[0];
+                a.setAttribute('role', 'button');
+                a.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    if (btn[1] === 0) { lundiCourant = lundiDe(new Date()); }
+                    else { lundiCourant.setDate(lundiCourant.getDate() + btn[1]); }
+                    afficherSemaine();
+                });
+                nav.appendChild(a);
+            });
+            var lbl = document.createElement('span');
+            lbl.className = 'agenda-semaine';
+            lbl.textContent = 'semaine du ' + deux(lundiCourant.getDate()) + '/' + deux(lundiCourant.getMonth() + 1) + ' au '
+                + deux(dimanche.getDate()) + '/' + deux(dimanche.getMonth() + 1) + '/' + dimanche.getFullYear();
+            nav.appendChild(lbl);
+            voyant.appendChild(nav);
+
+            var ul = document.createElement('ul');
+            ul.className = 'agenda-jours';
+            var aujourdhui = lundiDe(new Date()).getTime() === lundiCourant.getTime();
+            var total = 0;
+
+            for (var i = 0; i < 7; i++) {
+                var jour = new Date(lundiCourant.getTime());
+                jour.setDate(jour.getDate() + i);
+                var lendemain = new Date(jour.getTime());
+                lendemain.setDate(lendemain.getDate() + 1);
+
+                var evtsJour = evenements.filter(function (e) {
+                    return e.debut.getTime() >= jour.getTime() && e.debut.getTime() < lendemain.getTime();
+                }).sort(function (a, b) { return a.debut - b.debut; });
+
+                if (evtsJour.length === 0) { continue; }
+                total += evtsJour.length;
+
+                var li = document.createElement('li');
+                li.className = 'jour' + (aujourdhui && jour.getDay() === new Date().getDay() ? ' jour-courant' : '');
+                var ent = document.createElement('div');
+                ent.className = 'jour-entete';
+                ent.textContent = '\u25b8 ' + nomJour(jour) + ' ' + deux(jour.getDate()) + '/' + deux(jour.getMonth() + 1);
+                li.appendChild(ent);
+
+                var ulE = document.createElement('ul');
+                ulE.className = 'evt';
+                evtsJour.forEach(function (e) {
+                    var liE = document.createElement('li');
+                    var h = document.createElement('span');
+                    h.className = 'evt-horaire';
+                    h.textContent = heure(e.debut) + '\u2013' + heure(e.fin) + ' ';
+                    liE.appendChild(h);
+                    liE.appendChild(document.createTextNode(e.titre + (e.lieu ? ' · ' + e.lieu : '') + (e.desc ? ' · ' + e.desc : '')));
+                    ulE.appendChild(liE);
+                });
+                li.appendChild(ulE);
+                ul.appendChild(li);
+            }
+
+            if (total === 0) {
+                var vide = document.createElement('p');
+                vide.className = 'agenda-vide';
+                vide.textContent = '( aucun cours prévu cette semaine )';
+                voyant.appendChild(vide);
+            } else {
+                voyant.appendChild(ul);
+            }
+        }
+
+        function demarrer(evts) {
+            evenements = evts;
+            lundiCourant = lundiDe(new Date());
+            afficherSemaine();
+        }
+
+        function lireCache() {
+            try {
+                var c = JSON.parse(localStorage.getItem(CLE_CACHE));
+                if (c && c.texte && (Date.now() - c.date) < DELAI_CACHE) { return c.texte; }
+            } catch (e) {}
+            return null;
+        }
+
+        function ecrireCache(texte) {
+            try { localStorage.setItem(CLE_CACHE, JSON.stringify({ texte: texte, date: Date.now() })); } catch (e) {}
+        }
+
+        function afficherMessage(texte) {
+            conteneur.hidden = false;
+            conteneur.innerHTML = '<p class="ligne commentaire"># agenda : ' + texte + '</p>';
+        }
+
+        fetch(AGENDA_URL, { cache: 'no-cache' })
+            .then(function (r) { if (!r.ok) { throw new Error('ics'); } return r.text(); })
+            .then(function (texte) {
+                ecrireCache(texte);
+                demarrer(parserEvenements(texte));
+            })
+            .catch(function () {
+                var texte = lireCache();
+                if (texte) { demarrer(parserEvenements(texte)); }
+                else { afficherMessage('Edt.ics introuvable — déposez le fichier à la racine du dépôt.'); }
+            });
+    })();
+
 })();
 </script>
 </body>
