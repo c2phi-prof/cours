@@ -191,4 +191,1850 @@ function genererSujetsDepuisQCM(baseQCM){
     }
   }
   return sujets;
+}const BASE_QCM_INITIALE = [
+  {
+    id: "m1",
+    categorie: "Matérialisme historique",
+    scenario: "Texte 1 — Structure et conscience",
+    type: "single",
+    name: "Selon l'Avant-propos de 1859, que sont les rapports de production ?",
+    options: [
+      { text: "Des rapports nécessaires, indépendants de la volonté des hommes, dans lesquels ils entrent en produisant leur existence (par exemple les rapports de propriété).", correct: true, feedback: "Les rapports de production sont la trame objective de la vie sociale : relations de propriété, d'exploitation, d'échange, que personne n'a choisies individuellement mais qui s'imposent à tous. Ils forment la structure économique — la base — sur laquelle reposent le droit, la politique et les formes de pensée d'une époque." },
+      { text: "Les relations d'amitié que les ouvriers tissent à l'usine.", correct: false, feedback: "" },
+      { text: "Des rapports purement juridiques, égaux et volontaires, régis par le seul commerce.", correct: false, feedback: "" },
+      { text: "Les idées que les hommes se font de l'économie.", correct: false, feedback: "" }
+    ]
+  },
+  {
+    id: "m2",
+    categorie: "Matérialisme historique",
+    scenario: "Texte 1 — Structure et conscience",
+    type: "single",
+    name: "Que signifie l'opposition entre base et superstructure ?",
+    options: [
+      { text: "L'économie réelle (base) fonde le droit, la politique et les formes de conscience (superstructure) : le juridique et l'idéologique sont comme un édifice élevé sur des fondations.", correct: true, feedback: "L'image est architecturale : changer la base (les rapports de production) finit par emporter la superstructure (lois, institutions, religions, philosophies). C'est pourquoi Marx analyse l'histoire à partir de l'économie : ce ne sont pas les idées qui mènent le monde, mais les conditions matérielles qui, en se transformant, transforment les idées." },
+      { text: "Le droit est au-dessus de l'économie et la commande souverainement.", correct: false, feedback: "" },
+      { text: "Base et superstructure sont deux mots pour la même réalité.", correct: false, feedback: "" },
+      { text: "La superstructure désigne ici le rez-de-chaussée des usines.", correct: false, feedback: "" }
+    ]
+  },
+  {
+    id: "m3",
+    categorie: "Matérialisme historique",
+    scenario: "Texte 1 — Structure et conscience",
+    type: "single",
+    name: "« Ce n'est pas la conscience des hommes qui détermine leur être ; c'est inversement leur être social qui détermine leur conscience. » Que renverse cette formule ?",
+    options: [
+      { text: "Le renversement matérialiste de l'idéalisme (hérité de Hegel) : la pensée n'est plus le principe premier de l'histoire, mais l'expression de conditions sociales et matérielles.", correct: true, feedback: "Formule-cardinal du matérialisme historique : pour Hegel, l'histoire est le déploiement de l'Esprit ; pour Marx, les idées dominantes sont les idées de la classe dominante — elles expriment la position sociale de ceux qui les énoncent. Expliquer la conscience par l'être social, et non plus l'être par la conscience : c'est le geste matérialiste." },
+      { text: "Elle renverse simplement le sens de lecture d'un texte juridique.", correct: false, feedback: "" },
+      { text: "Elle énonce que la conscience est immuable et que le social change sans cause.", correct: false, feedback: "" },
+      { text: "Elle affirme qu'aucune connaissance n'est possible, comme chez les sceptiques.", correct: false, feedback: "" }
+    ]
+  },
+  {
+    id: "m4",
+    categorie: "Matérialisme historique",
+    scenario: "Texte 1 — Structure et conscience",
+    type: "single",
+    name: "À quelles conditions commence une ère de révolution sociale, selon le Texte 1 ?",
+    options: [
+      { text: "Quand les rapports de production, de formes de développement des forces productives qu'ils étaient, se changent en entraves : quand le cadre (propriété, institutions) bloque le développement matériel.", correct: true, feedback: "La révolution n'est pas un caprice : elle est la conséquence objective d'une contradiction entre le dynamisme des forces productives et la raideur des rapports de production (exprimés juridiquement en rapports de propriété). Une époque sociale ne disparaît jamais avant que se soient développées toutes les forces productives qu'elle pouvait contenir." },
+      { text: "Quand une idée nouvelle convainc l'ensemble des citoyens.", correct: false, feedback: "" },
+      { text: "Quand la superstructure s'effondre seule, sans cause économique.", correct: false, feedback: "" },
+      { text: "Quand les forces productives sont volontairement détruites.", correct: false, feedback: "" }
+    ]
+  },
+  {
+    id: "m5",
+    categorie: "Matérialisme historique",
+    scenario: "Texte 1 — Structure et conscience",
+    type: "short",
+    name: "Quelle formule de six mots condense le matérialisme historique dans le Texte 1 (être / conscience) ?",
+    answers: ["l'être social détermine la conscience","l être social determine la conscience"],
+    feedback: "« Ce n'est pas la conscience des hommes qui détermine leur être ; c'est inversement leur être social qui détermine leur conscience » : six mots suffisent à renverser l'idéalisme — l'être social d'abord, la conscience ensuite."
+  },
+  {
+    id: "a1",
+    categorie: "Aliénation",
+    scenario: "Texte 2 — L'aliénation du travail",
+    type: "single",
+    name: "Que signifie précisément que le travail est extérieur à l'ouvrier (Texte 2) ?",
+    options: [
+      { text: "Le travail n'appartient pas à son essence : dans le travail l'ouvrier ne s'affirme pas mais se nie, ne déploie pas une libre activité mais mortifie son corps et ruine son esprit.", correct: true, feedback: "« Extérieur » ne veut pas dire géographiquement au-dehors, mais étranger à l'essence humaine : ce qui devait être l'actualisation de l'homme (la libre activité) devient sa négation. Le repère du programme essentiel / accidentel s'applique : dans le mode de production capitaliste, le travail est accidentel par rapport à l'essence qu'il devrait réaliser." },
+      { text: "L'usine est toujours située à la périphérie de la ville.", correct: false, feedback: "" },
+      { text: "Le travail s'accomplit uniquement en plein air, à l'extérieur des bâtiments.", correct: false, feedback: "" },
+      { text: "L'ouvrier travaille attaché à l'extérieur de la machine.", correct: false, feedback: "" }
+    ]
+  },
+  {
+    id: "a2",
+    categorie: "Aliénation",
+    scenario: "Texte 2 — L'aliénation du travail",
+    type: "single",
+    name: "Pourquoi le travail est-il fui comme la peste dès qu'il n'existe pas de contrainte ?",
+    options: [
+      { text: "Parce que ce travail est contraint, forcé : il n'est pas la satisfaction d'un besoin mais un simple moyen de satisfaire des besoins extérieurs à lui ; la fuite spontanée révèle son caractère étranger.", correct: true, feedback: "Test empirique de l'aliénation : l'attitude de fuite quand la contrainte disparaît. Si le travail réalisait l'essence humaine, on ne le fuirait pas ; la fuite est le symptôme de la séparation entre le travailleur et son activité — l'activité ne lui appartient plus." },
+      { text: "Parce que les ouvriers sont naturellement paresseux et indisciplinés.", correct: false, feedback: "" },
+      { text: "Parce que la peste sévissait régulièrement dans les ateliers au XIXe siècle.", correct: false, feedback: "" },
+      { text: "Parce que le salaire n'est versé que les jours de congé.", correct: false, feedback: "" }
+    ]
+  },
+  {
+    id: "a3",
+    categorie: "Aliénation",
+    scenario: "Texte 2 — L'aliénation du travail",
+    type: "single",
+    name: "« Il est comme chez lui quand il ne travaille pas, et quand il travaille, il ne se sent pas chez lui. » Quel paradoxe cette formule met-elle en évidence ?",
+    options: [
+      { text: "Dans ses fonctions animales (manger, boire, procréer), l'homme se sent libre ; dans ses fonctions proprement humaines (le travail), il se sent ratatiné et esclave : l'aliénation inverse l'humain et l'animal chez l'homme.", correct: true, feedback: "Le paradoxe est le renversement du propre de l'homme : ce qui est spécifiquement humain (produire librement) est vécu comme servitude, ce qui est pur fonctionnement biologique est vécu comme liberté. L'aliénation du travail est donc aussi une aliénation de l'espèce : l'homme se reconnaît moins dans ce qui le définit." },
+      { text: "L'ouvrier possède deux maisons et alterne entre elles selon les jours.", correct: false, feedback: "" },
+      { text: "Le travail procure un logement mais pas le week-end.", correct: false, feedback: "" },
+      { text: "L'homme est chez lui partout, même au travail.", correct: false, feedback: "" }
+    ]
+  },
+  {
+    id: "a4",
+    categorie: "Aliénation",
+    scenario: "Texte 2 — L'aliénation du travail",
+    type: "short",
+    name: "Quel repère du programme le Texte 2 mobilise-t-il, quand Marx écrit que le travail n'appartient pas à l'essence de l'ouvrier ?",
+    answers: ["essentiel / accidentel","essentiel/accidentel","l'essentiel et l'accidentel","essentiel accidentel"],
+    feedback: "Repère essentiel / accidentel : dans le mode de production capitaliste, le travail est accidentel par rapport à l'essence humaine qu'il devrait réaliser — il échoue à être ce par quoi l'homme s'accomplit."
+  },
+  {
+    id: "c1",
+    categorie: "Travail et production",
+    scenario: "Texte 3 — Le moyen de travail",
+    type: "single",
+    name: "Qu'est-ce qu'un moyen de travail selon le Texte 3 ?",
+    options: [
+      { text: "Une chose (ou un ensemble de choses) que l'homme interpose entre lui et l'objet de son travail, utilisant ses propriétés pour agir sur d'autres choses conformément à son but.", correct: true, feedback: "Le moyen de travail est un intermédiaire instrumental : la pierre, le couteau, la machine. L'homme n'agit pas immédiatement sur l'objet (comme dans la cueillette, où ses organes suffisent) mais médiatement, par des choses qui prolongent son corps — des organes qu'il ajoute aux siens, allongeant sa stature naturelle." },
+      { text: "Le salaire versé à l'ouvrier en échange de son effort.", correct: false, feedback: "" },
+      { text: "Le temps de repos entre deux journées de travail.", correct: false, feedback: "" },
+      { text: "La richesse que l'homme retire de la nature sans effort.", correct: false, feedback: "" }
+    ]
+  },
+  {
+    id: "c2",
+    categorie: "Travail et production",
+    scenario: "Texte 3 — Le moyen de travail",
+    type: "multi",
+    name: "Selon le Texte 3, quels éléments figurent parmi les moyens de travail primitifs ou font de la terre un double réservoir ? (plusieurs réponses)",
+    options: [
+      { text: "La terre, à la fois magasin de vivres primitif et arsenal primitif des moyens de travail.", correct: true, feedback: "La terre est double : réservoir de subsistances (magasin) et réservoir d'instruments (arsenal — la pierre qui tranche, le bois qui sert de levier). Le travail humain commence par s'équiper à partir du donné naturel." },
+      { text: "Les pierres, bois et os façonnés, instruments et armes trouvés dans les cavernes les plus anciennes.", correct: true, feedback: "L'archéologie confirme la thèse : les plus anciennes cavernes contiennent déjà des instruments et armes de pierre — la technique fait partie de l'essence de l'homme dès son origine." },
+      { text: "L'animal dompté et apprivoisé, déjà modifié par le travail.", correct: true, feedback: "L'animal dompté figure au premier rang parmi les moyens de travail primitifs : bête de trait, de somme, de labour — un instrument vivant, produit du travail et moyen de travail à son tour." },
+      { text: "Les actions de bourse et les contrats financiers spéculatifs.", correct: false, feedback: "" }
+    ]
+  },
+  {
+    id: "c3",
+    categorie: "Travail et production",
+    scenario: "Texte 3 — Le moyen de travail",
+    type: "single",
+    name: "Qu'est-ce qui, selon le Texte 3, caractérise éminemment le travail humain par différence avec l'animal ?",
+    options: [
+      { text: "L'emploi et la création de moyens de travail : l'animal n'use que de ses organes naturels, l'homme invente et transforme des instruments, variables et imprévus.", correct: true, feedback: "L'animal est rivé à ses organes ; l'homme les prolonge par des outils qu'il fabrique lui-même — il transforme aussi ses propres instruments en en créant de nouveaux. Bergson reprendra l'idée : instinct (organe qui est un instrument naturel) contre intelligence (instrument inventé, donc illimité) — l'homo faber." },
+      { text: "La capacité de l'animal à fabriquer des machines complexes.", correct: false, feedback: "" },
+      { text: "Le fait de se nourrir sans travailler du tout.", correct: false, feedback: "" },
+      { text: "La voix et le chant, que l'animal ne possède pas.", correct: false, feedback: "" }
+    ]
+  },
+  {
+    id: "d1",
+    categorie: "Individu et société",
+    scenario: "Texte 4 — L'individu et la société",
+    type: "single",
+    name: "Que signifie « zôon politikon » chez Marx (Texte 4) ?",
+    options: [
+      { text: "L'homme est non seulement un animal sociable, mais un animal qui ne peut se constituer comme individu singulier que dans la société : société et individualité ne s'opposent pas, l'une fait l'autre.", correct: true, feedback: "Marx reprend la définition aristotélicienne de l'homme comme animal politique, mais dans un dessein moderne : protester contre l'illusion d'un individu déjà fait qui prêterait à la société ce qu'il posséderait d'abord seul. L'individu autosuffisant des économistes classiques (Robinson) est un mythe : la société n'est pas un essaim d'atomes mais le milieu de constitution de chaque individualité." },
+      { text: "L'homme est un loup pour l'homme dans l'état de nature.", correct: false, feedback: "" },
+      { text: "L'homme naît achevé puis entre ensuite, par contrat, dans la société.", correct: false, feedback: "" },
+      { text: "Seuls les philosophes sont des animaux politiques.", correct: false, feedback: "" }
+    ]
+  },
+  {
+    id: "d2",
+    categorie: "Individu et société",
+    scenario: "Texte 4 — L'individu et la société",
+    type: "single",
+    name: "Pourquoi la production en dehors de la société est-elle chose aussi absurde que le développement du langage sans individus parlant ensemble ?",
+    options: [
+      { text: "Parce que le langage et la production ne sont réalisables qu'ensemble et par des êtres en relation : l'individualité humaine n'existe que comme réalité sociale, même quand la société n'est pas là pour l'entourer.", correct: true, feedback: "Marx vise le mythe de Robinson Crusoé, utilisé par l'économie politique pour faire croire à un producteur solitaire. Un civilisé transporté dans un lieu désert ne peut produire seul que parce qu'il possède déjà en puissance les forces propres à la société : la société est en lui, même quand elle n'est pas autour de lui." },
+      { text: "Parce que le langage peut se développer par écrit, sans jamais personne autour.", correct: false, feedback: "" },
+      { text: "Parce que le travail solitaire est plus productif que le travail collectif.", correct: false, feedback: "" },
+      { text: "Parce que Marx estime qu'il faut toujours travailler à plusieurs pour la bonne forme.", correct: false, feedback: "" }
+    ]
+  },
+  {
+    id: "x1",
+    categorie: "Association",
+    scenario: "Textes 1-4 — Association",
+    type: "matching",
+    name: "Associez chaque notion du cours de Marx à sa définition correcte.",
+    pairs: [
+      { q: "Forces productives", a: "Les moyens matériels et humains dont dispose une société pour produire (outils, techniques, énergie, savoir-faire)" },
+      { q: "Rapports de production", a: "Les rapports sociaux nécessaires — propriété, exploitation — dans lesquels les hommes produisent leur existence" },
+      { q: "Superstructure", a: "L'ensemble juridique, politique et idéologique élevé sur la base économique, dont les formes correspondent à cette base" },
+      { q: "Aliénation", a: "Le devenir-étranger du travailleur vis-à-vis de son propre travail, qui le nie au lieu de l'affirmer" }
+    ]
+  },
+  {
+    id: "s1",
+    categorie: "Synthèse",
+    scenario: "Textes 1-4 — Synthèse",
+    type: "single",
+    name: "Quelle réponse synthétise le mieux l'unité des quatre textes de la séance ?",
+    options: [
+      { text: "L'homme n'est pas d'abord une conscience solitaire : il est un être matériel, producteur, qui ne se réalise que dans des rapports sociaux — quand ces rapports deviennent entraves ou extériorité, ils aliènent son activité même.", correct: true, feedback: "Fil conducteur du matérialisme historique : l'être social précède la conscience (T1) ; mais tout mode de production ne se vaut pas — celui qui rend le travail forcé aliène l'essence humaine qu'il devrait accomplir (T2) ; l'humanité se définit par la médiation instrumentale (T3) ; l'individualité n'est pas une monade mais un produit social (T4). La liberté exige donc de transformer les rapports, pas seulement les idées." },
+      { text: "Marx montre que les idées règnent seules sur l'histoire et qu'il faut les combattre par d'autres idées.", correct: false, feedback: "" },
+      { text: "Le travail individuel suffirait à faire l'humanité de l'homme ; la société n'y change rien.", correct: false, feedback: "" },
+      { text: "L'aliénation est un accident psychologique que la bonne volonté de l'ouvrier dissipe.", correct: false, feedback: "" }
+    ]
+  },
+  {
+    id: "s2",
+    categorie: "Synthèse",
+    scenario: "Textes 1-4 — Synthèse",
+    type: "long",
+    name: "Essai : montrez, à partir des textes de la séance, que la liberté ne peut pas consister à changer les idées seulement — elle exige une transformation des rapports sociaux de production. (Rédigez d'abord sur la feuille de gauche, puis copiez votre paragraphe ici.)",
+    answers: ["l'être social détermine la conscience"],
+    feedback: "Piste de correction : partez de la formule du Texte 1 (l'être social détermine la conscience) ; montrez avec le Texte 2 que l'aliénation n'est pas un défaut d'idées mais une structure qui rend le travail extérieur ; concluez avec les Textes 3 et 4 : produire, c'est toujours produire ensemble, avec des instruments historiquement donnés — changer les rapports, c'est changer les hommes qui les vivent.",
+    repere: "La liberté exige de transformer les rapports sociaux de production, pas seulement les idées."
+  }
+];
+
+const CLE_STORAGE = "tg-marx-redigezmoi-v1";
+let etat = {
+  theme: "pronote",
+  regle: true,
+  taille: 18,
+  baseQCM: JSON.parse(JSON.stringify(BASE_QCM_INITIALE)),
+  sujetActifId: null,
+  contenuHTML: "",
+  stratesTags: [],
+  tagsSelectionnes: [],
+  favorisQcmIds: [],
+  qcmActifsIds: [],
+  qIndex: 0,
+  score: 0,
+  answered: false,
+  perm: null,
+  ans: {},
+  performances: {
+    historique: [],
+    reponses: {}
+  },
+  googleConfig: {
+    dossierDrive: "TG-Marx_Philosophie",
+    email: "",
+    nomUtilisateur: "",
+    driveFileId: "",
+    dernierSync: ""
+  }
+};
+
+let googleAccessToken = "";
+let googleTokenExpiration = 0;
+
+let indexTags = [];
+let listeSujets = [];
+let nbParagraphesPrecedents = 0;
+let derniereSelectionRange = null;
+let generationEnCours = false;
+
+const pileUndo = [];
+const pileRedo = [];
+let ignoreHistorique = false;
+let timerSnapshot = null;
+
+function enregistrerSnapshot(force = false){
+  if(ignoreHistorique) return;
+  const html = editeur.innerHTML;
+  if(!force && pileUndo.length > 0 && pileUndo[pileUndo.length - 1] === html) return;
+  pileUndo.push(html);
+  if(pileUndo.length > 80) pileUndo.shift();
+  pileRedo.length = 0;
+  majBoutonsHistorique();
 }
+
+function majBoutonsHistorique(){
+  const bU = document.getElementById("btn-undo");
+  const bR = document.getElementById("btn-redo");
+  if(bU) bU.disabled = pileUndo.length <= 1;
+  if(bR) bR.disabled = pileRedo.length === 0;
+}
+
+function executerUndo(){
+  if(pileUndo.length <= 1) return;
+  pileRedo.push(pileUndo.pop());
+  const precedent = pileUndo[pileUndo.length - 1];
+  ignoreHistorique = true;
+  editeur.innerHTML = precedent;
+  etat.contenuHTML = precedent;
+  sauverEtat();
+  ignoreHistorique = false;
+  majBoutonsHistorique();
+  editeur.focus();
+  placerCurseurBloc();
+}
+
+function executerRedo(){
+  if(pileRedo.length === 0) return;
+  const suivant = pileRedo.pop();
+  pileUndo.push(suivant);
+  ignoreHistorique = true;
+  editeur.innerHTML = suivant;
+  etat.contenuHTML = suivant;
+  sauverEtat();
+  ignoreHistorique = false;
+  majBoutonsHistorique();
+  editeur.focus();
+  placerCurseurBloc();
+}
+
+function sauverEtat(){
+  try{ localStorage.setItem(CLE_STORAGE, JSON.stringify(etat)); }catch(e){}
+}
+function chargerEtat(){
+  try{ return JSON.parse(localStorage.getItem(CLE_STORAGE)); }catch(e){ return null; }
+}
+
+const feuille = document.getElementById("feuille");
+const editeur = document.getElementById("editeur-km");
+const curseurBloc = document.getElementById("curseur-bloc");
+const btnOuvrirSujets = document.getElementById("btn-ouvrir-sujets");
+const titreSujetActif = document.getElementById("titre-sujet-actif");
+const listeSujetsGeneres = document.getElementById("liste-sujets-generes");
+const cascadeListe = document.getElementById("cascade-liste");
+const actionsCascade = document.getElementById("actions-cascade");
+const btnSelectionnerTags = document.getElementById("btn-selectionner-tags");
+const btnDeselectionnerTags = document.getElementById("btn-deselectionner-tags");
+const zoneQcmWrapper = document.getElementById("zone-qcm-wrapper");
+const miniTagsQcm = document.getElementById("mini-tags-qcm");
+const navQcmBtns = document.getElementById("nav-qcm-btns");
+const card = document.getElementById("quizcard");
+
+function reconstruireIndex(){
+  indexTags = construireIndexTags(etat.baseQCM, SUPPORT_VIDEO.transcript);
+  listeSujets = genererSujetsDepuisQCM(etat.baseQCM);
+  if(!etat.sujetActifId || !listeSujets.some(s => s.id === etat.sujetActifId)){
+    etat.sujetActifId = listeSujets[0] ? listeSujets[0].id : null;
+  }
+}
+
+function appliquerApparence(){
+  document.body.setAttribute("data-theme", etat.theme || "pronote");
+  document.documentElement.style.setProperty("--taille-corps", (etat.taille || 18) + "px");
+  document.getElementById("regle-h").style.display = etat.regle ? "" : "none";
+  document.getElementById("regle-v").style.display = etat.regle ? "" : "none";
+  majBadgeGoogle();
+}
+
+function dessinerRegles(){
+  const px = 37.8;
+  const h = document.getElementById("regle-h");
+  const v = document.getElementById("regle-v");
+  h.innerHTML = ""; v.innerHTML = "";
+  const largCm = Math.floor((feuille.clientWidth - 184) / px);
+  const hautCm = Math.floor((feuille.clientHeight - 84) / px);
+  for(let c=0; c<=largCm; c++){
+    const t = document.createElement("div");
+    t.className = "graduation" + (c%2===0 ? " majeure" : "");
+    t.style.left = (c*px) + "px";
+    h.appendChild(t);
+    if(c>0 && c%2===0){
+      const n = document.createElement("div");
+      n.className = "nombre"; n.textContent = c;
+      n.style.left = (c*px) + "px";
+      h.appendChild(n);
+    }
+  }
+  for(let c=0; c<=hautCm; c++){
+    const t = document.createElement("div");
+    t.className = "graduation" + (c%2===0 ? " majeure" : "");
+    t.style.top = (c*px) + "px";
+    v.appendChild(t);
+  }
+}
+
+function placerCurseurBloc(){
+  const sel = window.getSelection();
+  if(!sel || sel.rangeCount === 0 || document.activeElement !== editeur){
+    curseurBloc.style.display = "none";
+    return;
+  }
+  const range = sel.getRangeAt(0);
+  if(!editeur.contains(range.commonAncestorContainer)){
+    curseurBloc.style.display = "none";
+    return;
+  }
+  const clone = range.cloneRange();
+  clone.collapse(true);
+  let rect = clone.getBoundingClientRect();
+
+  if(!rect || (rect.width === 0 && rect.height === 0)){
+    const repere = document.createElement("span");
+    repere.textContent = "\u200B";
+    clone.insertNode(repere);
+    rect = repere.getBoundingClientRect();
+    repere.remove();
+    sel.removeAllRanges();
+    sel.addRange(range);
+  }
+
+  const feuilleRect = feuille.getBoundingClientRect();
+  curseurBloc.style.left = (rect.left - feuilleRect.left) + "px";
+  curseurBloc.style.top = (rect.top - feuilleRect.top) + "px";
+  curseurBloc.style.display = "block";
+}
+
+function rendreMenuTitres(){
+  const actif = listeSujets.find(s => s.id === etat.sujetActifId) || listeSujets[0];
+  if(actif) titreSujetActif.textContent = actif.titre;
+
+  listeSujetsGeneres.innerHTML = "";
+  listeSujets.forEach(sujet => {
+    const btn = document.createElement("button");
+    btn.type = "button";
+    btn.className = "option-sujet" + (sujet.id === etat.sujetActifId ? " actif" : "");
+    btn.innerHTML = `<span class="intitule-sujet">${esc(sujet.titre)}</span>`;
+    btn.addEventListener("click", ()=>{
+      etat.sujetActifId = sujet.id;
+      etat.performances.historique.push({
+        action: "choix_sujet",
+        sujet: sujet.titre,
+        date: new Date().toISOString()
+      });
+      listeSujetsGeneres.hidden = true;
+      btnOuvrirSujets.setAttribute("aria-expanded", "false");
+      sauverEtat();
+      rendreMenuTitres();
+    });
+    listeSujetsGeneres.appendChild(btn);
+  });
+}
+
+btnOuvrirSujets.addEventListener("click", (e)=>{
+  e.stopPropagation();
+  const ouvert = !listeSujetsGeneres.hidden;
+  listeSujetsGeneres.hidden = ouvert;
+  btnOuvrirSujets.setAttribute("aria-expanded", String(!ouvert));
+});
+
+document.addEventListener("click", (e)=>{
+  if(!listeSujetsGeneres.hidden && !document.getElementById("bloc-titre-sujet").contains(e.target)){
+    listeSujetsGeneres.hidden = true;
+    btnOuvrirSujets.setAttribute("aria-expanded", "false");
+  }
+});
+
+function rendreSupport(){
+  const det = document.getElementById("extrait-container");
+  det.innerHTML = `
+    <summary>Support d'étude : les quatre textes de la séance (cliquez pour déplier)</summary>
+    <div class="bloc-texte-support">
+      ${TEXTES.map(t => `<h4 style="margin:12px 0 2px;color:var(--acc)">${esc(t.titre)}</h4><blockquote style="font-style:italic">${esc(t.corps)}</blockquote>`).join("")}
+    </div>
+    <p style="font-size:.85em;margin-top:8px">Lisez et représentez les textes sur la feuille de gauche : les notions repérées pilotent le questionnaire de droite.</p>
+  `;
+}
+
+function sauverPositionCurseur(){
+  const sel = window.getSelection();
+  if(sel && sel.rangeCount > 0){
+    const r = sel.getRangeAt(0);
+    if(editeur.contains(r.commonAncestorContainer)){
+      derniereSelectionRange = r.cloneRange();
+    }
+  }
+  placerCurseurBloc();
+}
+
+function insererAuCurseur(texteBrut){
+  const propre = String(texteBrut || "").replace(/\s+/g, " ").trim();
+  if(!propre) return;
+
+  enregistrerSnapshot(true);
+  editeur.focus();
+  const sel = window.getSelection();
+  let range = derniereSelectionRange;
+
+  if(!range || !editeur.contains(range.commonAncestorContainer)){
+    range = document.createRange();
+    range.selectNodeContents(editeur);
+    range.collapse(false);
+  }
+
+  sel.removeAllRanges();
+  sel.addRange(range);
+
+  let prefixe = "";
+  const sc = range.startContainer;
+  const so = range.startOffset;
+  if(sc.nodeType === Node.TEXT_NODE && so > 0){
+    const ch = sc.textContent[so - 1];
+    if(ch && !/\s/.test(ch)) prefixe = " ";
+  }
+
+  const span = document.createElement("span");
+  span.className = "insertion-fraiche";
+  span.textContent = prefixe + propre + " ";
+
+  range.deleteContents();
+  range.insertNode(span);
+
+  const apres = document.createRange();
+  apres.setStartAfter(span);
+  apres.collapse(true);
+  sel.removeAllRanges();
+  sel.addRange(apres);
+  derniereSelectionRange = apres.cloneRange();
+  placerCurseurBloc();
+
+  setTimeout(()=> span.classList.remove("insertion-fraiche"), 1400);
+
+  etat.contenuHTML = editeur.innerHTML;
+  enregistrerSnapshot(true);
+  sauverEtat();
+  planifierSyncDrive();
+}
+
+function analyserParagrapheEtAjouterStrate(texteParagraphe){
+  const clean = norm(texteParagraphe);
+  if(clean.length < 3) return;
+
+  const matches = indexTags.filter(t => clean.includes(t.radical));
+  if(matches.length === 0) return;
+
+  const rads = matches.slice(0, 6).map(m => m.radical);
+  const derniere = etat.stratesTags[etat.stratesTags.length - 1];
+  if(derniere && derniere.tags.join(",") === rads.join(",")) return;
+
+  etat.stratesTags.push({
+    id: Date.now() + Math.random(),
+    extrait: texteParagraphe.slice(0, 60),
+    tags: rads
+  });
+
+  sauverEtat();
+  rendreCascadeTags();
+}
+
+function initialiserEditeur(){
+  try{ document.execCommand("defaultParagraphSeparator", false, "p"); }catch(e){}
+  if(etat.contenuHTML){
+    editeur.innerHTML = etat.contenuHTML;
+  }
+  nbParagraphesPrecedents = editeur.querySelectorAll("p").length;
+  enregistrerSnapshot(true);
+
+  document.getElementById("btn-undo").addEventListener("click", executerUndo);
+  document.getElementById("btn-redo").addEventListener("click", executerRedo);
+
+  feuille.addEventListener("click", (e)=>{
+    if(e.target === feuille){
+      editeur.focus();
+      const sel = window.getSelection();
+      const range = document.createRange();
+      range.selectNodeContents(editeur);
+      range.collapse(false);
+      sel.removeAllRanges();
+      sel.addRange(range);
+      derniereSelectionRange = range.cloneRange();
+      placerCurseurBloc();
+    }
+  });
+
+  editeur.addEventListener("keyup", sauverPositionCurseur);
+  editeur.addEventListener("mouseup", sauverPositionCurseur);
+  editeur.addEventListener("focus", sauverPositionCurseur);
+  editeur.addEventListener("blur", ()=>{ curseurBloc.style.display = "none"; });
+  window.addEventListener("resize", placerCurseurBloc);
+
+  editeur.addEventListener("keydown", (e)=>{
+    if((e.ctrlKey || e.metaKey) && !e.altKey){
+      if(e.key.toLowerCase() === "z"){
+        e.preventDefault();
+        if(e.shiftKey) executerRedo();
+        else executerUndo();
+        return;
+      }
+      if(e.key.toLowerCase() === "y"){
+        e.preventDefault();
+        executerRedo();
+        return;
+      }
+    }
+
+    if(e.key === "Enter" && !e.shiftKey){
+      enregistrerSnapshot(true);
+      const sel = window.getSelection();
+      let texteBloc = "";
+      if(sel && sel.rangeCount > 0){
+        let node = sel.getRangeAt(0).startContainer;
+        while(node && node !== editeur && node.nodeName !== "P" && node.nodeName !== "DIV"){
+          node = node.parentNode;
+        }
+        if(node && node !== editeur){
+          texteBloc = node.innerText || node.textContent || "";
+        } else {
+          const lignes = (editeur.innerText || "").split("\n").filter(Boolean);
+          texteBloc = lignes[lignes.length - 1] || "";
+        }
+      }
+      setTimeout(()=>{
+        analyserParagrapheEtAjouterStrate(texteBloc);
+        sauverPositionCurseur();
+        etat.contenuHTML = editeur.innerHTML;
+        enregistrerSnapshot(true);
+        sauverEtat();
+        planifierSyncDrive();
+      }, 20);
+    }
+  });
+
+  editeur.addEventListener("input", ()=>{
+    sauverPositionCurseur();
+    etat.contenuHTML = editeur.innerHTML;
+    clearTimeout(timerSnapshot);
+    timerSnapshot = setTimeout(()=> enregistrerSnapshot(false), 600);
+
+    const paras = Array.from(editeur.querySelectorAll("p, div"));
+    if(paras.length > nbParagraphesPrecedents && paras.length >= 2){
+      const avantDernier = paras[paras.length - 2];
+      analyserParagrapheEtAjouterStrate(avantDernier.innerText || "");
+    }
+    nbParagraphesPrecedents = paras.length;
+    sauverEtat();
+    planifierSyncDrive();
+  });
+}
+
+function rendreCascadeTags(){
+  cascadeListe.innerHTML = "";
+  const totalStrates = etat.stratesTags.length;
+
+  if(totalStrates === 0){
+    actionsCascade.hidden = true;
+    return;
+  }
+
+  actionsCascade.hidden = false;
+
+  etat.stratesTags.forEach((strate, idx) => {
+    const distanceDuPresent = (totalStrates - 1) - idx;
+    const opacite = Math.max(0.32, 1 - distanceDuPresent * 0.22);
+
+    const ligne = document.createElement("div");
+    ligne.className = "strate-tags";
+    ligne.style.opacity = opacite.toFixed(2);
+
+    strate.tags.forEach(rad => {
+      const info = indexTags.find(t => t.radical === rad);
+      if(!info) return;
+      const btn = document.createElement("button");
+      btn.type = "button";
+      const estSel = etat.tagsSelectionnes.includes(rad);
+      btn.className = "tag-nuage" + (estSel ? " selectionne" : "");
+      btn.textContent = info.label;
+      btn.addEventListener("click", ()=>{
+        const pos = etat.tagsSelectionnes.indexOf(rad);
+        if(pos >= 0){
+          etat.tagsSelectionnes.splice(pos, 1);
+        } else {
+          etat.tagsSelectionnes.push(rad);
+        }
+        sauverEtat();
+        rendreCascadeTags();
+      });
+      ligne.appendChild(btn);
+    });
+
+    cascadeListe.appendChild(ligne);
+  });
+
+  cascadeListe.scrollTop = cascadeListe.scrollHeight;
+}
+
+btnSelectionnerTags.addEventListener("click", ()=>{
+  if(etat.tagsSelectionnes.length === 0){
+    etat.qcmActifsIds = [];
+    zoneQcmWrapper.hidden = true;
+    sauverEtat();
+    return;
+  }
+
+  const idsSet = new Set();
+  etat.tagsSelectionnes.forEach(rad => {
+    const info = indexTags.find(t => t.radical === rad);
+    if(info) info.qcmIds.forEach(id => idsSet.add(id));
+  });
+
+  etat.qcmActifsIds = Array.from(idsSet);
+  etat.qIndex = 0;
+  etat.score = 0;
+  etat.ans = {};
+  etat.answered = false;
+
+  etat.performances.historique.push({
+    action: "validation_tags",
+    tags: [...etat.tagsSelectionnes],
+    qcmIds: [...etat.qcmActifsIds],
+    date: new Date().toISOString()
+  });
+
+  sauverEtat();
+  if(etat.qcmActifsIds.length > 0){
+    zoneQcmWrapper.hidden = false;
+    renderQCM();
+  } else {
+    zoneQcmWrapper.hidden = true;
+  }
+});
+
+btnDeselectionnerTags.addEventListener("click", ()=>{
+  etat.tagsSelectionnes = [];
+  etat.qcmActifsIds = [];
+  zoneQcmWrapper.hidden = true;
+  sauverEtat();
+  rendreCascadeTags();
+});
+
+async function appelerGeminiJson(systemInstruction, promptText){
+  const payload = {
+    systemInstruction: { parts: [{ text: systemInstruction }] },
+    contents: [{ role: "user", parts: [{ text: promptText }] }],
+    generationConfig: {
+      temperature: 0.4,
+      maxOutputTokens: 1200,
+      responseMimeType: "application/json"
+    }
+  };
+
+  const modeles = ["gemini-2.5-flash", "gemini-2.0-flash"];
+  let dernierErreur = "";
+
+  for(const modele of modeles){
+    const controller = new AbortController();
+    const timer = setTimeout(()=> controller.abort(), 35000);
+    try{
+      const url = `https://generativelanguage.googleapis.com/v1beta/models/${modele}:generateContent?key=${encodeURIComponent(CLE_API_GEMINI)}`;
+      const res = await fetch(url, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+        signal: controller.signal
+      });
+      clearTimeout(timer);
+      if(!res.ok){
+        const errObj = await res.json().catch(()=>({}));
+        throw new Error(errObj.error?.message || `HTTP ${res.status}`);
+      }
+      const data = await res.json();
+      const raw = data?.candidates?.[0]?.content?.parts?.map(p => p.text || "").join("").trim() || "";
+      const cleaned = raw.replace(/^```json\s*/i, "").replace(/^```\s*/i, "").replace(/\s*```$/i, "").trim();
+      return JSON.parse(cleaned);
+    }catch(err){
+      clearTimeout(timer);
+      dernierErreur = err.name === "AbortError" ? "Délai dépassé." : err.message;
+    }
+  }
+  throw new Error(dernierErreur || "Erreur IA");
+}
+
+async function genererQuestionFormat(formatType){
+  if(generationEnCours) return;
+  const Q = obtenirQcmActifs();
+  const refQ = Q[etat.qIndex] || etat.baseQCM[0];
+  if(!refQ) return;
+
+  generationEnCours = true;
+  card.querySelectorAll(".btn-gen-format").forEach(b => b.disabled = true);
+
+  const sujetActif = listeSujets.find(s => s.id === etat.sujetActifId);
+  const contexte = [
+    `Sujet : ${sujetActif ? sujetActif.titre : ""}`,
+    `Catégorie : ${refQ.categorie || "Matérialisme historique"}`,
+    `Thème : ${refQ.scenario || ""}`,
+    `Question de référence : ${refQ.name}`,
+    `Extrait support : ${TEXTES.map(t => t.corps.slice(0, 300)).join(" […] ")}}`
+  ].join("\n");
+
+  let schemaConsigne = "";
+  if(formatType === "matching"){
+    schemaConsigne = `Génère une question d'association ("type": "matching") en français, niveau Terminale philosophie, sur le thème ci-dessus (Marx, matérialisme historique).
+Retourne un objet JSON exact :
+{"type":"matching","categorie":"${refQ.categorie || "Matérialisme historique"}","scenario":"${refQ.scenario || "Association"}","name":"Intitulé de la question d'association","pairs":[{"q":"Notion 1","a":"Définition ou thèse 1"},{"q":"Notion 2","a":"Définition ou thèse 2"},{"q":"Notion 3","a":"Définition ou thèse 3"}]}`;
+  } else if(formatType === "cloze"){
+    schemaConsigne = `Génère une question de texte à trous ("type": "cloze") en français, niveau Terminale philosophie, sur le thème ci-dessus.
+Retourne un objet JSON exact :
+{"type":"cloze","categorie":"${refQ.categorie || "Matérialisme historique"}","scenario":"${refQ.scenario || "Texte à trous"}","segs":[{"t":"Début de phrase "},{"blank":["mot1","variante1"]},{"t":" suite"},{"blank":["mot2","variante2"]},{"t":" fin."}]}`;
+  } else if(formatType === "short"){
+    schemaConsigne = `Génère une question à réponse courte d'une phrase ("type": "short") en français, niveau Terminale philosophie, sur le thème ci-dessus.
+Retourne un objet JSON exact :
+{"type":"short","categorie":"${refQ.categorie || "Matérialisme historique"}","scenario":"${refQ.scenario || "Réponse courte"}","name":"Question appelant une réponse d'une phrase","answers":["Réponse attendue en une phrase."],"feedback":"Explication concise d'une phrase."}`;
+  } else {
+    schemaConsigne = `Génère un sujet d'essai appelant une réponse longue d'un paragraphe ("type": "long") en français, niveau Terminale philosophie, sur le thème ci-dessus.
+Retourne un objet JSON exact :
+{"type":"long","categorie":"${refQ.categorie || "Synthèse"}","scenario":"${refQ.scenario || "Essai (1 paragraphe)"}","name":"Question d'essai appelant un paragraphe argumenté","repere":"Synthèse de référence attendue en un paragraphe."}`;
+  }
+
+  try{
+    const gen = await appelerGeminiJson(
+      "Tu es professeur de philosophie en Terminale. Produis uniquement un objet JSON valide sans texte hors JSON.",
+      `${contexte}\n\n${schemaConsigne}`
+    );
+
+    const nouvelleQ = {
+      id: `ia-${formatType}-${Date.now()}`,
+      categorie: gen.categorie || refQ.categorie || "Matérialisme historique",
+      scenario: gen.scenario || refQ.scenario || "Parcours IA",
+      type: formatType,
+      name: gen.name || (Array.isArray(gen.segs) ? gen.segs.map(s => s.t || (s.blank ? s.blank[0] : "")).join("") : "Question générée"),
+      pairs: Array.isArray(gen.pairs) ? gen.pairs : undefined,
+      segs: Array.isArray(gen.segs) ? gen.segs : undefined,
+      answers: Array.isArray(gen.answers) ? gen.answers : undefined,
+      feedback: gen.feedback || "",
+      repere: gen.repere || ""
+    };
+
+    etat.baseQCM.push(nouvelleQ);
+    etat.qcmActifsIds.push(nouvelleQ.id);
+    etat.qIndex = etat.qcmActifsIds.length - 1;
+    etat.answered = false;
+    reconstruireIndex();
+    sauverEtat();
+    planifierSyncDrive();
+    generationEnCours = false;
+    renderQCM();
+  }catch(err){
+    generationEnCours = false;
+    card.querySelectorAll(".btn-gen-format").forEach(b => b.disabled = false);
+    const errDiv = document.createElement("div");
+    errDiv.className = "fb no";
+    errDiv.textContent = "IA indisponible (" + err.message + ") — renseignez une clé APIvia une configuration sécurisée pour activer la génération.";
+    card.appendChild(errDiv);
+  }
+}
+
+async function analyserEssaiQuatreDomaines(q, texteEssai){
+  const systemInstruction = `Tu es correcteur de philosophie en classe de Terminale. Évalue l'essai (un paragraphe) par rapport à la question posée selon exactement 4 domaines :
+1. "analyse_question" : Analyse de la question (problématique) — note sur 5 (/5) et appréciation brève.
+2. "argumentation" : Argumentation — note sur 5 (/5) et appréciation brève.
+3. "connaissance" : Connaissance — note sur 5 (/5) et appréciation brève.
+4. "expression_ecrite" : Expression écrite — note sur 5 (/5) et appréciation brève.
+
+Retourne uniquement un JSON exact :
+{
+  "analyse_question": {"note": 0, "appreciation": "..."},
+  "argumentation": {"note": 0, "appreciation": "..."},
+  "connaissance": {"note": 0, "appreciation": "..."},
+  "expression_ecrite": {"note": 0, "appreciation": "..."},
+  "synthese": "..."
+}`;
+
+  const promptText = [
+    `Question posée : ${q.name}`,
+    q.repere ? `Repère attendu : ${q.repere}` : "",
+    `Essai de l'élève : ${texteEssai}`
+  ].filter(Boolean).join("\n");
+
+  return appelerGeminiJson(systemInstruction, promptText);
+}
+
+function rendreEvaluationQuatreDomaines(evalObj){
+  if(!evalObj) return "";
+  const domaines = [
+    { key: "analyse_question", label: "Analyse de la question (problématique)" },
+    { key: "argumentation", label: "Argumentation" },
+    { key: "connaissance", label: "Connaissance" },
+    { key: "expression_ecrite", label: "Expression écrite" }
+  ];
+
+  let total = 0;
+  const cartes = domaines.map(d => {
+    const item = evalObj[d.key] || { note: 0, appreciation: "" };
+    const n = Number(item.note) || 0;
+    total += n;
+    return `
+      <div class="domaine-note-box">
+        <div class="domaine-note-top">
+          <span>${esc(d.label)}</span>
+          <span>${n} / 5</span>
+        </div>
+        <div class="domaine-note-app">${esc(item.appreciation || "")}</div>
+      </div>
+    `;
+  }).join("");
+
+  return `
+    <div class="fb ok bloc-copiable">
+      <strong>Évaluation sur 4 domaines — Total : ${total} / 20</strong>
+      <div class="grille-4-domaines">${cartes}</div>
+      ${evalObj.synthese ? `<div>${esc(evalObj.synthese)}</div>` : ""}
+      ${boutonCopieDiscret()}
+    </div>
+  `;
+}
+
+function barreFormatsIA(){
+  return `
+    <div class="barre-formats-ia">
+      <button type="button" class="btn-gen-format" onclick="genererQuestionFormat('matching')">+ Association</button>
+      <button type="button" class="btn-gen-format" onclick="genererQuestionFormat('cloze')">+ Texte à trous</button>
+      <button type="button" class="btn-gen-format" onclick="genererQuestionFormat('short')">+ Réponse courte</button>
+      <button type="button" class="btn-gen-format" onclick="genererQuestionFormat('long')">+ Essai (1 paragraphe)</button>
+    </div>
+  `;
+}
+
+function obtenirQcmActifs(){
+  return etat.qcmActifsIds
+    .map(id => etat.baseQCM.find(q => q.id === id))
+    .filter(Boolean);
+}
+
+function nettoyerTitreScenario(sc){
+  return String(sc || "").replace(/^Scénario\s*\d*\s*[—:-]\s*/i, "").trim();
+}
+
+function basculerFavoriQcm(qcmId){
+  if(!Array.isArray(etat.favorisQcmIds)) etat.favorisQcmIds = [];
+  const idx = etat.favorisQcmIds.indexOf(qcmId);
+  if(idx >= 0){
+    etat.favorisQcmIds.splice(idx, 1);
+  } else {
+    etat.favorisQcmIds.push(qcmId);
+  }
+  sauverEtat();
+  planifierSyncDrive();
+  renderQCM();
+}
+
+function ouvrirFavorisQcm(){
+  if(!Array.isArray(etat.favorisQcmIds) || etat.favorisQcmIds.length === 0){
+    alert("Aucun QCM enregistré dans vos favoris pour le moment.");
+    return;
+  }
+  etat.qcmActifsIds = [...etat.favorisQcmIds];
+  etat.qIndex = 0;
+  etat.score = 0;
+  etat.ans = {};
+  etat.answered = false;
+  sauverEtat();
+  zoneQcmWrapper.hidden = false;
+  renderQCM();
+}
+
+function nbsp(s){
+  return String(s).replace(/ ([;:!?])/g,"\u00A0$1").replace(/« /g,"«\u00A0").replace(/ »/g,"\u00A0»");
+}
+function esc(s){
+  return nbsp(String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;"));
+}
+function shuffle(a){
+  for(let i=a.length-1;i>0;i--){
+    const j=Math.floor(Math.random()*(i+1)), t=a[i];
+    a[i]=a[j]; a[j]=t;
+  }
+  return a;
+}
+function melangeOptions(opts){
+  const perm = shuffle(opts.map((o,k)=>k));
+  const nbGood = opts.filter(o=>o.correct).length;
+  if(nbGood >= opts.length) return perm;
+  let essais = 0;
+  while(essais < 20){
+    let firstGood = perm.length;
+    for(let i=0;i<perm.length;i++){ if(opts[perm[i]].correct){ firstGood=i; break; } }
+    if(firstGood > 0) return perm;
+    const bads = [];
+    for(let j=1;j<perm.length;j++){ if(!opts[perm[j]].correct) bads.push(j); }
+    if(!bads.length) return perm;
+    const pick = bads[Math.floor(Math.random()*bads.length)];
+    const t = perm[0]; perm[0] = perm[pick]; perm[pick] = t;
+    essais++;
+  }
+  return perm;
+}
+
+function boutonCopieDiscret(){
+  return '<button type="button" class="btn-inserer-curseur" onclick="copierBlocVersCurseur(event, this)" title="Insérer au curseur dans le document">↵</button>';
+}
+
+function copierBlocVersCurseur(e, btn){
+  if(e){ e.preventDefault(); e.stopPropagation(); }
+  const conteneur = btn.closest(".bloc-copiable");
+  if(!conteneur) return;
+
+  const clone = conteneur.cloneNode(true);
+  clone.querySelectorAll(".btn-inserer-curseur, input, select, textarea").forEach(el => el.remove());
+
+  const titreFb = clone.querySelector("strong");
+  if(titreFb && /^(Réponse acceptée|Explication|Évaluation sur 4 domaines)/i.test(titreFb.textContent.trim())){
+    const nextBr = titreFb.nextSibling;
+    if(nextBr && nextBr.nodeName === "BR") nextBr.remove();
+    titreFb.remove();
+  }
+
+  const texte = (clone.textContent || "").replace(/^[✔✖]\s*/, "").replace(/\s*\(votre réponse\)\s*$/i, "").trim();
+  insererAuCurseur(texte);
+}
+
+function rendreBarreMetaQCM(listeQcm, qCourant){
+  miniTagsQcm.innerHTML = "";
+  const tagsLies = indexTags.filter(t => t.qcmIds.has(qCourant.id)).slice(0, 7);
+  tagsLies.forEach(t => {
+    const sp = document.createElement("span");
+    const estMatch = etat.tagsSelectionnes.includes(t.radical);
+    sp.className = "mini-tag" + (estMatch ? " actif" : "");
+    sp.textContent = t.label;
+    miniTagsQcm.appendChild(sp);
+  });
+
+  navQcmBtns.innerHTML = "";
+  if(listeQcm.length > 1){
+    const bPrev = document.createElement("button");
+    bPrev.type = "button"; bPrev.textContent = "◀";
+    bPrev.addEventListener("click", ()=>{
+      etat.qIndex = (etat.qIndex - 1 + listeQcm.length) % listeQcm.length;
+      renderQCM();
+    });
+    const bNext = document.createElement("button");
+    bNext.type = "button"; bNext.textContent = "▶";
+    bNext.addEventListener("click", ()=>{
+      etat.qIndex = (etat.qIndex + 1) % listeQcm.length;
+      renderQCM();
+    });
+    navQcmBtns.appendChild(bPrev);
+    navQcmBtns.appendChild(bNext);
+  }
+}
+
+function renderQCM(){
+  const Q = obtenirQcmActifs();
+  if(Q.length === 0){ zoneQcmWrapper.hidden = true; return; }
+  zoneQcmWrapper.hidden = false;
+  if(etat.qIndex >= Q.length) etat.qIndex = 0;
+
+  etat.answered = false;
+  const q = Q[etat.qIndex];
+  rendreBarreMetaQCM(Q, q);
+
+  const titreCourt = nettoyerTitreScenario(q.scenario) || "Questionnaire";
+  const cat = q.categorie || "Matérialisme historique";
+  const couleurCat = COULEURS_CATEGORIES[cat] || "var(--acc)";
+  const estFavori = Array.isArray(etat.favorisQcmIds) && etat.favorisQcmIds.includes(q.id);
+
+  const segmentsHTML = Q.map((item, idx) => {
+    const rep = etat.ans[idx];
+    let cls = "segment-prog";
+    if(idx === etat.qIndex) cls += " courant";
+    else if(rep && rep.ok) cls += " fait-ok";
+    else if(rep && !rep.ok) cls += " fait-ko";
+    return `<span class="${cls}" data-qidx="${idx}" title="Question ${idx + 1}/${Q.length}"></span>`;
+  }).join("");
+
+  let h = `<div class="qcm-header-graphique" style="--cat-color:${couleurCat}">
+    <div class="qcm-header-top">
+      <span class="qcm-titre-court">${esc(titreCourt)}</span>
+      <div class="qcm-actions-header">
+        <span class="badge-cat-graphique"><span class="dot-cat"></span>${esc(cat)}</span>
+        <button type="button" class="btn-favori-qcm ${estFavori ? "actif" : ""}" id="btn-toggle-favori" title="Ajouter ou retirer des favoris">
+          ${estFavori ? "★ Favori" : "☆ Favori"}
+        </button>
+      </div>
+    </div>
+    <div class="jauge-segments" aria-label="Progression">${segmentsHTML}</div>
+  </div>`;
+
+  if(q.type === "single" || q.type === "multi"){
+    etat.perm = melangeOptions(q.options);
+    h += '<p class="qtext bloc-copiable">' + esc(q.name) + boutonCopieDiscret() + '</p>';
+    etat.perm.forEach((orig, d) => {
+      h += '<label class="opt bloc-copiable" id="opt' + d + '"><input type="' + (q.type === "single" ? "radio" : "checkbox") + '" name="q" value="' + d + '" onchange="markSel()"> ' + esc(q.options[orig].text) + boutonCopieDiscret() + '</label>';
+    });
+  } else if(q.type === "short"){
+    h += '<p class="qtext bloc-copiable">' + esc(q.name) + boutonCopieDiscret() + '</p><input type="text" id="shortin" onkeydown="if(event.key===\'Enter\'){event.preventDefault();validate();}">';
+  } else if(q.type === "long"){
+    h += '<p class="qtext bloc-copiable">' + esc(q.name) + boutonCopieDiscret() + '</p><textarea class="essai-area" id="longin"></textarea>';
+  } else if(q.type === "matching"){
+    h += '<p class="qtext bloc-copiable">' + esc(q.name) + boutonCopieDiscret() + '</p>';
+    const pool = shuffle(q.pairs.map(p => p.a));
+    q.pairs.forEach((p, k) => {
+      h += '<div class="bloc-copiable" style="margin:10px 0"><strong>' + esc(p.q) + '</strong>' + boutonCopieDiscret() + '<select class="pairsel" id="sel' + k + '"><option value="">— Choisir —</option>' + pool.map(a => '<option>' + esc(a) + '</option>').join("") + '</select></div>';
+    });
+  } else if(q.type === "cloze"){
+    h += '<p class="qtext bloc-copiable" style="white-space:pre-wrap">';
+    q.segs.forEach((s, k) => {
+      if(s.t !== undefined) h += esc(s.t);
+      else h += '<span class="blank"><input type="text" id="cz' + k + '" onkeydown="if(event.key===\'Enter\'){event.preventDefault();validate();}"></span>';
+    });
+    h += boutonCopieDiscret() + '</p>';
+  }
+
+  h += '<button id="valbtn" onclick="validate()">Valider</button>';
+  h += barreFormatsIA();
+  card.innerHTML = h;
+
+  const btnFav = document.getElementById("btn-toggle-favori");
+  if(btnFav) btnFav.addEventListener("click", ()=> basculerFavoriQcm(q.id));
+
+  card.querySelectorAll(".segment-prog").forEach(seg => {
+    seg.addEventListener("click", ()=>{
+      etat.qIndex = Number(seg.dataset.qidx);
+      renderQCM();
+    });
+  });
+}
+
+function markSel(){
+  document.querySelectorAll("label.opt").forEach(l => l.classList.remove("sel"));
+  document.querySelectorAll("input[name=q]").forEach(inp => {
+    if(inp.checked) inp.closest("label").classList.add("sel");
+  });
+}
+
+async function validate(){
+  if(etat.answered) return;
+  const Q = obtenirQcmActifs();
+  const q = Q[etat.qIndex];
+  let ok = false, fb = "";
+
+  if(q.type === "long"){
+    const area = document.getElementById("longin");
+    const valBtn = document.getElementById("valbtn");
+    const texteEssai = (area ? area.value : "").trim();
+    if(!texteEssai){
+      if(area) area.focus();
+      return;
+    }
+    if(area) area.disabled = true;
+    if(valBtn) valBtn.disabled = true;
+    etat.answered = true;
+
+    try{
+      const evalObj = await analyserEssaiQuatreDomaines(q, texteEssai);
+      const total = (Number(evalObj.analyse_question?.note) || 0)
+        + (Number(evalObj.argumentation?.note) || 0)
+        + (Number(evalObj.connaissance?.note) || 0)
+        + (Number(evalObj.expression_ecrite?.note) || 0);
+      ok = total >= 10;
+      if(ok) etat.score++;
+      etat.ans[etat.qIndex] = { ok, given: texteEssai, eval4: evalObj };
+      etat.performances.reponses[q.id] = { ok, question: q.name, note20: total, date: new Date().toISOString() };
+
+      const segCourant = card.querySelector(`.segment-prog[data-qidx="${etat.qIndex}"]`);
+      if(segCourant){
+        segCourant.classList.remove("courant");
+        segCourant.classList.add(ok ? "fait-ok" : "fait-ko");
+      }
+      sauverEtat();
+      planifierSyncDrive();
+
+      let h = rendreEvaluationQuatreDomaines(evalObj);
+      h += '<button class="ghost" onclick="redoQ()" style="margin-top:10px">← Refaire cette question</button> ';
+      h += '<button onclick="nextQ()">' + (etat.qIndex + 1 < Q.length ? "Question suivante →" : "Voir le score") + '</button>';
+      card.insertAdjacentHTML("beforeend", h);
+    }catch(err){
+      etat.answered = false;
+      if(area) area.disabled = false;
+      if(valBtn) valBtn.disabled = false;
+      card.insertAdjacentHTML("beforeend", `<div class="fb no">IA indisponible (${esc(err.message)}). Votre paragraphe est conservé — vous pouvez le copier dans la feuille avec le bouton ↵.</div>`);
+    }
+    return;
+  }
+
+  if(q.type === "single" || q.type === "multi"){
+    const selD = [].slice.call(document.querySelectorAll("input[name=q]:checked")).map(i => +i.value);
+    const sel = selD.map(d => etat.perm[d]);
+    const corr = q.options.map((o, k) => o.correct ? k : -1).filter(k => k >= 0);
+    if(q.type === "single") ok = sel.length === 1 && corr.indexOf(sel[0]) >= 0;
+    else ok = sel.length === corr.length && sel.every(s => corr.indexOf(s) >= 0);
+
+    etat.perm.forEach((orig, d) => {
+      const el = document.getElementById("opt" + d);
+      if(q.options[orig].correct) el.classList.add("good");
+      else if(selD.indexOf(d) >= 0) el.classList.add("bad");
+      el.querySelector("input").disabled = true;
+    });
+    etat.ans[etat.qIndex] = { ok, given: sel };
+    fb = corr.map(k => q.options[k].feedback || "").join("<br><br>") || ("Réponse attendue : " + corr.map(k => q.options[k].text).join(" ; "));
+  } else if(q.type === "short"){
+    const inp = document.getElementById("shortin");
+    const repAttendue = Array.isArray(q.answers) && q.answers.length > 0 ? q.answers[0] : "";
+    ok = Array.isArray(q.answers) && q.answers.length > 0
+      ? q.answers.some(a => norm(a) === norm(inp.value))
+      : norm(inp.value).length > 8;
+    inp.disabled = true;
+    etat.ans[etat.qIndex] = { ok, given: inp.value };
+    fb = q.feedback || (repAttendue ? ("Réponse attendue : " + repAttendue) : "");
+  } else if(q.type === "matching"){
+    let allOk = true;
+    q.pairs.forEach((p, k) => {
+      const v = document.getElementById("sel" + k).value;
+      if(norm(v) !== norm(p.a)) allOk = false;
+      document.getElementById("sel" + k).disabled = true;
+    });
+    ok = allOk;
+    etat.ans[etat.qIndex] = { ok, given: q.pairs.map((p, k) => document.getElementById("sel" + k).value) };
+    fb = "Associations correctes : " + q.pairs.map(p => p.q + " → " + p.a).join(" ; ");
+  } else if(q.type === "cloze"){
+    let allOk2 = true;
+    q.segs.forEach((s, k) => {
+      if(s.blank === undefined) return;
+      const gv = document.getElementById("cz" + k).value;
+      if(!s.blank.some(a => norm(a) === norm(gv))) allOk2 = false;
+      document.getElementById("cz" + k).disabled = true;
+    });
+    ok = allOk2;
+    etat.ans[etat.qIndex] = { ok, given: q.segs.map((s, k) => s.blank === undefined ? null : document.getElementById("cz" + k).value) };
+    fb = "La réponse complète : « " + q.segs.map(s => s.blank !== undefined ? s.blank[0] : s.t).join("") + " »";
+  }
+
+  if(ok) etat.score++;
+  etat.answered = true;
+  etat.performances.reponses[q.id] = { ok, question: q.name, date: new Date().toISOString() };
+
+  const segCourant = card.querySelector(`.segment-prog[data-qidx="${etat.qIndex}"]`);
+  if(segCourant){
+    segCourant.classList.remove("courant");
+    segCourant.classList.add(ok ? "fait-ok" : "fait-ko");
+  }
+
+  sauverEtat();
+  planifierSyncDrive();
+
+  let h = '<div class="fb bloc-copiable ' + (ok ? "ok" : "no") + '"><strong>' + (ok ? "Réponse acceptée. ✅" : "Explication") + '</strong><br>' + fb + boutonCopieDiscret() + '</div>';
+  h += '<button class="ghost" onclick="redoQ()" style="margin-top:10px">← Refaire cette question</button> ';
+  h += '<button onclick="nextQ()">' + (etat.qIndex + 1 < Q.length ? "Question suivante →" : "Voir le score") + '</button>';
+  card.insertAdjacentHTML("beforeend", h);
+}
+
+function redoQ(){
+  const a = etat.ans[etat.qIndex];
+  if(a && a.ok) etat.score--;
+  delete etat.ans[etat.qIndex];
+  renderQCM();
+}
+
+function nextQ(){
+  const Q = obtenirQcmActifs();
+  etat.qIndex++;
+  if(etat.qIndex < Q.length){ renderQCM(); return; }
+  renderScoreQCM();
+}
+
+function renderScoreQCM(){
+  const Q = obtenirQcmActifs();
+  const n = Q.length, s = etat.score, pct = Math.round(100 * s / Math.max(1, n));
+
+  const sujetActif = listeSujets.find(x => x.id === etat.sujetActifId);
+  const normTexte = norm(editeur.innerText || "");
+  let trouves = 0;
+  if(sujetActif && sujetActif.motsCles.length > 0){
+    sujetActif.motsCles.forEach(rad => { if(normTexte.includes(rad)) trouves++; });
+  }
+  const pctTexte = (sujetActif && sujetActif.motsCles.length > 0)
+    ? Math.round((trouves / sujetActif.motsCles.length) * 100) : 0;
+
+  card.innerHTML = `
+    <h2 class="score">${pct >= 80 ? "🏆 " : ""}Score<span class="big">${s} / ${n}</span>${pct}%</h2>
+    <div class="bar"><div id="scorebar" style="width:0%"></div></div>
+    <div class="fb ok bloc-copiable" style="text-align:left">
+      <strong>Concordance texte rédigé / sujet :</strong> ${pctTexte}% des notions clés mobilisées sur la feuille.${boutonCopieDiscret()}
+    </div>
+    <div style="text-align:center">
+      <button onclick="reviewQCM()">Revoir les réponses</button>
+      <button class="ghost" onclick="restartQCM()">Refaire</button>
+    </div>
+  `;
+  setTimeout(()=>{ const sb = document.getElementById("scorebar"); if(sb) sb.style.width = pct + "%"; }, 100);
+  planifierSyncDrive();
+}
+
+function reviewQCM(){
+  const Q = obtenirQcmActifs();
+  let h = '<div class="qcm-titre-court" style="margin-bottom:10px">Récapitulatif</div>';
+  Q.forEach((q, k) => {
+    const a = etat.ans[k] || { ok: false, given: null };
+    h += '<div class="rq"><p class="qtext bloc-copiable">' + (k+1) + '. ' + esc(q.name) + boutonCopieDiscret() + '</p>';
+    if(q.type === "single" || q.type === "multi"){
+      q.options.forEach((o, j) => {
+        const picked = a.given && a.given.indexOf(j) >= 0;
+        const cls = o.correct ? "good" : (picked ? "bad" : "");
+        h += '<div class="opt bloc-copiable ' + cls + '">' + (o.correct ? "✔ " : "") + esc(o.text) + (picked ? " <em>(votre réponse)</em>" : "") + boutonCopieDiscret() + '</div>';
+      });
+      const corrText = q.options.filter(o => o.correct).map(o => o.feedback || o.text).join("<br><br>");
+      h += '<div class="fb bloc-copiable ' + (a.ok ? "ok" : "no") + '">' + corrText + boutonCopieDiscret() + '</div>';
+    } else if(q.type === "long"){
+      h += '<div class="bloc-copiable"><p>' + esc(a.given || "") + '</p>' + boutonCopieDiscret() + '</div>';
+      if(a.eval4) h += rendreEvaluationQuatreDomaines(a.eval4);
+    } else if(q.type === "matching"){
+      q.pairs.forEach((p, j) => {
+        const gv = a.given ? a.given[j] : "";
+        h += '<p class="bloc-copiable">' + esc(p.q) + ' → <em>' + esc(gv || "—") + '</em>' + (norm(gv) === norm(p.a) ? ' ✔' : ' (' + esc(p.a) + ')') + boutonCopieDiscret() + '</p>';
+      });
+    }
+    h += '</div>';
+  });
+  h += '<div style="text-align:center"><button onclick="restartQCM()">Refaire</button> <button class="ghost" onclick="renderScoreQCM()">Retour au score</button></div>';
+  card.innerHTML = h;
+}
+
+function restartQCM(){
+  etat.qIndex = 0; etat.score = 0; etat.ans = {};
+  renderQCM();
+}
+
+document.getElementById("badge-logo-slot").innerHTML = svgLogoC2Phi(18);
+document.getElementById("btn-google-badge").addEventListener("click", ouvrirModalGoogleDrive);
+
+function estConnecteGoogle(){
+  return Boolean(googleAccessToken && Date.now() < googleTokenExpiration);
+}
+
+function majBadgeGoogle(etatSync = ""){
+  const badge = document.getElementById("btn-google-badge");
+  const label = document.getElementById("label-google");
+  const cfg = etat.googleConfig || {};
+
+  badge.classList.remove("connecte", "syncing");
+  if(etatSync === "syncing"){
+    badge.classList.add("syncing");
+    label.textContent = "Enregistrement...";
+    return;
+  }
+  if((estConnecteGoogle() || cfg.email) && cfg.email){
+    badge.classList.add("connecte");
+    label.textContent = cfg.email;
+  } else {
+    label.textContent = "Se connecter";
+  }
+}
+
+function construirePayloadSauvegarde(){
+  etat.contenuHTML = editeur.innerHTML;
+  return {
+    application: APP_META.nom,
+    site: APP_META.siteUrl,
+    github: APP_META.githubUrl,
+    date: new Date().toISOString(),
+    dossierDrive: etat.googleConfig.dossierDrive || "TG-Marx_Philosophie",
+    utilisateur: {
+      email: etat.googleConfig.email || "",
+      nom: etat.googleConfig.nomUtilisateur || ""
+    },
+    textesEtude: TEXTES,
+    baseQCM: etat.baseQCM,
+    favorisQcmIds: etat.favorisQcmIds || [],
+    sujetActifId: etat.sujetActifId,
+    texteBrut: editeur.innerText,
+    contenuHTML: etat.contenuHTML,
+    stratesTags: etat.stratesTags,
+    tagsSelectionnes: etat.tagsSelectionnes,
+    performances: etat.performances
+  };
+}
+
+function lancerAuthentificationGoogle(onSuccess, onError){
+  if(!GOOGLE_CLIENT_ID || GOOGLE_CLIENT_ID.startsWith("REMPLACER_")){
+    if(onError) onError("Saisissez votre adresse courriel ci-dessous pour enregistrer votre espace de travail.");
+    return;
+  }
+  if(!(window.google && google.accounts && google.accounts.oauth2)){
+    if(onError) onError("Le service de connexion Google est indisponible hors ligne.");
+    return;
+  }
+
+  const tokenClient = google.accounts.oauth2.initTokenClient({
+    client_id: GOOGLE_CLIENT_ID,
+    scope: "https://www.googleapis.com/auth/drive.file https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/userinfo.profile",
+    hint: etat.googleConfig.email || undefined,
+    callback: async (resp)=>{
+      if(resp && resp.access_token){
+        googleAccessToken = resp.access_token;
+        googleTokenExpiration = Date.now() + ((Number(resp.expires_in) || 3500) * 1000);
+
+        try{
+          const resUser = await fetch("https://www.googleapis.com/oauth2/v3/userinfo", {
+            headers: { Authorization: "Bearer " + googleAccessToken }
+          });
+          if(resUser.ok){
+            const info = await resUser.json();
+            if(info.email) etat.googleConfig.email = info.email;
+            if(info.name) etat.googleConfig.nomUtilisateur = info.name;
+          }
+        }catch(e){}
+
+        sauverEtat();
+        majBadgeGoogle();
+        if(onSuccess) onSuccess();
+      } else {
+        if(onError) onError("La connexion a été interrompue.");
+      }
+    }
+  });
+
+  tokenClient.requestAccessToken({ prompt: estConnecteGoogle() ? "" : "select_account" });
+}
+
+async function obtenirOuCreerDossierDrive(nomDossier){
+  const headers = { Authorization: "Bearer " + googleAccessToken };
+  const q = encodeURIComponent(`name='${nomDossier.replace(/'/g, "\\'")}' and mimeType='application/vnd.google-apps.folder' and trashed=false`);
+  const res = await fetch(`https://www.googleapis.com/drive/v3/files?q=${q}&fields=files(id,name)`, { headers });
+  if(!res.ok) throw new Error("Accès à Google Drive refusé (" + res.status + ")");
+  const data = await res.json();
+  if(data.files && data.files[0]) return data.files[0].id;
+
+  const createRes = await fetch("https://www.googleapis.com/drive/v3/files", {
+    method: "POST",
+    headers: { ...headers, "Content-Type": "application/json" },
+    body: JSON.stringify({ name: nomDossier, mimeType: "application/vnd.google-apps.folder" })
+  });
+  if(!createRes.ok) throw new Error("Création du répertoire refusée");
+  const created = await createRes.json();
+  return created.id;
+}
+
+async function sauvegarderDansGoogleDrive(msgEl){
+  const cfg = etat.googleConfig;
+  const payload = construirePayloadSauvegarde();
+
+  if(estConnecteGoogle()){
+    majBadgeGoogle("syncing");
+    if(msgEl) msgEl.innerHTML = "Enregistrement sur votre espace Google Drive en cours...";
+
+    const folderId = await obtenirOuCreerDossierDrive(cfg.dossierDrive || "TG-Marx_Philosophie");
+    const contenuStr = JSON.stringify(payload, null, 2);
+    const identifiantFichier = (cfg.email || "session").split("@")[0];
+    const fileName = `tg-marx-${identifiantFichier}.json`;
+    const headers = { Authorization: "Bearer " + googleAccessToken };
+    const form = new FormData();
+
+    if(cfg.driveFileId){
+      form.append("metadata", new Blob([JSON.stringify({ name: fileName, mimeType: "application/json" })], { type: "application/json" }));
+      form.append("file", new Blob([contenuStr], { type: "application/json" }));
+      const resPatch = await fetch(`https://www.googleapis.com/upload/drive/v3/files/${cfg.driveFileId}?uploadType=multipart`, {
+        method: "PATCH", headers, body: form
+      });
+      if(!resPatch.ok){
+        cfg.driveFileId = "";
+        return sauvegarderDansGoogleDrive(msgEl);
+      }
+    } else {
+      form.append("metadata", new Blob([JSON.stringify({ name: fileName, mimeType: "application/json", parents: [folderId] })], { type: "application/json" }));
+      form.append("file", new Blob([contenuStr], { type: "application/json" }));
+      const resPost = await fetch("https://www.googleapis.com/upload/drive/v3/files?uploadType=multipart&fields=id,name", {
+        method: "POST", headers, body: form
+      });
+      if(!resPost.ok) throw new Error("Échec de l'envoi vers Google Drive");
+      const createdFile = await resPost.json();
+      cfg.driveFileId = createdFile.id;
+    }
+
+    cfg.dernierSync = new Date().toLocaleString("fr-FR");
+    sauverEtat();
+    majBadgeGoogle();
+    if(msgEl) msgEl.innerHTML = `✓ Travail enregistré sur Google Drive dans <strong>${esc(cfg.dossierDrive)}/${esc(fileName)}</strong>.`;
+    return;
+  }
+
+  if(APPS_SCRIPT_URL){
+    majBadgeGoogle("syncing");
+    if(msgEl) msgEl.innerHTML = "Enregistrement en ligne en cours...";
+    await fetch(APPS_SCRIPT_URL, {
+      method: "POST",
+      mode: "no-cors",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(payload)
+    });
+    cfg.dernierSync = new Date().toLocaleString("fr-FR");
+    sauverEtat();
+    majBadgeGoogle();
+    if(msgEl) msgEl.innerHTML = `✓ Session enregistrée pour <strong>${esc(cfg.email)}</strong> (${esc(cfg.dernierSync)}).`;
+  }
+}
+
+async function listerSauvegardesDrive(){
+  if(!estConnecteGoogle()) return [];
+  const folderId = await obtenirOuCreerDossierDrive(etat.googleConfig.dossierDrive || "TG-Marx_Philosophie");
+  const q = encodeURIComponent(`'${folderId}' in parents and mimeType='application/json' and trashed=false`);
+  const res = await fetch(`https://www.googleapis.com/drive/v3/files?q=${q}&orderBy=modifiedTime desc&fields=files(id,name,modifiedTime)`, {
+    headers: { Authorization: "Bearer " + googleAccessToken }
+  });
+  if(!res.ok) return [];
+  const data = await res.json();
+  return data.files || [];
+}
+
+async function chargerDepuisGoogleDrive(fileId, msgEl){
+  if(!estConnecteGoogle()) return;
+  if(msgEl) msgEl.innerHTML = "Récupération de votre document depuis Google Drive...";
+  const res = await fetch(`https://www.googleapis.com/drive/v3/files/${fileId}?alt=media`, {
+    headers: { Authorization: "Bearer " + googleAccessToken }
+  });
+  if(!res.ok) throw new Error("Lecture du document impossible");
+  const doc = await res.json();
+  fusionnerDocumentImporte(doc);
+  etat.googleConfig.driveFileId = fileId;
+  sauverEtat();
+  if(msgEl) msgEl.innerHTML = "✓ Document et parcours restaurés depuis Google Drive.";
+}
+
+let timerSyncAuto = null;
+function planifierSyncDrive(){
+  if(!estConnecteGoogle() && !(APPS_SCRIPT_URL && etat.googleConfig.email)) return;
+  clearTimeout(timerSyncAuto);
+  timerSyncAuto = setTimeout(async ()=>{
+    try{ await sauvegarderDansGoogleDrive(null); }catch(e){ majBadgeGoogle(); }
+  }, 3000);
+}
+
+function ouvrirModalGoogleDrive(){
+  const cfg = etat.googleConfig || {};
+  const connecte = estConnecteGoogle();
+  const oauthPret = Boolean(GOOGLE_CLIENT_ID && !GOOGLE_CLIENT_ID.startsWith("REMPLACER_"));
+
+  const w = document.createElement("div");
+  w.className = "modalwrap";
+  w.onclick = (e)=>{ if(e.target === w) w.remove(); };
+
+  w.innerHTML = `
+    <div class="modalbox">
+      <div class="entete-app-modale">
+        <div class="logo-c2phi">${svgLogoC2Phi(46)}</div>
+        <div class="titre-app-modale">
+          <h2>TG — Marx : liberté et matérialisme</h2>
+          <p class="sous-titre-app">
+            Rédaction guidée · <a href="${APP_META.siteUrl}" target="_blank" rel="noopener">c2phi.fr</a> · <a href="${APP_META.githubUrl}" target="_blank" rel="noopener">github.com/c2phi-prof</a>
+          </p>
+        </div>
+      </div>
+
+      <p class="presentation-app">
+        Rédigez <strong>au kilomètre</strong> sur la feuille de gauche en partant des quatre textes de Marx : l'application repère vos notions clés, propose des questionnaires ciblés et sauvegarde automatiquement vos textes, vos choix et vos performances.
+      </p>
+
+      <div class="statut-drive" id="statut-drive-msg">
+        ${cfg.email
+          ? `Espace connecté : <strong>${esc(cfg.nomUtilisateur || cfg.email)}</strong> (${esc(cfg.email)})<br>Répertoire de sauvegarde : <strong>${esc(cfg.dossierDrive)}</strong>${cfg.dernierSync ? ` · Dernier enregistrement : ${esc(cfg.dernierSync)}` : ""}`
+          : `Identifiez-vous avec votre compte Google pour enregistrer automatiquement vos écrits et vos résultats en ligne, et les retrouver sur n'importe quel appareil.`}
+      </div>
+
+      <div class="champ-config">
+        <label for="g-email-direct">Votre adresse courriel Google</label>
+        <input type="email" id="g-email-direct" value="${esc(cfg.email || "")}" placeholder="prenom.nom@gmail.com">
+      </div>
+
+      <div class="champ-config">
+        <label for="g-dossier">Nom du dossier dans Google Drive</label>
+        <input type="text" id="g-dossier" value="${esc(cfg.dossierDrive || "TG-Marx_Philosophie")}">
+      </div>
+
+      <div id="zone-fichiers-drive"></div>
+
+      <div style="margin-top:14px">
+        <button type="button" id="btn-g-save">Enregistrer mon travail</button>
+        ${connecte ? `<button type="button" class="ghost" id="btn-g-lister">Ouvrir un document Drive</button>` : ""}
+        ${cfg.email ? `<button type="button" class="danger" id="btn-g-deco">Se déconnecter</button>` : ""}
+        <button type="button" class="ghost" onclick="this.closest('.modalwrap').remove()">Fermer</button>
+      </div>
+    </div>
+  `;
+  document.body.appendChild(w);
+
+  const msgEl = document.getElementById("statut-drive-msg");
+
+  document.getElementById("btn-g-save").onclick = async ()=>{
+    etat.googleConfig.dossierDrive = document.getElementById("g-dossier").value.trim() || "TG-Marx_Philosophie";
+    const emailInp = document.getElementById("g-email-direct");
+    if(emailInp){
+      const val = emailInp.value.trim();
+      if(!val || !val.includes("@")){
+        msgEl.innerHTML = "Veuillez saisir une adresse courriel Google valide.";
+        return;
+      }
+      etat.googleConfig.email = val;
+      majBadgeGoogle();
+    }
+    sauverEtat();
+
+    if(oauthPret && !estConnecteGoogle()){
+      lancerAuthentificationGoogle(
+        async ()=>{ await sauvegarderDansGoogleDrive(msgEl); },
+        (errMsg)=>{ msgEl.innerHTML = esc(errMsg); }
+      );
+      return;
+    }
+
+    try{
+      await sauvegarderDansGoogleDrive(msgEl);
+      if(!oauthPret && !APPS_SCRIPT_URL){
+        exporterJSON();
+        msgEl.innerHTML = `Compte <strong>${esc(etat.googleConfig.email)}</strong> enregistré. Le fichier de sauvegarde a été téléchargé pour le dossier <strong>${esc(etat.googleConfig.dossierDrive)}</strong>.`;
+      }
+    }catch(err){
+      msgEl.innerHTML = "Erreur : " + esc(err.message);
+    }
+  };
+
+  const btnLister = document.getElementById("btn-g-lister");
+  if(btnLister){
+    btnLister.onclick = async ()=>{
+      const zoneF = document.getElementById("zone-fichiers-drive");
+      zoneF.innerHTML = "Recherche de vos documents sur Google Drive...";
+      const fichiers = await listerSauvegardesDrive();
+      if(fichiers.length === 0){
+        zoneF.innerHTML = "<p>Aucun document trouvé dans ce répertoire.</p>";
+        return;
+      }
+      zoneF.innerHTML = `<div class="liste-fichiers-drive">${fichiers.map(f => `
+        <div class="item-fichier-drive">
+          <span><strong>${esc(f.name)}</strong> (${new Date(f.modifiedTime).toLocaleString("fr-FR")})</span>
+          <button type="button" data-fid="${esc(f.id)}">Ouvrir</button>
+        </div>
+      `).join("")}</div>`;
+
+      zoneF.querySelectorAll("button[data-fid]").forEach(b => {
+        b.onclick = async ()=>{
+          try{ await chargerDepuisGoogleDrive(b.dataset.fid, msgEl); }
+          catch(err){ msgEl.innerHTML = "Erreur : " + esc(err.message); }
+        };
+      });
+    };
+  }
+
+  const btnDeco = document.getElementById("btn-g-deco");
+  if(btnDeco){
+    btnDeco.onclick = ()=>{
+      if(googleAccessToken && window.google && google.accounts && google.accounts.oauth2){
+        try{ google.accounts.oauth2.revoke(googleAccessToken, ()=>{}); }catch(e){}
+      }
+      googleAccessToken = "";
+      googleTokenExpiration = 0;
+      etat.googleConfig.email = "";
+      etat.googleConfig.nomUtilisateur = "";
+      etat.googleConfig.driveFileId = "";
+      etat.googleConfig.dernierSync = "";
+      sauverEtat();
+      majBadgeGoogle();
+      w.remove();
+    };
+  }
+}
+
+document.getElementById("btn-hamburger").addEventListener("click", ouvrirMenuHamburger);
+
+function ouvrirMenuHamburger(){
+  fermerMenuHamburger();
+  const nbFav = Array.isArray(etat.favorisQcmIds) ? etat.favorisQcmIds.length : 0;
+  const w = document.createElement("div");
+  w.className = "menuwrap";
+  w.id = "menuwrap";
+  w.onclick = (e)=>{ if(e.target === w) fermerMenuHamburger(); };
+
+  w.innerHTML = `
+    <div class="menubox" role="dialog" aria-label="Menu TG — Marx">
+      <div class="mtitle">${svgLogoC2Phi(22)}<span>TG — Marx : liberté et matérialisme</span></div>
+      <button type="button" id="m-google"><span class="mic">G</span>Connexion &amp; Google Drive</button>
+      <button type="button" id="m-favoris"><span class="mic">★</span>Mes QCM favoris (${nbFav})</button>
+      <button type="button" id="m-import"><span class="mic">↓</span>Importer (JSON)</button>
+      <button type="button" id="m-export"><span class="mic">↑</span>Sauvegarder (JSON)</button>
+      <button type="button" id="m-bilan"><span class="mic">✓</span>Bilan des performances</button>
+      <button type="button" id="m-parametres"><span class="mic">⚙</span>Paramètres</button>
+    </div>
+  `;
+  document.body.appendChild(w);
+
+  document.getElementById("m-google").onclick = ()=>{ fermerMenuHamburger(); ouvrirModalGoogleDrive(); };
+  document.getElementById("m-favoris").onclick = ()=>{ fermerMenuHamburger(); ouvrirFavorisQcm(); };
+  document.getElementById("m-import").onclick = ()=>{ fermerMenuHamburger(); document.getElementById("fichier-import").click(); };
+  document.getElementById("m-export").onclick = ()=>{ fermerMenuHamburger(); exporterJSON(); };
+  document.getElementById("m-bilan").onclick = ()=>{ fermerMenuHamburger(); ouvrirModalBilan(); };
+  document.getElementById("m-parametres").onclick = ()=>{ fermerMenuHamburger(); ouvrirModalParametres(); };
+}
+
+function fermerMenuHamburger(){
+  const w = document.getElementById("menuwrap");
+  if(w) w.remove();
+}
+
+function ouvrirModalBilan(){
+  const reps = Object.values(etat.performances.reponses || {});
+  const bonnes = reps.filter(r => r.ok).length;
+  const sujetActif = listeSujets.find(x => x.id === etat.sujetActifId);
+  const normTexte = norm(editeur.innerText || "");
+  let trouves = 0;
+  if(sujetActif && sujetActif.motsCles.length > 0){
+    sujetActif.motsCles.forEach(rad => { if(normTexte.includes(rad)) trouves++; });
+  }
+  const pctTexte = (sujetActif && sujetActif.motsCles.length > 0)
+    ? Math.round((trouves / sujetActif.motsCles.length) * 100) : 0;
+
+  const w = document.createElement("div");
+  w.className = "modalwrap";
+  w.onclick = (e)=>{ if(e.target === w) w.remove(); };
+  w.innerHTML = `
+    <div class="modalbox">
+      <h2>Bilan des performances — TG — Marx</h2>
+      <div>• Compte Google : <strong>${esc(etat.googleConfig.email || "Non connecté")}</strong></div>
+      <div>• Base QCM active : <strong>${etat.baseQCM.length}</strong> questions (${listeSujets.length} sujets générés)</div>
+      <div>• QCM favoris enregistrés : <strong>${(etat.favorisQcmIds || []).length}</strong></div>
+      <div>• QCM réussis : <strong>${bonnes} / ${reps.length}</strong></div>
+      <div>• Vérification du texte / sujet choisi : <strong>${pctTexte}%</strong> (${trouves} / ${sujetActif ? sujetActif.motsCles.length : 0} concepts clés)</div>
+      <div>• Strates de tags générées : <strong>${etat.stratesTags.length}</strong></div>
+      <button type="button" onclick="this.closest('.modalwrap').remove()">Fermer</button>
+    </div>
+  `;
+  document.body.appendChild(w);
+}
+
+function ouvrirModalParametres(){
+  const themes = ["pronote", "moderne", "machine", "manuscrit", "nuit"];
+  const w = document.createElement("div");
+  w.className = "modalwrap";
+  w.onclick = (e)=>{ if(e.target === w) w.remove(); };
+
+  w.innerHTML = `
+    <div class="modalbox">
+      <h2>Paramètres — TG — Marx</h2>
+      <div>Thème visuel : <button type="button" class="val-param" id="p-theme">${etat.theme}</button></div>
+      <div>Règle graduée : <button type="button" class="val-param" id="p-regle">${etat.regle ? "visible" : "masquée"}</button></div>
+      <div>Taille du texte : <button type="button" class="val-param" id="p-taille">${etat.taille} px</button></div>
+      <div style="margin-top:14px">
+        <button type="button" id="p-google">Compte Google</button>
+        <button type="button" class="danger" id="p-reset">Réinitialiser la session</button>
+        <button type="button" class="ghost" onclick="this.closest('.modalwrap').remove()">Fermer</button>
+      </div>
+    </div>
+  `;
+  document.body.appendChild(w);
+
+  document.getElementById("p-theme").onclick = (e)=>{
+    etat.theme = themes[(themes.indexOf(etat.theme) + 1) % themes.length];
+    e.target.textContent = etat.theme;
+    appliquerApparence(); sauverEtat();
+  };
+  document.getElementById("p-regle").onclick = (e)=>{
+    etat.regle = !etat.regle;
+    e.target.textContent = etat.regle ? "visible" : "masquée";
+    appliquerApparence(); sauverEtat();
+  };
+  document.getElementById("p-taille").onclick = (e)=>{
+    const tailles = [16, 18, 20];
+    etat.taille = tailles[(tailles.indexOf(etat.taille) + 1) % tailles.length];
+    e.target.textContent = etat.taille + " px";
+    appliquerApparence(); sauverEtat();
+  };
+  document.getElementById("p-google").onclick = ()=>{ w.remove(); ouvrirModalGoogleDrive(); };
+  document.getElementById("p-reset").onclick = ()=>{ localStorage.removeItem(CLE_STORAGE); location.reload(); };
+}
+
+function exporterJSON(){
+  const payload = construirePayloadSauvegarde();
+  const blob = new Blob([JSON.stringify(payload, null, 2)], { type: "application/json" });
+  const a = document.createElement("a");
+  a.href = URL.createObjectURL(blob);
+  a.download = "tg-marx-" + payload.date.slice(0, 10) + ".json";
+  document.body.appendChild(a);
+  a.click();
+  a.remove();
+}
+
+function fusionnerDocumentImporte(doc){
+  const candidats = Array.isArray(doc.baseQCM) ? doc.baseQCM : (Array.isArray(doc.questions) ? doc.questions : []);
+  const existants = new Set(etat.baseQCM.map(q => norm(q.name)));
+  candidats.forEach((item, i) => {
+    if(item && item.name && !existants.has(norm(item.name))){
+      etat.baseQCM.push({
+        id: item.id && !etat.baseQCM.some(x => x.id === item.id) ? item.id : `qcm-imp-${Date.now()}-${i}`,
+        categorie: item.categorie || "Synthèse",
+        scenario: item.scenario || "Parcours importé",
+        type: item.type || "single",
+        name: item.name,
+        options: item.options,
+        answers: item.answers,
+        pairs: item.pairs,
+        segs: item.segs,
+        feedback: item.feedback,
+        repere: item.repere || ""
+      });
+      existants.add(norm(item.name));
+    }
+  });
+
+  if(Array.isArray(doc.favorisQcmIds)){
+    etat.favorisQcmIds = Array.from(new Set([...(etat.favorisQcmIds || []), ...doc.favorisQcmIds]));
+  }
+
+  if(doc.contenuHTML || doc.texteBrut){
+    enregistrerSnapshot(true);
+    const ajout = doc.contenuHTML || `<p>${esc(doc.texteBrut)}</p>`;
+    editeur.innerHTML = editeur.innerHTML ? (editeur.innerHTML + ajout) : ajout;
+    etat.contenuHTML = editeur.innerHTML;
+    enregistrerSnapshot(true);
+  }
+
+  if(Array.isArray(doc.stratesTags)) etat.stratesTags.push(...doc.stratesTags);
+  if(doc.performances){
+    if(doc.performances.reponses){
+      etat.performances.reponses = Object.assign({}, etat.performances.reponses, doc.performances.reponses);
+    }
+    if(Array.isArray(doc.performances.historique)){
+      etat.performances.historique.push(...doc.performances.historique);
+    }
+  }
+
+  reconstruireIndex();
+  sauverEtat();
+  rendreMenuTitres();
+  rendreCascadeTags();
+}
+
+document.getElementById("fichier-import").addEventListener("change", async (e)=>{
+  const file = e.target.files[0];
+  e.target.value = "";
+  if(!file) return;
+  try{
+    fusionnerDocumentImporte(JSON.parse(await file.text()));
+  }catch(err){
+    alert("Fichier JSON invalide.");
+  }
+});
+
+const sauve = chargerEtat();
+if(sauve && Array.isArray(sauve.baseQCM)){
+  etat = Object.assign(etat, sauve);
+  if(!Array.isArray(etat.favorisQcmIds)) etat.favorisQcmIds = [];
+  etat.googleConfig = Object.assign({
+    dossierDrive: "TG-Marx_Philosophie",
+    email: "",
+    nomUtilisateur: "",
+    driveFileId: "",
+    dernierSync: ""
+  }, sauve.googleConfig || {});
+}
+
+reconstruireIndex();
+appliquerApparence();
+window.addEventListener("resize", dessinerRegles);
+
+dessinerRegles();
+rendreMenuTitres();
+rendreSupport();
+initialiserEditeur();
+rendreCascadeTags();
+
+if(etat.qcmActifsIds && etat.qcmActifsIds.length > 0){
+  renderQCM();
+}else{
+  etat.qcmActifsIds = listeSujets[0].qcmIds.slice();
+  sauverEtat();
+  zoneQcmWrapper.hidden = false;
+  renderQCM();
+}
+</script>
+</body>
+</html>
