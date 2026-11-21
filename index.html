@@ -384,10 +384,13 @@ li.item.vu.visible { opacity: .55; }
     relancer(false);
 
     /* ==================================================
-       AGENDA ICS — calendrier semaine (fichier Edt.ics)
+       AGENDA ICS — calendrier semaine (Pronote puis Edt.ics)
        ================================================== */
     (function () {
-        var AGENDA_URL = 'Edt.ics';
+        var SOURCES_AGENDA = [
+            'https://0620040g.index-education.net/pronote/ical/Edt.ics?icalsecurise=3B3E980DAE6C420B742AD360A45DC71EFB66DC2887A57C4FF058DE09462C201D0D4780577E50D00A8FD1A33B6089F764&version=2022.0.2.1&param=66683d31',
+            'Edt.ics'
+        ];
         var CLE_CACHE = 'c2phi-agenda-ics';
         var DELAI_CACHE = 6 * 60 * 60 * 1000;
         var conteneur = document.getElementById('agenda');
@@ -560,17 +563,24 @@ li.item.vu.visible { opacity: .55; }
             conteneur.innerHTML = '<p class="ligne commentaire"># agenda : ' + texte + '</p>';
         }
 
-        fetch(AGENDA_URL, { cache: 'no-cache' })
-            .then(function (r) { if (!r.ok) { throw new Error('ics'); } return r.text(); })
-            .then(function (texte) {
-                ecrireCache(texte);
-                demarrer(parserEvenements(texte));
-            })
-            .catch(function () {
+        function chargerAgenda(indexSource) {
+            if (indexSource >= SOURCES_AGENDA.length) {
                 var texte = lireCache();
                 if (texte) { demarrer(parserEvenements(texte)); }
-                else { afficherMessage('Edt.ics introuvable — déposez le fichier à la racine du dépôt.'); }
-            });
+                else { afficherMessage('agenda indisponible — flux Pronote et Edt.ics inaccessibles.'); }
+                return;
+            }
+            fetch(SOURCES_AGENDA[indexSource], { cache: 'no-cache' })
+                .then(function (r) { if (!r.ok) { throw new Error('ics'); } return r.text(); })
+                .then(function (texte) {
+                    var evts = parserEvenements(texte);
+                    if (!evts.length) { throw new Error('ics vide'); }
+                    ecrireCache(texte);
+                    demarrer(evts);
+                })
+                .catch(function () { chargerAgenda(indexSource + 1); });
+        }
+        chargerAgenda(0);
     })();
 
 })();
