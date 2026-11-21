@@ -618,18 +618,52 @@ label.opt.sel,div.opt.sel{border-color:var(--acc);background:color-mix(in srgb,v
 label.opt.good,div.opt.good{border-color:var(--ok);background:color-mix(in srgb,var(--ok) 15%,var(--card))}
 label.opt.bad,div.opt.bad{border-color:var(--bad);background:color-mix(in srgb,var(--bad) 12%,var(--card))}
 
-input[type=text],input[type=email]{
+input[type=text],input[type=email],textarea.essai-area{
   font-family:var(--font);font-size:1em;color:var(--ink);
   border:1px solid var(--line);border-radius:7px;padding:9px 11px;width:100%;background:var(--card);
+}
+textarea.essai-area{
+  min-height:150px;
+  line-height:1.58;
+  resize:vertical;
 }
 .blank input{display:inline-block;min-width:120px;padding:7px 9px;border:1px solid var(--line);border-radius:6px;background:var(--card);color:var(--ink)}
 select.pairsel{width:100%;margin:6px 0;padding:9px;border:1px solid var(--line);border-radius:7px;background:var(--card);color:var(--ink);font-family:var(--font)}
 
-.card button:not(.btn-inserer-curseur):not(.btn-favori-qcm):not(.btn-demander-ia){
+.card button:not(.btn-inserer-curseur):not(.btn-favori-qcm):not(.btn-gen-format){
   font-family:var(--font);font-size:1em;font-weight:bold;background:var(--acc);color:#fff;
   border:none;border-radius:6px;padding:11px 24px;cursor:pointer;margin-top:14px;
 }
 .card button.ghost{background:var(--ink)}
+
+.barre-formats-ia{
+  display:flex;
+  flex-wrap:wrap;
+  gap:6px;
+  margin-top:14px;
+  padding-top:12px;
+  border-top:1px solid var(--line);
+}
+button.btn-gen-format{
+  margin:0 !important;
+  padding:6px 11px !important;
+  font-family:var(--font) !important;
+  font-size:.8em !important;
+  font-weight:700 !important;
+  background:var(--papier) !important;
+  color:var(--acc) !important;
+  border:1px solid var(--acc) !important;
+  border-radius:6px !important;
+  cursor:pointer;
+}
+button.btn-gen-format:hover:not(:disabled){
+  background:var(--acc) !important;
+  color:#ffffff !important;
+}
+button.btn-gen-format:disabled{
+  opacity:.5;
+  cursor:not-allowed;
+}
 
 .fb{
   margin-top:14px;padding:12px 34px 12px 14px;border-radius:9px;line-height:1.5;font-size:.95em;
@@ -637,60 +671,31 @@ select.pairsel{width:100%;margin:6px 0;padding:9px;border:1px solid var(--line);
 .fb.ok{background:color-mix(in srgb,var(--ok) 14%,var(--card));border:1px solid var(--ok)}
 .fb.no{background:color-mix(in srgb,var(--bad) 12%,var(--card));border:1px solid var(--bad)}
 
-/* ---------- Barre de recherche IA minimaliste ---------- */
-.barre-recherche-ia{
-  margin-top:10px;
-  display:flex;
-  gap:6px;
-  align-items:stretch;
+.grille-4-domaines{
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:8px;
+  margin:10px 0;
 }
-.barre-recherche-ia input[type="text"]{
-  flex:1;
-  min-width:0;
-  padding:7px 10px !important;
-  font-size:.9em !important;
-  border-radius:6px !important;
-  background:var(--papier) !important;
-}
-.barre-recherche-ia input[type="text"]:disabled{
-  opacity:.65;
-  cursor:not-allowed;
-}
-button.btn-demander-ia{
-  margin:0 !important;
-  padding:7px 14px !important;
-  font-family:var(--font) !important;
-  font-size:.88em !important;
-  font-weight:700 !important;
-  background:var(--acc) !important;
-  color:#ffffff !important;
-  border:none !important;
-  border-radius:6px !important;
-  cursor:pointer;
-  white-space:nowrap;
-}
-button.btn-demander-ia:hover:not(:disabled){
-  background:var(--acc2) !important;
-}
-button.btn-demander-ia:disabled{
-  opacity:.5;
-  cursor:not-allowed;
-}
-.reponse-ia-simple{
-  margin-top:8px;
-  padding:10px 12px;
-  border-radius:6px;
+.domaine-note-box{
   background:var(--papier);
   border:1px solid var(--line);
-  font-size:.92em;
-  line-height:1.6;
+  border-radius:6px;
+  padding:8px 10px;
+}
+.domaine-note-top{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  font-size:.84em;
+  font-weight:700;
+  color:var(--acc);
+  margin-bottom:4px;
+}
+.domaine-note-app{
+  font-size:.86em;
+  line-height:1.45;
   color:var(--ink);
-}
-.reponse-ia-simple p{
-  margin-bottom:7px;
-}
-.reponse-ia-simple p:last-child{
-  margin-bottom:0;
 }
 
 .score{font-size:1.25em;text-align:center;margin:10px 0}
@@ -813,6 +818,7 @@ button.btn-demander-ia:disabled{
   #commandes-historique{right:24px}
   #regle-v{display:none}
   .bloc-video-mini{flex:1 1 100%;width:100%}
+  .grille-4-domaines{grid-template-columns:1fr}
 }
 </style>
 </head>
@@ -929,7 +935,7 @@ const SUPPORT_VIDEO = {
     { t: "07:30", s: "Victor Duran-Le Peuch distingue au sein de l'humanisme l'héritage égalitaire des Lumières et le suprémacisme humain qui fonde l'égalité des hommes sur l'exclusion des autres espèces." },
     { t: "09:49", s: "Réjane Sénac définit l'égalité politique non comme l'uniformité mais comme un horizon contre les rapports de domination, intégrant les animaux dans la communauté morale et politique." },
     { t: "13:25", s: "Débat sur la sentience (capacité subjective de sentir souffrance et plaisir) comme critère d'égalité morale contre les trois critères contractualistes de John Rawls avancés par Ariane Nicolas." },
-    { t: "18:28", s: "Discussion sur les droits de la nature et des écosystèmes versus l'égalité de considération des intérêts des individus sentients, et critique de la réification moderne du vivant." },
+    { t: "18:28", s: "Discussion sur les droits de la nature et des écosystèmes / l'égalité de considération des intérêts des individus sentients, et critique de la réification moderne du vivant." },
     { t: "21:18", s: "Ariane Nicolas défend le libéralisme politique et la pluralité des conceptions du bien contre une société antispéciste jugée coercitive." },
     { t: "22:31", s: "Débat sur la singularité humaine : Victor Duran-Le Peuch critique l'instrumentalisation des propres de l'homme pour légitimer une hiérarchie d'essence." },
     { t: "25:17", s: "Réjane Sénac mobilise Aristote (distinction du juste et de l'injuste) et Achille Mbembe (nécropouvoir) pour affirmer que la singularité humaine engage une responsabilité politique envers les autres espèces." },
@@ -1321,8 +1327,7 @@ let etat = {
   ans: {},
   performances: {
     historique: [],
-    reponses: {},
-    recherchesIA: {}
+    reponses: {}
   },
   googleConfig: {
     dossierDrive: "RédigezMoi_Philosophie",
@@ -1340,7 +1345,7 @@ let indexTags = [];
 let listeSujets = [];
 let nbParagraphesPrecedents = 0;
 let derniereSelectionRange = null;
-let requeteIaEnCours = false;
+let generationEnCours = false;
 
 const pileUndo = [];
 const pileRedo = [];
@@ -1419,9 +1424,6 @@ function reconstruireIndex(){
   listeSujets = genererSujetsDepuisQCM(etat.baseQCM);
   if(!etat.sujetActifId || !listeSujets.some(s => s.id === etat.sujetActifId)){
     etat.sujetActifId = listeSujets[0] ? listeSujets[0].id : null;
-  }
-  if(!etat.performances.recherchesIA){
-    etat.performances.recherchesIA = {};
   }
 }
 
@@ -1837,158 +1839,200 @@ btnDeselectionnerTags.addEventListener("click", ()=>{
   rendreCascadeTags();
 });
 
-/* ---------- Recherche IA minimaliste (1 question max par question QCM) ---------- */
-function formaterReponseSimple(texteBrut){
-  return String(texteBrut || "")
-    .split(/\n+/)
-    .map(p => p.trim())
-    .filter(Boolean)
-    .map(p => `<p>${esc(p)}</p>`)
-    .join("");
-}
-
-function construireBlocRechercheIa(qcm){
-  if(!etat.performances.recherchesIA) etat.performances.recherchesIA = {};
-  const dejaPosee = etat.performances.recherchesIA[qcm.id] || null;
-
-  const blocReponseIa = dejaPosee
-    ? `<div class="reponse-ia-simple bloc-copiable" id="rep-ia-${esc(qcm.id)}">${formaterReponseSimple(dejaPosee.reponse)}${boutonCopieDiscret()}</div>`
-    : `<div id="rep-ia-${esc(qcm.id)}"></div>`;
-
-  return `
-    <div class="barre-recherche-ia" id="zone-ia-${esc(qcm.id)}">
-      <input
-        type="text"
-        id="input-ia-${esc(qcm.id)}"
-        value="${dejaPosee ? esc(dejaPosee.question) : ""}"
-        ${dejaPosee || requeteIaEnCours ? "disabled" : ""}
-        onkeydown="if(event.key==='Enter'){event.preventDefault();soumettreRechercheIa('${esc(qcm.id)}');}"
-      >
-      <button
-        type="button"
-        class="btn-demander-ia"
-        id="btn-ia-${esc(qcm.id)}"
-        ${dejaPosee || requeteIaEnCours ? "disabled" : ""}
-        onclick="soumettreRechercheIa('${esc(qcm.id)}')"
-      >Demander</button>
-    </div>
-    ${blocReponseIa}
-  `;
-}
-
-async function soumettreRechercheIa(qcmId){
-  if(requeteIaEnCours) return;
-  if(!etat.performances.recherchesIA) etat.performances.recherchesIA = {};
-  if(etat.performances.recherchesIA[qcmId]) return;
-
-  const qcm = etat.baseQCM.find(x => x.id === qcmId);
-  if(!qcm) return;
-
-  const inputEl = document.getElementById("input-ia-" + qcmId);
-  const btnEl = document.getElementById("btn-ia-" + qcmId);
-  const repContainer = document.getElementById("rep-ia-" + qcmId);
-
-  const questionEleve = (inputEl ? inputEl.value : "").trim();
-  if(!questionEleve){
-    if(inputEl) inputEl.focus();
-    return;
-  }
-
-  requeteIaEnCours = true;
-  if(inputEl) inputEl.disabled = true;
-  if(btnEl) btnEl.disabled = true;
-
-  let bonneRepTexte = "";
-  let feedbackTexte = "";
-  if(Array.isArray(qcm.options)){
-    const b = qcm.options.find(o => o.correct) || qcm.options[0];
-    bonneRepTexte = b ? b.text : "";
-    feedbackTexte = b ? (b.feedback || "") : "";
-  } else if(Array.isArray(qcm.answers)){
-    bonneRepTexte = qcm.answers.join(" ; ");
-    feedbackTexte = qcm.feedback || "";
-  } else if(Array.isArray(qcm.pairs)){
-    bonneRepTexte = qcm.pairs.map(p => `${p.q} → ${p.a}`).join(" ; ");
-  }
-
-  const promptUtilisateur = [
-    `Question du QCM : ${qcm.name}`,
-    `Réponse / explication : ${bonneRepTexte} ${feedbackTexte}`.trim(),
-    `Demande : ${questionEleve}`
-  ].join("\n");
-
-  const bodyPayload = {
-    systemInstruction: {
-      parts: [{
-        text: "Professeur de philosophie en Terminale. Style académique clair, rigoureux et accessible à un élève de Terminale. Développe une explication complète et achevée sans coupure."
-      }]
-    },
-    contents: [{ role: "user", parts: [{ text: promptUtilisateur }] }],
+/* ==========================================================================
+   GÉNÉRATION DE FORMATS PAR IA & ÉVALUATION D'ESSAI SUR 4 DOMAINES
+   ========================================================================== */
+async function appelerGeminiJson(systemInstruction, promptText){
+  const payload = {
+    systemInstruction: { parts: [{ text: systemInstruction }] },
+    contents: [{ role: "user", parts: [{ text: promptText }] }],
     generationConfig: {
       temperature: 0.4,
-      maxOutputTokens: 1200
+      maxOutputTokens: 1200,
+      responseMimeType: "application/json"
     }
   };
 
-  let reponseFinale = "";
-  let succesRequete = false;
-  const modelesCandidats = ["gemini-2.5-flash", "gemini-2.0-flash"];
+  const modeles = ["gemini-2.5-flash", "gemini-2.0-flash"];
+  let dernierErreur = "";
 
-  for(const modele of modelesCandidats){
+  for(const modele of modeles){
     const controller = new AbortController();
-    const timerAbort = setTimeout(()=> controller.abort(), 35000);
+    const timer = setTimeout(()=> controller.abort(), 35000);
     try{
-      const endpoint = `https://generativelanguage.googleapis.com/v1beta/models/${modele}:generateContent?key=${encodeURIComponent(CLE_API_GEMINI)}`;
-      const res = await fetch(endpoint, {
+      const url = `https://generativelanguage.googleapis.com/v1beta/models/${modele}:generateContent?key=${encodeURIComponent(CLE_API_GEMINI)}`;
+      const res = await fetch(url, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(bodyPayload),
+        body: JSON.stringify(payload),
         signal: controller.signal
       });
-      clearTimeout(timerAbort);
+      clearTimeout(timer);
       if(!res.ok){
         const errObj = await res.json().catch(()=>({}));
         throw new Error(errObj.error?.message || `HTTP ${res.status}`);
       }
-      const json = await res.json();
-      const texteGenere = json?.candidates?.[0]?.content?.parts?.map(p => p.text || "").join("").trim();
-      if(texteGenere){
-        reponseFinale = texteGenere;
-        succesRequete = true;
-        break;
-      }
+      const data = await res.json();
+      const raw = data?.candidates?.[0]?.content?.parts?.map(p => p.text || "").join("").trim() || "";
+      const cleaned = raw.replace(/^```json\s*/i, "").replace(/^```\s*/i, "").replace(/\s*```$/i, "").trim();
+      return JSON.parse(cleaned);
     }catch(err){
-      clearTimeout(timerAbort);
-      reponseFinale = err.name === "AbortError" ? "Délai dépassé." : err.message;
+      clearTimeout(timer);
+      dernierErreur = err.name === "AbortError" ? "Délai dépassé." : err.message;
     }
   }
+  throw new Error(dernierErreur || "Erreur IA");
+}
 
-  requeteIaEnCours = false;
+async function genererQuestionFormat(formatType){
+  if(generationEnCours) return;
+  const Q = obtenirQcmActifs();
+  const refQ = Q[etat.qIndex] || etat.baseQCM[0];
+  if(!refQ) return;
 
-  if(succesRequete){
-    etat.performances.recherchesIA[qcmId] = {
-      question: questionEleve,
-      reponse: reponseFinale,
-      date: new Date().toISOString()
+  generationEnCours = true;
+  card.querySelectorAll(".btn-gen-format").forEach(b => b.disabled = true);
+
+  const sujetActif = listeSujets.find(s => s.id === etat.sujetActifId);
+  const contexte = [
+    `Sujet : ${sujetActif ? sujetActif.titre : ""}`,
+    `Catégorie : ${refQ.categorie || "Concepts"}`,
+    `Thème : ${refQ.scenario || ""}`,
+    `Question de référence : ${refQ.name}`,
+    `Extrait support : ${SUPPORT_VIDEO.verbatim}`
+  ].join("\n");
+
+  let schemaConsigne = "";
+  if(formatType === "matching"){
+    schemaConsigne = `Génère une question d'association ("type": "matching") en français, niveau Terminale philosophie, sur le thème ci-dessus.
+Retourne un objet JSON exact :
+{"type":"matching","categorie":"${refQ.categorie || "Concepts"}","scenario":"${refQ.scenario || "Association"}","name":"Intitulé de la question d'association","pairs":[{"q":"Notion ou auteur 1","a":"Définition ou thèse 1"},{"q":"Notion ou auteur 2","a":"Définition ou thèse 2"},{"q":"Notion ou auteur 3","a":"Définition ou thèse 3"}]}`;
+  } else if(formatType === "cloze"){
+    schemaConsigne = `Génère une question de texte à trous ("type": "cloze") en français, niveau Terminale philosophie, sur le thème ci-dessus.
+Retourne un objet JSON exact :
+{"type":"cloze","categorie":"${refQ.categorie || "Concepts"}","scenario":"${refQ.scenario || "Texte à trous"}","segs":[{"t":"Début de phrase "},{"blank":["mot1","variante1"]},{"t":" suite de phrase "},{"blank":["mot2","variante2"]},{"t":" fin."}]}`;
+  } else if(formatType === "short"){
+    schemaConsigne = `Génère une question à réponse courte d'une phrase ("type": "short") en français, niveau Terminale philosophie, sur le thème ci-dessus.
+Retourne un objet JSON exact :
+{"type":"short","categorie":"${refQ.categorie || "Concepts"}","scenario":"${refQ.scenario || "Réponse courte"}","name":"Question appelant une réponse d'une phrase","answers":["Réponse attendue en une phrase."],"feedback":"Explication concise d'une phrase."}`;
+  } else {
+    schemaConsigne = `Génère un sujet d'essai appelant une réponse longue d'un paragraphe ("type": "long") en français, niveau Terminale philosophie, sur le thème ci-dessus.
+Retourne un objet JSON exact :
+{"type":"long","categorie":"${refQ.categorie || "Concepts"}","scenario":"${refQ.scenario || "Essai (1 paragraphe)"}","name":"Question d'essai appelant un paragraphe argumenté","repere":"Synthèse de référence attendue en un paragraphe."}`;
+  }
+
+  try{
+    const gen = await appelerGeminiJson(
+      "Tu es professeur de philosophie en Terminale. Produis uniquement un objet JSON valide sans texte hors JSON.",
+      `${contexte}\n\n${schemaConsigne}`
+    );
+
+    const nouvelleQ = {
+      id: `ia-${formatType}-${Date.now()}`,
+      categorie: gen.categorie || refQ.categorie || "Concepts",
+      scenario: gen.scenario || refQ.scenario || "Parcours IA",
+      type: formatType,
+      name: gen.name || (Array.isArray(gen.segs) ? gen.segs.map(s => s.t || (s.blank ? s.blank[0] : "")).join("") : "Question générée"),
+      pairs: Array.isArray(gen.pairs) ? gen.pairs : undefined,
+      segs: Array.isArray(gen.segs) ? gen.segs : undefined,
+      answers: Array.isArray(gen.answers) ? gen.answers : undefined,
+      feedback: gen.feedback || "",
+      repere: gen.repere || ""
     };
+
+    etat.baseQCM.push(nouvelleQ);
+    etat.qcmActifsIds.push(nouvelleQ.id);
+    etat.qIndex = etat.qcmActifsIds.length - 1;
+    etat.answered = false;
+    reconstruireIndex();
     sauverEtat();
     planifierSyncDrive();
-    if(inputEl) inputEl.disabled = true;
-    if(btnEl) btnEl.disabled = true;
-    if(repContainer){
-      repContainer.className = "reponse-ia-simple bloc-copiable";
-      repContainer.innerHTML = formaterReponseSimple(reponseFinale) + boutonCopieDiscret();
-    }
-  } else {
-    if(inputEl) inputEl.disabled = false;
-    if(btnEl) btnEl.disabled = false;
-    if(repContainer){
-      repContainer.className = "reponse-ia-simple";
-      repContainer.innerHTML = `<p>${esc(reponseFinale)}</p>`;
-    }
+    generationEnCours = false;
+    renderQCM();
+  }catch(err){
+    generationEnCours = false;
+    card.querySelectorAll(".btn-gen-format").forEach(b => b.disabled = false);
+    const errDiv = document.createElement("div");
+    errDiv.className = "fb no";
+    errDiv.textContent = err.message;
+    card.appendChild(errDiv);
   }
 }
 
+async function analyserEssaiQuatreDomaines(q, texteEssai){
+  const systemInstruction = `Tu es correcteur de philosophie en classe de Terminale. Évalue l'essai (un paragraphe) par rapport à la question posée selon exactement 4 domaines :
+1. "analyse_question" : Analyse de la question (problématique) — note sur 5 (/5) et appréciation brève.
+2. "argumentation" : Argumentation — note sur 5 (/5) et appréciation brève.
+3. "connaissance" : Connaissance — note sur 5 (/5) et appréciation brève.
+4. "expression_ecrite" : Expression écrite — note sur 5 (/5) et appréciation brève.
+
+Retourne uniquement un JSON exact :
+{
+  "analyse_question": {"note": 0, "appreciation": "..."},
+  "argumentation": {"note": 0, "appreciation": "..."},
+  "connaissance": {"note": 0, "appreciation": "..."},
+  "expression_ecrite": {"note": 0, "appreciation": "..."},
+  "synthese": "..."
+}`;
+
+  const promptText = [
+    `Question posée : ${q.name}`,
+    q.repere ? `Repère attendu : ${q.repere}` : "",
+    `Essai de l'élève : ${texteEssai}`
+  ].filter(Boolean).join("\n");
+
+  return appelerGeminiJson(systemInstruction, promptText);
+}
+
+function rendreEvaluationQuatreDomaines(evalObj){
+  if(!evalObj) return "";
+  const domaines = [
+    { key: "analyse_question", label: "Analyse de la question (problématique)" },
+    { key: "argumentation", label: "Argumentation" },
+    { key: "connaissance", label: "Connaissance" },
+    { key: "expression_ecrite", label: "Expression écrite" }
+  ];
+
+  let total = 0;
+  const cartes = domaines.map(d => {
+    const item = evalObj[d.key] || { note: 0, appreciation: "" };
+    const n = Number(item.note) || 0;
+    total += n;
+    return `
+      <div class="domaine-note-box">
+        <div class="domaine-note-top">
+          <span>${esc(d.label)}</span>
+          <span>${n} / 5</span>
+        </div>
+        <div class="domaine-note-app">${esc(item.appreciation || "")}</div>
+      </div>
+    `;
+  }).join("");
+
+  return `
+    <div class="fb ok bloc-copiable">
+      <strong>Évaluation sur 4 domaines — Total : ${total} / 20</strong>
+      <div class="grille-4-domaines">${cartes}</div>
+      ${evalObj.synthese ? `<div>${esc(evalObj.synthese)}</div>` : ""}
+      ${boutonCopieDiscret()}
+    </div>
+  `;
+}
+
+function barreFormatsIA(){
+  return `
+    <div class="barre-formats-ia">
+      <button type="button" class="btn-gen-format" onclick="genererQuestionFormat('matching')">+ Association</button>
+      <button type="button" class="btn-gen-format" onclick="genererQuestionFormat('cloze')">+ Texte à trous</button>
+      <button type="button" class="btn-gen-format" onclick="genererQuestionFormat('short')">+ Réponse courte</button>
+      <button type="button" class="btn-gen-format" onclick="genererQuestionFormat('long')">+ Essai (1 paragraphe)</button>
+    </div>
+  `;
+}
+
+/* ==========================================================================
+   MOTEUR DE QCM
+   ========================================================================== */
 function obtenirQcmActifs(){
   return etat.qcmActifsIds
     .map(id => etat.baseQCM.find(q => q.id === id))
@@ -2069,10 +2113,10 @@ function copierBlocVersCurseur(e, btn){
   if(!conteneur) return;
 
   const clone = conteneur.cloneNode(true);
-  clone.querySelectorAll(".btn-inserer-curseur, input, select").forEach(el => el.remove());
+  clone.querySelectorAll(".btn-inserer-curseur, input, select, textarea").forEach(el => el.remove());
 
   const titreFb = clone.querySelector("strong");
-  if(titreFb && /^(Réponse acceptée|Explication)/i.test(titreFb.textContent.trim())){
+  if(titreFb && /^(Réponse acceptée|Explication|Évaluation sur 4 domaines)/i.test(titreFb.textContent.trim())){
     const nextBr = titreFb.nextSibling;
     if(nextBr && nextBr.nodeName === "BR") nextBr.remove();
     titreFb.remove();
@@ -2157,6 +2201,8 @@ function renderQCM(){
     });
   } else if(q.type === "short"){
     h += '<p class="qtext bloc-copiable">' + esc(q.name) + boutonCopieDiscret() + '</p><input type="text" id="shortin" onkeydown="if(event.key===\'Enter\'){event.preventDefault();validate();}">';
+  } else if(q.type === "long"){
+    h += '<p class="qtext bloc-copiable">' + esc(q.name) + boutonCopieDiscret() + '</p><textarea class="essai-area" id="longin"></textarea>';
   } else if(q.type === "matching"){
     h += '<p class="qtext bloc-copiable">' + esc(q.name) + boutonCopieDiscret() + '</p>';
     const pool = shuffle(q.pairs.map(p => p.a));
@@ -2173,6 +2219,7 @@ function renderQCM(){
   }
 
   h += '<button id="valbtn" onclick="validate()">Valider</button>';
+  h += barreFormatsIA();
   card.innerHTML = h;
 
   const btnFav = document.getElementById("btn-toggle-favori");
@@ -2193,11 +2240,55 @@ function markSel(){
   });
 }
 
-function validate(){
+async function validate(){
   if(etat.answered) return;
   const Q = obtenirQcmActifs();
   const q = Q[etat.qIndex];
   let ok = false, fb = "";
+
+  if(q.type === "long"){
+    const area = document.getElementById("longin");
+    const valBtn = document.getElementById("valbtn");
+    const texteEssai = (area ? area.value : "").trim();
+    if(!texteEssai){
+      if(area) area.focus();
+      return;
+    }
+    if(area) area.disabled = true;
+    if(valBtn) valBtn.disabled = true;
+    etat.answered = true;
+
+    try{
+      const evalObj = await analyserEssaiQuatreDomaines(q, texteEssai);
+      const total = (Number(evalObj.analyse_question?.note) || 0)
+        + (Number(evalObj.argumentation?.note) || 0)
+        + (Number(evalObj.connaissance?.note) || 0)
+        + (Number(evalObj.expression_ecrite?.note) || 0);
+      ok = total >= 10;
+      if(ok) etat.score++;
+      etat.ans[etat.qIndex] = { ok, given: texteEssai, eval4: evalObj };
+      etat.performances.reponses[q.id] = { ok, question: q.name, note20: total, date: new Date().toISOString() };
+
+      const segCourant = card.querySelector(`.segment-prog[data-qidx="${etat.qIndex}"]`);
+      if(segCourant){
+        segCourant.classList.remove("courant");
+        segCourant.classList.add(ok ? "fait-ok" : "fait-ko");
+      }
+      sauverEtat();
+      planifierSyncDrive();
+
+      let h = rendreEvaluationQuatreDomaines(evalObj);
+      h += '<button class="ghost" onclick="redoQ()" style="margin-top:10px">← Refaire cette question</button> ';
+      h += '<button onclick="nextQ()">' + (etat.qIndex + 1 < Q.length ? "Question suivante →" : "Voir le score") + '</button>';
+      card.insertAdjacentHTML("beforeend", h);
+    }catch(err){
+      etat.answered = false;
+      if(area) area.disabled = false;
+      if(valBtn) valBtn.disabled = false;
+      card.insertAdjacentHTML("beforeend", `<div class="fb no">${esc(err.message)}</div>`);
+    }
+    return;
+  }
 
   if(q.type === "single" || q.type === "multi"){
     const selD = [].slice.call(document.querySelectorAll("input[name=q]:checked")).map(i => +i.value);
@@ -2216,10 +2307,13 @@ function validate(){
     fb = corr.map(k => q.options[k].feedback || "").join("<br><br>") || ("Réponse attendue : " + corr.map(k => q.options[k].text).join(" ; "));
   } else if(q.type === "short"){
     const inp = document.getElementById("shortin");
-    ok = q.answers.some(a => norm(a) === norm(inp.value));
+    const repAttendue = Array.isArray(q.answers) && q.answers.length > 0 ? q.answers[0] : "";
+    ok = Array.isArray(q.answers) && q.answers.length > 0
+      ? q.answers.some(a => norm(a) === norm(inp.value))
+      : norm(inp.value).length > 8;
     inp.disabled = true;
     etat.ans[etat.qIndex] = { ok, given: inp.value };
-    fb = q.feedback || ("Réponses acceptées : " + q.answers.join(" ; "));
+    fb = q.feedback || (repAttendue ? ("Réponse attendue : " + repAttendue) : "");
   } else if(q.type === "matching"){
     let allOk = true;
     q.pairs.forEach((p, k) => {
@@ -2256,7 +2350,7 @@ function validate(){
   sauverEtat();
   planifierSyncDrive();
 
-  let h = '<div class="fb bloc-copiable ' + (ok ? "ok" : "no") + '"><strong>' + (ok ? "Réponse acceptée. ✅" : "Explication") + '</strong><br>' + fb + boutonCopieDiscret() + '</div>' + construireBlocRechercheIa(q);
+  let h = '<div class="fb bloc-copiable ' + (ok ? "ok" : "no") + '"><strong>' + (ok ? "Réponse acceptée. ✅" : "Explication") + '</strong><br>' + fb + boutonCopieDiscret() + '</div>';
   h += '<button class="ghost" onclick="redoQ()" style="margin-top:10px">← Refaire cette question</button> ';
   h += '<button onclick="nextQ()">' + (etat.qIndex + 1 < Q.length ? "Question suivante →" : "Voir le score") + '</button>';
   card.insertAdjacentHTML("beforeend", h);
@@ -2317,7 +2411,10 @@ function reviewQCM(){
         h += '<div class="opt bloc-copiable ' + cls + '">' + (o.correct ? "✔ " : "") + esc(o.text) + (picked ? " <em>(votre réponse)</em>" : "") + boutonCopieDiscret() + '</div>';
       });
       const corrText = q.options.filter(o => o.correct).map(o => o.feedback || o.text).join("<br><br>");
-      h += '<div class="fb bloc-copiable ' + (a.ok ? "ok" : "no") + '">' + corrText + boutonCopieDiscret() + '</div>' + construireBlocRechercheIa(q);
+      h += '<div class="fb bloc-copiable ' + (a.ok ? "ok" : "no") + '">' + corrText + boutonCopieDiscret() + '</div>';
+    } else if(q.type === "long"){
+      h += '<div class="bloc-copiable"><p>' + esc(a.given || "") + '</p>' + boutonCopieDiscret() + '</div>';
+      if(a.eval4) h += rendreEvaluationQuatreDomaines(a.eval4);
     } else if(q.type === "matching"){
       q.pairs.forEach((p, j) => {
         const gv = a.given ? a.given[j] : "";
@@ -2397,7 +2494,7 @@ function lancerAuthentificationGoogle(onSuccess, onError){
 
   const tokenClient = google.accounts.oauth2.initTokenClient({
     client_id: GOOGLE_CLIENT_ID,
-    scope: "https://www.googleapis.com/auth/drive.file https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/userinfo.profile",
+    scope: "[https://www.googleapis.com/auth/drive.file](https://www.googleapis.com/auth/drive.file) [https://www.googleapis.com/auth/userinfo.email](https://www.googleapis.com/auth/userinfo.email) [https://www.googleapis.com/auth/userinfo.profile](https://www.googleapis.com/auth/userinfo.profile)",
     hint: etat.googleConfig.email || undefined,
     callback: async (resp)=>{
       if(resp && resp.access_token){
@@ -2405,7 +2502,7 @@ function lancerAuthentificationGoogle(onSuccess, onError){
         googleTokenExpiration = Date.now() + ((Number(resp.expires_in) || 3500) * 1000);
 
         try{
-          const resUser = await fetch("https://www.googleapis.com/oauth2/v3/userinfo", {
+          const resUser = await fetch("[https://www.googleapis.com/oauth2/v3/userinfo](https://www.googleapis.com/oauth2/v3/userinfo)", {
             headers: { Authorization: "Bearer " + googleAccessToken }
           });
           if(resUser.ok){
@@ -2430,12 +2527,12 @@ function lancerAuthentificationGoogle(onSuccess, onError){
 async function obtenirOuCreerDossierDrive(nomDossier){
   const headers = { Authorization: "Bearer " + googleAccessToken };
   const q = encodeURIComponent(`name='${nomDossier.replace(/'/g, "\\'")}' and mimeType='application/vnd.google-apps.folder' and trashed=false`);
-  const res = await fetch(`https://www.googleapis.com/drive/v3/files?q=${q}&fields=files(id,name)`, { headers });
+  const res = await fetch(`[https://www.googleapis.com/drive/v3/files?q=$](https://www.googleapis.com/drive/v3/files?q=$){q}&fields=files(id,name)`, { headers });
   if(!res.ok) throw new Error("Accès à Google Drive refusé (" + res.status + ")");
   const data = await res.json();
   if(data.files && data.files[0]) return data.files[0].id;
 
-  const createRes = await fetch("https://www.googleapis.com/drive/v3/files", {
+  const createRes = await fetch("[https://www.googleapis.com/drive/v3/files](https://www.googleapis.com/drive/v3/files)", {
     method: "POST",
     headers: { ...headers, "Content-Type": "application/json" },
     body: JSON.stringify({ name: nomDossier, mimeType: "application/vnd.google-apps.folder" })
@@ -2463,7 +2560,7 @@ async function sauvegarderDansGoogleDrive(msgEl){
     if(cfg.driveFileId){
       form.append("metadata", new Blob([JSON.stringify({ name: fileName, mimeType: "application/json" })], { type: "application/json" }));
       form.append("file", new Blob([contenuStr], { type: "application/json" }));
-      const resPatch = await fetch(`https://www.googleapis.com/upload/drive/v3/files/${cfg.driveFileId}?uploadType=multipart`, {
+      const resPatch = await fetch(`[https://www.googleapis.com/upload/drive/v3/files/$](https://www.googleapis.com/upload/drive/v3/files/$){cfg.driveFileId}?uploadType=multipart`, {
         method: "PATCH", headers, body: form
       });
       if(!resPatch.ok){
@@ -2473,7 +2570,7 @@ async function sauvegarderDansGoogleDrive(msgEl){
     } else {
       form.append("metadata", new Blob([JSON.stringify({ name: fileName, mimeType: "application/json", parents: [folderId] })], { type: "application/json" }));
       form.append("file", new Blob([contenuStr], { type: "application/json" }));
-      const resPost = await fetch("https://www.googleapis.com/upload/drive/v3/files?uploadType=multipart&fields=id,name", {
+      const resPost = await fetch("[https://www.googleapis.com/upload/drive/v3/files?uploadType=multipart&fields=id,name](https://www.googleapis.com/upload/drive/v3/files?uploadType=multipart&fields=id,name)", {
         method: "POST", headers, body: form
       });
       if(!resPost.ok) throw new Error("Échec de l'envoi vers Google Drive");
@@ -2508,7 +2605,7 @@ async function listerSauvegardesDrive(){
   if(!estConnecteGoogle()) return [];
   const folderId = await obtenirOuCreerDossierDrive(etat.googleConfig.dossierDrive || "RédigezMoi_Philosophie");
   const q = encodeURIComponent(`'${folderId}' in parents and mimeType='application/json' and trashed=false`);
-  const res = await fetch(`https://www.googleapis.com/drive/v3/files?q=${q}&orderBy=modifiedTime desc&fields=files(id,name,modifiedTime)`, {
+  const res = await fetch(`[https://www.googleapis.com/drive/v3/files?q=$](https://www.googleapis.com/drive/v3/files?q=$){q}&orderBy=modifiedTime desc&fields=files(id,name,modifiedTime)`, {
     headers: { Authorization: "Bearer " + googleAccessToken }
   });
   if(!res.ok) return [];
@@ -2519,7 +2616,7 @@ async function listerSauvegardesDrive(){
 async function chargerDepuisGoogleDrive(fileId, msgEl){
   if(!estConnecteGoogle()) return;
   if(msgEl) msgEl.innerHTML = "Récupération de votre document depuis Google Drive...";
-  const res = await fetch(`https://www.googleapis.com/drive/v3/files/${fileId}?alt=media`, {
+  const res = await fetch(`[https://www.googleapis.com/drive/v3/files/$](https://www.googleapis.com/drive/v3/files/$){fileId}?alt=media`, {
     headers: { Authorization: "Bearer " + googleAccessToken }
   });
   if(!res.ok) throw new Error("Lecture du document impossible");
@@ -2555,7 +2652,7 @@ function ouvrirModalGoogleDrive(){
         <div class="titre-app-modale">
           <h2>RédigezMoi</h2>
           <p class="sous-titre-app">
-            Atelier d'aide à la rédaction · <a href="${APP_META.siteUrl}" target="_blank" rel="noopener">c2phi.fr</a> · <a href="${APP_META.githubUrl}" target="_blank" rel="noopener">github.com/c2phi-prof</a>
+            Atelier d'aide à la rédaction · <a href="${APP_META.siteUrl}" target="_blank" rel="noopener">c2phi.fr</a> · <a href="${APP_META.githubUrl}" target="_blank" rel="noopener">[github.com/c2phi-prof](https://github.com/c2phi-prof)</a>
           </p>
         </div>
       </div>
@@ -2740,7 +2837,6 @@ function fermerMenuHamburger(){
 function ouvrirModalBilan(){
   const reps = Object.values(etat.performances.reponses || {});
   const bonnes = reps.filter(r => r.ok).length;
-  const nbIa = Object.keys(etat.performances.recherchesIA || {}).length;
   const sujetActif = listeSujets.find(x => x.id === etat.sujetActifId);
   const normTexte = norm(editeur.innerText || "");
   let trouves = 0;
@@ -2760,8 +2856,7 @@ function ouvrirModalBilan(){
       <div>• Base QCM active : <strong>${etat.baseQCM.length}</strong> questions (${listeSujets.length} sujets générés)</div>
       <div>• QCM favoris enregistrés : <strong>${(etat.favorisQcmIds || []).length}</strong></div>
       <div>• QCM réussis : <strong>${bonnes} / ${reps.length}</strong></div>
-      <div>• Questions IA posées : <strong>${nbIa} / ${etat.baseQCM.length}</strong></div>
-      <div>• Vérification du texte par rapport au sujet choisi : <strong>${pctTexte}%</strong> (${trouves} / ${sujetActif ? sujetActif.motsCles.length : 0} concepts clés)</div>
+      <div>• Vérification du texte / sujet choisi : <strong>${pctTexte}%</strong> (${trouves} / ${sujetActif ? sujetActif.motsCles.length : 0} concepts clés)</div>
       <div>• Strates de tags générées : <strong>${etat.stratesTags.length}</strong></div>
       <button type="button" onclick="this.closest('.modalwrap').remove()">Fermer</button>
     </div>
@@ -2836,7 +2931,8 @@ function fusionnerDocumentImporte(doc){
         answers: item.answers,
         pairs: item.pairs,
         segs: item.segs,
-        feedback: item.feedback
+        feedback: item.feedback,
+        repere: item.repere || ""
       });
       existants.add(norm(item.name));
     }
@@ -2858,9 +2954,6 @@ function fusionnerDocumentImporte(doc){
   if(doc.performances){
     if(doc.performances.reponses){
       etat.performances.reponses = Object.assign({}, etat.performances.reponses, doc.performances.reponses);
-    }
-    if(doc.performances.recherchesIA){
-      etat.performances.recherchesIA = Object.assign({}, etat.performances.recherchesIA, doc.performances.recherchesIA);
     }
     if(Array.isArray(doc.performances.historique)){
       etat.performances.historique.push(...doc.performances.historique);
@@ -2888,8 +2981,6 @@ const sauve = chargerEtat();
 if(sauve && Array.isArray(sauve.baseQCM)){
   etat = Object.assign(etat, sauve);
   if(!Array.isArray(etat.favorisQcmIds)) etat.favorisQcmIds = [];
-  if(!etat.performances) etat.performances = { historique: [], reponses: {}, recherchesIA: {} };
-  if(!etat.performances.recherchesIA) etat.performances.recherchesIA = {};
   etat.googleConfig = Object.assign({
     dossierDrive: "RédigezMoi_Philosophie",
     email: "",
