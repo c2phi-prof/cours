@@ -1,0 +1,480 @@
+var BASE_QCM = [
+  { id:"m1", categorie:"Matérialisme historique", scenario:"Texte 1 — Structure et conscience", type:"single",
+    name:"Selon l'Avant-propos de 1859, que sont les rapports de production ?",
+    options:[
+      {text:"Des rapports nécessaires, indépendants de la volonté des hommes, dans lesquels ils entrent en produisant leur existence (par exemple les rapports de propriété).", correct:true, feedback:"Les rapports de production sont la trame objective de la vie sociale : relations de propriété, d'exploitation, d'échange, que personne n'a choisies individuellement mais qui s'imposent à tous. Ils forment la structure économique — la base — sur laquelle reposent le droit, la politique et les formes de pensée d'une époque."},
+      {text:"Les relations d'amitié que les ouvriers tissent à l'usine.", correct:false, feedback:""},
+      {text:"Des rapports purement juridiques, égaux et volontaires, régis par le seul commerce.", correct:false, feedback:""},
+      {text:"Les idées que les hommes se font de l'économie.", correct:false, feedback:""}]},
+  { id:"m2", categorie:"Matérialisme historique", scenario:"Texte 1 — Structure et conscience", type:"single",
+    name:"Que signifie l'opposition entre base et superstructure ?",
+    options:[
+      {text:"L'économie réelle (base) fonde le droit, la politique et les formes de conscience (superstructure) : le juridique et l'idéologique sont comme un édifice élevé sur des fondations.", correct:true, feedback:"L'image est architecturale : changer la base (les rapports de production) finit par emporter la superstructure (lois, institutions, religions, philosophies). C'est pourquoi Marx analyse l'histoire à partir de l'économie : ce ne sont pas les idées qui mènent le monde, mais les conditions matérielles qui, en se transformant, transforment les idées."},
+      {text:"Le droit est au-dessus de l'économie et la commande souverainement.", correct:false, feedback:""},
+      {text:"Base et superstructure sont deux mots pour la même réalité.", correct:false, feedback:""},
+      {text:"La superstructure désigne ici le rez-de-chaussée des usines.", correct:false, feedback:""}]},
+  { id:"m3", categorie:"Matérialisme historique", scenario:"Texte 1 — Structure et conscience", type:"single",
+    name:"« Ce n'est pas la conscience des hommes qui détermine leur être ; c'est inversement leur être social qui détermine leur conscience. » Que renverse cette formule ?",
+    options:[
+      {text:"Le renversement matérialiste de l'idéalisme (hérité de Hegel) : la pensée n'est plus le principe premier de l'histoire, mais l'expression de conditions sociales et matérielles.", correct:true, feedback:"Formule-cardinal du matérialisme historique : pour Hegel, l'histoire est le déploiement de l'Esprit ; pour Marx, les idées dominantes sont les idées de la classe dominante — elles expriment la position sociale de ceux qui les énoncent. Expliquer la conscience par l'être social, et non plus l'être par la conscience : c'est le geste matérialiste."},
+      {text:"Elle renverse simplement le sens de lecture d'un texte juridique.", correct:false, feedback:""},
+      {text:"Elle énonce que la conscience est immuable et que le social change sans cause.", correct:false, feedback:""},
+      {text:"Elle affirme qu'aucune connaissance n'est possible, comme chez les sceptiques.", correct:false, feedback:""}]},
+  { id:"m4", categorie:"Matérialisme historique", scenario:"Texte 1 — Structure et conscience", type:"single",
+    name:"À quelles conditions commence une ère de révolution sociale, selon le Texte 1 ?",
+    options:[
+      {text:"Quand les rapports de production, de formes de développement des forces productives qu'ils étaient, se changent en entraves : quand le cadre (propriété, institutions) bloque le développement matériel.", correct:true, feedback:"La révolution n'est pas un caprice : elle est la conséquence objective d'une contradiction entre le dynamisme des forces productives et la raideur des rapports de production (exprimés juridiquement en rapports de propriété). Une époque sociale ne disparaît jamais avant que se soient développées toutes les forces productives qu'elle pouvait contenir."},
+      {text:"Quand une idée nouvelle convainc l'ensemble des citoyens.", correct:false, feedback:""},
+      {text:"Quand la superstructure s'effondre seule, sans cause économique.", correct:false, feedback:""},
+      {text:"Quand les forces productives sont volontairement détruites.", correct:false, feedback:""}]},
+  { id:"m5", categorie:"Matérialisme historique", scenario:"Texte 1 — Structure et conscience", type:"short",
+    name:"Quelle formule de six mots condense le matérialisme historique dans le Texte 1 (être / conscience) ?",
+    answers:["l'être social détermine la conscience","l être social determine la conscience"], feedback:"« Ce n'est pas la conscience des hommes qui détermine leur être ; c'est inversement leur être social qui détermine leur conscience » : six mots suffisent à renverser l'idéalisme — l'être social d'abord, la conscience ensuite."},
+  { id:"a1", categorie:"Aliénation", scenario:"Texte 2 — L'aliénation du travail", type:"single",
+    name:"Que signifie précisément que le travail est extérieur à l'ouvrier (Texte 2) ?",
+    options:[
+      {text:"Le travail n'appartient pas à son essence : dans le travail l'ouvrier ne s'affirme pas mais se nie, ne déploie pas une libre activité mais mortifie son corps et ruine son esprit.", correct:true, feedback:"« Extérieur » ne veut pas dire géographiquement au-dehors, mais étranger à l'essence humaine : ce qui devait être l'actualisation de l'homme (la libre activité) devient sa négation. Le repère du programme essentiel / accidentel s'applique : dans le mode de production capitaliste, le travail est accidentel par rapport à l'essence qu'il devrait réaliser."},
+      {text:"L'usine est toujours située à la périphérie de la ville.", correct:false, feedback:""},
+      {text:"Le travail s'accomplit uniquement en plein air, à l'extérieur des bâtiments.", correct:false, feedback:""},
+      {text:"L'ouvrier travaille attaché à l'extérieur de la machine.", correct:false, feedback:""}]},
+  { id:"a2", categorie:"Aliénation", scenario:"Texte 2 — L'aliénation du travail", type:"single",
+    name:"Pourquoi le travail est-il fui comme la peste dès qu'il n'existe pas de contrainte ?",
+    options:[
+      {text:"Parce que ce travail est contraint, forcé : il n'est pas la satisfaction d'un besoin mais un simple moyen de satisfaire des besoins extérieurs à lui ; la fuite spontanée révèle son caractère étranger.", correct:true, feedback:"Test empirique de l'aliénation : l'attitude de fuite quand la contrainte disparaît. Si le travail réalisait l'essence humaine, on ne le fuirait pas ; la fuite est le symptôme de la séparation entre le travailleur et son activité — l'activité ne lui appartient plus."},
+      {text:"Parce que les ouvriers sont naturellement paresseux et indisciplinés.", correct:false, feedback:""},
+      {text:"Parce que la peste sévissait régulièrement dans les ateliers au XIXe siècle.", correct:false, feedback:""},
+      {text:"Parce que le salaire n'est versé que les jours de congé.", correct:false, feedback:""}]},
+  { id:"a3", categorie:"Aliénation", scenario:"Texte 2 — L'aliénation du travail", type:"single",
+    name:"« Il est comme chez lui quand il ne travaille pas, et quand il travaille, il ne se sent pas chez lui. » Quel paradoxe cette formule met-elle en évidence ?",
+    options:[
+      {text:"Dans ses fonctions animales (manger, boire, procréer), l'homme se sent libre ; dans ses fonctions proprement humaines (le travail), il se sent ratatiné et esclave : l'aliénation inverse l'humain et l'animal chez l'homme.", correct:true, feedback:"Le paradoxe est le renversement du propre de l'homme : ce qui est spécifiquement humain (produire librement) est vécu comme servitude, ce qui est pur fonctionnement biologique est vécu comme liberté. L'aliénation du travail est donc aussi une aliénation de l'espèce : l'homme se reconnaît moins dans ce qui le définit."},
+      {text:"L'ouvrier possède deux maisons et alterne entre elles selon les jours.", correct:false, feedback:""},
+      {text:"Le travail procure un logement mais pas le week-end.", correct:false, feedback:""},
+      {text:"L'homme est chez lui partout, même au travail.", correct:false, feedback:""}]},
+  { id:"a4", categorie:"Aliénation", scenario:"Texte 2 — L'aliénation du travail", type:"short",
+    name:"Quel repère du programme le Texte 2 mobilise-t-il, quand Marx écrit que le travail n'appartient pas à l'essence de l'ouvrier ?",
+    answers:["essentiel / accidentel","essentiel/accidentel","l'essentiel et l'accidentel","essentiel accidentel"], feedback:"Repère essentiel / accidentel : dans le mode de production capitaliste, le travail est accidentel par rapport à l'essence humaine qu'il devrait réaliser — il échoue à être ce par quoi l'homme s'accomplit."},
+  { id:"c1", categorie:"Travail et production", scenario:"Texte 3 — Le moyen de travail", type:"single",
+    name:"Qu'est-ce qu'un moyen de travail selon le Texte 3 ?",
+    options:[
+      {text:"Une chose (ou un ensemble de choses) que l'homme interpose entre lui et l'objet de son travail, utilisant ses propriétés pour agir sur d'autres choses conformément à son but.", correct:true, feedback:"Le moyen de travail est un intermédiaire instrumental : la pierre, le couteau, la machine. L'homme n'agit pas immédiatement sur l'objet (comme dans la cueillette, où ses organes suffisent) mais médiatement, par des choses qui prolongent son corps — des organes qu'il ajoute aux siens, allongeant sa stature naturelle."},
+      {text:"Le salaire versé à l'ouvrier en échange de son effort.", correct:false, feedback:""},
+      {text:"Le temps de repos entre deux journées de travail.", correct:false, feedback:""},
+      {text:"La richesse que l'homme retire de la nature sans effort.", correct:false, feedback:""}]},
+  { id:"c2", categorie:"Travail et production", scenario:"Texte 3 — Le moyen de travail", type:"multi",
+    name:"Selon le Texte 3, quels éléments figurent parmi les moyens de travail primitifs ou font de la terre un double réservoir ? (plusieurs réponses)",
+    options:[
+      {text:"La terre, à la fois magasin de vivres primitif et arsenal primitif des moyens de travail.", correct:true, feedback:"La terre est double : réservoir de subsistances (magasin) et réservoir d'instruments (arsenal — la pierre qui tranche, le bois qui sert de levier). Le travail humain commence par s'équiper à partir du donné naturel."},
+      {text:"Les pierres, bois et os façonnés, instruments et armes trouvés dans les cavernes les plus anciennes.", correct:true, feedback:"L'archéologie confirme la thèse : les plus anciennes cavernes contiennent déjà des instruments et armes de pierre — la technique fait partie de l'essence de l'homme dès son origine."},
+      {text:"L'animal dompté et apprivoisé, déjà modifié par le travail.", correct:true, feedback:"L'animal dompté figure au premier rang parmi les moyens de travail primitifs : bête de trait, de somme, de labour — un instrument vivant, produit du travail et moyen de travail à son tour."},
+      {text:"Les actions de bourse et les contrats financiers spéculatifs.", correct:false, feedback:""}]},
+  { id:"c3", categorie:"Travail et production", scenario:"Texte 3 — Le moyen de travail", type:"single",
+    name:"Qu'est-ce qui, selon le Texte 3, caractérise éminemment le travail humain par différence avec l'animal ?",
+    options:[
+      {text:"L'emploi et la création de moyens de travail : l'animal n'use que de ses organes naturels, l'homme invente et transforme des instruments, variables et imprévus.", correct:true, feedback:"L'animal est rivé à ses organes ; l'homme les prolonge par des outils qu'il fabrique lui-même — il transforme aussi ses propres instruments en en créant de nouveaux. Bergson reprendra l'idée : instinct (organe qui est un instrument naturel) contre intelligence (instrument inventé, donc illimité) — l'homo faber."},
+      {text:"La capacité de l'animal à fabriquer des machines complexes.", correct:false, feedback:""},
+      {text:"Le fait de se nourrir sans travailler du tout.", correct:false, feedback:""},
+      {text:"La voix et le chant, que l'animal ne possède pas.", correct:false, feedback:""}]},
+  { id:"d1", categorie:"Individu et société", scenario:"Texte 4 — L'individu et la société", type:"single",
+    name:"Que signifie « zôon politikon » chez Marx (Texte 4) ?",
+    options:[
+      {text:"L'homme est non seulement un animal sociable, mais un animal qui ne peut se constituer comme individu singulier que dans la société : société et individualité ne s'opposent pas, l'une fait l'autre.", correct:true, feedback:"Marx reprend la définition aristotélicienne de l'homme comme animal politique, mais dans un dessein moderne : protester contre l'illusion d'un individu déjà fait qui prêterait à la société ce qu'il posséderait d'abord seul. L'individu autosuffisant des économistes classiques (Robinson) est un mythe : la société n'est pas un essaim d'atomes mais le milieu de constitution de chaque individualité."},
+      {text:"L'homme est un loup pour l'homme dans l'état de nature.", correct:false, feedback:""},
+      {text:"L'homme naît achevé puis entre ensuite, par contrat, dans la société.", correct:false, feedback:""},
+      {text:"Seuls les philosophes sont des animaux politiques.", correct:false, feedback:""}]},
+  { id:"d2", categorie:"Individu et société", scenario:"Texte 4 — L'individu et la société", type:"single",
+    name:"Pourquoi la production en dehors de la société est-elle chose aussi absurde que le développement du langage sans individus parlant ensemble ?",
+    options:[
+      {text:"Parce que le langage et la production ne sont réalisables qu'ensemble et par des êtres en relation : l'individualité humaine n'existe que comme réalité sociale, même quand la société n'est pas là pour l'entourer.", correct:true, feedback:"Marx vise le mythe de Robinson Crusoé, utilisé par l'économie politique pour faire croire à un producteur solitaire. Un civilisé transporté dans un lieu désert ne peut produire seul que parce qu'il possède déjà en puissance les forces propres à la société : la société est en lui, même quand elle n'est pas autour de lui."},
+      {text:"Parce que le langage peut se développer par écrit, sans jamais personne autour.", correct:false, feedback:""},
+      {text:"Parce que le travail solitaire est plus productif que le travail collectif.", correct:false, feedback:""},
+      {text:"Parce que Marx estime qu'il faut toujours travailler à plusieurs pour la bonne forme.", correct:false, feedback:""}]},
+  { id:"x1", categorie:"Association", scenario:"Textes 1-4 — Association", type:"matching",
+    name:"Associez chaque notion du cours de Marx à sa définition correcte.",
+    pairs:[
+      { q:"Forces productives", a:"Les moyens matériels et humains dont dispose une société pour produire (outils, techniques, énergie, savoir-faire)" },
+      { q:"Rapports de production", a:"Les rapports sociaux nécessaires — propriété, exploitation — dans lesquels les hommes produisent leur existence" },
+      { q:"Superstructure", a:"L'ensemble juridique, politique et idéologique élevé sur la base économique, dont les formes correspondent à cette base" },
+      { q:"Aliénation", a:"Le devenir-étranger du travailleur vis-à-vis de son propre travail, qui le nie au lieu de l'affirmer" }
+    ]},
+  { id:"s1", categorie:"Synthèse", scenario:"Textes 1-4 — Synthèse", type:"single",
+    name:"Quelle réponse synthétise le mieux l'unité des quatre textes de la séance ?",
+    options:[
+      {text:"L'homme n'est pas d'abord une conscience solitaire : il est un être matériel, producteur, qui ne se réalise que dans des rapports sociaux — quand ces rapports deviennent entraves ou extériorité, ils aliènent son activité même.", correct:true, feedback:"Fil conducteur du matérialisme historique : l'être social précède la conscience (T1) ; mais tout mode de production ne se vaut pas — celui qui rend le travail forcé aliène l'essence humaine qu'il devrait accomplir (T2) ; l'humanité se définit par la médiation instrumentale (T3) ; l'individualité n'est pas une monade mais un produit social (T4). La liberté exige donc de transformer les rapports, pas seulement les idées."},
+      {text:"Marx montre que les idées règnent seules sur l'histoire et qu'il faut les combattre par d'autres idées.", correct:false, feedback:""},
+      {text:"Le travail individuel suffirait à faire l'humanité de l'homme ; la société n'y change rien.", correct:false, feedback:""},
+      {text:"L'aliénation est un accident psychologique que la bonne volonté de l'ouvrier dissipe.", correct:false, feedback:""}]},
+  { id:"s2", categorie:"Synthèse", scenario:"Textes 1-4 — Synthèse", type:"long",
+    name:"Essai : montrez, à partir des textes de la séance, que la liberté ne peut pas consister à changer les idées seulement — elle exige une transformation des rapports sociaux de production. (Rédigez d'abord sur la feuille de gauche, puis copiez votre paragraphe ici.)",
+    answers:["l'être social détermine la conscience"], feedback:"Piste de correction : partez de la formule du Texte 1 (l'être social détermine la conscience) ; montrez avec le Texte 2 que l'aliénation n'est pas un défaut d'idées mais une structure qui rend le travail extérieur ; concluez avec les Textes 3 et 4 : produire, c'est toujours produire ensemble, avec des instruments historiquement donnés — changer les rapports, c'est changer les hommes qui les vivent."}
+];
+
+var etat = chargerEtat() || {
+  theme: "pronote", taille: 18,
+  sujetActifId: null, contenuHTML: "", stratesTags: [], tagsSelectionnes: [],
+  qcmActifsIds: [], qIndex: 0, score: 0, ans: {}, answered: false, perm: null,
+  performances: { historique: [], reponses: {} }
+};
+function chargerEtat(){ try { return JSON.parse(localStorage.getItem(CLE_STORAGE)); } catch(e){ return null; } }
+function sauverEtat(){ try { localStorage.setItem(CLE_STORAGE, JSON.stringify(etat)); } catch(e){} }
+
+var feuille = document.getElementById('feuille');
+var editeur = document.getElementById('editeur-km');
+var card = document.getElementById('quizcard');
+var zoneQcmWrapper = document.getElementById('zone-qcm-wrapper');
+
+function nbsp(s){ return String(s).replace(/ ([;:!?])/g,"\u00A0$1"); }
+function esc(s){ return nbsp(String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;")); }
+function norm(s){ return String(s||"").toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g,"").replace(/[^a-z0-9 ]/g,"").replace(/\s+/g," ").trim(); }
+function shuffle(a){ for(var i=a.length-1;i>0;i--){ var j=Math.floor(Math.random()*(i+1)), t=a[i]; a[i]=a[j]; a[j]=t; } return a; }
+
+var listeSujets = [];
+function genererSujets(){
+  var s = [];
+  s.push({ id:"s-tous", titre:"Marx et le matérialisme historique : l'homme, un être de rapports ?", qcmIds: BASE_QCM.map(function(q){ return q.id; }) });
+  var parSc = {};
+  BASE_QCM.forEach(function(q){ (parSc[q.scenario] = parSc[q.scenario] || []).push(q.id); });
+  Object.keys(parSc).forEach(function(sc, i){
+    s.push({ id:"s-sc-" + i, titre:sc + " : quelles forces à l'œuvre ?", qcmIds: parSc[sc] });
+  });
+  listeSujets = s;
+  if(!etat.sujetActifId || !listeSujets.some(function(x){ return x.id === etat.sujetActifId; })) etat.sujetActifId = listeSujets[0].id;
+}
+function rendreMenuTitres(){
+  var actif = listeSujets.filter(function(x){ return x.id === etat.sujetActifId; })[0] || listeSujets[0];
+  document.getElementById('titre-sujet-actif').textContent = actif ? actif.titre : "";
+  var l = document.getElementById('liste-sujets-generes');
+  l.innerHTML = "";
+  listeSujets.forEach(function(sujet){
+    var b = document.createElement('button');
+    b.type = "button";
+    b.className = "option-sujet" + (sujet.id === etat.sujetActifId ? " actif" : "");
+    b.innerHTML = '<span class="intitule-sujet">' + esc(sujet.titre) + '</span>';
+    b.onclick = function(){
+      etat.sujetActifId = sujet.id;
+      etat.qcmActifsIds = sujet.qcmIds.slice();
+      etat.qIndex = 0; etat.score = 0; etat.ans = {}; etat.answered = false;
+      sauverEtat();
+      l.hidden = true;
+      rendreMenuTitres();
+      renderQCM();
+    };
+    l.appendChild(b);
+  });
+}
+document.getElementById('btn-ouvrir-sujets').addEventListener('click', function(e){
+  e.stopPropagation();
+  var l = document.getElementById('liste-sujets-generes');
+  l.hidden = !l.hidden;
+});
+document.addEventListener('click', function(e){
+  var l = document.getElementById('liste-sujets-generes');
+  if(!l.hidden && !document.getElementById('bloc-titre-sujet').contains(e.target)) l.hidden = true;
+});
+
+function rendreTextes(){
+  var det = document.getElementById('extrait-container');
+  var h = '<summary>Lire les quatre textes de la séance (cliquez pour déplier)</summary>';
+  TEXTES.forEach(function(t){
+    h += '<details><summary>' + esc(t.titre) + '</summary><blockquote>' + esc(t.contenu) + '</blockquote></details>';
+  });
+  h += '<p class="mini">Lisez et représentez les textes sur la feuille de gauche : les mots-clés repérés pilotent le questionnaire de droite.</p>';
+  det.innerHTML = h;
+}
+
+var MOTSCLES = ["forces productives","rapports de production","superstructure","conscience","être social","aliénation","extérieur","travail forcé","moyen de travail","outil","animal","société","individu","base","révolution","propriété","langage","essence","contrainte","entraves"];
+function analyserParagraphe(texte){
+  var n = norm(texte);
+  if(n.length < 4) return;
+  var trouves = MOTSCLES.filter(function(m){ return n.indexOf(norm(m)) !== -1; }).slice(0, 8);
+  if(!trouves.length) return;
+  var derniere = etat.stratesTags[etat.stratesTags.length - 1];
+  if(derniere && derniere.tags.join(",") === trouves.join(",")) return;
+  etat.stratesTags.push({ extrait: texte.slice(0, 60), tags: trouves });
+  sauverEtat();
+  rendreCascadeTags();
+}
+function rendreCascadeTags(){
+  var l = document.getElementById('cascade-liste');
+  l.innerHTML = "";
+  var total = etat.stratesTags.length;
+  etat.stratesTags.forEach(function(strate, i){
+    var ligne = document.createElement('div');
+    ligne.className = "strate-tags";
+    ligne.style.opacity = Math.max(0.32, 1 - ((total - 1 - i) * 0.22)).toFixed(2);
+    strate.tags.forEach(function(m){
+      var b = document.createElement('button');
+      b.type = "button";
+      var sel = etat.tagsSelectionnes.indexOf(m) !== -1;
+      b.className = "tag-nuage" + (sel ? " selectionne" : "");
+      b.textContent = m;
+      b.onclick = function(){
+        var p = etat.tagsSelectionnes.indexOf(m);
+        if(p >= 0) etat.tagsSelectionnes.splice(p, 1); else etat.tagsSelectionnes.push(m);
+        sauverEtat(); rendreCascadeTags();
+      };
+      ligne.appendChild(b);
+    });
+    l.appendChild(ligne);
+  });
+  l.scrollTop = l.scrollHeight;
+}
+document.getElementById('btn-selectionner-tags').onclick = function(){
+  if(!etat.tagsSelectionnes.length){ etat.qcmActifsIds = []; zoneQcmWrapper.hidden = true; sauverEtat(); return; }
+  var ens = {};
+  BASE_QCM.forEach(function(q){
+    var sources = [q.name];
+    if(q.options) q.options.forEach(function(o){ if(o.correct) sources.push(o.text, o.feedback || ""); });
+    if(q.answers) sources.push(q.answers.join(" "));
+    if(q.pairs) q.pairs.forEach(function(p){ sources.push(p.q, p.a); });
+    var blob = norm(sources.join(" "));
+    etat.tagsSelectionnes.forEach(function(t){ if(blob.indexOf(norm(t)) !== -1) ens[q.id] = true; });
+  });
+  etat.qcmActifsIds = Object.keys(ens);
+  etat.qIndex = 0; etat.score = 0; etat.ans = {}; etat.answered = false;
+  sauverEtat();
+  if(etat.qcmActifsIds.length){ zoneQcmWrapper.hidden = false; renderQCM(); }
+  else zoneQcmWrapper.hidden = true;
+};
+document.getElementById('btn-deselectionner-tags').onclick = function(){
+  etat.tagsSelectionnes = []; sauverEtat(); rendreCascadeTags();
+};
+
+editeur.addEventListener('input', function(){
+  etat.contenuHTML = editeur.innerHTML;
+  sauverEtat();
+  var paras = Array.prototype.slice.call(editeur.querySelectorAll('p, div'));
+  if(paras.length >= 1) analyserParagraphe(paras[paras.length - 1].innerText || "");
+});
+
+function obtenirQcmActifs(){
+  return etat.qcmActifsIds.map(function(id){ return BASE_QCM.filter(function(q){ return q.id === id; })[0]; }).filter(Boolean);
+}
+function renderQCM(){
+  var Q = obtenirQcmActifs();
+  if(!Q.length){ zoneQcmWrapper.hidden = true; return; }
+  zoneQcmWrapper.hidden = false;
+  if(etat.qIndex >= Q.length) etat.qIndex = 0;
+  etat.answered = false;
+  var q = Q[etat.qIndex];
+  var segments = Q.map(function(item, idx){
+    var a = etat.ans[idx];
+    var cls = "segment-prog";
+    if(idx === etat.qIndex) cls += " courant";
+    else if(a && a.ok) cls += " fait-ok";
+    else if(a && !a.ok) cls += " fait-ko";
+    return '<span class="' + cls + '" data-qidx="' + idx + '" title="Question ' + (idx + 1) + '"></span>';
+  }).join("");
+  var h = '<div class="jauge-segments">' + segments + '</div>';
+  h += '<div style="margin-bottom:12px"><span class="mini-tag">' + esc(q.categorie) + '</span> <span class="mini-tag">' + esc(q.scenario) + '</span></div>';
+  h += '<p class="qtext">' + esc(q.name) + '</p>';
+  if(q.type === "single" || q.type === "multi"){
+    var perm = shuffle(q.options.map(function(o, k){ return k; }));
+    etat.perm = perm;
+    perm.forEach(function(orig, d){
+      h += '<label class="opt" id="opt' + d + '"><input type="' + (q.type === "single" ? "radio" : "checkbox") + '" name="q" value="' + d + '" onchange="markSel()"> ' + esc(q.options[orig].text) + '</label>';
+    });
+  } else if(q.type === "short"){
+    h += '<input type="text" id="shortin" placeholder="Votre réponse…" onkeydown="if(event.key===\'Enter\'){event.preventDefault();validate();}">';
+  } else if(q.type === "long"){
+    h += '<textarea id="longin" style="width:100%;min-height:150px;font-family:var(--font);line-height:1.58;resize:vertical;border:1px solid var(--line);border-radius:7px;padding:9px 11px;background:var(--card);color:var(--ink)"></textarea>';
+  } else if(q.type === "matching"){
+    var pool = shuffle(q.pairs.map(function(p){ return p.a; }));
+    q.pairs.forEach(function(p, k){
+      h += '<div style="margin:10px 0"><strong>' + esc(p.q) + '</strong><select class="pairsel" id="sel' + k + '"><option value="">— Choisir —</option>' + pool.map(function(a){ return '<option>' + esc(a) + '</option>'; }).join("") + '</select></div>';
+    });
+  }
+  h += '<button id="valbtn" onclick="validate()">Valider</button>';
+  card.innerHTML = h;
+  Array.prototype.forEach.call(card.querySelectorAll('.segment-prog'), function(seg){
+    seg.addEventListener('click', function(){ etat.qIndex = Number(seg.getAttribute('data-qidx')); renderQCM(); });
+  });
+}
+function markSel(){
+  Array.prototype.forEach.call(document.querySelectorAll('label.opt'), function(l){ l.classList.remove('sel'); });
+  Array.prototype.forEach.call(document.querySelectorAll('input[name=q]'), function(inp){
+    if(inp.checked) inp.closest('label').classList.add('sel');
+  });
+}
+function validate(){
+  if(etat.answered) return;
+  var Q = obtenirQcmActifs();
+  var q = Q[etat.qIndex];
+  var ok = false, fb = "";
+  if(q.type === "single" || q.type === "multi"){
+    var selD = Array.prototype.map.call(document.querySelectorAll('input[name=q]:checked'), function(i){ return +i.value; });
+    var sel = selD.map(function(d){ return etat.perm[d]; });
+    var corr = q.options.map(function(o, k){ return o.correct ? k : -1; }).filter(function(k){ return k >= 0; });
+    ok = q.type === "single" ? (sel.length === 1 && corr.indexOf(sel[0]) >= 0) : (sel.length === corr.length && sel.every(function(s){ return corr.indexOf(s) >= 0; }));
+    etat.perm.forEach(function(orig, d){
+      var el = document.getElementById('opt' + d);
+      if(q.options[orig].correct) el.classList.add('good');
+      else if(selD.indexOf(d) >= 0) el.classList.add('bad');
+      el.querySelector('input').disabled = true;
+    });
+    etat.ans[etat.qIndex] = { ok: ok, given: sel };
+    fb = corr.map(function(k){ return q.options[k].feedback; }).filter(Boolean).join("<br><br>");
+  } else if(q.type === "short" || q.type === "long"){
+    var inp = document.getElementById(q.type === "short" ? 'shortin' : 'longin');
+    var v = (inp.value || "").trim();
+    if(q.type === "long"){
+      if(v.length < 40){ alert("Rédigez au moins quelques phrases avant de valider."); return; }
+      fb = q.feedback || "";
+      ok = true;
+    } else {
+      ok = q.answers.some(function(a){ return norm(a) === norm(v); });
+      fb = q.feedback || ("Réponse attendue : " + q.answers[0]);
+    }
+    inp.disabled = true;
+    etat.ans[etat.qIndex] = { ok: ok, given: v };
+  } else if(q.type === "matching"){
+    var allOk = true;
+    q.pairs.forEach(function(p, k){
+      var s = document.getElementById('sel' + k);
+      if(norm(s.value) !== norm(p.a)) allOk = false;
+      s.disabled = true;
+    });
+    ok = allOk;
+    etat.ans[etat.qIndex] = { ok: ok, given: q.pairs.map(function(p, k){ return document.getElementById('sel' + k).value; }) };
+    fb = "Associations correctes : " + q.pairs.map(function(p){ return p.q + " → " + p.a; }).join(" ; ");
+  }
+  if(ok) etat.score++;
+  etat.answered = true;
+  etat.performances.reponses[q.id] = { ok: ok, question: q.name, date: new Date().toISOString() };
+  var seg = card.querySelector('.segment-prog[data-qidx="' + etat.qIndex + '"]');
+  if(seg){ seg.classList.remove('courant'); seg.classList.add(ok ? 'fait-ok' : 'fait-ko'); }
+  sauverEtat();
+  var rep = '<button class="ghost" onclick="redoQ()" style="margin-top:10px">← Refaire cette question</button> <button onclick="nextQ()">' + (etat.qIndex + 1 < Q.length ? "Question suivante →" : "Voir le score") + '</button>';
+  card.insertAdjacentHTML('beforeend', '<div class="fb ' + (ok ? 'ok' : 'no') + '"><strong>' + (ok ? "Réponse acceptée ✔" : "Explication") + '</strong><br>' + fb + '</div>' + rep);
+}
+function redoQ(){
+  var a = etat.ans[etat.qIndex];
+  if(a && a.ok) etat.score--;
+  delete etat.ans[etat.qIndex];
+  sauverEtat();
+  renderQCM();
+}
+function nextQ(){
+  var Q = obtenirQcmActifs();
+  etat.qIndex++;
+  sauverEtat();
+  if(etat.qIndex < Q.length) renderQCM();
+  else renderScoreQCM();
+}
+function renderScoreQCM(){
+  var Q = obtenirQcmActifs();
+  var n = Q.length, s = etat.score, pct = Math.round(100 * s / Math.max(1, n));
+  card.innerHTML = '<h2 class="score">' + (pct >= 80 ? "🏆 " : "") + 'Score<span class="big">' + s + ' / ' + n + '</span>' + pct + '%</h2><div class="bar"><div id="scorebar" style="width:0%"></div></div><div style="text-align:center"><button onclick="reviewQCM()">Revoir les réponses</button> <button class="ghost" onclick="restartQCM()">Refaire</button></div>';
+  setTimeout(function(){ var b = document.getElementById('scorebar'); if(b) b.style.width = pct + '%'; }, 100);
+}
+function reviewQCM(){
+  var Q = obtenirQcmActifs();
+  var h = '<div style="margin-bottom:10px;font-weight:700;color:var(--acc)">Récapitulatif</div>';
+  Q.forEach(function(q, k){
+    var a = etat.ans[k] || { ok: false, given: null };
+    h += '<div class="rq"><p class="qtext">' + (k + 1) + '. ' + esc(q.name) + '</p>';
+    if(q.options){
+      q.options.forEach(function(o, j){
+        var picked = a.given && a.given.indexOf(j) >= 0;
+        var cls = o.correct ? 'good' : (picked ? 'bad' : '');
+        h += '<div class="opt ' + cls + '">' + (o.correct ? "✔ " : "✖ ") + esc(o.text) + (picked ? ' <em>(votre réponse)</em>' : '') + '</div>';
+      });
+      var corr = q.options.filter(function(o){ return o.correct; }).map(function(o){ return o.feedback || o.text; }).join("<br><br>");
+      h += '<div class="fb ' + (a.ok ? 'ok' : 'no') + '">' + corr + '</div>';
+    } else if(q.pairs){
+      q.pairs.forEach(function(p, j){
+        var gv = a.given ? a.given[j] : "";
+        h += '<p>' + esc(p.q) + ' → <em>' + esc(gv || "—") + '</em>' + (norm(gv) === norm(p.a) ? ' ✔' : ' <span class="mini">(attendu : ' + esc(p.a) + ')</span>') + '</p>';
+      });
+    } else {
+      h += '<div class="fb ' + (a.ok ? 'ok' : 'no') + '">' + esc(a.given || "") + (q.feedback ? '<br><br>' + esc(q.feedback) : '') + '</div>';
+    }
+    h += '</div>';
+  });
+  h += '<div style="text-align:center"><button onclick="restartQCM()">Refaire</button> <button class="ghost" onclick="renderScoreQCM()">Retour au score</button></div>';
+  card.innerHTML = h;
+}
+function restartQCM(){ etat.qIndex = 0; etat.score = 0; etat.ans = {}; sauverEtat(); renderQCM(); }
+
+document.getElementById('btn-hamburger').onclick = function(){
+  var w = document.createElement('div');
+  w.style.cssText = "position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:60;display:flex;align-items:flex-start;justify-content:flex-end;padding:56px 18px";
+  w.onclick = function(e){ if(e.target === w) w.remove(); };
+  var themes = ["pronote","moderne","manuscrit","nuit"];
+  var box = document.createElement('div');
+  box.className = 'menubox';
+  box.innerHTML = '<div class="mtitle">TG — Marx</div>'
+    + '<button id="m-theme">🎨 Thème : ' + etat.theme + '</button>'
+    + '<button id="m-taille">🔎 Taille : ' + etat.taille + ' px</button>'
+    + '<button id="m-export">📤 Sauvegarde (JSON)</button>'
+    + '<button id="m-import">📥 Importer (JSON)</button>'
+    + '<button id="m-bilan">✓ Bilan des performances</button>';
+  w.appendChild(box);
+  document.body.appendChild(w);
+  box.querySelector('#m-theme').onclick = function(){ etat.theme = themes[(themes.indexOf(etat.theme) + 1) % themes.length]; document.body.setAttribute('data-theme', etat.theme); this.innerHTML = '🎨 Thème : ' + etat.theme; sauverEtat(); };
+  box.querySelector('#m-taille').onclick = function(){ var t = [16,18,20]; etat.taille = t[(t.indexOf(etat.taille) + 1) % t.length]; document.documentElement.style.setProperty('--taille-corps', etat.taille + 'px'); this.innerHTML = '🔎 Taille : ' + etat.taille + ' px'; sauverEtat(); };
+  box.querySelector('#m-export').onclick = function(){ w.remove(); exporterJSON(); };
+  box.querySelector('#m-import').onclick = function(){ w.remove(); document.getElementById('fichier-import').click(); };
+  box.querySelector('#m-bilan').onclick = function(){
+    w.remove();
+    var reps = Object.keys(etat.performances.reponses).map(function(k){ return etat.performances.reponses[k]; });
+    var bonnes = reps.filter(function(r){ return r.ok; }).length;
+    alert("BILAN — TG Marx : matérialisme historique\n\nQuestions traitées : " + reps.length + "\nRéponses justes : " + bonnes + "\nRédaction en cours : " + (editeur.innerText || "").length + " caractères\nStrates de mots-clés : " + etat.stratesTags.length);
+  };
+};
+function exporterJSON(){
+  etat.contenuHTML = editeur.innerHTML;
+  var payload = { date: new Date().toISOString(), sujetActifId: etat.sujetActifId, texteBrut: editeur.innerText, contenuHTML: etat.contenuHTML, stratesTags: etat.stratesTags, tagsSelectionnes: etat.tagsSelectionnes, performances: etat.performances };
+  var a = document.createElement('a');
+  a.href = URL.createObjectURL(new Blob([JSON.stringify(payload, null, 2)], { type: "application/json" }));
+  a.download = "tg-marx-" + payload.date.slice(0, 10) + ".json";
+  document.body.appendChild(a); a.click(); a.remove();
+}
+document.getElementById('fichier-import').addEventListener('change', function(e){
+  var f = e.target.files[0];
+  e.target.value = "";
+  if(!f) return;
+  var fr = new FileReader();
+  fr.onload = function(){
+    try {
+      var doc = JSON.parse(fr.result);
+      if(doc.contenuHTML){ editeur.innerHTML = editeur.innerHTML + doc.contenuHTML; etat.contenuHTML = editeur.innerHTML; }
+      if(Array.isArray(doc.stratesTags)) etat.stratesTags = etat.stratesTags.concat(doc.stratesTags);
+      if(doc.performances && doc.performances.reponses) etat.performances.reponses = Object.assign({}, etat.performances.reponses, doc.performances.reponses);
+      sauverEtat(); rendreCascadeTags();
+      alert("Session restaurée.");
+    } catch(err){ alert("Fichier JSON invalide."); }
+  };
+  fr.readAsText(f);
+});
+
+function dessinerRegle(){
+  var h = document.getElementById('regle-h');
+  var px = 37.8;
+  h.innerHTML = "";
+  var largCm = Math.floor((feuille.clientWidth - 184) / px);
+  for(var c = 0; c <= largCm; c++){
+    var t = document.createElement('span');
+    t.style.cssText = "position:absolute;bottom:0;width:1px;height:" + (c % 2 === 0 ? 9 : 5) + "px;left:" + (c * px) + "px;background:currentColor";
+    h.appendChild(t);
+  }
+}
+
+document.body.setAttribute('data-theme', etat.theme || "pronote");
+document.documentElement.style.setProperty('--taille-corps', (etat.taille || 18) + "px");
+if(etat.contenuHTML) editeur.innerHTML = etat.contenuHTML;
+genererSujets();
+rendreMenuTitres();
+rendreTextes();
+rendreCascadeTags();
+dessinerRegle();
+window.addEventListener('resize', dessinerRegle);
+if(!etat.qcmActifsIds || !etat.qcmActifsIds.length){
+  etat.qcmActifsIds = listeSujets[0].qcmIds.slice();
+  sauverEtat();
+}
+zoneQcmWrapper.hidden = false;
+renderQCM();
+</script>
+</body>
+</html>
