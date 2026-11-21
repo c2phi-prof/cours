@@ -479,7 +479,7 @@ button.burgerbtn:hover{border-color:var(--acc);color:var(--acc)}
 }
 .menubox .mic{width:20px;text-align:center;font-weight:700}
 
-/* ---------- Carte QCM : Titre seul + Système graphique progression & catégorie + Favoris ---------- */
+/* ---------- Carte QCM ---------- */
 #zone-qcm-wrapper{display:flex;flex-direction:column;gap:10px}
 #zone-qcm-wrapper[hidden]{display:none}
 .barre-qcm-meta{display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap}
@@ -637,45 +637,28 @@ select.pairsel{width:100%;margin:6px 0;padding:9px;border:1px solid var(--line);
 .fb.ok{background:color-mix(in srgb,var(--ok) 14%,var(--card));border:1px solid var(--ok)}
 .fb.no{background:color-mix(in srgb,var(--bad) 12%,var(--card));border:1px solid var(--bad)}
 
-/* ---------- Barre de recherche IA + indications supplémentaires (1 requête max / question) ---------- */
+/* ---------- Barre de recherche IA minimaliste ---------- */
 .barre-recherche-ia{
-  margin-top:14px;
-  padding-top:12px;
-  border-top:1px dashed color-mix(in srgb,var(--acc) 35%,var(--line));
+  margin-top:10px;
   display:flex;
-  flex-direction:column;
   gap:6px;
-}
-.entete-recherche-ia{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  font-size:.76em;
-  font-weight:700;
-  text-transform:uppercase;
-  letter-spacing:.04em;
-  color:var(--acc);
-}
-.ligne-saisie-ia{
-  display:flex;
-  gap:8px;
   align-items:stretch;
 }
-.ligne-saisie-ia input[type="text"]{
+.barre-recherche-ia input[type="text"]{
   flex:1;
   min-width:0;
-  padding:8px 11px !important;
+  padding:7px 10px !important;
   font-size:.9em !important;
   border-radius:6px !important;
   background:var(--papier) !important;
 }
-.ligne-saisie-ia input[type="text"]:disabled{
+.barre-recherche-ia input[type="text"]:disabled{
   opacity:.65;
   cursor:not-allowed;
 }
 button.btn-demander-ia{
   margin:0 !important;
-  padding:8px 16px !important;
+  padding:7px 14px !important;
   font-family:var(--font) !important;
   font-size:.88em !important;
   font-weight:700 !important;
@@ -693,77 +676,21 @@ button.btn-demander-ia:disabled{
   opacity:.5;
   cursor:not-allowed;
 }
-.ligne-indications-ia{
-  display:flex;
-  align-items:stretch;
-}
-.ligne-indications-ia input[type="text"]{
-  width:100%;
-  padding:7px 11px !important;
-  font-size:.84em !important;
-  border-radius:6px !important;
-  border-style:dashed !important;
-  background:color-mix(in srgb,var(--acc) 3%,var(--papier)) !important;
-}
-.ligne-indications-ia input[type="text"]:disabled{
-  opacity:.65;
-  cursor:not-allowed;
-}
-
-.reponse-ia-academique{
+.reponse-ia-simple{
   margin-top:8px;
-  padding:12px 34px 12px 14px;
-  border-radius:7px;
+  padding:10px 12px;
+  border-radius:6px;
   background:var(--papier);
   border:1px solid var(--line);
-  border-left:3px solid var(--acc);
   font-size:.92em;
-  line-height:1.62;
+  line-height:1.6;
   color:var(--ink);
 }
-.reponse-ia-academique .titre-ia-term{
-  display:block;
-  font-size:.78em;
-  font-weight:700;
-  text-transform:uppercase;
-  letter-spacing:.04em;
-  color:var(--acc);
-  margin-bottom:6px;
+.reponse-ia-simple p{
+  margin-bottom:7px;
 }
-.reponse-ia-academique p{
-  margin-bottom:8px;
-}
-.reponse-ia-academique p:last-child{
+.reponse-ia-simple p:last-child{
   margin-bottom:0;
-}
-
-.signature-modele-ia{
-  margin-top:10px;
-  padding-top:8px;
-  border-top:1px solid var(--line);
-  display:inline-flex;
-  align-items:center;
-  gap:8px;
-  font-size:.78em;
-  color:var(--ink);
-  opacity:.88;
-}
-.vignette-logo-llm{
-  width:22px;
-  height:22px;
-  border-radius:5px;
-  display:inline-flex;
-  align-items:center;
-  justify-content:center;
-  background:color-mix(in srgb,var(--acc) 12%,var(--card));
-  border:1px solid color-mix(in srgb,var(--acc) 35%,var(--line));
-  flex-shrink:0;
-}
-.signature-modele-ia code{
-  font-family:'Courier New',Courier,monospace;
-  font-size:.95em;
-  font-weight:700;
-  color:var(--acc);
 }
 
 .score{font-size:1.25em;text-align:center;margin:10px 0}
@@ -950,9 +877,6 @@ button.btn-demander-ia:disabled{
 <script>
 "use strict";
 
-/* ==========================================================================
-   IDENTITÉ DE L'APPLICATION : RédigezMoi — c2phi.fr / github.com/c2phi-prof
-   ========================================================================== */
 const APP_META = {
   nom: "RédigezMoi",
   siteUrl: "https://c2phi.fr",
@@ -961,7 +885,6 @@ const APP_META = {
 };
 
 const CLE_API_GEMINI = "AQ.Ab8RN6J_jhRoWQfLy-9LVg1Ak0ULT7j2npAFQq41rR3rWEj-2w";
-const INDICATIONS_DEFAUT = "Indications supplémentaire...";
 
 function svgLogoC2Phi(taillePx){
   const s = taillePx || 44;
@@ -975,15 +898,6 @@ function svgLogoC2Phi(taillePx){
     <path d="M108 62 A48 48 0 0 1 62 108 L62 92 A32 32 0 0 0 92 62 Z" fill="#f39c12"/>
     <polygon points="110,84 98,98 90,86" fill="#f39c12"/>
   </svg>`;
-}
-
-function svgVignetteModele(modelId){
-  const id = String(modelId || "gemini");
-  return `<span class="vignette-logo-llm" title="Modèle : ${id}">
-    <svg width="16" height="16" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-label="${id}">
-      <path d="M12 2 C12.6 8.2 15.8 11.4 22 12 C15.8 12.6 12.6 15.8 12 22 C11.4 15.8 8.2 12.6 2 12 C8.2 11.4 11.4 8.2 12 2 Z" fill="currentColor"/>
-    </svg>
-  </span>`;
 }
 
 const GOOGLE_CLIENT_ID = "";
@@ -1025,7 +939,6 @@ const SUPPORT_VIDEO = {
   ]
 };
 
-/* ---------- Palette graphique par catégorie ---------- */
 const COULEURS_CATEGORIES = {
   "Concepts":     "#2e7d32",
   "Humanisme":    "#1c5d99",
@@ -1247,9 +1160,6 @@ const BASE_QCM_INITIALE = [
   }
 ];
 
-/* ==========================================================================
-   INDEXATION DES TAGS & GÉNÉRATION DES SUJETS
-   ========================================================================== */
 const STOPWORDS = new Set([
   "dans","pour","avec","sans","sous","vers","chez","entre","comme","ainsi","donc","mais","or","ni","car",
   "que","qui","quoi","dont","quel","quelle","quels","quelles","lequel","laquelle","lesquels",
@@ -1392,7 +1302,6 @@ function genererSujetsDepuisQCM(baseQCM){
   return sujets;
 }
 
-/* ---------- État de l'application ---------- */
 const CLE_STORAGE = "redigezmoi-antispecisme-v2";
 let etat = {
   theme: "pronote",
@@ -1433,7 +1342,6 @@ let nbParagraphesPrecedents = 0;
 let derniereSelectionRange = null;
 let requeteIaEnCours = false;
 
-/* ---------- Pile d'historique Ctrl+Z / Ctrl+Y ---------- */
 const pileUndo = [];
 const pileRedo = [];
 let ignoreHistorique = false;
@@ -1491,7 +1399,6 @@ function chargerEtat(){
   try{ return JSON.parse(localStorage.getItem(CLE_STORAGE)); }catch(e){ return null; }
 }
 
-/* ---------- Références DOM ---------- */
 const feuille = document.getElementById("feuille");
 const editeur = document.getElementById("editeur-km");
 const curseurBloc = document.getElementById("curseur-bloc");
@@ -1635,7 +1542,7 @@ function rendreSupport(){
     <div class="grille-support">
       <div class="bloc-video-mini">
         <div class="cadre-player" id="cadre-yt">
-          <div class="vignette-repli" id="vignette-yt" title="Lire la séquence à 02:23">
+          <div class="vignette-repli" id="vignette-yt">
             <img src="${thumbMax}" alt="${esc(SUPPORT_VIDEO.titre)}" onerror="this.style.display='none'">
             <span class="btn-play-overlay">▶</span>
           </div>
@@ -1669,9 +1576,6 @@ function rendreSupport(){
   });
 }
 
-/* ==========================================================================
-   FRAPPE AU KILOMÈTRE, CURSEUR CARRÉ & INSERTION QCM
-   ========================================================================== */
 function sauverPositionCurseur(){
   const sel = window.getSelection();
   if(sel && sel.rangeCount > 0){
@@ -1843,9 +1747,6 @@ function initialiserEditeur(){
   });
 }
 
-/* ==========================================================================
-   NUAGE DE TAGS EN CASCADE HISTORIQUE
-   ========================================================================== */
 function rendreCascadeTags(){
   cascadeListe.innerHTML = "";
   const totalStrates = etat.stratesTags.length;
@@ -1936,10 +1837,8 @@ btnDeselectionnerTags.addEventListener("click", ()=>{
   rendreCascadeTags();
 });
 
-/* ==========================================================================
-   RECHERCHE IA ACADÉMIQUE TERMINALE PHILO (1 QUESTION MAX / QUESTION QCM)
-   ========================================================================== */
-function obtenirReponseIaParagraphes(texteBrut){
+/* ---------- Recherche IA minimaliste (1 question max par question QCM) ---------- */
+function formaterReponseSimple(texteBrut){
   return String(texteBrut || "")
     .split(/\n+/)
     .map(p => p.trim())
@@ -1948,77 +1847,32 @@ function obtenirReponseIaParagraphes(texteBrut){
     .join("");
 }
 
-function construireSignatureModele(modeleId){
-  const idPropre = String(modeleId || "gemini-2.5-flash");
-  return `
-    <div class="signature-modele-ia">
-      ${svgVignetteModele(idPropre)}
-      <span>Modèle utilisé : <code>${esc(idPropre)}</code></span>
-    </div>
-  `;
-}
-
-function construireBlocReponseIaComplete(dataIa){
-  return `
-    <div class="reponse-ia-academique bloc-copiable">
-      <span class="titre-ia-term">Éclairage philosophique · Terminale</span>
-      ${obtenirReponseIaParagraphes(dataIa.reponse)}
-      ${construireSignatureModele(dataIa.modeleId)}
-      ${boutonCopieDiscret()}
-    </div>
-  `;
-}
-
 function construireBlocRechercheIa(qcm){
   if(!etat.performances.recherchesIA) etat.performances.recherchesIA = {};
   const dejaPosee = etat.performances.recherchesIA[qcm.id] || null;
-  const quotaTexte = dejaPosee ? "1 / 1 question posée" : "1 question disponible";
 
   const blocReponseIa = dejaPosee
-    ? `<div id="rep-ia-${esc(qcm.id)}">${construireBlocReponseIaComplete(dejaPosee)}</div>`
+    ? `<div class="reponse-ia-simple bloc-copiable" id="rep-ia-${esc(qcm.id)}">${formaterReponseSimple(dejaPosee.reponse)}${boutonCopieDiscret()}</div>`
     : `<div id="rep-ia-${esc(qcm.id)}"></div>`;
-
-  const valeurIndications = dejaPosee
-    ? (dejaPosee.indications || "")
-    : INDICATIONS_DEFAUT;
 
   return `
     <div class="barre-recherche-ia" id="zone-ia-${esc(qcm.id)}">
-      <div class="entete-recherche-ia">
-        <span>Question complémentaire (IA · Terminale Philo)</span>
-        <span id="quota-ia-${esc(qcm.id)}">${quotaTexte}</span>
-      </div>
-      <div class="ligne-saisie-ia">
-        <input
-          type="text"
-          id="input-ia-${esc(qcm.id)}"
-          placeholder="${dejaPosee ? "Quota atteint pour cette question QCM (1/1)" : "Ex. : Quelle distinction conceptuelle fonder ici au bac ?"}"
-          value="${dejaPosee ? esc(dejaPosee.question) : ""}"
-          ${dejaPosee || requeteIaEnCours ? "disabled" : ""}
-          onkeydown="if(event.key==='Enter'){event.preventDefault();soumettreRechercheIa('${esc(qcm.id)}');}"
-        >
-        <button
-          type="button"
-          class="btn-demander-ia"
-          id="btn-ia-${esc(qcm.id)}"
-          ${dejaPosee || requeteIaEnCours ? "disabled" : ""}
-          onclick="soumettreRechercheIa('${esc(qcm.id)}')"
-        >${requeteIaEnCours ? "Analyse..." : "Demander"}</button>
-      </div>
-      <div class="ligne-indications-ia">
-        <input
-          type="text"
-          id="indications-ia-${esc(qcm.id)}"
-          aria-label="Indications supplémentaires"
-          value="${esc(valeurIndications)}"
-          ${dejaPosee || requeteIaEnCours ? "disabled" : ""}
-          onfocus="if(!this.disabled && this.value==='${INDICATIONS_DEFAUT}'){this.value='';}"
-          onblur="if(!this.disabled && !this.value.trim()){this.value='${INDICATIONS_DEFAUT}';}"
-          onkeydown="if(event.key==='Enter'){event.preventDefault();soumettreRechercheIa('${esc(qcm.id)}');}"
-        >
-      </div>
-      ${blocReponseIa}
+      <input
+        type="text"
+        id="input-ia-${esc(qcm.id)}"
+        value="${dejaPosee ? esc(dejaPosee.question) : ""}"
+        ${dejaPosee || requeteIaEnCours ? "disabled" : ""}
+        onkeydown="if(event.key==='Enter'){event.preventDefault();soumettreRechercheIa('${esc(qcm.id)}');}"
+      >
+      <button
+        type="button"
+        class="btn-demander-ia"
+        id="btn-ia-${esc(qcm.id)}"
+        ${dejaPosee || requeteIaEnCours ? "disabled" : ""}
+        onclick="soumettreRechercheIa('${esc(qcm.id)}')"
+      >Demander</button>
     </div>
+    ${blocReponseIa}
   `;
 }
 
@@ -2031,30 +1885,18 @@ async function soumettreRechercheIa(qcmId){
   if(!qcm) return;
 
   const inputEl = document.getElementById("input-ia-" + qcmId);
-  const indEl = document.getElementById("indications-ia-" + qcmId);
   const btnEl = document.getElementById("btn-ia-" + qcmId);
   const repContainer = document.getElementById("rep-ia-" + qcmId);
-  const quotaEl = document.getElementById("quota-ia-" + qcmId);
 
   const questionEleve = (inputEl ? inputEl.value : "").trim();
-  const brutIndications = (indEl ? indEl.value : "").trim();
-  const indicationsEleve = (brutIndications && brutIndications !== INDICATIONS_DEFAUT) ? brutIndications : "";
-
-  if(!questionEleve && !indicationsEleve){
+  if(!questionEleve){
     if(inputEl) inputEl.focus();
     return;
   }
 
   requeteIaEnCours = true;
   if(inputEl) inputEl.disabled = true;
-  if(indEl) indEl.disabled = true;
-  if(btnEl){
-    btnEl.disabled = true;
-    btnEl.textContent = "Analyse...";
-  }
-  if(repContainer){
-    repContainer.innerHTML = `<div class="reponse-ia-academique"><span class="titre-ia-term">Éclairage philosophique · Terminale</span><p>Rédaction de l'analyse en cours…</p></div>`;
-  }
+  if(btnEl) btnEl.disabled = true;
 
   let bonneRepTexte = "";
   let feedbackTexte = "";
@@ -2069,101 +1911,84 @@ async function soumettreRechercheIa(qcmId){
     bonneRepTexte = qcm.pairs.map(p => `${p.q} → ${p.a}`).join(" ; ");
   }
 
-  const sequenceCombinée = [
-    `Thème / Axe : ${qcm.scenario || ""} — Catégorie : ${qcm.categorie || ""}`,
+  const promptUtilisateur = [
     `Question du QCM : ${qcm.name}`,
-    `Élément de réponse / corrigé : ${bonneRepTexte} ${feedbackTexte}`.trim(),
-    `Question principale de l'élève : ${questionEleve || "(non précisée)"}`,
-    `Indications supplémentaires : ${indicationsEleve || "Aucune indication complémentaire"}`
+    `Réponse / explication : ${bonneRepTexte} ${feedbackTexte}`.trim(),
+    `Demande : ${questionEleve}`
   ].join("\n");
 
-  const systemPrompt = [
-    "Tu es professeur de philosophie en classe de Terminale (système éducatif français).",
-    "Réponds dans un style académique clair, rigoureux et nuancé, conçu pour faire comprendre et exploiter la notion à un élève de Terminale préparant l'épreuve de philosophie.",
-    "Explicite les distinctions conceptuelles, la portée problématique et les enjeux philosophiques en lien direct avec la question du QCM, la question de l'élève et les indications supplémentaires.",
-    "Rédige exactement 2 paragraphes denses et pédagogiques (130 à 190 mots environ), sans listes à puces ni titres."
-  ].join(" ");
-
   const bodyPayload = {
-    systemInstruction: { parts: [{ text: systemPrompt }] },
-    contents: [{ role: "user", parts: [{ text: sequenceCombinée }] }],
+    systemInstruction: {
+      parts: [{
+        text: "Professeur de philosophie en Terminale. Style académique clair, rigoureux et accessible à un élève de Terminale. Développe une explication complète et achevée sans coupure."
+      }]
+    },
+    contents: [{ role: "user", parts: [{ text: promptUtilisateur }] }],
     generationConfig: {
       temperature: 0.4,
-      maxOutputTokens: 420
+      maxOutputTokens: 1200
     }
   };
 
   let reponseFinale = "";
-  let modeleUtiliseId = "gemini-2.5-flash";
   let succesRequete = false;
   const modelesCandidats = ["gemini-2.5-flash", "gemini-2.0-flash"];
 
   for(const modele of modelesCandidats){
-    modeleUtiliseId = modele;
+    const controller = new AbortController();
+    const timerAbort = setTimeout(()=> controller.abort(), 35000);
     try{
       const endpoint = `https://generativelanguage.googleapis.com/v1beta/models/${modele}:generateContent?key=${encodeURIComponent(CLE_API_GEMINI)}`;
       const res = await fetch(endpoint, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(bodyPayload)
+        body: JSON.stringify(bodyPayload),
+        signal: controller.signal
       });
+      clearTimeout(timerAbort);
       if(!res.ok){
         const errObj = await res.json().catch(()=>({}));
         throw new Error(errObj.error?.message || `HTTP ${res.status}`);
       }
       const json = await res.json();
-      const idRecu = json?.modelVersion || modele;
       const texteGenere = json?.candidates?.[0]?.content?.parts?.map(p => p.text || "").join("").trim();
       if(texteGenere){
-        modeleUtiliseId = idRecu;
         reponseFinale = texteGenere;
         succesRequete = true;
         break;
       }
     }catch(err){
-      reponseFinale = `L'analyse académique n'a pas pu aboutir (${err.message}). Vérifiez la connectivité ou la clé API configurée.`;
+      clearTimeout(timerAbort);
+      reponseFinale = err.name === "AbortError" ? "Délai dépassé." : err.message;
     }
   }
 
   requeteIaEnCours = false;
 
   if(succesRequete){
-    const entryIa = {
+    etat.performances.recherchesIA[qcmId] = {
       question: questionEleve,
-      indications: indicationsEleve,
       reponse: reponseFinale,
-      modeleId: modeleUtiliseId,
       date: new Date().toISOString()
     };
-    etat.performances.recherchesIA[qcmId] = entryIa;
     sauverEtat();
     planifierSyncDrive();
-    if(quotaEl) quotaEl.textContent = "1 / 1 question posée";
     if(inputEl) inputEl.disabled = true;
-    if(indEl) indEl.disabled = true;
-    if(btnEl){
-      btnEl.disabled = true;
-      btnEl.textContent = "Demander";
-    }
+    if(btnEl) btnEl.disabled = true;
     if(repContainer){
-      repContainer.innerHTML = construireBlocReponseIaComplete(entryIa);
+      repContainer.className = "reponse-ia-simple bloc-copiable";
+      repContainer.innerHTML = formaterReponseSimple(reponseFinale) + boutonCopieDiscret();
     }
   } else {
     if(inputEl) inputEl.disabled = false;
-    if(indEl) indEl.disabled = false;
-    if(btnEl){
-      btnEl.disabled = false;
-      btnEl.textContent = "Demander";
-    }
+    if(btnEl) btnEl.disabled = false;
     if(repContainer){
-      repContainer.innerHTML = `<div class="reponse-ia-academique"><span class="titre-ia-term">Éclairage philosophique · Terminale</span><p>${esc(reponseFinale)}</p>${construireSignatureModele(modeleUtiliseId)}</div>`;
+      repContainer.className = "reponse-ia-simple";
+      repContainer.innerHTML = `<p>${esc(reponseFinale)}</p>`;
     }
   }
 }
 
-/* ==========================================================================
-   MOTEUR DE QCM : TITRE RÉDUIT + JAUGE GRAPHIQUE + CATÉGORIE + FAVORIS
-   ========================================================================== */
 function obtenirQcmActifs(){
   return etat.qcmActifsIds
     .map(id => etat.baseQCM.find(q => q.id === id))
@@ -2244,7 +2069,7 @@ function copierBlocVersCurseur(e, btn){
   if(!conteneur) return;
 
   const clone = conteneur.cloneNode(true);
-  clone.querySelectorAll(".btn-inserer-curseur, input, select, .barre-recherche-ia, .titre-ia-term, .signature-modele-ia").forEach(el => el.remove());
+  clone.querySelectorAll(".btn-inserer-curseur, input, select").forEach(el => el.remove());
 
   const titreFb = clone.querySelector("strong");
   if(titreFb && /^(Réponse acceptée|Explication)/i.test(titreFb.textContent.trim())){
@@ -2431,7 +2256,7 @@ function validate(){
   sauverEtat();
   planifierSyncDrive();
 
-  let h = '<div class="fb bloc-copiable ' + (ok ? "ok" : "no") + '"><strong>' + (ok ? "Réponse acceptée. ✅" : "Explication") + '</strong><br>' + fb + boutonCopieDiscret() + construireBlocRechercheIa(q) + '</div>';
+  let h = '<div class="fb bloc-copiable ' + (ok ? "ok" : "no") + '"><strong>' + (ok ? "Réponse acceptée. ✅" : "Explication") + '</strong><br>' + fb + boutonCopieDiscret() + '</div>' + construireBlocRechercheIa(q);
   h += '<button class="ghost" onclick="redoQ()" style="margin-top:10px">← Refaire cette question</button> ';
   h += '<button onclick="nextQ()">' + (etat.qIndex + 1 < Q.length ? "Question suivante →" : "Voir le score") + '</button>';
   card.insertAdjacentHTML("beforeend", h);
@@ -2492,7 +2317,7 @@ function reviewQCM(){
         h += '<div class="opt bloc-copiable ' + cls + '">' + (o.correct ? "✔ " : "") + esc(o.text) + (picked ? " <em>(votre réponse)</em>" : "") + boutonCopieDiscret() + '</div>';
       });
       const corrText = q.options.filter(o => o.correct).map(o => o.feedback || o.text).join("<br><br>");
-      h += '<div class="fb bloc-copiable ' + (a.ok ? "ok" : "no") + '">' + corrText + boutonCopieDiscret() + construireBlocRechercheIa(q) + '</div>';
+      h += '<div class="fb bloc-copiable ' + (a.ok ? "ok" : "no") + '">' + corrText + boutonCopieDiscret() + '</div>' + construireBlocRechercheIa(q);
     } else if(q.type === "matching"){
       q.pairs.forEach((p, j) => {
         const gv = a.given ? a.given[j] : "";
@@ -2510,9 +2335,6 @@ function restartQCM(){
   renderQCM();
 }
 
-/* ==========================================================================
-   FENÊTRE DE CONNEXION RÉDIGEZMOI & SAUVEGARDE GOOGLE DRIVE
-   ========================================================================== */
 document.getElementById("badge-logo-slot").innerHTML = svgLogoC2Phi(18);
 document.getElementById("btn-google-badge").addEventListener("click", ouvrirModalGoogleDrive);
 
@@ -2717,7 +2539,6 @@ function planifierSyncDrive(){
   }, 3000);
 }
 
-/* ---------- Fenêtre de connexion personnalisée RédigezMoi ---------- */
 function ouvrirModalGoogleDrive(){
   const cfg = etat.googleConfig || {};
   const connecte = estConnecteGoogle();
@@ -2880,9 +2701,6 @@ function ouvrirModalGoogleDrive(){
   }
 }
 
-/* ==========================================================================
-   MENU HAMBURGER
-   ========================================================================== */
 document.getElementById("btn-hamburger").addEventListener("click", ouvrirMenuHamburger);
 
 function ouvrirMenuHamburger(){
@@ -2942,7 +2760,7 @@ function ouvrirModalBilan(){
       <div>• Base QCM active : <strong>${etat.baseQCM.length}</strong> questions (${listeSujets.length} sujets générés)</div>
       <div>• QCM favoris enregistrés : <strong>${(etat.favorisQcmIds || []).length}</strong></div>
       <div>• QCM réussis : <strong>${bonnes} / ${reps.length}</strong></div>
-      <div>• Questions IA posées : <strong>${nbIa} / ${etat.baseQCM.length}</strong> (1 max par question)</div>
+      <div>• Questions IA posées : <strong>${nbIa} / ${etat.baseQCM.length}</strong></div>
       <div>• Vérification du texte par rapport au sujet choisi : <strong>${pctTexte}%</strong> (${trouves} / ${sujetActif ? sujetActif.motsCles.length : 0} concepts clés)</div>
       <div>• Strates de tags générées : <strong>${etat.stratesTags.length}</strong></div>
       <button type="button" onclick="this.closest('.modalwrap').remove()">Fermer</button>
@@ -2992,9 +2810,6 @@ function ouvrirModalParametres(){
   document.getElementById("p-reset").onclick = ()=>{ localStorage.removeItem(CLE_STORAGE); location.reload(); };
 }
 
-/* ==========================================================================
-   EXPORT & IMPORT JSON (FUSION ADDITIVE)
-   ========================================================================== */
 function exporterJSON(){
   const payload = construirePayloadSauvegarde();
   const blob = new Blob([JSON.stringify(payload, null, 2)], { type: "application/json" });
@@ -3069,7 +2884,6 @@ document.getElementById("fichier-import").addEventListener("change", async (e)=>
   }
 });
 
-/* ---------- Démarrage ---------- */
 const sauve = chargerEtat();
 if(sauve && Array.isArray(sauve.baseQCM)){
   etat = Object.assign(etat, sauve);
