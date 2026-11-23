@@ -1,0 +1,976 @@
+<!DOCTYPE html>
+<!-- saved from url=(0057)https://c2phi.fr/HLP11120-EducationPlusGrandProbleme.html -->
+<html lang="fr"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>L'éducation, le plus grand problème</title>
+<style>
+:root{--bg:#f4f1ea;--card:#fffdf7;--ink:#2b2b26;--acc:#8a1c1c;--acc2:#a33c3c;--ok:#2e6b34;--bad:#a33;--line:#d8d2c4;--font:Georgia,'Times New Roman',serif;--shadow:rgba(0,0,0,.06)}
+body[data-theme="pronote"]{--bg:#ffffff;--card:#fafafa;--ink:#333333;--acc:#006400;--acc2:#4a9d4a;--ok:#2e7d32;--bad:#b03030;--line:#c9c9c9;--font:Arial,Helvetica,'Segoe UI',sans-serif;--shadow:rgba(0,0,0,.08)}
+body[data-theme="pronote"] .topbar{background:#f0f0f0;border:1px solid #c9c9c9;border-radius:8px;padding:12px 14px;margin-bottom:16px}
+body[data-theme="pronote"] .card{border-radius:6px}
+body[data-theme="pronote"] button{border-radius:6px;font-weight:bold}
+body[data-theme="pronote"] label.opt,body[data-theme="pronote"] div.opt{border-radius:5px}
+body[data-theme="moderne"]{--bg:#eaf2fb;--card:#ffffff;--ink:#1b2a3a;--acc:#1c5d99;--acc2:#3f8fd6;--ok:#1e7a46;--bad:#c0392b;--line:#c4d4e8;--font:Verdana,Geneva,sans-serif;--shadow:rgba(28,93,153,.15)}
+body[data-theme="machine"]{--bg:#e6e6e2;--card:#f7f7f2;--ink:#222;--acc:#0a6b3c;--acc2:#0e8f54;--ok:#0a6b3c;--bad:#b03030;--line:#b8b8ae;--font:'Courier New',Courier,monospace;--shadow:rgba(0,0,0,.12)}
+body[data-theme="manuscrit"]{--bg:#f0e6d6;--card:#fbf3e4;--ink:#3b2f1e;--acc:#7a5b1e;--acc2:#a3823a;--ok:#4e6b2f;--bad:#8f3a2a;--line:#d9c9a8;--font:'Comic Sans MS','Segoe Script',cursive;--shadow:rgba(90,70,40,.15)}
+body[data-theme="creatif"]{--bg:#f3e9ff;--card:#ffffff;--ink:#2d1b4e;--acc:#6a1bb0;--acc2:#c2410c;--ok:#12805c;--bad:#c81e5a;--line:#d9c4f2;--font:'Trebuchet MS','Papyrus',fantasy;--shadow:rgba(106,27,176,.18)}
+body[data-theme="nuit"]{--bg:#12141a;--card:#1c1f28;--ink:#e8e6e0;--acc:#7fa8ff;--acc2:#a8c2ff;--ok:#7fd695;--bad:#ff8a8a;--line:#343947;--font:'Segoe UI',Helvetica,Arial,sans-serif;--shadow:rgba(0,0,0,.5)}
+*{box-sizing:border-box}
+body{font-family:var(--font);background:var(--bg);color:var(--ink);margin:0;padding:20px;transition:background .4s,color .4s}
+.wrap{max-width:760px;margin:0 auto}
+.topbar{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:14px}
+h1{font-size:1.45em;color:var(--acc);margin:0;text-align:center;flex:1}
+.themebox{display:flex;align-items:center;gap:6px;font-size:.85em}
+.themebox select{font-family:var(--font);font-size:.95em;padding:6px 8px;border:1px solid var(--line);border-radius:20px;background:var(--card);color:var(--ink);cursor:pointer;height:34px}
+button.burgerbtn{margin:0;width:38px;height:38px;padding:0;border-radius:9px!important;background:var(--card)!important;color:var(--ink);border:1px solid var(--line);font:700 1.15em/1 var(--font);cursor:pointer;box-shadow:0 1px 4px var(--shadow);display:inline-flex;align-items:center;justify-content:center;transition:border-color .16s ease}
+button.burgerbtn:hover{border-color:var(--acc);color:var(--acc)}
+.menuwrap{position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:60;display:flex;align-items:flex-start;justify-content:flex-end;padding:56px 14px 14px;overflow:auto}
+.menubox{background:var(--card);color:var(--ink);border:1px solid var(--line);border-radius:14px;min-width:230px;max-width:300px;padding:10px;box-shadow:0 12px 40px rgba(0,0,0,.4);font-family:var(--font)}
+.menubox .mtitle{font-weight:700;padding:8px 12px 6px;border-bottom:1px solid var(--line);margin-bottom:6px}
+.menubox button{display:flex;width:100%;margin:0;background:transparent;color:var(--ink);border:none;border-radius:8px;padding:11px 12px;font-size:.95em;text-align:left;align-items:center;gap:10px;justify-content:flex-start}
+.menubox button:hover{background:color-mix(in srgb,var(--acc) 10%,var(--card));color:var(--acc);filter:none;transform:none}
+.menubox button:active{transform:none}
+.menubox .mic{width:22px;text-align:center;font-weight:700}
+.sub{text-align:center;color:var(--ink);opacity:.65;margin-bottom:16px;font-style:italic}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:22px;box-shadow:0 3px 10px var(--shadow);transition:background .4s,border-color .4s;animation:cardIn .45s ease}
+@keyframes cardIn{from{opacity:0;transform:translateY(14px) scale(.99)}to{opacity:1;transform:none}}
+.progwrap{height:8px;background:var(--line);border-radius:4px;overflow:hidden;margin-bottom:16px}
+.progbar{height:100%;background:var(--acc);width:0;transition:width .6s cubic-bezier(.25,.9,.3,1)}
+.qnum{font-size:.85em;opacity:.65;margin-bottom:8px}
+.qtext{font-size:1.08em;margin:0 0 14px;line-height:1.5;animation:fadeUp .4s ease}
+@keyframes fadeUp{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+label.opt,div.opt{display:block;border:1px solid var(--line);border-radius:9px;padding:10px 12px;margin:8px 0;cursor:pointer;line-height:1.4;animation:fadeUp .4s ease backwards;transition:background .25s,border-color .25s,transform .15s}
+label.opt:hover,div.opt:hover{transform:none}
+label.opt.sel,div.opt.sel{border-color:var(--acc);background:color-mix(in srgb,var(--acc) 10%,var(--card))}
+label.opt.good,div.opt.good{border-color:var(--ok);background:color-mix(in srgb,var(--ok) 15%,var(--card));animation:pop .4s ease,goodGlow 1.1s ease 2}
+@keyframes goodGlow{0%,100%{box-shadow:0 0 0 rgba(0,0,0,0)}50%{box-shadow:0 0 22px color-mix(in srgb,var(--ok) 70%,transparent)}}
+@keyframes confettiFall{0%{transform:translateY(-10px) rotate(0deg) scale(1);opacity:1}100%{transform:translateY(130px) rotate(560deg) scale(.6);opacity:0}}
+.party{position:relative;height:0;overflow:visible;text-align:center;pointer-events:none}
+.party i{position:absolute;top:0;display:block;width:10px;height:15px;border-radius:2px;animation:confettiFall 1s ease-in forwards}
+@keyframes bigTick{0%{transform:translate(-50%,-50%) scale(0) rotate(-40deg);opacity:0}55%{transform:translate(-50%,-50%) scale(1.35) rotate(8deg);opacity:1}100%{transform:translate(-50%,-50%) scale(1) rotate(0);opacity:1}}
+.bigtick{position:fixed;left:50%;top:38%;font-size:64px;z-index:60;pointer-events:none;animation:bigTick .85s ease forwards;filter:drop-shadow(0 6px 14px color-mix(in srgb,var(--ok) 60%,transparent))}
+@keyframes cardCheer{0%,100%{box-shadow:0 3px 10px var(--shadow)}45%{box-shadow:0 0 34px color-mix(in srgb,var(--ok) 55%,transparent),0 3px 10px var(--shadow)}}
+.card.cheer{animation:cardCheer 1s ease 2}
+label.opt.bad,div.opt.bad{border-color:var(--bad);background:color-mix(in srgb,var(--bad) 12%,var(--card));animation:shake .45s ease}
+@keyframes pop{0%{transform:scale(.96)}55%{transform:scale(1.04)}100%{transform:scale(1)}}
+@keyframes shake{0%,100%{transform:translateX(0)}20%{transform:translateX(-7px)}40%{transform:translateX(7px)}60%{transform:translateX(-4px)}80%{transform:translateX(4px)}}
+input[type=text],textarea{font-family:var(--font);font-size:1em;color:var(--ink)}
+input[type=text]{border:1px solid var(--line);border-radius:7px;padding:9px 11px;width:100%;background:var(--card)}
+.blank input{display:inline-block;min-width:130px}
+select.pairsel{width:100%;margin:6px 0;padding:9px;border:1px solid var(--line);border-radius:7px;background:var(--card);color:var(--ink);font-family:var(--font)}
+button{font-family:var(--font);font-size:1em;background:var(--acc);color:#fff;border:none;border-radius:9px;padding:11px 24px;cursor:pointer;margin-top:14px;transition:transform .15s,filter .2s,background .4s}
+button:hover{filter:brightness(1.15);transform:scale(1.04)}
+button:active{transform:scale(.97)}
+button.ghost{background:var(--ink)}
+.fb{margin-top:14px;padding:12px 14px;border-radius:9px;line-height:1.5;font-size:.95em;animation:fadeUp .45s ease}
+.fb.ok{background:color-mix(in srgb,var(--ok) 14%,var(--card));border:1px solid var(--ok)}
+.fb.no{background:color-mix(in srgb,var(--bad) 12%,var(--card));border:1px solid var(--bad)}
+.score{font-size:1.25em;text-align:center;margin:10px 0;animation:pop .5s ease}
+.score .big{font-size:2em;color:var(--acc);display:block}
+.bar{height:12px;background:var(--line);border-radius:6px;overflow:hidden;margin:14px 0}
+.bar>div{height:100%;background:var(--ok);transition:width 1.1s cubic-bezier(.25,.9,.3,1)}
+.rq{border:1px solid var(--line);border-radius:10px;padding:14px;margin:14px 0;background:color-mix(in srgb,var(--acc) 3%,var(--card));animation:fadeUp .4s ease}
+.rq div.opt{cursor:default}
+.aibox{margin-top:10px}
+.helpwrap{position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:60;display:flex;align-items:flex-start;justify-content:center;padding:30px 14px;overflow:auto}
+.helpbox{background:var(--card);color:var(--ink);border:1px solid var(--line);border-radius:14px;max-width:680px;width:100%;padding:20px 26px;box-shadow:0 12px 40px rgba(0,0,0,.4);font-family:var(--font)}
+.helpbox h2{margin:0 0 10px}
+.helpbox p,.helpbox li{line-height:1.55}
+.helpbox .lbl{display:block;margin-top:14px}
+.hidden{display:none}
+#editor{position:fixed;inset:0;background:rgba(15,12,8,.6);overflow:auto;padding:20px;z-index:50;animation:fadeUp .3s ease}
+#editor .panel{background:var(--card);color:var(--ink);max-width:820px;margin:0 auto;border-radius:12px;padding:20px}
+#editor textarea,#editor input[type=text]{width:100%;margin:4px 0 10px}
+.eq{border:1px solid var(--line);border-radius:9px;padding:12px;margin:10px 0;background:color-mix(in srgb,var(--acc) 4%,var(--card))}
+.eq .lbl{font-size:.8em;opacity:.65;margin-top:6px;display:block}
+.mini{font-size:.85em;padding:6px 11px;margin:4px 4px 0 0;background:var(--ink)}
+.danger{background:var(--bad)}
+</style>
+<link type="text/css" rel="stylesheet" id="dark-mode-custom-link"><link type="text/css" rel="stylesheet" id="dark-mode-general-link"><style lang="en" type="text/css" id="dark-mode-custom-style"></style><style lang="en" type="text/css" id="dark-mode-native-style"></style><style lang="en" type="text/css" id="dark-mode-native-sheet"></style><style>:root .inset-x-0[x-data="adblockBanner()"], :root #hero a[download="Unicore.zip"], :root body > div[data-captcha-enable="true"] > div.cleanslate[id^="google-captcha-"] > div.captcha-box, :root html > #__cf_challenge_host__, :root html[data-scrapbook-source][data-scrapbook-create][data-scrapbook-title] > body.no-js > div.main-wrapper[role="main"] > div.main-content, :root html > body.body > div.container > div.content > form > table.optoutForm, :root html > body > div.container > form#unsubscribe-form[onsubmit="submitUnsubscribeForm(event)"], :root html[lang] > body:not([class]):not([id]):not([style]) > div.background-container > div.container > div.captcha-box, :root #plcontent > #bw-cf-root, :root body[data-m][style] > footer ~ #plcontent > #plgate, :root div.grid[aria-hidden="true"]:not([id]):not([style]) + main:not([class]):not([id]):not([style]) ~ div[style="position: fixed; inset: 0px; z-index: 2147483647;"]:not([class]):not([id]), :root html[data-page="macos-download"] > body[data-platform="macos"] > .app_wrap, :root body > .main-wrapper > .main-content > .intro > .checkbox-window, :root html > .cfmd-shadow-host, :root .wp-singular > iframe[srcdoc][allowfullscreen][allow*="clipboard-write"][style*="2147483647"], :root html > #nc-cover:not(body), :root body > .cf-root, :root .cjs-container > #checkbox-window, :root .wp-singular > div[data-sm][style*="2147483647"] > iframe[style*="100%"][allow*="clipboard-write"], :root #ipBar + .main, :root #mainBtn[onclick="startVerify()"], :root #turnstile[onclick="handleClick()"], :root body > .page > .verify-row, :root body > .page > #mainVerifyRow, :root body.wp-singular > div[id$="-overlay"] > div[id$="-container"] > div[class*="-container"] > div[id$="-checkbox-window"], :root html[lang] > body.ishome > div.adult + main.main, :root .flex a[href^="https://s.smartfloralab.com/"], :root div[data-ad-slot-name], :root .post-template-default a[href^="https://go."][href*="/smartpop/"], :root .container a[title="AI Jerk OFF"][href][target="_blank"], :root body > #mdl-register.modal.anm-e.regnow, :root .flex a[href^="http://adpostup.com/"], :root #app-root ~ a[href][target="_blank"][style="position: fixed;top: 0;left: 0;width: 100%;height: 100%;display: block;z-index: 9999999;cursor: auto"], :root #wrapper ~ a[href][target="_blank"][style="position: fixed;top: 0;left: 0;width: 100%;height: 100%;display: block;z-index: 9999999;cursor: auto"], :root .header ~ div[style^="position:fixed;inset:0;z-index:2147483647;background:black;opacity:0.01;height:"], :root #app a[href^="https://t.nettrck.store/"], :root img[width="728"][height="90"], :root button.btn[data-openuri*="/4/"], :root #adbtm[onclick="badr();"], :root a[href^="https://www.polybuzz.ai/"] img.responsive-image, :root .kln > a[href^="https://www.polybuzz.ai/"], :root html[lang][style^="--main-bg-color"] > body:not([class]):not([id]) > div#container[style="visibility: visible;"] > div#banner[style="opacity:0"] ~ main:not([class]):not([id]) > div#message, :root #donate > a[href][style][onclick="thank_you()"][target="_blank"][rel="nofollow"], :root .container a[href^="https://insensitiveshoweraudible.com/"], :root .jwplayer ~ div[style="position:absolute;top:0;left:0;width: 100%;height: 100%;z-index:2147483647"], :root iframe.lazyloaded[data-src^="https://rcm-fe.amazon-adsystem.com/"], :root div[style^="position: fixed; inset: 0px; z-index: 2147483647; background: black; opacity: 0.01"], :root .skel-layers-fixed a[href*=".com/smartpop/"], :root [style^="position: fixed; inset: 0px; z-index: 2147483647; background-color: transparent; pointer-events: auto; cursor: auto; margin: 0px; padding: 0px; display: block;"], :root body.glue-body > #cf-modal-overlay, :root .ads-iframe:not([style="position: absolute; left: -10px; top: -10px;"]), :root .ad-content:not(:empty), :root div[style="position: fixed; display: block; width: 100%; height: 100%; inset: 0px; background-color: rgba(0, 0, 0, 0); z-index: 300000;"], :root #weatherad:not(:empty), :root #topbannerad:not(:empty), :root #topBannerAd:not(:empty), :root #ad_img:not(:empty), :root #adContext:not(:empty), :root .ad-300x250:not(.ads), :root [data-ad-width]:not([style$="left: -10000px !important; top: -1000px !important;"]):not(.adsbygoogle), :root .adunit:not(.text-ad), :root .adslot_1:not(.text-ad), :root #ads-footer:not([style^="position: absolute; left: -5000px"]), :root a.tdn[href^="https://landing.brazzersnetwork.com/"], :root #ads-1:not([style^="position: absolute; left: -5000px"]), :root #adframe:not(frameset):not([style^="position: absolute; left: -5000px"]), :root #ad_slot:not([style^="position: absolute; left: -5000px"]), :root #ad_big:not([style^="position: absolute; left: -5000px"]), :root #ad_area:not([style^="position: absolute; left: -5000px"]), :root #ad_300:not([style^="position: absolute; left: -5000px"]), :root a[dontfo=""][style$="position: absolute; z-index: 2147483647;"], :root [href^="https://join.enjoyx.com/track/"], :root a[href*=".click/?z="][href*="&n"], :root [href^="//taghaugh.com/"], :root div[class$="player-promo-col"], :root [href^="https://www.safestcontentgate.com/"], :root [href^="//cadsecs.com/"], :root [href^="//mellowads.com/"], :root .cjs-container > #verify-window, :root [href^="https://fireads.online/"], :root html[lang="vi"] .sspp-area, :root html[lang="tr"] > body.has-footer-ad.has-pageskin-desktop a.pageskin-desktop-wrapper, :root html[lang="tr"] #aa-wp .container-ads-adjustment, :root body > a.visible[id][href][target="_blank"], :root body > div[style="position: fixed; inset: 0px; z-index: 2147483647; background: transparent; cursor: pointer;"], :root #videojs ~ div[style="position: absolute; top: 0px; left: 0px; width: 100%; height: 100%; z-index: 2147483646;"], :root html > #bw-rc-host, :root .close-btn4[onclick="closeAd4()"], :root .close-btn3[onclick="closeAd3()"], :root .close-btn[onclick="closeAd()"], :root #go-to-top + div[id][class], :root .bb ~ main#container .containerAds, :root #midadd:not(:empty), :root #adzerk:not(:empty), :root #advert-header:not(:empty), :root div.card > div#cbRow.checkbox-row[onclick="startVerify()"], :root #tongkatlol ~ script[src^="/shrinke/js/"] ~ .main-content-box > div[style="width:100%;height:110px"], :root body > div[style$="z-index: 2147483647; top: 0px; left: 0px; position: fixed; display: block;"], :root html > body > div.container.m-p > #checkbox-window.checkbox-window, :root .container a[href^="https://seduced.com"][href*="ref="], :root #kt_player .fp-brand, :root a[id][href="https://toolkitspro.com"][rel^="noopener noreferrer"], :root #kt_player #ads_iframe, :root .header-container a[href^="https://candyai.gg/"], :root [src^="//dombnrs.com/"], :root #kt_player ~ #sp-player, :root [href^="https://klsdee.com/"], :root [href^="//producebreed.com/"], :root #modern-player-root ~ div[id^="custom-invisible-overlay-"][class^="custom-popup-overlay-"], :root [href="//xxxrevpushclcdu.com/app.webp"], :root [href^="https://adult.xyz/"], :root .code-block a[href^="https://ewxerd.site/"], :root [href^="https://popcash.net/"], :root a[href^="http://www.poweredbyliquidfire.mobi/"], :root [href^="https://t.mobtyb.com/"], :root [data-lnguri*="vipbox"], :root .reklama:not(.ads), :root a[href^="https://syndication.exdynsrv.com/splash.php"], :root [href*="/afu.php"], :root span[id^="ezoic-pub-ad-placeholder-"], :root ins.adsbygoogle[data-ad-slot], :root ins.adsbygoogle[data-ad-client], :root img[src^="https://s-img.adskeeper.com/"], :root #download a[download="Unicore.zip"], :root guj-ad, :root body[data-clipboard-code] > .main-wrapper, :root gpt-ad, :root div#spot-holder.spot-holder[style="display: block;"], :root div[ow-ad-unit-wrapper], :root div[id^="zergnet-widget"], :root html[lang] > body:not([class]):not([id]):not([style]) > div.container > div.recaptcha-box, :root div[id^="vuukle-ad-"], :root div[id^="taboola-stream-"], :root div[id^="sticky_ad_"], :root div[id^="st"][style^="z-index: 999999999;"], :root div[id^="rc-widget-"], :root html > body > div.content > dl > dd.dd1 > div.min_sider > form#form1[action="unsubscribe.php"], :root div[id^="mrec-leaderboard-"], :root div[id^="gpt_ad_"], :root div[id^="ezoic-pub-ad-"], :root .code-block a[target="_blank"][href^="https://"][href*=".com/"][href*="?key="], :root div[id^="dfp-ad-"], :root div[id^="crt-"][style], :root div[id^="adspot-"], :root a[onclick="openAuc();"], :root ps-connatix-module, :root div[id^="ad_position_"], :root [data-ad-module]:not([style$="left: -10000px !important; top: -1000px !important;"]):not(.adsbygoogle), :root a[id][href="https://chpadblock.com/"][rel^="noopener noreferrer"], :root div[id^="ad-div-"], :root div[id*="ScriptRoot"], :root div[id*="MarketGid"], :root #banner468:not([style^="position: absolute; left: -5000px"]), :root div[data-id-advertdfpconf], :root div[data-dfp-id], :root div[style="top: 0px; left: 0px; width: 1287px; height: 500px; position: fixed; z-index: 2147483647;"], :root hl-adsense, :root div[data-contentexchange-widget], :root div[data-alias="300x250 Ad 2"], :root div[data-adzone], :root #buy-sell-ads:not(:empty), :root div[data-adunit-path], :root div[data-adname], :root div[data-ad-targeting], :root div[data-ad-region], :root div[data-ad-placeholder], :root div[aria-label="Ads"], :root .google-ad:not(.testAd), :root display-ads, :root #ad_space:not([style^="position: absolute; left: -5000px"]), :root display-ad-component, :root atf-ad-slot, :root aside[id^="adrotate_widgets-"], :root div[style^="position:fixed;inset:0px;z-index:2147483647;background:black;opacity:0.01"], :root aside[aria-label="retailmedia.complimentarySponsored"], :root html[lang] > body#body > * > div.cvh.BlockClicksActivityBusy, :root amp-fx-flying-carpet, :root amp-embed[type="taboola"], :root html > #nochain-demo-frame:not(body), :root html[lang="tr"] #aa-wp .rnd-ads-adjustment, :root amp-connatix-player, :root div[id^="google_dfp_"], :root ad-slot, :root a[href^="https://www.purevpn.com/"][href*="&utm_source=aff-"], :root a[href^="https://www.onlineusershielder.com/"], :root html[lang="tr"] > body.has-footer-ad.has-pageskin-desktop a.pageskin-click-right, :root a[href^="https://financeads.net/tc.php?"], :root a[href^="https://www.mrskin.com/tour"], :root a[href^="https://www.infowarsstore.com/"] > img, :root a[href^="https://www.highperformancecpmgate.com/"], :root amp-ad, :root a[href^="https://www.highcpmrevenuenetwork.com/"], :root a[href^="https://www.get-express-vpn.com/offer/"], :root a[href^="https://lnkxt.bannerator.com/"], :root a[href^="https://www.geekbuying.com/dynamic-ads/"], :root #cmdTextDisplay ~ *, :root [href^="https://groorsoa.net/"], :root a[href*=".sadbaguette.com/"], :root a[href^="https://www.financeads.net/tc.php?"], :root a[href^="https://www.effectiveratecpm.com/"], :root [href^="https://www.herbanomic.com/"] > img, :root a[href^="https://www.dql2clk.com/"], :root [data-template-type="nativead"], :root a[href^="https://www.adultempire.com/"][href*="?partner_id="], :root a[href^="https://www.nutaku.net/signup/landing/"], :root a[href^="https://www.dating-finder.com/signup/?ai_d="], :root a[href^="https://wolf-327b.com/"], :root body > .content-wrapper > .cf-wrap, :root [data-ad-manager-id]:not([style$="left: -10000px !important; top: -1000px !important;"]):not(.adsbygoogle), :root a[href^="https://voluum.prom-xcams.com/"], :root a[href^="https://twinrdsyte.com/"], :root .category-ads:not(html):not(body):not(.post), :root a[href^="https://twinrdsrv.com/"], :root [href="https://snvhost.com/"], :root a[href^="https://trk.nfl-online-streams.club/"], :root a[href^="https://tracking.avapartner.com/"], :root a[href^="https://track.wg-aff.com"], :root a[href^="https://track.ultravpn.com/"], :root a[href^="https://track.afcpatrk.com/"], :root [href="https://t.me/Russia_Vs_Ukraine_War3"], :root a[href^="https://track.adform.net/"], :root a[href^="https://torguard.net/aff.php"] > img, :root .menu-item a[href^="https://go.rmhfrtnd.com"], :root [data-identity="adhesive-ad"], :root a[href^="https://tc.tradetracker.net/"] > img, :root a[href^="https://tatrck.com/"], :root [href^="https://zstacklife.com/"] img, :root a[href^="https://click.candyoffers.com/"], :root a[href^="https://t.aslnk.link/"], :root .container a[href^="https://go.mavrtracktor.com/"], :root a[onmousedown^="this.href='https://paid.outbrain.com/network/redir?"], :root a[href^="https://t.ajump1.com/"], :root a[href^="https://t.adating.link/"], :root a[href^="https://go.trackitalltheway.com/"], :root [href^="https://track.fiverr.com/visit/"] > img, :root a[href^="https://syndication.exoclick.com/"], :root a[href^="https://syndication.dynsrvtbg.com/"], :root div[data-alias="300x250 Ad 1"], :root a[href^="https://syndicate.contentsserved.com/"], :root a[href^="https://svb-analytics.trackerrr.com/"], :root a[onmousedown^="this.href='https://paid.outbrain.com/network/redir?"] + .ob_source, :root a[href^="http://www.iyalc.com/"], :root a[href^="https://claring-loccelkin.com/"], :root a[href^="https://stardomcoit.com/"], :root a[href^="https://track.aftrk5.com/"], :root a[href^="https://slkmis.com/"], :root a[href^="https://myclick-2.com/"], :root a[href^="https://sexynearme.com/"], :root a[href^="https://s.zlinkt.com/"], :root a[href^="https://s.zlinkr.com/"], :root bottomadblock, :root a[href^="https://s.zlinkd.com/"], :root a[href^="https://ad.doubleclick.net/"], :root a[href^="https://static.fleshlight.com/images/banners/"], :root a[href^="https://s.zlink7.com/"], :root a[href^="https://s.ma3ion.com/"], :root a[href^="https://www.privateinternetaccess.com/"] > img, :root a[href^="https://s.gentlefieldpattern.com/"], :root a[href^="https://s.eunow4u.com/"], :root a[href^="https://random-affiliate.atimaze.com/"], :root #downloadAd:not(:empty), :root #kt_player > div[style$="display: block;"][style*="inset: 0px;"], :root a[href^="https://quotationfirearmrevision.com/"], :root a[href^="https://pubads.g.doubleclick.net/"], :root a[href^="https://prf.hn/click/"][href*="/camref:"] > img, :root a[href^="https://www.dating-finder.com/?ai_d="], :root a[href^="https://serve.awmdelivery.com/"], :root a[href^="https://prf.hn/click/"][href*="/adref:"] > img, :root .page-layout a[href^="https://hashcounts.com/"], :root app-ad, :root [href^="https://ap.octopuspop.com/click/"] > img, :root a[href^="https://postback1win.com/"], :root html[lang] > body#body > * > div.cv-xwrapper > div.cvc > div.cv-inner, :root [href^="https://go.mavrtracktor.com/"], :root a[href^="https://a.adtng.com/"], :root a[href^="https://playnano.online/offerwalls/?ref="], :root a[href^="https://mmwebhandler.aff-online.com/"], :root a[href^="https://www.bet365.com/"][href*="affiliate="], :root a[href^="https://pb-track.com/"], :root a[href^="https://pb-front.com/"], :root a[href^="https://paid.outbrain.com/network/redir?"], :root a[href^="https://streamate.com/landing/click/"], :root div[class^="Adstyled__AdWrapper-"], :root a[href^="https://osfultrbriolenai.info/"], :root a[href^="https://upsups.click/"], :root .ad-placeholder:not(#detect, #detect_ad_empire, #filter_ads_by_classname, .adsbox), :root a[href^="https://ndt5.net/"], :root a[href^="https://natour.naughtyamerica.com/track/"], :root a.poly-title[href^="https://www.polybuzz.ai/"], :root a[href^="https://mediaserver.entainpartners.com/renderBanner.do?"], :root [data-ad-name], :root a[href^="https://loboclick.com/"], :root a[href^="https://lead1.pl/"], :root .cta-button[onclick="openUpdateModal()"], :root a[href^="https://landing.brazzersnetwork.com/"], :root a[href^="https://join.bannedsextapes.com/track/"], :root [href^="https://exi8ef83z9.com/"], :root a[href^="https://jaxofuna.com/"], :root a[href^="https://italarizege.xyz/"], :root .category-ad:not(html):not(body):not(.post), :root a[href^="https://s.happyleafmotion.com/"], :root a[href^="https://identicaldrench.com/"], :root a[href^="https://helmethomicidal.com/"], :root #adsquare:not([style^="position: absolute; left: -5000px"]), :root a[href^="https://golinks.work/"], :root a[href^="https://go.xxxjmp.com"], :root [class^="div-gpt-ad"]:not([style^="width: 1px; height: 1px; position: absolute; left: -10000px; top: -"]), :root a[href^="https://zirdough.net/"], :root [class^="tile-picker__CitrusBannerContainer-sc-"], :root a[href^="https://go.xxxiijmp.com"], :root .ad-link:not(.adsbox), :root a[href^="https://go.xtbaffiliates.com/"], :root a[href^="https://go.xlviirdr.com"], :root div[class$="-adlabel"], :root a[href^="https://go.xlviiirdr.com"], :root a[href^="https://go.xlivrdr.com"], :root a[href^="https://ismlks.com/"], :root .flex a[href^="https://tt.culinar9sync.com/"], :root [href^="https://www.mypillow.com/"] > img, :root a[href^="https://go.xlirdr.com"], :root [data-css-class="dfp-inarticle"], :root a[href^="https://go.tmrjmp.com"], :root a[href^="https://go.markets.com/visit/?bta="], :root a[href^="https://billing.purevpn.com/aff.php"] > img, :root a[href^="https://go.hpyrdr.com/"], :root [data-lnguri^="https://s3.amazonaws.com"], :root a[href^="https://lijavaxa.com/"], :root a[href^="https://go.goaserv.com/"], :root a[href^="https://go.etoro.com/"] > img, :root a[href^="https://go.dmzjmp.com"], :root a[href^="https://www.bang.com/?aff="], :root #mgb-container > #mgb, :root a[href^="https://go.admjmp.com"], :root a[href^="https://get.surfshark.net/aff_c?"][href*="&aff_id="] > img, :root a[href^="https://datewhisper.life/"], :root a[href^="https://click.linksynergy.com/fs-bin/"] > img, :root a[href^="https://get-link.xyz/"], :root a[href^="https://www.mrskin.com/account/"], :root a[id][href="https://hamrocsit.com"][rel^="noopener noreferrer"], :root a[href^="https://www.adskeeper.com"], :root #vidcloud-player > #overlay-container, :root a[data-redirect^="https://paid.outbrain.com/network/redir?"], :root [href^="https://clicks.affstrack.com/"] > img, :root a[href^="https://engine.phn.doublepimp.com/"], :root a[href^="https://dl-protect.net/"], :root a[href*=".foxqck.com/"], :root a[href^="https://ctosrd.com/"], :root a[href^="https://clixtrac.com/"], :root a[href^="https://clicks.pipaffiliates.com/"], :root #ad_footer:not([style^="position: absolute; left: -5000px"]), :root app-advertisement, :root a[href^="https://getmatchedlocally.com/"], :root a[href^="https://clickins.slixa.com/"], :root a[href^="https://combodef.com/"], :root a[href^="https://click.hoolig.app/"], :root a[href^="https://track.totalav.com/"], :root a[href^="https://ctrdwm.com/"], :root img[src^="https://images.purevpnaffiliates.com"], :root a[href^="https://porntubemate.com/"], :root a[href^="https://clickadilla.com/"], :root a[href^="https://click.dtiserv2.com/"], :root a[href^="https://www.adxsrve.com/"], :root a[href^="https://click.Ggpickaff.com/"], :root a[href^="https://go.awdeliverynet.com/"], :root a[href^="https://go.xlvirdr.com"], :root a[href^="https://cam4com.go2cloud.org/"], :root a[onclick^="window.location.replace('https://random-affiliate.atimaze.com/"], :root a[href^="https://bongacams2.com/track?"], :root a[href^="https://t.ajrkm1.com/"], :root #main-content a[href^="https://hub.buzzaffiliates.com/"], :root a[href^="https://bongacams10.com/track?"], :root a[href^="//hoodingluster.com/"], :root a[href^="https://black77854.com/"], :root a[href^="https://rixofa.com/"], :root a[href^="https://best-experience-cool.com/"], :root [data-taboola-options], :root a[href^="https://believessway.com/"], :root a[href^="https://Click.ggpickaff.com/"], :root a[href^="https://banners.livepartners.com/"], :root a[href^="http://revolvemockerycopper.com/"], :root a[href^="https://awptjmp.com/"], :root a[href^="https://join.sexworld3d.com/track/"], :root a[href^="https://track.cam4tracking.com/"], :root a[href^="https://aweptjmp.com/"], :root a[href^="https://ausoafab.net/"], :root #tabVideo > .rmedia, :root a[href^="https://aj1070.online/"], :root a[href^="https://ads.planetwin365affiliate.com/"], :root a[href^="https://ads.leovegas.com/"], :root a[href^="https://a.medfoodhome.com/"], :root .nya-slot[style], :root a[href^="https://a.bestcontentweb.top/"], :root a[href^="https://adultfriendfinder.com/go/"], :root a[href^="https://a.bestcontentoperation.top/"], :root a[href^="https://a2.adform.net/"], :root a[href^="https://a.candyai.love/"], :root .banner-img > .pbl, :root [data-m-ad-id], :root a[href^="https://a-ads.com/"], :root [data-testid^="section-AdRowBillboard"], :root .ad-placeholder:not(#filter_ads_by_classname):not(#detect_ad_empire):not(#detect):not(.adsbox), :root broadstreet-zone-container, :root a[href^="https://ak.psaltauw.net/"], :root a[href^="https://1winpb.com/"], :root div[id^="optidigital-adslot"], :root [href^="https://wsup.ai/"], :root a[href^="https://123-stream.org/"], :root a[href^="https://in.rabbtrk.com/"], :root a[href^="http://www.h4trck.com/"], :root [href^="https://a.acebet.com/api/click?"], :root #video_player ~ div[id] div[style^="position:fixed;inset:0px;z-index:"], :root a[href^="http://www.friendlyduck.com/AF_"], :root .btn-primary[onclick="showVerification()"], :root a[href^="http://partners.etoro.com/"], :root [href="https://chaturbate.jjgirls.com/"] > img, :root body div#notificationPopup.notificationPopupBlock, :root a[href^="http://cam4com.go2cloud.org/aff_c?"], :root a[href^="https://ads.betfair.com/redirect.aspx?"], :root #leader_ad:not(:empty), :root amp-ad-custom, :root .home a[href^="https://s.zline0.com/"], :root a[href^="https://prf.hn/click/"][href*="/creativeref:"] > img, :root a[href*="&maxads="], :root a[href^="https://1betandgonow.com/"], :root a[href^="http://www.adultempire.com/unlimited/promo?"][href*="&partner_id="], :root [href^="http://referrer.website/"], :root a[href^="http://trk.globwo.online/"], :root a-ad, :root a[href^="https://offhandpump.com/"], :root a[href^="http://stickingrepute.com/"], :root #slashboxes > .deals-rail, :root [href^="http://mypillow.com/"] > img, :root a[href^="http://bongacams.com/track?"], :root .fp-ui > a[href][target="_blank"][style^="position: absolute; inset: 0px;"], :root a[href^="//startgaming.net/tienda/" i], :root a[href^="https://a.medfoodsafety.com/"], :root a[href^="//go.eabids.com/"], :root a[href^=" https://www.friendlyduck.com/AF_"], :root [data-cl-spot-id], :root a[href*="/jump/next.php?r="], :root a[href^="https://chaturbate.com/in/?"], :root div[style^="z-index: 999999; background-image: url(\"data:image/gif;base64,"][style$="position: absolute;"], :root [href^="https://affiliate.fastcomet.com/"] > img, :root #banner728x90:not([style^="position: absolute; left: -5000px"]), :root div[id^="lazyad-"], :root a[href^="http://com-1.pro/"], :root [href^="https://www.profitablegatecpm.com/"], :root a[href*=".cfm?domain="][href*="&fp="], :root #vstr ~ #overlay, :root [id^="section-ad-banner"], :root a[href^="https://go.bushheel.com/"], :root a[href^="https://ctjdwm.com/"], :root body > div.mw[role="main"] > .mc, :root a[href^="https://camfapr.com/landing/click/"], :root div[data-ad-wrapper], :root .gnt_em_vp_c[data-g-s="vp_dk"], :root [href="//sexcams.plus/"], :root a[href*="/go.php?a_aid="], :root [id^="google_ads_iframe_"], :root [id^="ad_slider"], :root html#html[sti][vic][lang] > body#allbody, :root [href^="https://www.onclickperformance.com/"], :root a[href^="https://www.goldenfrog.com/vyprvpn?offer_id="][href*="&aff_id="], :root a[href^="https://wmctjd.com/"], :root a[href*="//jjgirls.com/sex/Chaturbate"], :root [id^="ad-wrap-"], :root a[href^="http://sarcasmadvisor.com/"], :root .ad-slot:not(.adsbox):not(.adsbygoogle), :root [href^="https://www.restoro.com/"], :root [href^="https://www.targetingpartner.com/"], :root .close-btn2[onclick="closeAd2()"], :root a[href^="https://join.virtuallust3d.com/"], :root .section-subheader > .section-hotel-prices-header, :root [href^="https://www.hostg.xyz/"] > img, :root [href*="passtechusa.com"], :root a[href^="https://bngpt.com/"], :root a[href^="http://adultfriendfinder.com/go/"], :root a[href^="https://fastestvpn.com/lifetime-special-deal?a_aid="], :root a[href^="https://tour.mrskin.com/"], :root a[href^="https://s.zlink3.com/"], :root a[href^="http://sneakyadministration.com/"], :root .wrapper a[rel~="sponsored"][href^="https://"][href*=".com/"][href*="?key="], :root [href^="https://www.brighteonstore.com/products/"] img, :root citrus-ad-wrapper, :root a[href^="https://go.grinsbest.com/"], :root [href^="https://www.avantlink.com/click.php"] img, :root html.canvas > body.wp-singular + div[popover="manual"], :root #app a[href^="https://s.smartfloralab.com/"], :root a[href^="https://t.acam.link/"], :root a[href^="https://go.strpjmp.com/"], :root [href^="https://url.totaladblock.com/"], :root div[id^="ad-position-"], :root a[href^="https://www.toprevenuegate.com/"], :root a[href^="https://bc.game/"], :root a[href^="https://bngprm.com/"], :root [href^="https://shiftnetwork.infusionsoft.com/go/"] > img, :root a[href^="https://trk.softonixs.xyz/"], :root [href^="https://wct.link/click?"], :root [href^="//look.utndln.com/offer"], :root div[data-adunit], :root app-large-ad, :root [href^="https://turtlebids.irauctions.com/"] img, :root a[href^="https://iqbroker.com/"][href*="?aff="], :root .p-post-ad:not(html):not(body), :root #vplayer ~ img[id][onclick], :root [href^="https://rpwmct.com/"], :root a[href^="https://go.cmtaffiliates.com/"], :root [href^="https://mylead.global/stl/"] > img, :root [data-testid="adBanner-wrapper"], :root [href^="https://optimizedelite.com/"] > img, :root a[href^="https://go.rmishe.com/"], :root [href^="https://ilovemyfreedoms.com/landing-"], :root a[href^="https://go.xxxijmp.com"], :root [href^="https://istlnkcl.com/"], :root a[href^="https://go.nordvpn.net/aff"] > img, :root #tongkatlol ~ script[src^="/shrinke/js/"] ~ .main-content-box + .content-box > div[id][style^="position: fixed; display: block; width: 100%;"], :root .\[\&_\.gdprAdTransparencyCogWheelButton\]\:\!pjra-z-\[5\], :root [href^="http://clicks.totemcash.com/"], :root a[href^="https://ad.zanox.com/ppc/"] > img, :root [class~="mailpoet_form_popup_overlay"], :root a[href^="https://www.brazzersnetwork.com/landing/"], :root a[href^="https://explore-site.com/"], :root .AdBody:not(body), :root [href^="https://glersakr.com/"], :root a[href^="https://tm-offers.gamingadult.com/"], :root [href^="https://charmingdatings.life/"], :root [data-id^="div-gpt-ad"], :root a[href^="https://tracker.loropartners.com/"], :root [href^="https://awbbjmp.com/"], :root .post-template-default a[href^="https://www.ourdreamersai13.com/"], :root [href^="http://www.mypillow.com/"] > img, :root a[href^="https://join.virtualtaboo.com/track/"], :root [id^="ad_sky"], :root [name^="google_ads_iframe"], :root [href^="https://go.xlrdr.com"], :root [href*="uselnk.com/"], :root a[href^="https://s.cant3am.com/"], :root .nav-item[href^="https://candyai.gg/"], :root [data-testid^="taboola-"], :root #teaser3[style^="width: 100%;height:0;text-align: center;display: scroll;position:fixed;"], :root a[href*=".adglare.net/"], :root a[href^="https://track.1234sd123.com/"], :root zeus-ad, :root [data-testid="prism-ad-wrapper"], :root [href^="https://antiagingbed.com/discount/"] > img, :root a[href*=".adsrv.eacdn.com/"], :root #teaser1[style^="width:autopx;"], :root [href^="https://www.cloudways.com/en/?id"], :root #modal[doskip][prclck], :root body > .main-wrapper > .main-content > .intro > #checkbox-window, :root [data-uri^="https://s3.amazonaws.com"], :root [href^="https://mypatriotsupply.com/"] > img, :root a[href^="https://bodelen.com/"], :root a[href*=".g2afse.com/"], :root a[href^="https://go.hpyjmp.com"], :root iframe[scrolling="no"][sandbox*="allow-popups allow-modals"][style^="width: 100%; height: 100%; border: none;"], :root [href^="https://mystore.com/"] > img, :root html[lang] > body.startnew > div#sections > section#section_uname, :root span[data-ez-ph-id], :root [href^="https://track.aftrk1.com/"], :root html[lang] > body:not([style]) > div.captchaBody, :root #adheader:not([style^="position: absolute; left: -5000px"]), :root div[id^="adngin-"], :root [data-rc-widget], :root a[href^="https://stellarcashflow.net/trck/"], :root [data-mobile-ad-id], :root [href^="https://join.playboyplus.com/track/"], :root html > #bw-cf-root, :root [href^="https://go.smljmp.com/"], :root a[href^="https://gamingadlt.com/?offer="], :root a[href^="https://go.bbrdbr.com"], :root a[href^="https://fc.lc/ref/"], :root body.user-clicked[style="cursor: auto;"] > #root > .app-container, :root a[href^="https://pb-imc.com/"], :root a[href^="https://www8.smartadserver.com/"], :root topadblock, :root a[href^="//s.zlinkd.com/"], :root a[href^="https://adclick.g.doubleclick.net/"], :root [data-freestar-ad][id], :root body > .cf-page-wrap, :root [data-dynamic-ads], :root [data-desktop-ad-id], :root body > #rcOverlay > #rcCard, :root [data-d-ad-id], :root [href^="https://track.wg-aff.com/click"], :root a[href^="https://go.rmhfrtnd.com"], :root [data-asg-ins], :root [data-block-type="ad"], :root [onclick*="content.ad/"], :root [href^="https://go.rdrjmp.com/"], :root a[href^="https://snowdayonline.xyz/"], :root a[href^="https://join.dreamsexworld.com/"], :root a[href^="http://join.brokestraightboys.com/track/"], :root div[id^="div-ads-"], :root [href^="https://rapidgator.net/article/premium/ref/"], :root a[href^="https://track.aftrk3.com/"], :root [href^="https://join3.bannedsextapes.com"], :root [href^="https://join.girlsoutwest.com/"], :root html > body.hold-transition.theme-primary.bg-img[style^="background-image"][style*="wallpaperaccess.com"][style*="background-repeat"][style*="background-size"], :root AMP-AD, :root [data-ad-cls], :root .ad-box:not(#ad-banner):not(:empty), :root body > .wrapper > .card-box > #step-1, :root [data-ez-name], :root a[style="width:100%;height:100%;z-index:10000000000000000;position:absolute;top:0;left:0;"], :root .ob_container .item-container-obpd, :root #ads_top:not(a), :root a[href^="https://go.mnaspm.com/"], :root a[href^="https://service.bv-aff-trx.com/"], :root .ad_slot:not(.text-ad), :root #st-ami + div[id][class*=" "], :root a[href^="https://6-partner.com/"], :root [class^="s2nPlayer"], :root a[href^="https://traffdaq.com/"], :root [data-testid="ad_testID"], :root [href^="https://ad.admitad.com/"], :root [href^="https://mypillow.com/"] > img, :root [data-testid="commercial-label-taboola"], :root a[href^="http://tc.tradetracker.net/"] > img, :root [class^="amp-ad-"], :root .ad_unit:not(.text-ad, .adsbox), :root [href="https://clickaine.com"], :root #playerOverlay[style="position:absolute; z-index:3"], :root a[href^="https://www.liquidfire.mobi/"], :root .grid > .container > #aside-promotion, :root DFP-AD, :root #hero + div.marquee-wrap + section#games + section#features + #download, :root #ads-banner:not([style^="position: absolute; left: -5000px"]), :root AD-SLOT, :root a[href^="https://www.googleadservices.com/pagead/aclk?"] > img, :root body > .security-container[style="opacity: 1; transform: translateY(0px);"], :root a[href^="https://a.bestcontentfood.top/"], :root #kt_player > a[target="_blank"], :root [href^="https://zone.gotrackier.com/"], :root .ad-area:not(.text-ad), :root a[href^="https://ab.advertiserurl.com/aff/"], :root #adSpecial:not(:empty), :root a[data-oburl^="https://paid.outbrain.com/network/redir?"], :root .sidebar-ad:not(.adsbygoogle), :root a[href^="https://s.zlinkn.com/"], :root a[href^="https://go.xxxvjmp.com/"], :root .ads_container:not(.text-ad), :root [class^="adDisplay-module"], :root a[href^="https://t.ajrkm3.com/"], :root in-page-message[doskip], :root [href^="https://aads.com/campaigns/"], :root a[href^="https://juicyads.in/"], :root #ad_728:not([style^="position: absolute; left: -5000px"]), :root div[id^="apn_native_ad_slot_"], :root .adhesion:not(body), :root body > div.captcha-container > div.captcha-card, :root ad-shield-ads, :root a[href^="https://hot-growngames.life/"], :root .ad_box:not(.text-ad), :root [href^="https://wap4dollar.com/ad/nonadult/serve.php"], :root [href="https://jdrucker.com/gold"] > img, :root .fp-player > div[style="position: absolute; inset: 0px; overflow: hidden; z-index: 160; background: transparent; display: block;"], :root .ad-wrap:not(#google_ads_iframe_checktag), :root a[href^="https://www.friendlyduck.com/AF_"], :root html[lang="tr"] #aa-wp + .fixed-footer .footer-ad-container, :root [href^="https://ad1.adfarm1.adition.com/"], :root #teaser3[style^="width:autopx;"], :root a[href^="https://gml-grp.com/"], :root a[href^="https://activate-game.com/"], :root .ob_dual_right > .ob_ads_header ~ .odb_div, :root a[href^="https://wittered-mainging.com/"], :root div[id][style^="position: fixed; inset: 0px; z-index: 2147483647; background: black"][style*="opacity: 0.01"], :root #teaser3[style="width: 100%;text-align: center;display: scroll;position:fixed;bottom: 0;margin: 0 auto;z-index: 103;"], :root html[lang="tr"] > body.has-footer-ad.has-pageskin-desktop a.pageskin-click-left, :root [data-revive-zoneid], :root a[href^="https://go.skinstrip.net"][href*="?campaignId="], :root figure.movie-detail-banner div[style="position: absolute; top: 0px; left: 0px; width: 100%; height: 100%; z-index: 999; cursor: pointer;"], :root #teaser2[style^="width:autopx;"], :root a[href^="https://losingoldfry.com/"], :root #player div[style$="cursor: pointer; position: absolute; width: 100%; height: 100%; padding: 1rem; z-index: 2147483647;"], :root div[style="position: fixed; inset: 0px; z-index: 2147483647; pointer-events: auto;"], :root .scroll-fixable.rail-right > .deals-rail, :root div[id^="adrotate_widgets-"], :root .Ad-Container:not(.adsbygoogle) { display: none !important; }</style></head>
+<body data-theme="pronote">
+<div class="wrap">
+<div class="topbar">
+<h1 id="qtitle" onclick="titleClick()" style="cursor:pointer">L'éducation, le plus grand problème</h1>
+<div class="themebox"><button class="burgerbtn" onclick="showMenu()" title="Menu" aria-label="Menu">☰</button></div>
+</div>
+<div class="sub" id="qsub">HLP1 — Vendredi 20 novembre 2026</div>
+<div class="card" id="quizcard" style=""><div class="progwrap"><div class="progbar" style="width: 0%;"></div></div><div class="qnum">Question 1 sur 13</div><p class="qtext">Selon la synthèse du cours, quel est le double sens du «&nbsp;plus grand&nbsp;» quand Kant dit que l'éducation est «&nbsp;le plus grand et le plus ardu problème qui nous puisse être proposé&nbsp;»&nbsp;?</p><label class="opt" id="opt0" style="animation-delay:0.05s"><input type="radio" name="q" value="0" onchange="markSel()"> Le plus grand signifie uniquement le plus difficile, le plus complexe à résoudre.</label><label class="opt" id="opt1" style="animation-delay:0.12000000000000001s"><input type="radio" name="q" value="1" onchange="markSel()"> Il signifie que l'éducation est le problème le plus ancien de l'humanité, antérieur à tous les autres.</label><label class="opt" id="opt2" style="animation-delay:0.19s"><input type="radio" name="q" value="2" onchange="markSel()"> Il signifie à la fois le plus difficile (la contradiction du rapport entre l'homme et la civilisation) et le plus important (l'éducation représente un idéal, lequel comporte lui aussi une contradiction).</label><label class="opt" id="opt3" style="animation-delay:0.26s"><input type="radio" name="q" value="3" onchange="markSel()"> Il signifie le plus important seulement, car l'éducation ne pose aucune difficulté particulière.</label><button id="valbtn" onclick="validate()">Valider</button></div>
+</div>
+<div id="editor" class="hidden"><div class="panel" id="editpanel"></div></div>
+
+<script>
+var QUIZ = {"title": "L'éducation, le plus grand problème", "sub": "HLP1 — Vendredi 20 novembre 2026", "questions": [{"type": "single", "name": "Selon la synthèse du cours, quel est le double sens du « plus grand » quand Kant dit que l'éducation est « le plus grand et le plus ardu problème qui nous puisse être proposé » ?", "options": [{"text": "Le plus grand signifie uniquement le plus difficile, le plus complexe à résoudre.", "correct": false, "feedback": "Le « plus grand » a un double sens. Il signifie d'abord le plus difficile (« ardu » veut dire difficile) : la difficulté tient à la contradiction du rapport entre l'homme et la civilisation. Mais il signifie aussi le plus important : l'éducation représente un idéal (terme défini par Kant), et cet idéal comporte lui aussi une contradiction, que Kant explique dans son texte. C'est pourquoi la question « pourquoi l'éducation est-elle le plus grand problème de l'humanité ? » récapitule tout le chapitre."}, {"text": "Il signifie à la fois le plus difficile (la contradiction du rapport entre l'homme et la civilisation) et le plus important (l'éducation représente un idéal, lequel comporte lui aussi une contradiction).", "correct": true, "feedback": "Le « plus grand » a un double sens. Il signifie d'abord le plus difficile (« ardu » veut dire difficile) : la difficulté tient à la contradiction du rapport entre l'homme et la civilisation. Mais il signifie aussi le plus important : l'éducation représente un idéal (terme défini par Kant), et cet idéal comporte lui aussi une contradiction, que Kant explique dans son texte. C'est pourquoi la question « pourquoi l'éducation est-elle le plus grand problème de l'humanité ? » récapitule tout le chapitre."}, {"text": "Il signifie le plus important seulement, car l'éducation ne pose aucune difficulté particulière.", "correct": false, "feedback": "Le « plus grand » a un double sens. Il signifie d'abord le plus difficile (« ardu » veut dire difficile) : la difficulté tient à la contradiction du rapport entre l'homme et la civilisation. Mais il signifie aussi le plus important : l'éducation représente un idéal (terme défini par Kant), et cet idéal comporte lui aussi une contradiction, que Kant explique dans son texte. C'est pourquoi la question « pourquoi l'éducation est-elle le plus grand problème de l'humanité ? » récapitule tout le chapitre."}, {"text": "Il signifie que l'éducation est le problème le plus ancien de l'humanité, antérieur à tous les autres.", "correct": false, "feedback": "Le « plus grand » a un double sens. Il signifie d'abord le plus difficile (« ardu » veut dire difficile) : la difficulté tient à la contradiction du rapport entre l'homme et la civilisation. Mais il signifie aussi le plus important : l'éducation représente un idéal (terme défini par Kant), et cet idéal comporte lui aussi une contradiction, que Kant explique dans son texte. C'est pourquoi la question « pourquoi l'éducation est-elle le plus grand problème de l'humanité ? » récapitule tout le chapitre."}]}, {"type": "single", "name": "Vrai ou faux : selon la correction apportée en classe, l'homme a d'abord été un animal, puis la civilisation est venue restreindre son animalité.", "options": [{"text": "Vrai", "correct": false, "feedback": "On ne peut pas dire que l'homme a été un animal à l'origine. L'origine de l'homme n'est pas connue : on ne peut faire que des hypothèses (comme les astrophysiciens sur le Big Bang). Les faits, ce sont les traces découvertes par les archéologues et les anthropologues : or toutes les traces humaines les plus reculées (des centaines de milliers d'années) — poterie, sépultures, restes de plats préparés — témoignent d'une vie culturelle. Aussi loin que l'on puisse remonter dans le temps, l'homme n'a jamais vécu comme un animal. Ce n'est donc pas notre animalité que la civilisation restreint, mais la satisfaction libre de nos pulsions naturelles."}, {"text": "Faux", "correct": true, "feedback": "On ne peut pas dire que l'homme a été un animal à l'origine. L'origine de l'homme n'est pas connue : on ne peut faire que des hypothèses (comme les astrophysiciens sur le Big Bang). Les faits, ce sont les traces découvertes par les archéologues et les anthropologues : or toutes les traces humaines les plus reculées (des centaines de milliers d'années) — poterie, sépultures, restes de plats préparés — témoignent d'une vie culturelle. Aussi loin que l'on puisse remonter dans le temps, l'homme n'a jamais vécu comme un animal. Ce n'est donc pas notre animalité que la civilisation restreint, mais la satisfaction libre de nos pulsions naturelles."}]}, {"type": "single", "name": "Pourquoi l'éducation est-elle un problème difficile selon Freud ?", "options": [{"text": "Parce que les enfants n'aiment pas l'école et que les maîtres manquent d'autorité.", "correct": false, "feedback": "C'est le paradoxe central. La civilisation (une forme d'éducation) restreint la satisfaction libre de nos pulsions naturelles, qui sont par définition égoïstes. L'homme n'aime pas se voir restreindre, et pourtant il a besoin de la civilisation, grâce à laquelle il produit ce dont il a besoin pour vivre (objets pour chasser, pour se loger, pour vivre une vie humaine). Bien qu'il en ait besoin, l'homme craint la société et se révolte contre l'ordre social : voilà pourquoi l'éducation est un problème difficile."}, {"text": "Parce que l'homme entretient des relations conflictuelles avec la civilisation : elle restreint la satisfaction libre de ses pulsions naturelles, et pourtant il en a besoin pour produire ce dont il a besoin pour vivre.", "correct": true, "feedback": "C'est le paradoxe central. La civilisation (une forme d'éducation) restreint la satisfaction libre de nos pulsions naturelles, qui sont par définition égoïstes. L'homme n'aime pas se voir restreindre, et pourtant il a besoin de la civilisation, grâce à laquelle il produit ce dont il a besoin pour vivre (objets pour chasser, pour se loger, pour vivre une vie humaine). Bien qu'il en ait besoin, l'homme craint la société et se révolte contre l'ordre social : voilà pourquoi l'éducation est un problème difficile."}, {"text": "Parce que la civilisation détruit complètement les pulsions naturelles de l'homme, ce qui le rend profondément malheureux.", "correct": false, "feedback": "C'est le paradoxe central. La civilisation (une forme d'éducation) restreint la satisfaction libre de nos pulsions naturelles, qui sont par définition égoïstes. L'homme n'aime pas se voir restreindre, et pourtant il a besoin de la civilisation, grâce à laquelle il produit ce dont il a besoin pour vivre (objets pour chasser, pour se loger, pour vivre une vie humaine). Bien qu'il en ait besoin, l'homme craint la société et se révolte contre l'ordre social : voilà pourquoi l'éducation est un problème difficile."}, {"text": "Parce que l'homme n'a pas besoin de la civilisation et peut vivre parfaitement sans elle.", "correct": false, "feedback": "C'est le paradoxe central. La civilisation (une forme d'éducation) restreint la satisfaction libre de nos pulsions naturelles, qui sont par définition égoïstes. L'homme n'aime pas se voir restreindre, et pourtant il a besoin de la civilisation, grâce à laquelle il produit ce dont il a besoin pour vivre (objets pour chasser, pour se loger, pour vivre une vie humaine). Bien qu'il en ait besoin, l'homme craint la société et se révolte contre l'ordre social : voilà pourquoi l'éducation est un problème difficile."}]}, {"type": "single", "name": "Selon la synthèse du cours, que peut signifier le mot « maître » à travers les concepts définis par les auteurs (discipline, droit, justice, Providence) ?", "options": [{"text": "Toujours la même chose : celui qui contraint et discipline, quel que soit le point de vue.", "correct": false, "feedback": "Dans tous les concepts définis par les auteurs au fil des textes (civilisation, culture, discipline, Providence, droit, justice), le mot maître peut vouloir dire des choses très différentes : un maître du point de vue de la discipline (telle que Kant la définit), un maître dans le cadre du droit, un maître du point de vue de la justice, un maître du point de vue de la Providence (la volonté divine). La question « l'homme a-t-il besoin d'un maître ? » change donc de sens selon le point de vue adopté : définir d'abord ses concepts, voilà la méthode."}, {"text": "Exclusivement le maître d'école, au sens strictement scolaire du terme.", "correct": false, "feedback": "Dans tous les concepts définis par les auteurs au fil des textes (civilisation, culture, discipline, Providence, droit, justice), le mot maître peut vouloir dire des choses très différentes : un maître du point de vue de la discipline (telle que Kant la définit), un maître dans le cadre du droit, un maître du point de vue de la justice, un maître du point de vue de la Providence (la volonté divine). La question « l'homme a-t-il besoin d'un maître ? » change donc de sens selon le point de vue adopté : définir d'abord ses concepts, voilà la méthode."}, {"text": "Uniquement Dieu, au sens de la Providence, dans tous les textes du chapitre.", "correct": false, "feedback": "Dans tous les concepts définis par les auteurs au fil des textes (civilisation, culture, discipline, Providence, droit, justice), le mot maître peut vouloir dire des choses très différentes : un maître du point de vue de la discipline (telle que Kant la définit), un maître dans le cadre du droit, un maître du point de vue de la justice, un maître du point de vue de la Providence (la volonté divine). La question « l'homme a-t-il besoin d'un maître ? » change donc de sens selon le point de vue adopté : définir d'abord ses concepts, voilà la méthode."}, {"text": "Des choses très différentes selon les points de vue : un maître du point de vue de la discipline (telle que Kant la définit), un maître dans le cadre du droit, un maître du point de vue de la justice, un maître du point de vue de la Providence (la volonté divine).", "correct": true, "feedback": "Dans tous les concepts définis par les auteurs au fil des textes (civilisation, culture, discipline, Providence, droit, justice), le mot maître peut vouloir dire des choses très différentes : un maître du point de vue de la discipline (telle que Kant la définit), un maître dans le cadre du droit, un maître du point de vue de la justice, un maître du point de vue de la Providence (la volonté divine). La question « l'homme a-t-il besoin d'un maître ? » change donc de sens selon le point de vue adopté : définir d'abord ses concepts, voilà la méthode."}]}, {"type": "single", "name": "Selon le documentaire sur l'histoire de l'éducation, à quoi l'éducation a-t-elle d'abord servi à l'origine ?", "options": [{"text": "Au bien commun : dès l'origine, elle a été conçue pour élever le niveau de tous les citoyens.", "correct": false, "feedback": "Le documentaire montre que l'éducation a rarement été jouée au service du bien commun : elle a plus souvent servi à garantir le pouvoir, à orienter les carrières et à imposer des normes. L'échange en classe l'a confirmé : l'éducation a été mise au point par le pouvoir pour garantir le pouvoir ; à l'origine, elle servait à faire respecter le pouvoir, non le bien commun ou le bien collectif."}, {"text": "À garantir le pouvoir : elle a plus souvent servi à faire respecter le pouvoir qu'à servir le bien commun.", "correct": true, "feedback": "Le documentaire montre que l'éducation a rarement été jouée au service du bien commun : elle a plus souvent servi à garantir le pouvoir, à orienter les carrières et à imposer des normes. L'échange en classe l'a confirmé : l'éducation a été mise au point par le pouvoir pour garantir le pouvoir ; à l'origine, elle servait à faire respecter le pouvoir, non le bien commun ou le bien collectif."}, {"text": "Au développement personnel de chaque enfant, à son épanouissement individuel.", "correct": false, "feedback": "Le documentaire montre que l'éducation a rarement été jouée au service du bien commun : elle a plus souvent servi à garantir le pouvoir, à orienter les carrières et à imposer des normes. L'échange en classe l'a confirmé : l'éducation a été mise au point par le pouvoir pour garantir le pouvoir ; à l'origine, elle servait à faire respecter le pouvoir, non le bien commun ou le bien collectif."}, {"text": "À préparer les enfants à leur rôle dans la société selon leur rang, comme le voulait Humboldt.", "correct": false, "feedback": "Le documentaire montre que l'éducation a rarement été jouée au service du bien commun : elle a plus souvent servi à garantir le pouvoir, à orienter les carrières et à imposer des normes. L'échange en classe l'a confirmé : l'éducation a été mise au point par le pouvoir pour garantir le pouvoir ; à l'origine, elle servait à faire respecter le pouvoir, non le bien commun ou le bien collectif."}]}, {"type": "single", "name": "Que montre le système éducatif de Sparte, présenté comme le premier de l'histoire ?", "options": [{"text": "Qu'une société peut alphabétiser tout son peuple dans le seul but d'élever son niveau culturel.", "correct": false, "feedback": "Dans une dictature militaire et esclavagiste (les hilotes, premiers habitants, très supérieurs en nombre : environ sept hilotes pour un spartiate), les garçons sont envoyés dès sept ans dans un camp d'entraînement, programme d'endurcissement destiné à former des guerriers (épreuves de flagellation). Ils bénéficient aussi du seul programme d'alphabétisation publique de l'époque : savoir lire servait notamment à l'espionnage (intercepter des messages). L'instruction est un instrument permettant de garantir le pouvoir et de maintenir les hilotes sous contrôle pendant des siècles."}, {"text": "Que l'éducation y était réservée aux hilotes pour maintenir leur supériorité numérique.", "correct": false, "feedback": "Dans une dictature militaire et esclavagiste (les hilotes, premiers habitants, très supérieurs en nombre : environ sept hilotes pour un spartiate), les garçons sont envoyés dès sept ans dans un camp d'entraînement, programme d'endurcissement destiné à former des guerriers (épreuves de flagellation). Ils bénéficient aussi du seul programme d'alphabétisation publique de l'époque : savoir lire servait notamment à l'espionnage (intercepter des messages). L'instruction est un instrument permettant de garantir le pouvoir et de maintenir les hilotes sous contrôle pendant des siècles."}, {"text": "Que les Spartiates refusaient toute forme d'instruction, jugée inutile pour des guerriers.", "correct": false, "feedback": "Dans une dictature militaire et esclavagiste (les hilotes, premiers habitants, très supérieurs en nombre : environ sept hilotes pour un spartiate), les garçons sont envoyés dès sept ans dans un camp d'entraînement, programme d'endurcissement destiné à former des guerriers (épreuves de flagellation). Ils bénéficient aussi du seul programme d'alphabétisation publique de l'époque : savoir lire servait notamment à l'espionnage (intercepter des messages). L'instruction est un instrument permettant de garantir le pouvoir et de maintenir les hilotes sous contrôle pendant des siècles."}, {"text": "Que l'instruction peut être un instrument de pouvoir : endurcissement militaire dès sept ans pour contrôler les hilotes, et alphabétisation publique notamment utile à l'espionnage.", "correct": true, "feedback": "Dans une dictature militaire et esclavagiste (les hilotes, premiers habitants, très supérieurs en nombre : environ sept hilotes pour un spartiate), les garçons sont envoyés dès sept ans dans un camp d'entraînement, programme d'endurcissement destiné à former des guerriers (épreuves de flagellation). Ils bénéficient aussi du seul programme d'alphabétisation publique de l'époque : savoir lire servait notamment à l'espionnage (intercepter des messages). L'instruction est un instrument permettant de garantir le pouvoir et de maintenir les hilotes sous contrôle pendant des siècles."}]}, {"type": "single", "name": "Vrai ou faux : Charlemagne a inventé l'école.", "options": [{"text": "Vrai", "correct": false, "feedback": "Charlemagne n'a pas inventé l'école : l'école existait déjà dans toutes les civilisations avancées, et dans le christianisme avec les écoles paroissiales et épiscopales. Il a lancé une réforme éducative sans précédent dans le haut Moyen Âge, manœuvre calculée pour asseoir son pouvoir : former les fonctionnaires d'une administration solide, uniformiser la liturgie, harmoniser l'écriture (la minuscule caroline, ancêtre de nos polices actuelles), diffuser le christianisme. Pour Charlemagne, l'éducation n'est pas une fin en soi, mais un instrument nécessaire pour maintenir la cohésion de l'Empire."}, {"text": "Faux", "correct": true, "feedback": "Charlemagne n'a pas inventé l'école : l'école existait déjà dans toutes les civilisations avancées, et dans le christianisme avec les écoles paroissiales et épiscopales. Il a lancé une réforme éducative sans précédent dans le haut Moyen Âge, manœuvre calculée pour asseoir son pouvoir : former les fonctionnaires d'une administration solide, uniformiser la liturgie, harmoniser l'écriture (la minuscule caroline, ancêtre de nos polices actuelles), diffuser le christianisme. Pour Charlemagne, l'éducation n'est pas une fin en soi, mais un instrument nécessaire pour maintenir la cohésion de l'Empire."}]}, {"type": "single", "name": "Selon la politologue Agustina Paglayan, qui a créé les premiers systèmes d'enseignement primaire obligatoire, et à quelle fin ?", "options": [{"text": "Les démocraties, pour former des citoyens éclairés capables de participer au débat public.", "correct": false, "feedback": "Ce ne sont pas les démocraties qui ont conduit à la création d'un enseignement primaire ; celui-ci s'est développé et étendu avant que les pays ne deviennent démocratiques. Ce sont les autocrates qui les premiers ont envoyé les enfants à l'école, et la plupart des lois sur la scolarité ont été adoptées juste après des révoltes populaires (Prusse après les révoltes paysannes ; Massachusetts après la révolte de Shays ; France en 1833 après les barricades de la révolution de juillet ; Pérou après vingt ans de guerre civile). L'objectif : former des citoyens obéissants, enseigner aux enfants que le statu quo est acceptable et qu'il n'y a aucune raison de se rebeller."}, {"text": "Les autocrates, avant les révoltes populaires, pour prévenir toute contestation en amont.", "correct": false, "feedback": "Ce ne sont pas les démocraties qui ont conduit à la création d'un enseignement primaire ; celui-ci s'est développé et étendu avant que les pays ne deviennent démocratiques. Ce sont les autocrates qui les premiers ont envoyé les enfants à l'école, et la plupart des lois sur la scolarité ont été adoptées juste après des révoltes populaires (Prusse après les révoltes paysannes ; Massachusetts après la révolte de Shays ; France en 1833 après les barricades de la révolution de juillet ; Pérou après vingt ans de guerre civile). L'objectif : former des citoyens obéissants, enseigner aux enfants que le statu quo est acceptable et qu'il n'y a aucune raison de se rebeller."}, {"text": "Les églises, pour diffuser la religion, la Prusse n'ayant adopté sa loi qu'en 1833.", "correct": false, "feedback": "Ce ne sont pas les démocraties qui ont conduit à la création d'un enseignement primaire ; celui-ci s'est développé et étendu avant que les pays ne deviennent démocratiques. Ce sont les autocrates qui les premiers ont envoyé les enfants à l'école, et la plupart des lois sur la scolarité ont été adoptées juste après des révoltes populaires (Prusse après les révoltes paysannes ; Massachusetts après la révolte de Shays ; France en 1833 après les barricades de la révolution de juillet ; Pérou après vingt ans de guerre civile). L'objectif : former des citoyens obéissants, enseigner aux enfants que le statu quo est acceptable et qu'il n'y a aucune raison de se rebeller."}, {"text": "Les autocrates, et la plupart des lois sur la scolarité ont été adoptées juste après des révoltes populaires, afin de former des citoyens obéissants et d'enseigner que le statu quo est acceptable.", "correct": true, "feedback": "Ce ne sont pas les démocraties qui ont conduit à la création d'un enseignement primaire ; celui-ci s'est développé et étendu avant que les pays ne deviennent démocratiques. Ce sont les autocrates qui les premiers ont envoyé les enfants à l'école, et la plupart des lois sur la scolarité ont été adoptées juste après des révoltes populaires (Prusse après les révoltes paysannes ; Massachusetts après la révolte de Shays ; France en 1833 après les barricades de la révolution de juillet ; Pérou après vingt ans de guerre civile). L'objectif : former des citoyens obéissants, enseigner aux enfants que le statu quo est acceptable et qu'il n'y a aucune raison de se rebeller."}]}, {"type": "single", "name": "Comment Michel Foucault considère-t-il l'école ?", "options": [{"text": "Comme un havre de paix protecteur, à l'écart des disciplines de la société adulte.", "correct": false, "feedback": "Foucault souligne qu'à partir du 18e siècle des méthodes de plus en plus subtiles sont utilisées pour discipliner les citoyens. Il considérait l'école comme une sorte de prison de jour pour les enfants ; les enseignants y surveillent en permanence les enfants comme des gardiens de pénitencier ; l'État voit dans l'école une académie de dressage du peuple. On y apprend dès l'enfance à être ponctuel, à rester assis tranquillement, à rester sage et à ne pas trop poser de questions : une machine sociale bien huilée."}, {"text": "Comme une sorte de prison de jour pour les enfants, une académie de dressage du peuple, où l'on apprend à être ponctuel, sage et à ne pas trop poser de questions.", "correct": true, "feedback": "Foucault souligne qu'à partir du 18e siècle des méthodes de plus en plus subtiles sont utilisées pour discipliner les citoyens. Il considérait l'école comme une sorte de prison de jour pour les enfants ; les enseignants y surveillent en permanence les enfants comme des gardiens de pénitencier ; l'État voit dans l'école une académie de dressage du peuple. On y apprend dès l'enfance à être ponctuel, à rester assis tranquillement, à rester sage et à ne pas trop poser de questions : une machine sociale bien huilée."}, {"text": "Comme la seule institution qui échappe aux dispositifs de pouvoir étudiés par les historiens.", "correct": false, "feedback": "Foucault souligne qu'à partir du 18e siècle des méthodes de plus en plus subtiles sont utilisées pour discipliner les citoyens. Il considérait l'école comme une sorte de prison de jour pour les enfants ; les enseignants y surveillent en permanence les enfants comme des gardiens de pénitencier ; l'État voit dans l'école une académie de dressage du peuple. On y apprend dès l'enfance à être ponctuel, à rester assis tranquillement, à rester sage et à ne pas trop poser de questions : une machine sociale bien huilée."}, {"text": "Comme un outil de libération qui affranchit l'enfant de toutes les disciplines sociales.", "correct": false, "feedback": "Foucault souligne qu'à partir du 18e siècle des méthodes de plus en plus subtiles sont utilisées pour discipliner les citoyens. Il considérait l'école comme une sorte de prison de jour pour les enfants ; les enseignants y surveillent en permanence les enfants comme des gardiens de pénitencier ; l'État voit dans l'école une académie de dressage du peuple. On y apprend dès l'enfance à être ponctuel, à rester assis tranquillement, à rester sage et à ne pas trop poser de questions : une machine sociale bien huilée."}]}, {"type": "single", "name": "Quel est l'idéal éducatif de Humboldt, chargé de relever l'État prussien après la défaite de 1806 ?", "options": [{"text": "Former chaque enfant à son futur rôle dans la société selon son rang, pour renforcer la cohésion de l'État prussien.", "correct": false, "feedback": "Après la défaite prussienne de 1806 face à Napoléon, Humboldt est chargé de relever l'État en matière d'éducation. Son idéal éducatif repose sur l'idée que chaque individu a le potentiel de se forger sa propre image du monde et de mieux le comprendre : l'éducation ne doit pas servir uniquement à préparer les enfants à leur rôle dans la société selon leur rang, mais aussi à veiller à leur épanouissement personnel ; tous les enfants doivent recevoir la même éducation quel que soit leur origine sociale. Après 1815, ces idées, jugées dangereuses, sont écartées : l'État façonne l'éducation selon ses besoins du moment."}, {"text": "Reprendre les idées de Charlemagne : uniformiser la liturgie et l'écriture pour unifier l'empire.", "correct": false, "feedback": "Après la défaite prussienne de 1806 face à Napoléon, Humboldt est chargé de relever l'État en matière d'éducation. Son idéal éducatif repose sur l'idée que chaque individu a le potentiel de se forger sa propre image du monde et de mieux le comprendre : l'éducation ne doit pas servir uniquement à préparer les enfants à leur rôle dans la société selon leur rang, mais aussi à veiller à leur épanouissement personnel ; tous les enfants doivent recevoir la même éducation quel que soit leur origine sociale. Après 1815, ces idées, jugées dangereuses, sont écartées : l'État façonne l'éducation selon ses besoins du moment."}, {"text": "Sélectionner les meilleurs éléments par des examens portant sur la mémorisation des classiques.", "correct": false, "feedback": "Après la défaite prussienne de 1806 face à Napoléon, Humboldt est chargé de relever l'État en matière d'éducation. Son idéal éducatif repose sur l'idée que chaque individu a le potentiel de se forger sa propre image du monde et de mieux le comprendre : l'éducation ne doit pas servir uniquement à préparer les enfants à leur rôle dans la société selon leur rang, mais aussi à veiller à leur épanouissement personnel ; tous les enfants doivent recevoir la même éducation quel que soit leur origine sociale. Après 1815, ces idées, jugées dangereuses, sont écartées : l'État façonne l'éducation selon ses besoins du moment."}, {"text": "Chaque individu peut se forger sa propre image du monde : l'éducation vise l'épanouissement personnel, et tous les enfants doivent recevoir la même éducation quel que soit leur origine sociale.", "correct": true, "feedback": "Après la défaite prussienne de 1806 face à Napoléon, Humboldt est chargé de relever l'État en matière d'éducation. Son idéal éducatif repose sur l'idée que chaque individu a le potentiel de se forger sa propre image du monde et de mieux le comprendre : l'éducation ne doit pas servir uniquement à préparer les enfants à leur rôle dans la société selon leur rang, mais aussi à veiller à leur épanouissement personnel ; tous les enfants doivent recevoir la même éducation quel que soit leur origine sociale. Après 1815, ces idées, jugées dangereuses, sont écartées : l'État façonne l'éducation selon ses besoins du moment."}]}, {"type": "short", "name": "Selon les études américaines citées par le documentaire, les hommes ayant décroché un diplôme universitaire vivent en moyenne près de combien d'années de plus que les autres ? (chiffre en années)", "answers": ["9", "9 ans", "neuf", "neuf ans", "neuf années de plus", "9 années"], "feedback": "Près de 9 ans de plus. Le documentaire cite aussi une autre étude : chaque euro investi dans l'éducation des jeunes enfants rapporterait jusqu'à douze fois plus (12, c'est donc ce multiplicateur, non le nombre d'années)."}, {"type": "matching", "name": "Associer chaque cas du documentaire à ce qu'il illustre dans l'histoire de l'éducation.", "pairs": [{"q": "Sparte", "a": "Le contrôle des hilotes par l'endurcissement militaire et l'alphabétisation au service de l'espionnage"}, {"q": "Charlemagne", "a": "La réforme éducative pour unifier l'empire : administration, liturgie et minuscule caroline"}, {"q": "Prusse (1763)", "a": "Le premier enseignement primaire obligatoire, adopté juste après des révoltes populaires pour former des citoyens obéissants"}, {"q": "Chine (examens keju)", "a": "La sélection par les performances individuelles sur la mémorisation des classiques confucéens"}, {"q": "Pensionnats canadiens", "a": "L'éducation utilisée comme arme pour éradiquer une culture autochtone"}, {"q": "Humboldt", "a": "L'épanouissement personnel et la même éducation pour tous quel que soit l'origine sociale"}], "feedback": "Sparte : le contrôle des hilotes par l'endurcissement militaire et l'alphabétisation au service de l'espionnage. Charlemagne : la réforme éducative pour unifier l'Empire (administration, liturgie, minuscule caroline). Prusse (1763) : le premier enseignement primaire obligatoire, adopté juste après des révoltes populaires pour former des citoyens obéissants. Chine (examens keju) : la sélection par les performances individuelles sur la mémorisation des classiques confucéens. Pensionnats canadiens : l'éducation utilisée comme arme pour éradiquer une culture autochtone (environ 150 000 enfants, au moins 4 100 morts). Humboldt : l'épanouissement personnel et la même éducation pour tous quel que soit l'origine sociale."}, {"type": "cloze", "name": "Compléter la synthèse du cours.", "segs": [{"t": "L'éducation est le plus grand problème au double sens du plus "}, {"blank": ["difficile"]}, {"t": " et du plus "}, {"blank": ["important"]}, {"t": " ; l'homme a "}, {"blank": ["besoin"]}, {"t": " de la société, mais celle-ci restreint la satisfaction libre de ses pulsions "}, {"blank": ["naturelles"]}, {"t": "."}], "feedback": "L'éducation est le plus grand problème au double sens du plus difficile et du plus important : difficile parce que la civilisation restreint la satisfaction libre de nos pulsions naturelles alors que nous avons besoin d'elle ; important parce que l'éducation représente un idéal, qui comporte lui aussi une contradiction."}]};
+(function(o){for(var k in o){var v=o[k];if(typeof v==='string'){o[k]=nbsp(v);}else if(v&&typeof v==='object'){(function w(x){for(var j in x){var y=x[j];if(typeof y==='string'){x[j]=nbsp(y);}else if(y&&typeof y==='object'){w(y);}}})(v);}}})(QUIZ);
+var HELP_DEF = "## Comment fonctionne ce QCM ?\n\n**Déroulement.** Le QCM présente les questions une par une. Choisissez votre réponse puis cliquez sur **Valider** : un encart affiche alors « Réponse acceptée. » ou l'explication du cours (encart « Explication » si la réponse ne convient pas). La barre de progression en haut indique votre avancement.\n\n**Types de questions.** Cinq formes possibles : choix unique (une seule bonne réponse), choix multiple (plusieurs bonnes réponses), réponse courte (tapez votre réponse, les variantes proches sont acceptées), association (relier chaque élément à sa définition) et texte à trous (complétez la phrase). Dans les questions à trous et les réponses courtes, la touche **Entrée** valide directement la réponse.\n\n**Écran de score.** À la fin, votre score s'affiche accompagné d'un bilan de votre performance : une appréciation d'ensemble, les types d'erreurs à corriger et deux conseils pour progresser.\n\n## L'écran « Revoir les réponses du QCM »\n\nDepuis l'écran de score, le bouton **Revoir les réponses du QCM** affiche le récapitulatif complet : pour chaque question, votre réponse, la bonne réponse mise en évidence et l'explication du cours.\n\n**Poser une question.** Sous chaque question du récapitulatif, le bouton **Poser une question** ouvre une recherche : la réponse est cherchée dans des sources en ligne (des pages consultées sont indiquées sous chaque réponse). Vous pouvez poser **plusieurs questions successives** : elles s'empilent les unes sous les autres et restent enregistrées dans le navigateur, même après avoir fermé la page. La touche Entrée envoie la question, le bouton **Réduire** referme la conversation.\n\n**Enregistrer.** Deux exports sont possibles :\n- **Enregistrer les questions et réponses (texte)** (en haut du récapitulatif) : enregistre uniquement les questions que vous avez posées et les réponses obtenues.\n- **Enregistrer mon résultat** (en bas de page) : enregistre tout votre résultat (chaque question, votre réponse, la réponse attendue, l'explication du cours) ainsi que toutes les questions posées et les réponses obtenues.\n\nLes fichiers obtenus sont des fichiers texte que vous pouvez conserver, imprimer ou consulter plus tard.\n\n## Apparence et navigation\n\n\n- Les deux boutons ronds à droite de l'écran permettent de **remonter tout en haut** (flèche du haut) ou de **descendre tout en bas** (flèche du bas) du QCM.\n- Chaque appareil dispose d'une **limite quotidienne d'utilisation** pour un QCM donné : au-delà, les recherches de réponses ne sont plus possibles jusqu'au lendemain, mais le QCM reste utilisable.";
+var HELP=lsGet("qcm_help_"+qid(),HELP_DEF);
+
+var st = {i:0, score:0, answered:false, clicks:[], tclicks:[], perm:null, ans:{}, ai:0, bilan:null};
+var card = document.getElementById('quizcard');
+QUIZ.sub=QUIZ.sub||document.getElementById('qsub').textContent;
+
+function nbsp(s){return String(s).replace(/ ([;:!?])/g,'\u00A0$1').replace(/« /g,'«\u00A0').replace(/ »/g,'\u00A0»');}
+function esc(s){return nbsp(s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'));}
+function shuffle(a){for(var i=a.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1)),t=a[i];a[i]=a[j];a[j]=t;}return a;}
+/* Mélange forcé des options : la bonne réponse ne peut jamais apparaître en 1re position,
+   et au moins une mauvaise réponse précède la première bonne (quelle que soit la banque). */
+function melangeOptions(opts){
+  var perm=shuffle(opts.map(function(o,k){return k;}));
+  var nbGood=opts.filter(function(o){return o.correct;}).length;
+  if(nbGood>=opts.length)return perm; /* toutes bonnes ou toutes mauvaises : rien à forcer */
+  /* garantir qu'une mauvaise réponse précède la première bonne */
+  var essais=0;
+  while(essais<20){
+    var firstGood=perm.length;
+    for(var i=0;i<perm.length;i++){if(opts[perm[i]].correct){firstGood=i;break;}}
+    if(firstGood>0)return perm; /* une mauvaise réponse est déjà devant */
+    /* échanger la bonne réponse de tête avec une mauvaise prise au hasard plus loin */
+    var bads=[];for(var j=1;j<perm.length;j++){if(!opts[perm[j]].correct)bads.push(j);}
+    if(!bads.length)return perm;
+    var pick=bads[Math.floor(Math.random()*bads.length)];
+    var t=perm[0];perm[0]=perm[pick];perm[pick]=t;
+    essais++;
+  }
+  return perm;
+}
+
+function setTheme(t){
+  document.body.setAttribute('data-theme',t);
+  try{localStorage.setItem('qcm_theme',t);}catch(e){}
+}
+/* ---- Page d'aide (bouton « ? »), éditable dans le mode édition ---- */
+function showHelp(){
+  closeHelp();
+  var w=document.createElement('div');
+  w.className='helpwrap';w.id='helpwrap';
+  w.onclick=function(e){if(e.target===w)closeHelp();};
+  w.innerHTML='<div class="helpbox" role="dialog" aria-label="Aide"><div style="display:flex;align-items:center;justify-content:space-between"><h2>Aide</h2><button class="ghost" onclick="closeHelp()">Fermer ✕</button></div>'+md(HELP)+'<div style="text-align:center;margin-top:18px"><button onclick="closeHelp()">Fermer</button></div></div>';
+  document.body.appendChild(w);
+  try{var t=w.querySelector('h2');if(t&&t.focus)t.focus();}catch(e){}
+}
+function closeHelp(){
+  var w=document.getElementById('helpwrap');
+  if(w)w.remove();
+}
+
+function render(){
+  st.answered=false;
+  var Q=QUIZ.questions, q=Q[st.i];
+  var h='<div class="progwrap"><div class="progbar"></div></div>';
+  h+='<div class="qnum">Question '+(st.i+1)+' sur '+Q.length+'</div>';
+  if(q.type==='single'||q.type==='multi'){
+    st.perm=melangeOptions(q.options);
+    h+='<p class="qtext">'+esc(q.name)+'</p>';
+    st.perm.forEach(function(orig,d){
+      h+='<label class="opt" id="opt'+d+'" style="animation-delay:'+(0.05+d*0.07)+'s"><input type="'+(q.type==='single'?'radio':'checkbox')+'" name="q" value="'+d+'" onchange="markSel()"> '+esc(q.options[orig].text)+'</label>';
+    });
+  }else if(q.type==='short'){
+    h+='<p class="qtext">'+esc(q.name)+'</p><input type="text" id="shortin" placeholder="Votre réponse…" onkeydown="keyGo(event)">';
+  }else if(q.type==='matching'){
+    h+='<p class="qtext">'+esc(q.name)+'</p>';
+    var pool=shuffle(q.pairs.map(function(p){return p.a;}));
+    q.pairs.forEach(function(p,k){
+      h+='<div style="margin:10px 0"><strong>'+esc(p.q)+'</strong><select class="pairsel" id="sel'+k+'"><option value="">— Choisir —</option>'+pool.map(function(a){return '<option>'+esc(a)+'</option>';}).join('')+'</select></div>';
+    });
+  }else if(q.type==='cloze'){
+    h+='<p class="qtext" style="white-space:pre-wrap">';
+    q.segs.forEach(function(s,k){
+      if(s.t!==undefined){h+=esc(s.t);}else{h+='<span class="blank"><input type="text" id="cz'+k+'" onkeydown="keyGo(event)" style="min-width:120px;padding:7px 9px;border:1px solid var(--line);border-radius:6px;background:var(--card);color:var(--ink)"></span>';}
+    });
+    h+='</p>';
+  }
+  h+='<button id="valbtn" onclick="validate()">Valider</button>';
+  card.innerHTML=h;
+  document.querySelector('.progbar').style.width=(100*st.i/Q.length)+'%';
+  card.style.animation='none';void card.offsetWidth;card.style.animation='';
+}
+function markSel(){
+  document.querySelectorAll('label.opt').forEach(function(l){l.classList.remove('sel');});
+  document.querySelectorAll('input[name=q]').forEach(function(inp){if(inp.checked)inp.closest('label').classList.add('sel');});
+}
+function norm(s){return (s||'').replace(/[\u00A0\u202F]/g,' ').toLowerCase().replace(/[éèêë]/g,'e').replace(/[àâä]/g,'a').replace(/[îï]/g,'i').replace(/[ôö]/g,'o').replace(/[ûùü]/g,'u').replace(/ç/g,'c').replace(/[''`’]/g,'').replace(/-/g,' ').replace(/[^a-z0-9 ]/g,'').replace(/\s+/g,' ').replace(/^ | $/g,'');}
+
+function keyGo(e){
+  if(!e||e.key!=='Enter')return;
+  if(e.preventDefault)e.preventDefault();
+  validate();
+}
+function titleClick(){
+  var now=Date.now();
+  st.tclicks.push(now);
+  st.tclicks=st.tclicks.filter(function(t){return now-t<700;});
+  if(st.tclicks.length>=3){st.tclicks=[];openEditor();}
+}
+function validate(){
+  var now=Date.now(); st.clicks.push(now);
+  st.clicks=st.clicks.filter(function(t){return now-t<500;});
+  if(st.clicks.length>=3){st.clicks=[];cheatRandom();return;}
+  if(st.answered)return;
+  var q=QUIZ.questions[st.i], ok=false, fb='', pending=null;
+  if(q.type==='single'||q.type==='multi'){
+    var selD=[].slice.call(document.querySelectorAll('input[name=q]:checked')).map(function(i){return +i.value;});
+    var sel=selD.map(function(d){return st.perm[d];});
+    var corr=q.options.map(function(o,k){return o.correct?k:-1;}).filter(function(k){return k>=0;});
+    if(q.type==='single'){ok=sel.length===1&&corr.indexOf(sel[0])>=0;}
+    else{ok=sel.length===corr.length&&sel.every(function(s){return corr.indexOf(s)>=0;});}
+    st.perm.forEach(function(orig,d){
+      var el=document.getElementById('opt'+d);
+      if(q.options[orig].correct)el.classList.add('good'); else if(selD.indexOf(d)>=0)el.classList.add('bad');
+      el.querySelector('input').disabled=true;
+    });
+    st.ans[st.i]={ok:ok,given:sel};
+    fb=corr.map(function(k){return q.options[k].feedback||'';}).join('<br><br>')||('Réponse attendue : '+corr.map(function(k){return q.options[k].text;}).join(' ; '));
+  }else if(q.type==='short'){
+    var inp=document.getElementById('shortin');
+    var v=norm(inp.value);
+    ok=q.answers.some(function(a){return norm(a)===v;});
+    inp.disabled=true;
+    st.ans[st.i]={ok:ok,given:inp.value};
+    fb=q.feedback||('Réponses acceptées : '+q.answers.join(' ; '));
+    if(!ok&&v){pending=function(done){aiCheckText(st.i,inp.value,q.answers,done);};}
+  }else if(q.type==='matching'){
+    var allOk=true;
+    q.pairs.forEach(function(p,k){
+      var v=document.getElementById('sel'+k).value;
+      if(norm(v)!==norm(p.a))allOk=false;
+      document.getElementById('sel'+k).disabled=true;
+    });
+    ok=allOk;
+    st.ans[st.i]={ok:ok,given:q.pairs.map(function(p,k){return document.getElementById('sel'+k).value;})};
+    fb='Associations correctes : '+q.pairs.map(function(p){return p.q+' → '+p.a;}).join(' ; ');
+  }else if(q.type==='cloze'){
+    var allOk2=true, wrongs=[];
+    q.segs.forEach(function(s,k){
+      if(s.blank===undefined)return;
+      var gv=document.getElementById('cz'+k).value;
+      var v2=norm(gv);
+      if(!s.blank.some(function(a){return norm(a)===v2;})){allOk2=false;wrongs.push({k:k,gv:gv,blank:s.blank});}
+      document.getElementById('cz'+k).disabled=true;
+    });
+    ok=allOk2;
+    st.ans[st.i]={ok:ok,given:q.segs.map(function(s,k){return s.blank===undefined?null:document.getElementById('cz'+k).value;})};
+    fb='La réponse complète : « '+q.segs.map(function(s){return s.blank!==undefined?s.blank[0]:s.t;}).join('')+' »';
+    if(!ok&&wrongs.some(function(w){return norm(w.gv);})){pending=function(done){aiCheckCloze(st.i,wrongs,done);};}
+  }
+  if(pending){
+    st.answered=true;
+    card.insertAdjacentHTML('beforeend','<div class="fb ok" id="aichk">⏳ Vérification de votre réponse…</div>');
+    pending(function(aiOk,extra){
+      var el=document.getElementById('aichk'); if(el)el.remove();
+      if(aiOk){ok=true;st.ans[st.i].ok=true;}
+      finishValidate(ok,fb+(extra?'<br><br>'+extra:''));
+    });
+  }else{finishValidate(ok,fb);}
+}
+function finishValidate(ok,fb){
+  if(ok)st.score++;
+  st.answered=true;
+  var h='<div class="fb '+(ok?'ok':'no')+'" style="animation-delay:.25s"><strong>'+(ok?'Réponse acceptée. ✅':'Explication')+'</strong><br>'+fb+'</div>';
+  if(ok){
+    var cols=['#2e7d32','#ffd166','#ef476f','#118ab2','#06d6a0','#f78c6b'];
+    var conf='<div class="party">';
+    for(var c=0;c<14;c++){conf+='<i style="left:'+(8+6*c)+'%;background:'+cols[c%cols.length]+';animation-delay:'+(c*0.025).toFixed(3)+'s"></i>';}
+    h+=conf+'</div>';
+    card.classList.add('cheer');
+    var bt=document.createElement('div');bt.className='bigtick';bt.textContent='✅';
+    document.body.appendChild(bt);
+    setTimeout(function(){if(bt.parentNode)bt.parentNode.removeChild(bt);},900);
+  }
+  h+='<button class="ghost" onclick="redo()" style="margin-top:10px">← Refaire cette question</button> ';
+  h+='<button onclick="next()">'+(st.i+1<QUIZ.questions.length?'Question suivante →':'Voir le score')+'</button>';
+  card.insertAdjacentHTML('beforeend',h);
+}
+function redo(){
+  var a=st.ans[st.i];
+  if(a&&a.ok)st.score--;
+  delete st.ans[st.i];
+  render();
+}
+function cheatRandom(){
+  st.score=0;
+  QUIZ.questions.forEach(function(q,k){
+    var ok=false, given=null;
+    if(q.type==='single'){
+      var j=Math.floor(Math.random()*q.options.length);
+      given=[j]; ok=!!q.options[j].correct;
+    }else if(q.type==='multi'){
+      var nb=1+Math.floor(Math.random()*Math.min(3,q.options.length));
+      var picks=shuffle(q.options.map(function(o,x){return x;})).slice(0,nb);
+      var corr=q.options.filter(function(o){return o.correct;}).length;
+      ok=picks.length===corr&&picks.every(function(x){return q.options[x].correct;});
+      given=picks;
+    }else if(q.type==='short'){
+      if(Math.random()<0.5){given=q.answers[Math.floor(Math.random()*q.answers.length)];ok=true;}
+      else{given=['réponse au hasard'][0];ok=false;}
+    }else if(q.type==='matching'){
+      var pool=shuffle(q.pairs.map(function(p){return p.a;}));
+      given=pool;
+      ok=q.pairs.every(function(p,x){return norm(pool[x])===norm(p.a);});
+    }else if(q.type==='cloze'){
+      given=[];ok=true;
+      q.segs.forEach(function(s){
+        if(s.blank===undefined){given.push(null);return;}
+        if(Math.random()<0.6){given.push(s.blank[0]);}
+        else{given.push('au hasard');ok=false;}
+      });
+    }
+    st.ans[k]={ok:ok,given:given};
+    if(ok)st.score++;
+  });
+  st.i=QUIZ.questions.length-1;
+  st.answered=true;
+  renderScore();
+}
+function next(){
+  st.i++;
+  if(st.i<QUIZ.questions.length){render();return;}
+  renderScore();
+}
+
+/* -- Nom de base conventionnel pour l'Arbre de compétences -- */
+function baseName(){ try{ if(typeof dlBase==='function') return dlBase(); }catch(e){} return (QUIZ.title||'qcm').replace(/[^A-Za-z0-9]+/g,'').slice(0,40); }
+
+function renderScore(){
+  var n=QUIZ.questions.length, s=st.score, pct=Math.round(100*s/n);
+  var msg=pct>=80?'Excellent, le cours est maîtrisé ! 🎉':pct>=50?'Bonne base : revoyez les explications des questions manquées.':'À reprendre : relisez le cours et le texte de Kant, puis refaites le QCM.';
+  var pb=document.querySelector('.progbar'); if(pb)pb.style.width='100%';
+  var savedBilan=st.bilan||lsGet('bilan_'+qid(),'');
+  var bilanH=savedBilan?('<strong>Bilan de votre performance</strong><br>'+md(savedBilan)):'<em>Bilan en préparation…</em>';
+  card.innerHTML='<h2 class="score">'+(pct>=80?'🏆 ':'')+'Score<span class="big">'+s+' / '+n+'</span>'+pct+'%</h2><div class="bar"><div id="scorebar" style="width:0%"></div></div><p style="text-align:center">'+msg+'</p><div class="fb ok" id="bilan" style="text-align:left">'+bilanH+'</div><div style="text-align:center"><button onclick="review()">Revoir les réponses du QCM</button> <button class="ghost" onclick="restart()">Refaire le QCM</button></div>';
+  
+  /* -- Sauvegarde du meilleur résultat, pour l'Arbre de compétences (même origine) -- */
+  try{
+    var prev=JSON.parse(lsGet('qcmres_'+baseName(),'null')||'null');
+    if(!prev||pct>prev.pct){ lsSet('qcmres_'+baseName(), JSON.stringify({pct:pct,score:s,total:n,date:Date.now(),comps:(QUIZ.comps||[])})); }
+  }catch(e){}
+
+  setTimeout(function(){var sb=document.getElementById('scorebar'); if(sb)sb.style.width=pct+'%';},120);
+  if(!savedBilan)aiBilan();
+}
+function review(){
+  var h='<div class="qnum">Récapitulatif — vos réponses et les explications du cours</div>';
+  if(QUIZ.questions.some(function(qq,k){return loadChat(k).length;}))h+='<div style="text-align:center"><button class="ghost" onclick="saveChat()">💾 Enregistrer les questions et réponses (texte)</button></div>';
+  var rb=st.bilan||lsGet('bilan_'+qid(),'');
+  if(rb)h+='<div class="fb ok"><strong>Bilan de votre performance</strong><br>'+md(rb)+'</div>';
+  QUIZ.questions.forEach(function(q,k){
+    var a=st.ans[k]||{ok:false,given:null};
+    h+='<div class="rq"><p class="qtext">'+(k+1)+'. '+esc(q.name)+'</p>';
+    if(q.type==='single'||q.type==='multi'){
+      q.options.forEach(function(o,j){
+        var picked=a.given&&a.given.indexOf(j)>=0;
+        var cls=o.correct?'good':(picked?'bad':'');
+        h+='<div class="opt '+cls+'">'+(o.correct?'✔ ':'')+esc(o.text)+(picked?' <em>(votre réponse)</em>':'')+'</div>';
+      });
+      var corrText=q.options.filter(function(o){return o.correct;}).map(function(o){return o.feedback||o.text;}).join('<br><br>');
+      h+='<div class="fb '+(a.ok?'ok':'no')+'">'+corrText+'</div>';
+    }else if(q.type==='short'){
+      h+='<p><em>Votre réponse :</em> '+esc(a.given||'—')+'</p><p><em>Réponses acceptées :</em> '+esc(q.answers.join(' ; '))+'</p>';
+      if(q.feedback)h+='<div class="fb '+(a.ok?'ok':'no')+'">'+q.feedback+'</div>';
+    }else if(q.type==='matching'){
+      q.pairs.forEach(function(p,j){
+        var gv=a.given?a.given[j]:'';
+        h+='<p>'+esc(p.q)+' → <em>'+esc(gv||'—')+'</em>'+(norm(gv)===norm(p.a)?' ✔':' <span style="color:var(--bad)">✖ '+esc(p.a)+'</span>')+'</p>';
+      });
+    }else{
+      h+='<p style="white-space:pre-wrap">';
+      q.segs.forEach(function(s,j){
+        if(s.t!==undefined)h+=esc(s.t);
+        else{var gv=a.given?a.given[j]:'';var gok=s.blank.some(function(x){return norm(x)===norm(gv);});
+          h+='<strong>'+esc(gv||'…')+'</strong>'+(gok?' ✔':' ('+esc(s.blank[0])+')');}
+      });
+      h+='</p>';
+    }
+    h+=(loadChat(k).length?aiChatHtml(k)+aiInput(k):aiBox(k));
+    h+='</div>';
+  });
+  h+='<div style="text-align:center"><button onclick="saveResult()">Enregistrer mon résultat</button> <button onclick="restart()">Refaire le QCM</button> <button class="ghost" onclick="renderScore()">Retour au score</button></div>';
+  card.innerHTML=h;
+  if(window.scrollTo)window.scrollTo(0,0);
+}
+function restart(){st.i=0;st.score=0;st.clicks=[];st.ans={};st.ai=0;st.bilan=null;render();}
+
+/* ---- Couche IA minimaliste (Ministral 3B, repli Mistral Small) ---- */
+var MISTRAL_KEY='mstrl_rWaAuPNbjAcCqKNJDj7XjTiFhS3AdBds_2jbUGh';
+var AI_MAX=10;
+var AI_MODELS=['ministral-3b-latest','mistral-small-latest'];
+/* ---- Markdown minimal pour les réponses de l'IA ---- */
+function md(t){
+  t=String(t).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+  t=t.replace(/```[a-z]*\n?/g,'');
+  t=t.replace(/\[([^\]]+)\]\((https?:\/\/[^\s)]+)\)/g,'<a href="$2" target="_blank" rel="noopener">$1</a>');
+  t=t.replace(/\*\*(.+?)\*\*/g,'<strong>$1</strong>');
+  t=t.replace(/(^|[^*\w])\*([^*\n]+)\*/g,'$1<em>$2</em>');
+  t=t.replace(/^#{1,4}\s*(.+)$/gm,'<strong>$1</strong>');
+  t=t.replace(/^\s*[-•]\s+/gm,'• ');
+  t=t.replace(/\n/g,'<br>');
+  return nbsp(t);
+}
+/* ---- Quota IA quotidien, par élève et par QCM (sans connexion) ---- */
+function lsGet(k,d){try{return localStorage.getItem(k)||d;}catch(e){return d;}}
+function lsSet(k,v){try{localStorage.setItem(k,v);}catch(e){}}
+function hash(s){var h=0;for(var i=0;i<s.length;i++){h=((h<<5)-h+s.charCodeAt(i))|0;}return 'h'+(h>>>0).toString(36);}
+function devId(){var d=lsGet('ai_dev','');if(!d){d=(Date.now().toString(36)+Math.random().toString(36).slice(2,10));lsSet('ai_dev',d);}return d;}
+var AI_IP='na';
+try{fetch('https://api.ipify.org?format=json').then(function(r){return r.json();}).then(function(j){if(j&&j.ip)AI_IP=String(j.ip);}).catch(function(){});}catch(e){}
+function qid(){return hash(QUIZ.title);}
+function dayKey(){var d=new Date();return d.getFullYear()+'-'+(d.getMonth()+1)+'-'+d.getDate();}
+function quotaKey(){return 'aiq_'+qid()+'_'+hash(AI_IP)+'_'+devId()+'_'+dayKey();}
+var AI_DAILY_MAX=25;
+function quotaLeft(){return AI_DAILY_MAX-(+lsGet(quotaKey(),'0')||0);}
+function quotaUse(){lsSet(quotaKey(),String((+lsGet(quotaKey(),'0')||0)+1));}
+/* ---- Appel générique à l'IA (Ministral 3B, repli Mistral Small) ---- */
+function aiCall(sys,usr,maxtok,temp,cb){
+  if(quotaLeft()<=0){cb(null);return;}
+  quotaUse();
+  function call(model){
+    return fetch('https://api.mistral.ai/v1/chat/completions',{method:'POST',headers:{'Content-Type':'application/json','Authorization':'Bearer '+MISTRAL_KEY},body:JSON.stringify({model:model,messages:[{role:'system',content:sys},{role:'user',content:usr}],max_tokens:maxtok,temperature:temp})});
+  }
+  call(AI_MODELS[0])
+    .then(function(r){return r.json().then(function(j){return {ok:r.ok,j:j};});})
+    .then(function(res){
+      if(res.ok)return cb((res.j&&res.j.choices&&res.j.choices[0]&&res.j.choices[0].message&&res.j.choices[0].message.content)||null);
+      var m=String((res.j&&res.j.message)||'');
+      if(m.indexOf('model')>=0||m.indexOf('not found')>=0){
+        return call(AI_MODELS[1]).then(function(r){return r.json();}).then(function(j){return cb((j.choices&&j.choices[0]&&j.choices[0].message&&j.choices[0].message.content)||null);}).catch(function(){cb(null);});
+      }
+      cb(null);
+    })
+    .catch(function(){cb(null);});
+}
+/* ---- Analyse robuste du verdict JSON renvoyé pour une vérification ---- */
+function aiVerdict(txt,n){
+  var t=String(txt).replace(/```[a-z]*\n?/g,'').trim();
+  var j=null; try{j=JSON.parse(t);}catch(e){}
+  var arr=null,comment=null;
+  if(j){
+    comment=j.comment||null;
+    if(comment&&typeof comment!=='string'){
+      comment=(comment.text!==undefined&&typeof comment.text==='string')?comment.text:(comment.raison!==undefined&&typeof comment.raison==='string')?comment.raison:(comment.message!==undefined&&typeof comment.message==='string')?comment.message:null;
+    }
+    if(Array.isArray(j.ok))arr=j.ok;
+    else if(typeof j.ok==='boolean')arr=[j.ok];
+  }
+  if(!arr){
+    var m=t.match(/\[[\s\S]*?\]/);
+    if(m){arr=m[0].slice(1,-1).split(',').map(function(x){return /true/i.test(x);});}
+    else if(/"ok"\s*:\s*"?true"?/i.test(t))arr=[true];
+    else if(/"ok"\s*:\s*"?false"?/i.test(t))arr=[false];
+    var cm=t.match(/"comment"\s*:\s*"([^"]*)"/); if(cm)comment=cm[1];
+  }
+  if(arr&&n){while(arr.length<n)arr.push(false);arr=arr.slice(0,n);}
+  return {ok:arr,comment:comment};
+}
+/* ---- Vérification IA des réponses courtes approximatives ---- */
+function aiCheckText(k,given,answers,done){
+  try{if(!navigator.onLine){done(false,null);return;}}catch(e){done(false,null);return;}
+  var q=QUIZ.questions[k];
+  var usr='Question du QCM : « '+q.name+' »\nRéponses attendues : '+answers.join(' ; ')+'\nRéponse de l\'élève : « '+given+' »\nCette réponse est-elle correcte ou une variante acceptable ? Accepte toute variante fidèle au sens : faute d\'orthographe, majuscules, ponctuation en début ou en fin de réponse (points, virgules, guillemets), pluriel, article ou casse, espaces, synonyme fidèle au sens (par exemple « emprunt » au lieu de « prêt »). Ne refuse que si le sens est réellement différent ou si la réponse est vide. Réponds STRICTEMENT en JSON sans autre texte ni bloc de code : {"ok":true,"comment":"une phrase très brève pour l\'élève"} ou {"ok":false,...}';
+  aiCall('Tu es un correcteur de philosophie. Réponds uniquement en JSON, sans texte autour.',usr,120,0,function(txt){
+    if(!txt){done(false,null);return;}
+    var v=aiVerdict(txt,1);
+    if(v.ok===null){
+      aiCall('Réponds uniquement OUI ou NON, un seul mot, sans ponctuation.',usr+'\n\nRéponds uniquement par OUI (si la réponse de l\'élève est acceptable) ou NON.',10,0,function(t2){
+        if(t2&&/oui|vrai|true/i.test(String(t2).toLowerCase()))done(true,null);
+        else done(false,null);
+      });
+      return;
+    }
+    /* Aucun message ajouté après l'explication (pas de « Réponse acceptée : null ») */
+    done(!!(v.ok&&v.ok[0]),null);
+  });
+}
+/* ---- Vérification IA des textes à trous approximatifs ---- */
+function aiCheckCloze(k,wrongs,done){
+  try{if(!navigator.onLine){done(false,null);return;}}catch(e){done(false,null);return;}
+  var q=QUIZ.questions[k];
+  var list=wrongs.map(function(w,x){return 'Trou '+(x+1)+' — réponse de l\'élève : « '+w.gv+' » ; réponses attendues : '+w.blank.join(' ; ');}).join('\n');
+  var usr='Texte à trous du QCM : « '+q.name+' »\n'+list+'\nPour chaque trou, la réponse de l\'élève est-elle correcte ou une variante acceptable ? Accepte toute variante fidèle au sens : faute d\'orthographe, majuscules, ponctuation en début ou en fin de réponse (points, virgules, guillemets), pluriel, espaces, synonyme fidèle au sens (par exemple « emprunt » au lieu de « prêt »). Un trou laissé vide est toujours faux. Ne refuse que si le sens est réellement différent. Réponds STRICTEMENT en JSON sans autre texte ni bloc de code : {"ok":[true ou false pour chaque trou dans l\'ordre], "comment": "une phrase très brève"}';
+  aiCall('Tu es un correcteur de philosophie. Réponds uniquement en JSON, sans texte autour.',usr,150,0,function(txt){
+    if(!txt){done(false,null);return;}
+    var v=aiVerdict(txt,wrongs.length);
+    if(!v.ok){
+      aiCall('Réponds uniquement par une liste de mots OUI ou NON séparés par des virgules, un par trou, dans l\'ordre, sans autre texte.',usr+'\n\nRéponds uniquement par une liste de OUI ou NON séparés par des virgules, dans l\'ordre des trous.',20,0,function(t2){
+        if(!t2){done(false,null);return;}
+        var parts=String(t2).split(/[,;\n]/).map(function(x){return /oui|vrai|true/i.test(x.trim());});
+        while(parts.length<wrongs.length)parts.push(false);
+        var all=wrongs.every(function(w,x){return parts[x]===true;});
+        done(all,null);
+      });
+      return;
+    }
+    var all=wrongs.length>0&&wrongs.every(function(w,x){return v.ok[x]===true;});
+    done(all,null);
+  });
+}
+/* ---- Bilan IA de fin de QCM ---- */
+function aiBilan(){
+  try{if(!navigator.onLine){bilanFallback();return;}}catch(e){}
+  if(quotaLeft()<=0){bilanFallback();return;}
+  var n=QUIZ.questions.length;
+  var det=QUIZ.questions.map(function(q,k){
+    var a=st.ans[k]||{ok:false,given:null};
+    var g=Array.isArray(a.given)?a.given.filter(Boolean).join(' ; '):(a.given||'—');
+    return 'Q'+(k+1)+' : '+(a.ok?'réussie':'manquée (réponse donnée : '+g+')');
+  }).join('\n');
+  var sys='Tu es un professeur de philosophie au lycée. Rédige un bilan de révision pour un élève de terminale, en français : un mot d\'ensemble sur sa performance, le ou les types d\'erreurs observés, puis 2 conseils précis pour progresser. 150 mots maximum. STYLE IMPERSONNEL OBLIGATOIRE : ne jamais t\'adresser à l\'élève, ni « tu » ni « vous » ni impératifs ; employer des tournures neutres du type « Le score obtenu montre… », « Les erreurs portent sur… », « Il convient de… », « Il serait utile de… ». Markdown simple autorisé (**gras**, listes).';
+  var usr='Score : '+st.score+'/'+n+'\nDétail question par question :\n'+det;
+  aiCall(sys,usr,400,0.3,function(txt){
+    var el=document.getElementById('bilan');
+    if(!el)return;
+    if(txt){st.bilan=txt;lsSet('bilan_'+qid(),txt);el.innerHTML='<strong>Bilan de votre performance</strong><br>'+md(txt);}
+    else bilanFallback();
+  });
+}
+function bilanFallback(){
+  var el=document.getElementById('bilan'); if(!el)return;
+  var missed=QUIZ.questions.map(function(q,k){return st.ans[k]&&st.ans[k].ok?-1:k;}).filter(function(x){return x>=0;});
+  var t='<strong>Bilan</strong><br>';
+  if(!missed.length)t+='Sans faute : le cours est maîtrisé. La simple relecture des explications suffit à consolider l\'ensemble.';
+  else t+='À réviser en priorité : '+missed.map(function(x){return 'question '+(x+1);}).join(', ')+'. Relire les explications correspondantes, puis refaire le QCM.';
+  if(quotaLeft()<=0)t+='<br><em>Bilan détaillé indisponible : limite quotidienne atteinte pour ce QCM.</em>';
+  else t+='<br><em>Bilan détaillé indisponible (pas de connexion).</em>';
+  el.innerHTML=t;
+}
+/* ---- Menu burger : aide, plein écran réel, navigation ---- */
+function fsSupported(){
+  var el=document.documentElement;
+  return !!(el.requestFullscreen||el.webkitRequestFullscreen);
+}
+function isFs(){
+  var d=document;
+  return !!(d.fullscreenElement||d.webkitFullscreenElement);
+}
+function fsLabel(){
+  return isFs()?'Quitter le plein écran':'Plein écran (sans cadre du navigateur)';
+}
+function toggleFs(){
+  var d=document, el=d.documentElement;
+  if(isFs()){
+    var ex=d.exitFullscreen||d.webkitExitFullscreen;
+    if(ex){try{var q=ex.call(d);if(q&&q.catch)q.catch(function(){});}catch(e){}}
+    refreshFsBtn();
+    return;
+  }
+  var rq=el.requestFullscreen||el.webkitRequestFullscreen;
+  if(!rq){alert("Ce navigateur n'autorise pas le plein écran réel.\nSur iPad/iPhone : ouvrez la page dans Safari puis « Ajouter à l'écran d'accueil » pour l'utiliser sans cadre, comme une application.");return;}
+  try{var p=rq.call(el);if(p&&p.catch)p.catch(function(){});}catch(e){}
+  setTimeout(refreshFsBtn,60);
+}
+function refreshFsBtn(){
+  var b=document.getElementById('mfsbtn');
+  if(b)b.innerHTML='<span class="mic">⛶</span>'+fsLabel();
+  try{document.body.classList.toggle('fullscreen',isFs());}catch(e){}
+}
+try{
+  document.addEventListener('fullscreenchange',refreshFsBtn);
+  document.addEventListener('webkitfullscreenchange',refreshFsBtn);
+}catch(e){}
+function showMenu(){
+  closeMenu();
+  var w=document.createElement('div');
+  w.className='menuwrap';w.id='menuwrap';
+  w.onclick=function(e){if(e.target===w)closeMenu();};
+  var h='<div class="menubox" role="dialog" aria-label="Menu"><div class="mtitle">Menu</div>';
+  h+='<button id="mfsbtn" onclick="toggleFs();closeMenu()"><span class="mic">⛶</span>'+fsLabel()+'</button>';
+  h+='<button onclick="closeMenu();showHelp()"><span class="mic">?</span>Aide — comment fonctionne ce QCM</button>';
+  h+='<button onclick="closeMenu();scrollPage(0)"><span class="mic">↑</span>Revenir tout en haut</button>';
+  h+='<button onclick="closeMenu();scrollPage(1)"><span class="mic">↓</span>Aller tout en bas</button>';
+  h+='</div>';
+  w.innerHTML=h;
+  document.body.appendChild(w);
+}
+function closeMenu(){
+  var w=document.getElementById('menuwrap');
+  if(w)w.remove();
+}
+function scrollPage(bottom){
+  var ed=document.getElementById('editor');
+  if(ed&&!ed.classList.contains('hidden')){
+    var ey=bottom?Math.max(0,ed.scrollHeight-ed.clientHeight):0;
+    try{ed.scrollTo({top:ey,behavior:'smooth'});}catch(e){ed.scrollTop=ey;}
+    return;
+  }
+  var y=bottom?Math.max(0,document.documentElement.scrollHeight-window.innerHeight):0;
+  try{window.scrollTo({top:y,behavior:'smooth'});}catch(e){window.scrollTo(0,y);}
+}
+function aiBox(k){
+  return '<div class="aibox" id="aibox'+k+'"><button class="ghost" onclick="aiOpen('+k+')">Poser une question</button></div>';
+}
+/* ---- Conversation : questions successives par question du QCM ---- */
+function loadChat(k){
+  if(!st.chat)st.chat={};
+  if(st.chat[k]===undefined){
+    var s=lsGet('chat_'+qid()+'_'+k,'');
+    st.chat[k]=[];
+    if(s){try{st.chat[k]=JSON.parse(s)||[];}catch(e){st.chat[k]=[];}}
+  }
+  return st.chat[k];
+}
+function chatLinksHtml(urls){
+  return (urls||[]).slice(0,7).map(function(u){return '<a href="'+u+'" target="_blank" rel="noopener">'+u+'</a>';}).join('<br>');
+}
+function aiChatHtml(k){
+  var a=loadChat(k),h='';
+  a.forEach(function(x,xi){
+    h+='<div class="fb ok" style="margin-top:8px"><strong>Question '+(xi+1)+' :</strong> '+esc(x.q)+'</div>';
+    h+='<div class="fb ok" style="margin-top:6px"><strong>Explication</strong><br>'+md(x.a);
+    var lk=chatLinksHtml(x.urls);
+    if(lk)h+='<br><span class="lbl">Pages consultées :</span><br>'+lk;
+    h+='</div>';
+  });
+  return h;
+}
+function aiInput(k){
+  return '<div style="margin-top:10px"><input type="text" id="aiq'+k+'" placeholder="Poser une autre question sur ce point du cours…" onkeydown="aiGo(event,'+k+')" style="margin-bottom:8px"><button onclick="aiAsk('+k+')">Envoyer</button> <button class="ghost" onclick="document.getElementById(\'aibox'+k+'\').innerHTML=aiBox('+k+')">Réduire</button></div>';
+}
+function aiOpen(k){
+  document.getElementById('aibox'+k).innerHTML=aiChatHtml(k)+aiInput(k);
+  var inp=document.getElementById('aiq'+k);
+  if(inp&&inp.focus){try{inp.focus();}catch(e){}}
+}
+/* Enregistre toutes les questions-réponses de l'écran de révision en fichier texte */
+function saveChat(){
+  var lines=[QUIZ.title+(QUIZ.sub?' — '+QUIZ.sub:''),'Questions posées et réponses obtenues',''];
+  var n=0;
+  QUIZ.questions.forEach(function(q,k){
+    var c=loadChat(k);
+    if(!c.length)return;
+    n++;
+    lines.push('——— Question '+(k+1)+' du QCM : '+q.name+' ———');
+    c.forEach(function(x){
+      lines.push('Question posée : '+x.q);
+      lines.push('Réponse :');
+      var t=String(x.a).replace(/\[([^\]]+)\]\(([^)]+)\)/g,'$1 ($2)').replace(/\*\*/g,'').replace(/^\s*#+\s*/gm,'').replace(/^\s*[-*]\s+/gm,'- ');
+      lines.push(t);
+      if(x.urls&&x.urls.length)lines.push('Pages consultées : '+x.urls.join(' , '));
+      lines.push('');
+    });
+  });
+  if(!n){alert('Aucune question posée pour le moment.');return;}
+  var blob=new Blob([lines.join('\n')],{type:'text/plain'});
+  var a=document.createElement('a');a.href=URL.createObjectURL(blob);
+  a.download=dlBase()+'-QuestionsReponses.txt';
+  document.body.appendChild(a);a.click();a.remove();
+}
+/* Convertit le markdown des réponses en texte brut pour les exports texte */
+function mdPlain(t){
+  return String(t).replace(/\[([^\]]+)\]\(([^)]+)\)/g,'$1 ($2)').replace(/\*\*/g,'').replace(/^\s*#+\s*/gm,'').replace(/^\s*[-*]\s+/gm,'- ').replace(/^\s*•\s+/gm,'- ');
+}
+/* Enregistre tout le résultat du QCM (réponses, explications) + toutes les questions posées et leurs réponses */
+function saveResult(){
+  var n=QUIZ.questions.length;
+  var lines=[QUIZ.title+(QUIZ.sub?' — '+QUIZ.sub:''),'Résultat du QCM : '+st.score+' / '+n+' ('+Math.round(100*st.score/Math.max(1,n))+'%)',''];
+  QUIZ.questions.forEach(function(q,k){
+    var a=st.ans[k]||{ok:false,given:null};
+    var g=Array.isArray(a.given)?a.given.filter(Boolean).join(' ; '):(a.given||'—');
+    lines.push('——— Question '+(k+1)+' : '+q.name+' ———');
+    lines.push('Réponse donnée : '+g);
+    lines.push(a.ok?'Résultat : réussie ✔':'Résultat : manquée ✖');
+    var exp='',corr='';
+    if(q.type==='single'||q.type==='multi'){
+      corr=q.options.filter(function(o){return o.correct;}).map(function(o){return o.text;}).join(' ; ');
+      exp=q.options.filter(function(o){return o.correct&&o.feedback;}).map(function(o){return o.feedback;}).join('\n\n');
+    }else if(q.type==='short'){
+      corr=q.answers.join(' ; ');
+      exp=q.feedback||'';
+    }else if(q.type==='matching'){
+      corr=q.pairs.map(function(p){return p.q+' → '+p.a;}).join(' ; ');
+    }else{
+      corr=q.segs.map(function(s){return s.t!==undefined?s.t:(s.blank?s.blank[0]:'');}).join('');
+    }
+    lines.push('Réponse attendue : '+corr);
+    if(exp)lines.push('Explication : '+mdPlain(exp));
+    lines.push('');
+  });
+  if(QUIZ.questions.some(function(qq,k){return loadChat(k).length;})){
+    lines.push('====================','Questions posées et réponses obtenues','');
+    QUIZ.questions.forEach(function(q,k){
+      var c=loadChat(k);
+      if(!c.length)return;
+      lines.push('——— Question '+(k+1)+' du QCM : '+q.name+' ———');
+      c.forEach(function(x){
+        lines.push('Question posée : '+x.q);
+        lines.push('Réponse :');
+        lines.push(mdPlain(x.a));
+        if(x.urls&&x.urls.length)lines.push('Pages consultées : '+x.urls.join(' , '));
+        lines.push('');
+      });
+    });
+  }
+  var blob=new Blob([lines.join('\n')],{type:'text/plain'});
+  var a=document.createElement('a');a.href=URL.createObjectURL(blob);
+  a.download=dlBase()+'-Resultat.txt';
+  document.body.appendChild(a);a.click();a.remove();
+}
+function aiGo(e,k){
+  if(!e||e.key!=='Enter')return;
+  if(e.preventDefault)e.preventDefault();
+  aiAsk(k);
+}
+function aiContext(k){
+  var q=QUIZ.questions[k];
+  var ctx='Question du QCM : '+q.name+'\n';
+  if(q.options)ctx+='Explication du cours : '+q.options.filter(function(o){return o.correct;}).map(function(o){return o.feedback||o.text;}).join('\n');
+  if(q.answers)ctx+='Réponses acceptées : '+q.answers.join(' ; ')+'\nExplication du cours : '+(q.feedback||'');
+  if(q.pairs)ctx+='Associations correctes : '+q.pairs.map(function(p){return p.q+' → '+p.a;}).join(' ; ');
+  if(q.segs)ctx+='Texte à trous corrigé : '+q.segs.map(function(s){return s.t!==undefined?s.t:'['+s.blank[0]+']';}).join('');
+  return ctx;
+}
+/* ---- Recherche internet de sources académiques pour les questions des élèves ---- */
+/* Sites et sources exclusivement français */
+function isFrUrl(u){
+  u=String(u||'');
+  return /^https?:\/\/[^\/]*\.fr(\/|$)/i.test(u)||/fr\.wikipedia\.org|cairn\.info|cairn\.fr|openedition\.org|revues\.org|philomag\.com|hal\.science|erudit\.org|classiques\.uqac\.ca|le-philosophe\.|la-philosophie\.fr|noes\.|persee\.fr|universalis\.fr|lemonde\.fr|lemonde\.com/i.test(u);
+}
+function aiSearch(q){
+  var terms=(q+' '+QUIZ.title).replace(/[«»"]/g,'').slice(0,200);
+  function wiki(){
+    return fetch('https://fr.wikipedia.org/w/api.php?action=query&list=search&srsearch='+encodeURIComponent(terms)+'&srlimit=2&format=json&origin=*')
+      .then(function(r){return r.json();})
+      .then(function(j){
+        var hits=(j&&j.query&&j.query.search)||[];
+        return hits.map(function(h){return '« '+h.title+' » (Wikipedia : https://fr.wikipedia.org/wiki/'+encodeURIComponent(h.title)+')';}).join('\n');
+      }).catch(function(){return '';});
+  }
+  function openalex(){
+    return fetch('https://api.openalex.org/works?search='+encodeURIComponent(terms)+'&per-page=5&language=fre&mailto=prof.c2phi.fr@gmail.com')
+      .then(function(r){return r.json();})
+      .then(function(j){
+        var hits=(j&&j.results)||[];
+        return hits.filter(function(w){return w.title;}).map(function(w){
+          var url=w.doi?w.doi:(w.id||'');
+          var auth=w.authorships&&w.authorships[0]&&w.authorships[0].author&&w.authorships[0].author.display_name;
+          return '« '+w.title+' »'+(w.publication_year?(' ('+w.publication_year+')'):'')+(auth?(' — '+auth):'')+' (source académique : '+url+')';
+        }).join('\n');
+      }).catch(function(){return '';});
+  }
+  function ddg(){
+    return fetch('https://api.duckduckgo.com/?q='+encodeURIComponent(terms)+'&kl=fr-fr&format=json&no_html=1&skip_disambig=1')
+      .then(function(r){return r.json();})
+      .then(function(j){
+        var out=[];
+        var topics=(j&&(j.RelatedTopics||[]))||[];
+        topics.forEach(function(t){
+          var u=t.FirstURL||(t.topics&&t.topics[0]&&t.topics[0].FirstURL);
+          var x=t.Text||(t.topics&&t.topics[0]&&t.topics[0].Text);
+          if(u&&x&&/https?:/.test(u)&&isFrUrl(u))out.push('« '+String(x).split(' - ')[0].slice(0,90)+' » ('+u+')');
+        });
+        return out.slice(0,3).join('\n');
+      }).catch(function(){return '';});
+  }
+  return Promise.all([openalex(),wiki(),ddg()]).then(function(r){
+    var lines=(r[0]+'\n'+r[1]+'\n'+r[2]).split('\n');
+    /* OpenAlex : ne conserver que les œuvres en français dont le lien est un site français ou un DOI */
+    lines=lines.filter(function(l){return l&&(/doi\.org|source académique/.test(l)?(/doi\.org/.test(l)||isFrUrl(l)):isFrUrl(l)||/Wikipedia : https:\/\/fr\.wikipedia\.org/.test(l));});
+    return lines.slice(0,7).join('\n');
+  }).catch(function(){return '';});
+}
+function aiSourcesLinks(sources){
+  var urls=String(sources||'').match(/https?:\/\/[^\s)»]+/g)||[];
+  var seen={},out=[];
+  urls.forEach(function(u){if(!seen[u]){seen[u]=1;out.push(u);}});
+  return out.slice(0,7).map(function(u){return '<a href="'+u+'" target="_blank" rel="noopener">'+u+'</a>';}).join('<br>');
+}
+function chatUrls(sources){
+  var urls=String(sources||'').match(/https?:\/\/[^\s)»]+/g)||[];
+  var seen={},out=[];
+  urls.forEach(function(u){if(!seen[u]){seen[u]=1;out.push(u);}});
+  return out.slice(0,7);
+}
+function aiAsk(k){
+  if(st.ai>=AI_MAX){document.getElementById('aibox'+k).innerHTML=aiChatHtml(k)+'<div class="fb no">Limite de '+AI_MAX+' questions par session atteinte.</div>';return;}
+  var q=document.getElementById('aiq'+k).value.trim();
+  if(!q)return;
+  var b=document.getElementById('aibox'+k);
+  if(quotaLeft()<=0){b.innerHTML=aiChatHtml(k)+'<div class="fb no">Limite quotidienne d\'utilisation atteinte pour ce QCM.</div>';return;}
+  b.innerHTML=aiChatHtml(k)+'<div class="fb ok" id="aistat'+k+'">🔎 Recherche de sources…</div>';
+  st.ai++;
+  aiSearch(q).then(function(sources){
+    var el=document.getElementById('aistat'+k); if(el)el.innerHTML='⏳ Recherche d\'une réponse…';
+    var sys='Tu es un professeur de philosophie au lycée. Réponds en français, en 120 mots maximum, de façon claire et pédagogique. Fonde-toi d\'abord sur l\'explication de la séance fournie ; tu peux la compléter avec les sources trouvées sur internet ci-dessous : sources académiques (articles, DOI) et sites sérieux sur le sujet (encyclopédies, universités, ressources de référence). Si tu t\'appuies sur une source, cite-la explicitement entre parenthèses (auteur ou site, titre) et donne le lien exact de la page consultée. Markdown simple autorisé (**gras**, listes, [libellé](https://lien)).';
+    var usr=aiContext(k)+'\n\nSources trouvées sur internet :\n'+(sources||'(aucune source trouvée)')+'\n\nQuestion de l\'élève : '+q;
+    aiCall(sys,usr,300,0.3,function(txt){
+      if(txt){
+        var a=loadChat(k);
+        a.push({q:q,a:txt,urls:chatUrls(sources)});
+        lsSet('chat_'+qid()+'_'+k,JSON.stringify(a));
+        b.innerHTML=aiChatHtml(k)+aiInput(k);
+      }
+      else{b.innerHTML=aiChatHtml(k)+'<div class="fb no">Impossible de répondre pour le moment (connexion). Reformulez ou réessayez plus tard.</div>'+aiInput(k);}
+    });
+  });
+}
+
+/* ---- Cheat code : 3 clics rapides sur Valider -> mode édition ---- */
+function openEditor(){
+  var p=document.getElementById('editpanel');
+  var h='<h2>Mode édition du QCM</h2>';
+  h+=quotaPanelHtml();
+  h+='<span class="lbl">Titre</span><input type="text" id="etitle" value="'+esc(QUIZ.title)+'">';
+  h+='<span class="lbl">Sous-titre (classe et date)</span><input type="text" id="esub" value="'+esc(QUIZ.sub||document.getElementById('qsub').textContent)+'">';
+  QUIZ.questions.forEach(function(q,k){
+    h+='<div class="eq"><button class="mini danger" onclick="delQ('+k+')">Supprimer cette question</button>';
+    h+='<span class="lbl">Intitulé / texte de la question</span><textarea rows="3" id="eq'+k+'">'+esc(q.type==='cloze'?q.segs.map(clozeRaw).join(''):q.name)+'</textarea>';
+    h+='<span class="lbl">Type : '+(q.type==='single'?'choix unique':q.type==='multi'?'choix multiple':q.type==='short'?'réponse courte':q.type==='matching'?'association':'texte à trous')+'</span>';
+    if(q.type==='single'||q.type==='multi'){
+      q.options.forEach(function(o,j){
+        h+='<div style="border-top:1px dashed var(--line);padding-top:8px;margin-top:8px">';
+        h+='<span class="lbl">Option '+(j+1)+'</span>';
+        h+='<input type="text" id="eo'+k+'_'+j+'" value="'+esc(o.text)+'">';
+        h+='<label><input type="'+(q.type==='single'?'radio':'checkbox')+'" id="ec'+k+'_'+j+'" '+(o.correct?'checked':'')+' onchange="singleFix('+k+','+j+')"> Bonne réponse</label> ';
+        h+='<span class="lbl">Explication (feedback)</span><textarea rows="2" id="ef'+k+'_'+j+'">'+esc(o.feedback)+'</textarea>';
+        h+='<button class="mini" onclick="delOpt('+k+','+j+')">Retirer cette option</button></div>';
+      });
+      h+='<button class="mini" onclick="addOpt('+k+')">Ajouter une option</button>';
+    }else if(q.type==='short'){
+      h+='<span class="lbl">Réponses acceptées (séparées par des points-virgules)</span><input type="text" id="ea'+k+'" value="'+esc(q.answers.join(' ; '))+'">';
+      h+='<span class="lbl">Explication</span><textarea rows="3" id="ef'+k+'">'+esc(q.feedback)+'</textarea>';
+    }else if(q.type==='matching'){
+      q.pairs.forEach(function(pr,j){
+        h+='<div style="border-top:1px dashed var(--line);padding-top:8px;margin-top:8px"><input type="text" id="epq'+k+'_'+j+'" value="'+esc(pr.q)+'"> <input type="text" id="epa'+k+'_'+j+'" value="'+esc(pr.a)+'"> <button class="mini" onclick="delPair('+k+','+j+')">Retirer</button></div>';
+      });
+      h+='<button class="mini" onclick="addPair('+k+')">Ajouter une paire</button>';
+    }else{
+      h+='<span class="lbl">Texte à trous (syntaxe {1:SHORTANSWER:=réponse~~variante})</span><textarea rows="4" id="eq'+k+'">'+esc(q.segs.map(clozeRaw).join(''))+'</textarea>';
+    }
+    h+='</div>';
+  });
+  h+='<button class="ghost" onclick="addQ()">Ajouter une question (choix unique)</button><br>';
+  h+='<div class="eq"><span class="lbl">Page d\'aide (affichée par le bouton « ? »)</span><textarea rows="8" id="ehelp">'+esc(HELP)+'</textarea></div>';
+  h+='<button onclick="applyEdit()">Appliquer les modifications</button> ';
+  h+='<button class="ghost" onclick="downloadJson()">Télécharger le QCM (JSON)</button> ';
+  h+='<button class="ghost" onclick="downloadHtml()">Télécharger le QCM (HTML)</button> ';
+  h+='<button class="danger" onclick="document.getElementById(\'editor\').classList.add(\'hidden\')">Fermer sans appliquer</button>';
+  h+=quotaPanelHtml();
+  p.innerHTML=h;
+  document.getElementById('editor').classList.remove('hidden');
+}
+/* Panneau d'information sur la limite d'utilisation (affiché en tête et en pied du mode édition) */
+function quotaPanelHtml(){
+  var used=AI_DAILY_MAX-quotaLeft();
+  var left=Math.max(0,AI_DAILY_MAX-used);
+  var pct=Math.min(100,Math.round(100*used/AI_DAILY_MAX));
+  var h='<div class="eq" style="border:1px solid var(--line);padding:10px;margin:10px 0">';
+  h+='<strong>Limite d\'utilisation — données prises en compte</strong>';
+  h+='<p style="margin:6px 0">QCM : '+esc(QUIZ.title)+' (identifiant : '+qid()+')<br>';
+  h+='Jour : '+dayKey()+' — Identifiant de l\'appareil : '+esc(devId())+' — Adresse IP : '+esc(AI_IP)+'<br>';
+  h+='Clé de comptage : '+esc(quotaKey())+'</p>';
+  h+='<p style="margin:6px 0">Plafond : '+AI_DAILY_MAX+' utilisations par jour / appareil / IP / QCM — ';
+  h+='<strong>Niveau atteint : '+used+' / '+AI_DAILY_MAX+' ('+pct+'%)</strong> — Restant au total : <strong>'+left+'</strong></p>';
+  h+='<div style="background:var(--line);height:8px;border-radius:4px;overflow:hidden"><div style="background:var(--accent,#4a7);height:8px;width:'+pct+'%"></div></div>';
+  h+='<p style="margin:6px 0">Limite de session : '+AI_MAX+' questions — posées dans cette session : '+st.ai+'</p>';
+  h+='</div>';
+  return h;
+}
+function clozeRaw(seg){
+  return seg.t!==undefined?seg.t:'{1:SHORTANSWER:='+seg.blank.join('~~')+'}';
+}
+function singleFix(k,j){
+  if(QUIZ.questions[k].type!=='single')return;
+  QUIZ.questions[k].options.forEach(function(o,x){if(x!==j)document.getElementById('ec'+k+'_'+x).checked=false;});
+}
+function delQ(k){if(confirm('Supprimer cette question ?')){QUIZ.questions.splice(k,1);openEditor();}}
+function delOpt(k,j){QUIZ.questions[k].options.splice(j,1);openEditor();}
+function addOpt(k){QUIZ.questions[k].options.push({text:'Nouvelle option',correct:false,feedback:''});openEditor();}
+function delPair(k,j){QUIZ.questions[k].pairs.splice(j,1);openEditor();}
+function addPair(k){QUIZ.questions[k].pairs.push({q:'Élément',a:'Associé'});openEditor();}
+function addQ(){QUIZ.questions.push({type:'single',name:'Nouvelle question',options:[{text:'Bonne réponse',correct:true,feedback:''},{text:'Mauvaise réponse 1',correct:false,feedback:''},{text:'Mauvaise réponse 2',correct:false,feedback:''},{text:'Mauvaise réponse 3',correct:false,feedback:''}]});openEditor();}
+
+function applyEdit(){
+  QUIZ.title=document.getElementById('etitle').value||QUIZ.title;
+  var nh=document.getElementById('ehelp');
+  if(nh){HELP=nh.value;lsSet('qcm_help_'+qid(),HELP);}
+  document.getElementById('qtitle').textContent=QUIZ.title;
+  document.title=QUIZ.title;
+  QUIZ.sub=document.getElementById('esub').value||'';
+  document.getElementById('qsub').textContent=QUIZ.sub;
+  QUIZ.questions.forEach(function(q,k){
+    if(q.type==='single'||q.type==='multi'){
+      q.name=document.getElementById('eq'+k).value;
+      q.options.forEach(function(o,j){
+        o.text=document.getElementById('eo'+k+'_'+j).value;
+        o.correct=!!document.getElementById('ec'+k+'_'+j).checked;
+        o.feedback=document.getElementById('ef'+k+'_'+j).value;
+      });
+    }else if(q.type==='short'){
+      q.name=document.getElementById('eq'+k).value;
+      q.answers=document.getElementById('ea'+k).value.split(';').map(function(s){return s.trim();}).filter(Boolean);
+      q.feedback=document.getElementById('ef'+k).value;
+    }else if(q.type==='matching'){
+      q.name=document.getElementById('eq'+k).value;
+      q.pairs.forEach(function(p,j){
+        p.q=document.getElementById('epq'+k+'_'+j).value;
+        p.a=document.getElementById('epa'+k+'_'+j).value;
+      });
+    }else{
+      var raw=document.getElementById('eq'+k).value;
+      var segs=[],i=0,re=/\{1:(?:SHORTANSWER|MULTICHOICE|NUMERICAL):([^}]*)\}/g,m;
+      while((m=re.exec(raw))!==null){
+        if(m.index>i)segs.push({t:raw.slice(i,m.index)});
+        segs.push({blank:m[1].split(/~~|~/).map(function(a){return a.replace(/^=/,'').trim();})});
+        i=re.lastIndex;
+      }
+      if(i<raw.length)segs.push({t:raw.slice(i)});
+      q.segs=segs;
+    }
+  });
+  document.getElementById('editor').classList.add('hidden');
+  st.i=Math.min(st.i,QUIZ.questions.length-1);st.score=0;st.clicks=[];render();
+}
+/* Nom de fichier des téléchargements : ClasseMoisJour-Notion (ex. TG51116-ImperatifCategorique.html).
+   Classe extraite du sous-titre ou du titre ; mois et jour extraits de la date de la séance
+   dans le sous-titre (sinon date du jour) ; notion = dernière partie du titre, sans accents,
+   sans petits mots (l', le, de, …), chaque mot commençant par une majuscule. */
+function dlBase(){
+  var t=QUIZ.title||'qcm',sub=QUIZ.sub||'';
+  var m=sub.match(/([A-Z]{2,4}\d(?:\/[A-Z]{2,4}\d)*)/)||t.match(/([A-Z]{2,4}\d)/);
+  var cls=m?m[1].replace(/[^A-Za-z0-9]/g,''):'';
+  var mois=['janvier','février','mars','avril','mai','juin','juillet','août','septembre','octobre','novembre','décembre'];
+  var dm=sub.toLowerCase().match(/(\d{1,2})(?:er)?\s+([a-zéû]+)/);
+  var mo=dm?mois.indexOf(dm[2]):-1,mmdd;
+  if(dm&&mo>=0){mmdd=('0'+(mo+1)).slice(-2)+('0'+parseInt(dm[1],10)).slice(-2);}
+  else{var d=new Date();mmdd=('0'+(d.getMonth()+1)).slice(-2)+('0'+d.getDate()).slice(-2);}
+  var notion=t.split(/ : | - | — /).pop().trim();
+  var stop={l:1,d:1,n:1,s:1,j:1,le:1,la:1,les:1,de:1,du:1,des:1,un:1,une:1,a:1,au:1,aux:1,et:1,en:1,y:1,ce:1,cet:1,cette:1,que:1,qui:1,est:1,il:1,elle:1,on:1,comme:1,autre:1,autres:1};
+  var slug=notion.replace(/[\u0027\u2019]/g,' ');
+  try{slug=slug.normalize('NFD').replace(/[\u0300-\u036f]/g,'');}catch(e){}
+  slug=slug.split(/[^A-Za-z0-9]+/).filter(function(w){return w&&!stop[w.toLowerCase()];}).map(function(w){return w.charAt(0).toUpperCase()+w.slice(1);}).join('');
+  if(!slug)slug=t.replace(/[^A-Za-z0-9]/g,'')||'qcm';
+  return (cls?cls:'')+mmdd+'-'+slug;
+}
+function downloadJson(){
+  var blob=new Blob([JSON.stringify(QUIZ,null,2)],{type:'application/json'});
+  var a=document.createElement('a');a.href=URL.createObjectURL(blob);
+  a.download=dlBase()+'.json';
+  document.body.appendChild(a);a.click();a.remove();
+}
+/* Enregistre la page HTML complète avec le QCM modifié :
+   exige que la déclaration « var QUIZ = {...}; » occupe une ligne unique. */
+function downloadHtml(){
+  applyEdit();
+  var sc=document.getElementsByTagName('script'),si=-1;
+  for(var i=0;i<sc.length;i++){if(sc[i].textContent.indexOf('var QUIZ = ')>=0){si=i;break;}}
+  if(si<0){alert('Enregistrement impossible : script du QCM introuvable.');return;}
+  var lines=sc[si].textContent.split('\n'),done=false;
+  for(var L=0;L<lines.length;L++){
+    if(lines[L].indexOf('var QUIZ = ')===0){lines[L]='var QUIZ = '+JSON.stringify(QUIZ)+';';done=true;break;}
+  }
+  if(!done){alert('Enregistrement impossible : la déclaration du QCM doit rester sur une ligne unique.');return;}
+  for(var L2=0;L2<lines.length;L2++){
+    if(lines[L2].indexOf('var HELP_DEF = ')===0){lines[L2]='var HELP_DEF = '+JSON.stringify(HELP)+';';break;}
+  }
+  var clone=document.documentElement.cloneNode(true);
+  clone.getElementsByTagName('script')[si].textContent=lines.join('\n');
+  var c=clone.querySelector('#quizcard'); if(c)c.innerHTML='';
+  var ed=clone.querySelector('#editor'); if(ed){ed.classList.add('hidden');var ep=clone.querySelector('#editpanel');if(ep)ep.innerHTML='';}
+  var blob=new Blob(['<!DOCTYPE html>\n'+clone.outerHTML],{type:'text/html'});
+  var a=document.createElement('a');a.href=URL.createObjectURL(blob);
+  a.download=dlBase()+'.html';
+  document.body.appendChild(a);a.click();a.remove();
+}
+render();
+</script>
+<script type="module" src="./L'éducation, le plus grand problème_files/vce701823e78c4301a35b7e07294d87301792088814092" integrity="sha512-UKNk8GbxkABxKcXYuLkO16EleLGUkcvJWtpSNmExE0Too3ZaFAxTscNWEc1OdAv5/BikHawapSCaiD2XCmp+Bw==" nonce="rDOHrhI6bRGVUuzfI81IQA==" data-cf-beacon="{&quot;version&quot;:&quot;2024.11.0&quot;,&quot;token&quot;:&quot;36b4216ae2dc4d5488c249161e71fe1e&quot;,&quot;spa&quot;:2}" crossorigin="anonymous" style="display: none !important;"></script>
+
+
+<div state="voice" class="placeholder-icon" id="tts-placeholder-icon" title="Click to show TTS button" style="background-image: url(&quot;chrome-extension://ifnfkcmbdaelhfkpkoncangcnhieanmj/data/content_script/icons/voice.png&quot;);"><canvas width="36" height="36" class="loading-circle" id="text-to-speech-loader" style="display: none;"></canvas></div></body></html>
