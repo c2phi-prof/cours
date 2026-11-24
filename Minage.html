@@ -713,22 +713,22 @@ const bt=$('#bt');
 const cfg=()=>{try{return JSON.parse(localStorage.getItem('tagflow.ai'))}catch(e){return null}};
 $('#bk').onclick=()=>{
   const c=cfg()||{};
-  const key=prompt('clé API (vide = désactiver)',c.key||'');if(key===null)return;
+  const key=prompt('clé API Mistral (vide = désactiver)',c.key||'');if(key===null)return;
   if(!key.trim()){try{localStorage.removeItem('tagflow.ai')}catch(e){}return}
-  const url=prompt('url',c.url||'https://api.anthropic.com/v1/messages');if(url===null)return;
-  const model=prompt('modèle',c.model||'claude-sonnet-5-5');if(model===null)return;
+  const url=prompt('url',c.url||'https://api.mistral.ai/v1/chat/completions');if(url===null)return;
+  const model=prompt('modèle',c.model||'mistral-large-latest');if(model===null)return;
   try{localStorage.setItem('tagflow.ai',JSON.stringify({key:key.trim(),url:url.trim(),model:model.trim()}))}catch(e){}
 };
 async function callAI(p,signal){
-  if(window.claude&&typeof window.claude.complete==='function')return await window.claude.complete(p);
+  if(window.mistral&&typeof window.mistral.complete==='function')return await window.mistral.complete(p);
   const c=cfg();if(!c||!c.key)return null;
-  const anth=/anthropic\.com/.test(c.url);
+  const mis=/mistral\.ai/.test(c.url);
   const r=await fetch(c.url,{method:'POST',signal,
-    headers:anth?{'content-type':'application/json','x-api-key':c.key,'anthropic-version':'2023-06-01','anthropic-dangerous-direct-browser-access':'true'}:{'content-type':'application/json',Authorization:'Bearer '+c.key},
-    body:JSON.stringify(anth?{model:c.model,max_tokens:4096,messages:[{role:'user',content:p}]}:{model:c.model,prompt:p})});
+    headers:{'content-type':'application/json',Authorization:'Bearer '+c.key},
+    body:JSON.stringify(mis?{model:c.model,max_tokens:4096,messages:[{role:'user',content:p}]}:{model:c.model,prompt:p})});
   if(!r.ok)throw new Error(r.status);
   const j=await r.json();
-  if(anth)return(j.content||[]).map(x=>x.text||'').join('');
+  if(mis)return(j.choices||[]).map(x=>x.message&&x.message.content||'').join('');
   return typeof j==='string'?j:(j.text||j.output||JSON.stringify(j));
 }
 function extractJSON(s){
