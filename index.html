@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -106,7 +107,8 @@ li.item.vu.visible { opacity: .55; }
         spanHorodatage: null,
         spanCompte: null,
         DelaiAuto: 10 * 60 * 1000,
-        enCours: false
+        enCours: false,
+        affichageEnCours: false
     };
 
     function proprietaireEtDepot() {
@@ -275,6 +277,12 @@ li.item.vu.visible { opacity: .55; }
     }
 
     async function afficher(fichiers, notifieNouveaux) {
+        maj.affichageEnCours = true;
+        try { await afficherListe(fichiers, notifieNouveaux); }
+        finally { maj.affichageEnCours = false; }
+    }
+
+    async function afficherListe(fichiers, notifieNouveaux) {
         renduRapide = !!(maj.signature && notifieNouveaux);
         var vus = lireVus();
         var retenus = fichiers.filter(function (f) {
@@ -346,9 +354,9 @@ li.item.vu.visible { opacity: .55; }
     }
 
     function relancer(silencieux) {
-        if (maj.enCours) { return; }
+        if (maj.enCours || maj.affichageEnCours) { return; }
         maj.enCours = true;
-        fetch(urlApi)
+        fetch(urlApi, { cache: 'no-cache' })
             .then(function (reponse) {
                 if (!reponse.ok) throw new Error('API GitHub');
                 return reponse.json();
