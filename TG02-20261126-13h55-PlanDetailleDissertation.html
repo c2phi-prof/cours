@@ -1,0 +1,906 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Le plan détaillé de la dissertation</title>
+<style>
+:root{--bg:#f4f1ea;--card:#fffdf7;--ink:#2b2b26;--acc:#8a1c1c;--acc2:#a33c3c;--ok:#2e6b34;--bad:#a33;--line:#d8d2c4;--font:Georgia,'Times New Roman',serif;--shadow:rgba(0,0,0,.06)}
+body[data-theme="pronote"]{--bg:#ffffff;--card:#fafafa;--ink:#333333;--acc:#006400;--acc2:#4a9d4a;--ok:#2e7d32;--bad:#b03030;--line:#c9c9c9;--font:Arial,Helvetica,'Segoe UI',sans-serif;--shadow:rgba(0,0,0,.08)}
+body[data-theme="pronote"] .topbar{background:#f0f0f0;border:1px solid #c9c9c9;border-radius:8px;padding:12px 14px;margin-bottom:16px}
+body[data-theme="pronote"] .card{border-radius:6px}
+body[data-theme="pronote"] button{border-radius:6px;font-weight:bold}
+body[data-theme="pronote"] label.opt,body[data-theme="pronote"] div.opt{border-radius:5px}
+body[data-theme="moderne"]{--bg:#eaf2fb;--card:#ffffff;--ink:#1b2a3a;--acc:#1c5d99;--acc2:#3f8fd6;--ok:#1e7a46;--bad:#c0392b;--line:#c4d4e8;--font:Verdana,Geneva,sans-serif;--shadow:rgba(28,93,153,.15)}
+body[data-theme="machine"]{--bg:#e6e6e2;--card:#f7f7f2;--ink:#222;--acc:#0a6b3c;--acc2:#0e8f54;--ok:#0a6b3c;--bad:#b03030;--line:#b8b8ae;--font:'Courier New',Courier,monospace;--shadow:rgba(0,0,0,.12)}
+body[data-theme="manuscrit"]{--bg:#f0e6d6;--card:#fbf3e4;--ink:#3b2f1e;--acc:#7a5b1e;--acc2:#a3823a;--ok:#4e6b2f;--bad:#8f3a2a;--line:#d9c9a8;--font:'Comic Sans MS','Segoe Script',cursive;--shadow:rgba(90,70,40,.15)}
+body[data-theme="creatif"]{--bg:#f3e9ff;--card:#ffffff;--ink:#2d1b4e;--acc:#6a1bb0;--acc2:#c2410c;--ok:#12805c;--bad:#c81e5a;--line:#d9c4f2;--font:'Trebuchet MS','Papyrus',fantasy;--shadow:rgba(106,27,176,.18)}
+body[data-theme="nuit"]{--bg:#12141a;--card:#1c1f28;--ink:#e8e6e0;--acc:#7fa8ff;--acc2:#a8c2ff;--ok:#7fd695;--bad:#ff8a8a;--line:#343947;--font:'Segoe UI',Helvetica,Arial,sans-serif;--shadow:rgba(0,0,0,.5)}
+*{box-sizing:border-box}
+body{font-family:var(--font);background:var(--bg);color:var(--ink);margin:0;padding:20px;transition:background .4s,color .4s}
+.wrap{max-width:760px;margin:0 auto}
+.topbar{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:14px}
+h1{font-size:1.45em;color:var(--acc);margin:0;text-align:center;flex:1}
+.themebox{display:flex;align-items:center;gap:6px;font-size:.85em}
+.themebox select{font-family:var(--font);font-size:.95em;padding:6px 8px;border:1px solid var(--line);border-radius:20px;background:var(--card);color:var(--ink);cursor:pointer;height:34px}
+button.helpbtn{margin:0;width:34px;height:34px;padding:0;border-radius:50%!important;background:#fff!important;color:var(--ink);border:1px solid var(--line);font:700 1em/1 var(--font);cursor:pointer;box-shadow:0 1px 4px var(--shadow);display:inline-flex;align-items:center;justify-content:center;transition:border-color .16s ease}
+button.helpbtn:hover{border-color:var(--acc);color:var(--acc)}
+.qtags{display:flex;flex-wrap:wrap;gap:6px;justify-content:center;margin:0 0 10px}
+.qtags span{font-size:.75em;color:var(--acc);background:color-mix(in srgb,var(--acc) 10%,transparent);border-radius:12px;padding:2px 9px}
+.sub{text-align:center;color:var(--ink);opacity:.65;margin-bottom:16px;font-style:italic}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:22px;box-shadow:0 3px 10px var(--shadow);transition:background .4s,border-color .4s;animation:cardIn .45s ease}
+@keyframes cardIn{from{opacity:0;transform:translateY(14px) scale(.99)}to{opacity:1;transform:none}}
+.progwrap{height:8px;background:var(--line);border-radius:4px;overflow:hidden;margin-bottom:16px}
+.progbar{height:100%;background:var(--acc);width:0;transition:width .6s cubic-bezier(.25,.9,.3,1)}
+.qnum{font-size:.85em;opacity:.65;margin-bottom:8px}
+.qtext{font-size:1.08em;margin:0 0 14px;line-height:1.5;animation:fadeUp .4s ease}
+@keyframes fadeUp{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+label.opt,div.opt{display:block;border:1px solid var(--line);border-radius:9px;padding:10px 12px;margin:8px 0;cursor:pointer;line-height:1.4;animation:fadeUp .4s ease backwards;transition:background .25s,border-color .25s,transform .15s}
+label.opt:hover,div.opt:hover{transform:none}
+label.opt.sel,div.opt.sel{border-color:var(--acc);background:color-mix(in srgb,var(--acc) 10%,var(--card))}
+label.opt.good,div.opt.good{border-color:var(--ok);background:color-mix(in srgb,var(--ok) 15%,var(--card));animation:pop .4s ease,goodGlow 1.1s ease 2}
+@keyframes goodGlow{0%,100%{box-shadow:0 0 0 rgba(0,0,0,0)}50%{box-shadow:0 0 22px color-mix(in srgb,var(--ok) 70%,transparent)}}
+@keyframes confettiFall{0%{transform:translateY(-10px) rotate(0deg) scale(1);opacity:1}100%{transform:translateY(130px) rotate(560deg) scale(.6);opacity:0}}
+.party{position:relative;height:0;overflow:visible;text-align:center;pointer-events:none}
+.party i{position:absolute;top:0;display:block;width:10px;height:15px;border-radius:2px;animation:confettiFall 1s ease-in forwards}
+@keyframes bigTick{0%{transform:translate(-50%,-50%) scale(0) rotate(-40deg);opacity:0}55%{transform:translate(-50%,-50%) scale(1.35) rotate(8deg);opacity:1}100%{transform:translate(-50%,-50%) scale(1) rotate(0);opacity:1}}
+.bigtick{position:fixed;left:50%;top:38%;font-size:64px;z-index:60;pointer-events:none;animation:bigTick .85s ease forwards;filter:drop-shadow(0 6px 14px color-mix(in srgb,var(--ok) 60%,transparent))}
+@keyframes cardCheer{0%,100%{box-shadow:0 3px 10px var(--shadow)}45%{box-shadow:0 0 34px color-mix(in srgb,var(--ok) 55%,transparent),0 3px 10px var(--shadow)}}
+.card.cheer{animation:cardCheer 1s ease 2}
+label.opt.bad,div.opt.bad{border-color:var(--bad);background:color-mix(in srgb,var(--bad) 12%,var(--card));animation:shake .45s ease}
+@keyframes pop{0%{transform:scale(.96)}55%{transform:scale(1.04)}100%{transform:scale(1)}}
+@keyframes shake{0%,100%{transform:translateX(0)}20%{transform:translateX(-7px)}40%{transform:translateX(7px)}60%{transform:translateX(-4px)}80%{transform:translateX(4px)}}
+input[type=text],textarea{font-family:var(--font);font-size:1em;color:var(--ink)}
+input[type=text]{border:1px solid var(--line);border-radius:7px;padding:9px 11px;width:100%;background:var(--card)}
+.blank input{display:inline-block;min-width:130px}
+select.pairsel{width:100%;margin:6px 0;padding:9px;border:1px solid var(--line);border-radius:7px;background:var(--card);color:var(--ink);font-family:var(--font)}
+button{font-family:var(--font);font-size:1em;background:var(--acc);color:#fff;border:none;border-radius:9px;padding:11px 24px;cursor:pointer;margin-top:14px;transition:transform .15s,filter .2s,background .4s}
+button:hover{filter:brightness(1.15);transform:scale(1.04)}
+button:active{transform:scale(.97)}
+button.ghost{background:var(--ink)}
+.fb{margin-top:14px;padding:12px 14px;border-radius:9px;line-height:1.5;font-size:.95em;animation:fadeUp .45s ease}
+.fb.ok{background:color-mix(in srgb,var(--ok) 14%,var(--card));border:1px solid var(--ok)}
+.fb.no{background:color-mix(in srgb,var(--bad) 12%,var(--card));border:1px solid var(--bad)}
+.score{font-size:1.25em;text-align:center;margin:10px 0;animation:pop .5s ease}
+.score .big{font-size:2em;color:var(--acc);display:block}
+.bar{height:12px;background:var(--line);border-radius:6px;overflow:hidden;margin:14px 0}
+.bar>div{height:100%;background:var(--ok);transition:width 1.1s cubic-bezier(.25,.9,.3,1)}
+.rq{border:1px solid var(--line);border-radius:10px;padding:14px;margin:14px 0;background:color-mix(in srgb,var(--acc) 3%,var(--card));animation:fadeUp .4s ease}
+.rq div.opt{cursor:default}
+.aibox{margin-top:10px}
+.scrollbtns{position:fixed;right:16px;bottom:16px;display:flex;flex-direction:column;gap:10px;z-index:40}
+.scrollbtns button{width:48px;height:48px;border-radius:50%!important;cursor:pointer;border:1px solid var(--line);background:var(--card)!important;color:var(--acc);display:flex;align-items:center;justify-content:center;box-shadow:0 4px 14px var(--shadow);transition:transform .16s ease,box-shadow .16s ease,border-color .16s ease}
+.scrollbtns button:hover{transform:translateY(-2px) scale(1.06);border-color:var(--acc);box-shadow:0 0 0 3px var(--acc2),0 7px 18px var(--shadow)}
+.scrollbtns button:active{transform:translateY(0) scale(.95)}
+.scrollbtns .arr{font:700 26px/1 var(--font);color:var(--acc);display:inline-block}
+.helpwrap{position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:60;display:flex;align-items:flex-start;justify-content:center;padding:30px 14px;overflow:auto}
+.helpbox{background:var(--card);color:var(--ink);border:1px solid var(--line);border-radius:14px;max-width:680px;width:100%;padding:20px 26px;box-shadow:0 12px 40px rgba(0,0,0,.4);font-family:var(--font)}
+.helpbox h2{margin:0 0 10px}
+.helpbox p,.helpbox li{line-height:1.55}
+.helpbox .lbl{display:block;margin-top:14px}
+.hidden{display:none}
+#editor{position:fixed;inset:0;background:rgba(15,12,8,.6);overflow:auto;padding:20px;z-index:50;animation:fadeUp .3s ease}
+#editor .panel{background:var(--card);color:var(--ink);max-width:820px;margin:0 auto;border-radius:12px;padding:20px}
+#editor textarea,#editor input[type=text]{width:100%;margin:4px 0 10px}
+.eq{border:1px solid var(--line);border-radius:9px;padding:12px;margin:10px 0;background:color-mix(in srgb,var(--acc) 4%,var(--card))}
+.eq .lbl{font-size:.8em;opacity:.65;margin-top:6px;display:block}
+.mini{font-size:.85em;padding:6px 11px;margin:4px 4px 0 0;background:var(--ink)}
+.danger{background:var(--bad)}
+</style>
+</head>
+<body data-theme="pronote">
+<div class="wrap">
+<div class="topbar">
+<h1 id="qtitle" onclick="titleClick()" style="cursor:pointer">Le plan détaillé de la dissertation</h1>
+<div class="themebox"><button class="helpbtn" onclick="showHelp()" title="Aide" aria-label="Aide">?</button></div>
+</div>
+<div class="sub" id="qsub">TG02 — Séance du 26 novembre 2026 (2 heures)</div>
+<div class="card" id="quizcard"></div>
+</div>
+<div id="editor" class="hidden"><div class="panel" id="editpanel"></div></div>
+<div class="scrollbtns"><button onclick="scrollPage(0)" title="Revenir tout en haut du QCM" aria-label="Revenir tout en haut"><span class="arr">↑</span></button><button onclick="scrollPage(1)" title="Aller tout en bas du QCM" aria-label="Aller tout en bas"><span class="arr">↓</span></button></div>
+<script>
+var QUIZ = {"title": "Le plan détaillé de la dissertation", "sub": "TG02 — Séance du 26 novembre 2026 (2 heures)", "questions": [{"type": "single", "name": "Quelles sont les trois étapes du travail au brouillon avant de rédiger ?", "options": [{"text": "Noter toutes les idées en vrac ; regrouper selon des points communs puis hiérarchiser ; rédiger quelques bouts de phrases et de paragraphes pour penser la rédaction.", "correct": true, "feedback": "Il n'y a pas de méthode au sens de règles à suivre, ni plan type : donner des modèles à suivre transformerait l'enseignement en conformité, alors que la philosophie est apprendre à penser par soi-même. En contrepartie, il faut respecter les étapes et contrôler le temps : première étape, toutes les idées en vrac sur la ou les premières feuilles du brouillon ; deuxième étape, regrouper selon des points communs puis hiérarchiser ; troisième étape, quelques bouts de phrases et de paragraphes pour penser la rédaction (introduction, transitions). Très peu de temps est en réalité consacré au brouillon : on se met très vite à rédiger sans préparation suffisante."}, {"text": "Rédiger l'introduction, chercher les idées, rédiger la conclusion.", "correct": false, "feedback": "Il n'y a pas de méthode au sens de règles à suivre, ni plan type : donner des modèles à suivre transformerait l'enseignement en conformité, alors que la philosophie est apprendre à penser par soi-même. En contrepartie, il faut respecter les étapes et contrôler le temps : première étape, toutes les idées en vrac sur la ou les premières feuilles du brouillon ; deuxième étape, regrouper selon des points communs puis hiérarchiser ; troisième étape, quelques bouts de phrases et de paragraphes pour penser la rédaction (introduction, transitions). Très peu de temps est en réalité consacré au brouillon : on se met très vite à rédiger sans préparation suffisante."}, {"text": "Apprendre le cours, recopier le plan type, rédiger.", "correct": false, "feedback": "Il n'y a pas de méthode au sens de règles à suivre, ni plan type : donner des modèles à suivre transformerait l'enseignement en conformité, alors que la philosophie est apprendre à penser par soi-même. En contrepartie, il faut respecter les étapes et contrôler le temps : première étape, toutes les idées en vrac sur la ou les premières feuilles du brouillon ; deuxième étape, regrouper selon des points communs puis hiérarchiser ; troisième étape, quelques bouts de phrases et de paragraphes pour penser la rédaction (introduction, transitions). Très peu de temps est en réalité consacré au brouillon : on se met très vite à rédiger sans préparation suffisante."}, {"text": "Choisir un plan type, le remplir, relire.", "correct": false, "feedback": "Il n'y a pas de méthode au sens de règles à suivre, ni plan type : donner des modèles à suivre transformerait l'enseignement en conformité, alors que la philosophie est apprendre à penser par soi-même. En contrepartie, il faut respecter les étapes et contrôler le temps : première étape, toutes les idées en vrac sur la ou les premières feuilles du brouillon ; deuxième étape, regrouper selon des points communs puis hiérarchiser ; troisième étape, quelques bouts de phrases et de paragraphes pour penser la rédaction (introduction, transitions). Très peu de temps est en réalité consacré au brouillon : on se met très vite à rédiger sans préparation suffisante."}], "tags": ["la liberté", "méthode"]}, {"type": "single", "name": "Quelle chronologie retenir pour gérer les 4 heures de l'épreuve ?", "options": [{"text": "5 minutes pour choisir le sujet, 20 minutes pour la problématique, 1h45 pour tout le brouillon (idées, plan détaillé, bouts de phrases), et le temps restant, environ 1h30, pour rédiger.", "correct": true, "feedback": "Chronologie à retenir sur les 4 heures : 5 minutes, pas plus, pour lire les trois sujets et choisir (au baccalauréat : deux questions de dissertation et un texte) ; une fois le sujet choisi, oublier les autres, ne pas en utiliser une partie, ne pas changer de sujet en cours de route ; 20 minutes pour chercher le problème et rédiger la problématique ; 1h45 pour tout le brouillon (recherche des idées en vrac, plan détaillé, regroupement, hiérarchisation, bouts de phrases) ; soit 2h30 au total. Le temps restant, environ 1h30, sert à rédiger la copie d'après le plan détaillé, qui doit être achevé : on ne réfléchit plus au sujet en rédigeant. Rédiger environ deux copies (la moyenne au baccalauréat). Se relire toutes les trois ou quatre phrases, sans attendre la fin de la copie : fautes d'orthographe et expression écrite comptent. Écrire proprement, sauter une ligne entre les grandes parties, faire des alinéas."}, {"text": "30 minutes pour choisir, 1 heure pour le brouillon, 2h30 pour rédiger.", "correct": false, "feedback": "Chronologie à retenir sur les 4 heures : 5 minutes, pas plus, pour lire les trois sujets et choisir (au baccalauréat : deux questions de dissertation et un texte) ; une fois le sujet choisi, oublier les autres, ne pas en utiliser une partie, ne pas changer de sujet en cours de route ; 20 minutes pour chercher le problème et rédiger la problématique ; 1h45 pour tout le brouillon (recherche des idées en vrac, plan détaillé, regroupement, hiérarchisation, bouts de phrases) ; soit 2h30 au total. Le temps restant, environ 1h30, sert à rédiger la copie d'après le plan détaillé, qui doit être achevé : on ne réfléchit plus au sujet en rédigeant. Rédiger environ deux copies (la moyenne au baccalauréat). Se relire toutes les trois ou quatre phrases, sans attendre la fin de la copie : fautes d'orthographe et expression écrite comptent. Écrire proprement, sauter une ligne entre les grandes parties, faire des alinéas."}, {"text": "15 minutes pour le sujet, 3 heures de brouillon, 45 minutes de rédaction.", "correct": false, "feedback": "Chronologie à retenir sur les 4 heures : 5 minutes, pas plus, pour lire les trois sujets et choisir (au baccalauréat : deux questions de dissertation et un texte) ; une fois le sujet choisi, oublier les autres, ne pas en utiliser une partie, ne pas changer de sujet en cours de route ; 20 minutes pour chercher le problème et rédiger la problématique ; 1h45 pour tout le brouillon (recherche des idées en vrac, plan détaillé, regroupement, hiérarchisation, bouts de phrases) ; soit 2h30 au total. Le temps restant, environ 1h30, sert à rédiger la copie d'après le plan détaillé, qui doit être achevé : on ne réfléchit plus au sujet en rédigeant. Rédiger environ deux copies (la moyenne au baccalauréat). Se relire toutes les trois ou quatre phrases, sans attendre la fin de la copie : fautes d'orthographe et expression écrite comptent. Écrire proprement, sauter une ligne entre les grandes parties, faire des alinéas."}, {"text": "1 heure de cours mémorisé, 3 heures de rédaction directe.", "correct": false, "feedback": "Chronologie à retenir sur les 4 heures : 5 minutes, pas plus, pour lire les trois sujets et choisir (au baccalauréat : deux questions de dissertation et un texte) ; une fois le sujet choisi, oublier les autres, ne pas en utiliser une partie, ne pas changer de sujet en cours de route ; 20 minutes pour chercher le problème et rédiger la problématique ; 1h45 pour tout le brouillon (recherche des idées en vrac, plan détaillé, regroupement, hiérarchisation, bouts de phrases) ; soit 2h30 au total. Le temps restant, environ 1h30, sert à rédiger la copie d'après le plan détaillé, qui doit être achevé : on ne réfléchit plus au sujet en rédigeant. Rédiger environ deux copies (la moyenne au baccalauréat). Se relire toutes les trois ou quatre phrases, sans attendre la fin de la copie : fautes d'orthographe et expression écrite comptent. Écrire proprement, sauter une ligne entre les grandes parties, faire des alinéas."}], "tags": ["la liberté", "méthode"]}, {"type": "single", "name": "Au baccalauréat, une fois le sujet choisi, on peut changer de sujet au bout d'une demi-heure si on bloque.", "options": [{"text": "Faux", "correct": true, "feedback": "Chronologie à retenir sur les 4 heures : 5 minutes, pas plus, pour lire les trois sujets et choisir (au baccalauréat : deux questions de dissertation et un texte) ; une fois le sujet choisi, oublier les autres, ne pas en utiliser une partie, ne pas changer de sujet en cours de route ; 20 minutes pour chercher le problème et rédiger la problématique ; 1h45 pour tout le brouillon (recherche des idées en vrac, plan détaillé, regroupement, hiérarchisation, bouts de phrases) ; soit 2h30 au total. Le temps restant, environ 1h30, sert à rédiger la copie d'après le plan détaillé, qui doit être achevé : on ne réfléchit plus au sujet en rédigeant. Rédiger environ deux copies (la moyenne au baccalauréat). Se relire toutes les trois ou quatre phrases, sans attendre la fin de la copie : fautes d'orthographe et expression écrite comptent. Écrire proprement, sauter une ligne entre les grandes parties, faire des alinéas."}, {"text": "Vrai", "correct": false, "feedback": "Chronologie à retenir sur les 4 heures : 5 minutes, pas plus, pour lire les trois sujets et choisir (au baccalauréat : deux questions de dissertation et un texte) ; une fois le sujet choisi, oublier les autres, ne pas en utiliser une partie, ne pas changer de sujet en cours de route ; 20 minutes pour chercher le problème et rédiger la problématique ; 1h45 pour tout le brouillon (recherche des idées en vrac, plan détaillé, regroupement, hiérarchisation, bouts de phrases) ; soit 2h30 au total. Le temps restant, environ 1h30, sert à rédiger la copie d'après le plan détaillé, qui doit être achevé : on ne réfléchit plus au sujet en rédigeant. Rédiger environ deux copies (la moyenne au baccalauréat). Se relire toutes les trois ou quatre phrases, sans attendre la fin de la copie : fautes d'orthographe et expression écrite comptent. Écrire proprement, sauter une ligne entre les grandes parties, faire des alinéas."}], "tags": ["la liberté", "méthode"]}, {"type": "single", "name": "Combien de sujets propose l'épreuve de philosophie du baccalauréat, et lesquels ?", "options": [{"text": "Trois sujets : deux questions de dissertation et un texte.", "correct": true, "feedback": "Chronologie à retenir sur les 4 heures : 5 minutes, pas plus, pour lire les trois sujets et choisir (au baccalauréat : deux questions de dissertation et un texte) ; une fois le sujet choisi, oublier les autres, ne pas en utiliser une partie, ne pas changer de sujet en cours de route ; 20 minutes pour chercher le problème et rédiger la problématique ; 1h45 pour tout le brouillon (recherche des idées en vrac, plan détaillé, regroupement, hiérarchisation, bouts de phrases) ; soit 2h30 au total. Le temps restant, environ 1h30, sert à rédiger la copie d'après le plan détaillé, qui doit être achevé : on ne réfléchit plus au sujet en rédigeant. Rédiger environ deux copies (la moyenne au baccalauréat). Se relire toutes les trois ou quatre phrases, sans attendre la fin de la copie : fautes d'orthographe et expression écrite comptent. Écrire proprement, sauter une ligne entre les grandes parties, faire des alinéas."}, {"text": "Trois sujets : trois questions de dissertation.", "correct": false, "feedback": "Chronologie à retenir sur les 4 heures : 5 minutes, pas plus, pour lire les trois sujets et choisir (au baccalauréat : deux questions de dissertation et un texte) ; une fois le sujet choisi, oublier les autres, ne pas en utiliser une partie, ne pas changer de sujet en cours de route ; 20 minutes pour chercher le problème et rédiger la problématique ; 1h45 pour tout le brouillon (recherche des idées en vrac, plan détaillé, regroupement, hiérarchisation, bouts de phrases) ; soit 2h30 au total. Le temps restant, environ 1h30, sert à rédiger la copie d'après le plan détaillé, qui doit être achevé : on ne réfléchit plus au sujet en rédigeant. Rédiger environ deux copies (la moyenne au baccalauréat). Se relire toutes les trois ou quatre phrases, sans attendre la fin de la copie : fautes d'orthographe et expression écrite comptent. Écrire proprement, sauter une ligne entre les grandes parties, faire des alinéas."}, {"text": "Deux sujets : une dissertation et une explication de texte.", "correct": false, "feedback": "Chronologie à retenir sur les 4 heures : 5 minutes, pas plus, pour lire les trois sujets et choisir (au baccalauréat : deux questions de dissertation et un texte) ; une fois le sujet choisi, oublier les autres, ne pas en utiliser une partie, ne pas changer de sujet en cours de route ; 20 minutes pour chercher le problème et rédiger la problématique ; 1h45 pour tout le brouillon (recherche des idées en vrac, plan détaillé, regroupement, hiérarchisation, bouts de phrases) ; soit 2h30 au total. Le temps restant, environ 1h30, sert à rédiger la copie d'après le plan détaillé, qui doit être achevé : on ne réfléchit plus au sujet en rédigeant. Rédiger environ deux copies (la moyenne au baccalauréat). Se relire toutes les trois ou quatre phrases, sans attendre la fin de la copie : fautes d'orthographe et expression écrite comptent. Écrire proprement, sauter une ligne entre les grandes parties, faire des alinéas."}, {"text": "Un seul sujet, imposé à tous.", "correct": false, "feedback": "Chronologie à retenir sur les 4 heures : 5 minutes, pas plus, pour lire les trois sujets et choisir (au baccalauréat : deux questions de dissertation et un texte) ; une fois le sujet choisi, oublier les autres, ne pas en utiliser une partie, ne pas changer de sujet en cours de route ; 20 minutes pour chercher le problème et rédiger la problématique ; 1h45 pour tout le brouillon (recherche des idées en vrac, plan détaillé, regroupement, hiérarchisation, bouts de phrases) ; soit 2h30 au total. Le temps restant, environ 1h30, sert à rédiger la copie d'après le plan détaillé, qui doit être achevé : on ne réfléchit plus au sujet en rédigeant. Rédiger environ deux copies (la moyenne au baccalauréat). Se relire toutes les trois ou quatre phrases, sans attendre la fin de la copie : fautes d'orthographe et expression écrite comptent. Écrire proprement, sauter une ligne entre les grandes parties, faire des alinéas."}], "tags": ["la liberté", "méthode"]}, {"type": "single", "name": "Pendant la rédaction de la copie, on ne doit plus avoir à réfléchir au sujet : le plan détaillé doit être achevé.", "options": [{"text": "Vrai", "correct": true, "feedback": "Chronologie à retenir sur les 4 heures : 5 minutes, pas plus, pour lire les trois sujets et choisir (au baccalauréat : deux questions de dissertation et un texte) ; une fois le sujet choisi, oublier les autres, ne pas en utiliser une partie, ne pas changer de sujet en cours de route ; 20 minutes pour chercher le problème et rédiger la problématique ; 1h45 pour tout le brouillon (recherche des idées en vrac, plan détaillé, regroupement, hiérarchisation, bouts de phrases) ; soit 2h30 au total. Le temps restant, environ 1h30, sert à rédiger la copie d'après le plan détaillé, qui doit être achevé : on ne réfléchit plus au sujet en rédigeant. Rédiger environ deux copies (la moyenne au baccalauréat). Se relire toutes les trois ou quatre phrases, sans attendre la fin de la copie : fautes d'orthographe et expression écrite comptent. Écrire proprement, sauter une ligne entre les grandes parties, faire des alinéas."}, {"text": "Faux", "correct": false, "feedback": "Chronologie à retenir sur les 4 heures : 5 minutes, pas plus, pour lire les trois sujets et choisir (au baccalauréat : deux questions de dissertation et un texte) ; une fois le sujet choisi, oublier les autres, ne pas en utiliser une partie, ne pas changer de sujet en cours de route ; 20 minutes pour chercher le problème et rédiger la problématique ; 1h45 pour tout le brouillon (recherche des idées en vrac, plan détaillé, regroupement, hiérarchisation, bouts de phrases) ; soit 2h30 au total. Le temps restant, environ 1h30, sert à rédiger la copie d'après le plan détaillé, qui doit être achevé : on ne réfléchit plus au sujet en rédigeant. Rédiger environ deux copies (la moyenne au baccalauréat). Se relire toutes les trois ou quatre phrases, sans attendre la fin de la copie : fautes d'orthographe et expression écrite comptent. Écrire proprement, sauter une ligne entre les grandes parties, faire des alinéas."}], "tags": ["la liberté", "méthode"]}, {"type": "matching", "name": "Associez chaque auteur à la notion avec laquelle il est apparu depuis le début de l'année.", "pairs": [{"q": "Épicure", "a": "Le bonheur et la raison (les désirs naturels et nécessaires)"}, {"q": "Kant et Alain", "a": "Le devoir, dans la question sur le bonheur"}, {"q": "Descartes", "a": "La liberté d'indifférence, le plus bas degré de liberté"}, {"q": "Sartre", "a": "La conscience et la liberté en situation"}, {"q": "Marx", "a": "Le déterminisme social"}], "tags": ["la liberté", "le bonheur", "le devoir", "la conscience", "Épicure", "Kant", "Descartes", "Sartre", "Marx"]}, {"type": "single", "name": "Pourquoi l'enseignement de la philosophie n'est-il pas linéaire, et pourquoi est-ce important ?", "options": [{"text": "Parce que les notions sont mélangées : au baccalauréat, on devra savoir utiliser plusieurs notions pour répondre à un sujet, par exemple la raison dans une question sur le bonheur.", "correct": true, "feedback": "Les notions abordées depuis le début de l'année : le bonheur, la raison, le devoir, la conscience, la liberté. La volonté n'est pas une notion du programme. L'enseignement de la philosophie n'est pas linéaire : tout est mélangé, et au baccalauréat on devra savoir utiliser plusieurs notions pour répondre à un sujet (par exemple, comment la raison est apparue dans la question sur le bonheur avec Épicure ; comment le devoir est apparu avec Kant et Alain dans la même question sur le bonheur ; comment la conscience est apparue dans la question sur la liberté, avec Sartre et le texte de Kant). S'y ajoutent tous les repères du programme utilisés depuis septembre."}, {"text": "Parce que le programme change chaque année.", "correct": false, "feedback": "Les notions abordées depuis le début de l'année : le bonheur, la raison, le devoir, la conscience, la liberté. La volonté n'est pas une notion du programme. L'enseignement de la philosophie n'est pas linéaire : tout est mélangé, et au baccalauréat on devra savoir utiliser plusieurs notions pour répondre à un sujet (par exemple, comment la raison est apparue dans la question sur le bonheur avec Épicure ; comment le devoir est apparu avec Kant et Alain dans la même question sur le bonheur ; comment la conscience est apparue dans la question sur la liberté, avec Sartre et le texte de Kant). S'y ajoutent tous les repères du programme utilisés depuis septembre."}, {"text": "Parce que chaque notion ne figure qu'à un seul moment de l'année.", "correct": false, "feedback": "Les notions abordées depuis le début de l'année : le bonheur, la raison, le devoir, la conscience, la liberté. La volonté n'est pas une notion du programme. L'enseignement de la philosophie n'est pas linéaire : tout est mélangé, et au baccalauréat on devra savoir utiliser plusieurs notions pour répondre à un sujet (par exemple, comment la raison est apparue dans la question sur le bonheur avec Épicure ; comment le devoir est apparu avec Kant et Alain dans la même question sur le bonheur ; comment la conscience est apparue dans la question sur la liberté, avec Sartre et le texte de Kant). S'y ajoutent tous les repères du programme utilisés depuis septembre."}, {"text": "Parce que les auteurs doivent être étudiés dans l'ordre chronologique.", "correct": false, "feedback": "Les notions abordées depuis le début de l'année : le bonheur, la raison, le devoir, la conscience, la liberté. La volonté n'est pas une notion du programme. L'enseignement de la philosophie n'est pas linéaire : tout est mélangé, et au baccalauréat on devra savoir utiliser plusieurs notions pour répondre à un sujet (par exemple, comment la raison est apparue dans la question sur le bonheur avec Épicure ; comment le devoir est apparu avec Kant et Alain dans la même question sur le bonheur ; comment la conscience est apparue dans la question sur la liberté, avec Sartre et le texte de Kant). S'y ajoutent tous les repères du programme utilisés depuis septembre."}], "tags": ["la liberté", "le bonheur", "la raison", "méthode"]}, {"type": "single", "name": "Quand commence la difficulté du plan en deux parties ?", "options": [{"text": "Dès le regroupement des idées : si deux groupes seulement se constituent, il faut chercher d'autres idées, non pour les opposer, mais pour pointer vers d'autres directions (des conditions, des conséquences, des nuances).", "correct": true, "feedback": "Un plan en deux parties est impossible : les arguments puis les contre-arguments s'annuleraient, on ne répondrait pas au problème ; et un plan en deux parties signifie qu'on croit pouvoir répondre par oui ou par non, alors qu'une question à laquelle on peut répondre par oui ou par non ne pose pas problème. La difficulté commence dès le regroupement des idées : si deux groupes seulement se constituent, chercher d'autres idées, non pour opposer, mais pour pointer vers d'autres directions (des conditions, des conséquences, des nuances : « oui, mais à condition que… »). Exemple : sur le Père Noël, « existe-t-il ? oui ou non » est une impasse ; on peut montrer que la croyance au Père Noël a des effets positifs sur l'enfant, et qu'on l'a aussi inventée pour faire acheter (fête commerciale, comme la Saint-Valentin). C'est en croisant la recherche d'idées qu'on échappe au manichéisme et au dualisme (oui/non, pour/contre, avantages/inconvénients)."}, {"text": "Au moment de la rédaction, quand on n'a plus le temps.", "correct": false, "feedback": "Un plan en deux parties est impossible : les arguments puis les contre-arguments s'annuleraient, on ne répondrait pas au problème ; et un plan en deux parties signifie qu'on croit pouvoir répondre par oui ou par non, alors qu'une question à laquelle on peut répondre par oui ou par non ne pose pas problème. La difficulté commence dès le regroupement des idées : si deux groupes seulement se constituent, chercher d'autres idées, non pour opposer, mais pour pointer vers d'autres directions (des conditions, des conséquences, des nuances : « oui, mais à condition que… »). Exemple : sur le Père Noël, « existe-t-il ? oui ou non » est une impasse ; on peut montrer que la croyance au Père Noël a des effets positifs sur l'enfant, et qu'on l'a aussi inventée pour faire acheter (fête commerciale, comme la Saint-Valentin). C'est en croisant la recherche d'idées qu'on échappe au manichéisme et au dualisme (oui/non, pour/contre, avantages/inconvénients)."}, {"text": "Dans la conclusion, quand il faut départager les arguments.", "correct": false, "feedback": "Un plan en deux parties est impossible : les arguments puis les contre-arguments s'annuleraient, on ne répondrait pas au problème ; et un plan en deux parties signifie qu'on croit pouvoir répondre par oui ou par non, alors qu'une question à laquelle on peut répondre par oui ou par non ne pose pas problème. La difficulté commence dès le regroupement des idées : si deux groupes seulement se constituent, chercher d'autres idées, non pour opposer, mais pour pointer vers d'autres directions (des conditions, des conséquences, des nuances : « oui, mais à condition que… »). Exemple : sur le Père Noël, « existe-t-il ? oui ou non » est une impasse ; on peut montrer que la croyance au Père Noël a des effets positifs sur l'enfant, et qu'on l'a aussi inventée pour faire acheter (fête commerciale, comme la Saint-Valentin). C'est en croisant la recherche d'idées qu'on échappe au manichéisme et au dualisme (oui/non, pour/contre, avantages/inconvénients)."}, {"text": "Au choix du sujet, quand on hésite entre deux sujets.", "correct": false, "feedback": "Un plan en deux parties est impossible : les arguments puis les contre-arguments s'annuleraient, on ne répondrait pas au problème ; et un plan en deux parties signifie qu'on croit pouvoir répondre par oui ou par non, alors qu'une question à laquelle on peut répondre par oui ou par non ne pose pas problème. La difficulté commence dès le regroupement des idées : si deux groupes seulement se constituent, chercher d'autres idées, non pour opposer, mais pour pointer vers d'autres directions (des conditions, des conséquences, des nuances : « oui, mais à condition que… »). Exemple : sur le Père Noël, « existe-t-il ? oui ou non » est une impasse ; on peut montrer que la croyance au Père Noël a des effets positifs sur l'enfant, et qu'on l'a aussi inventée pour faire acheter (fête commerciale, comme la Saint-Valentin). C'est en croisant la recherche d'idées qu'on échappe au manichéisme et au dualisme (oui/non, pour/contre, avantages/inconvénients)."}], "tags": ["la liberté", "méthode"]}, {"type": "single", "name": "Comment échapper au « oui ou non » sur un sujet comme « le Père Noël existe-t-il ? » ?", "options": [{"text": "En cherchant d'autres directions : montrer que la croyance a des effets positifs sur l'enfant, ou qu'on l'a aussi inventée pour faire acheter (fête commerciale, comme la Saint-Valentin).", "correct": true, "feedback": "Un plan en deux parties est impossible : les arguments puis les contre-arguments s'annuleraient, on ne répondrait pas au problème ; et un plan en deux parties signifie qu'on croit pouvoir répondre par oui ou par non, alors qu'une question à laquelle on peut répondre par oui ou par non ne pose pas problème. La difficulté commence dès le regroupement des idées : si deux groupes seulement se constituent, chercher d'autres idées, non pour opposer, mais pour pointer vers d'autres directions (des conditions, des conséquences, des nuances : « oui, mais à condition que… »). Exemple : sur le Père Noël, « existe-t-il ? oui ou non » est une impasse ; on peut montrer que la croyance au Père Noël a des effets positifs sur l'enfant, et qu'on l'a aussi inventée pour faire acheter (fête commerciale, comme la Saint-Valentin). C'est en croisant la recherche d'idées qu'on échappe au manichéisme et au dualisme (oui/non, pour/contre, avantages/inconvénients)."}, {"text": "En répondant franchement non : le Père Noël n'existe pas, ce qui clôt le sujet.", "correct": false, "feedback": "Un plan en deux parties est impossible : les arguments puis les contre-arguments s'annuleraient, on ne répondrait pas au problème ; et un plan en deux parties signifie qu'on croit pouvoir répondre par oui ou par non, alors qu'une question à laquelle on peut répondre par oui ou par non ne pose pas problème. La difficulté commence dès le regroupement des idées : si deux groupes seulement se constituent, chercher d'autres idées, non pour opposer, mais pour pointer vers d'autres directions (des conditions, des conséquences, des nuances : « oui, mais à condition que… »). Exemple : sur le Père Noël, « existe-t-il ? oui ou non » est une impasse ; on peut montrer que la croyance au Père Noël a des effets positifs sur l'enfant, et qu'on l'a aussi inventée pour faire acheter (fête commerciale, comme la Saint-Valentin). C'est en croisant la recherche d'idées qu'on échappe au manichéisme et au dualisme (oui/non, pour/contre, avantages/inconvénients)."}, {"text": "En répondant oui : il existe un village qui lui est consacré en Islande.", "correct": false, "feedback": "Un plan en deux parties est impossible : les arguments puis les contre-arguments s'annuleraient, on ne répondrait pas au problème ; et un plan en deux parties signifie qu'on croit pouvoir répondre par oui ou par non, alors qu'une question à laquelle on peut répondre par oui ou par non ne pose pas problème. La difficulté commence dès le regroupement des idées : si deux groupes seulement se constituent, chercher d'autres idées, non pour opposer, mais pour pointer vers d'autres directions (des conditions, des conséquences, des nuances : « oui, mais à condition que… »). Exemple : sur le Père Noël, « existe-t-il ? oui ou non » est une impasse ; on peut montrer que la croyance au Père Noël a des effets positifs sur l'enfant, et qu'on l'a aussi inventée pour faire acheter (fête commerciale, comme la Saint-Valentin). C'est en croisant la recherche d'idées qu'on échappe au manichéisme et au dualisme (oui/non, pour/contre, avantages/inconvénients)."}, {"text": "En refusant de traiter ce sujet, hors programme.", "correct": false, "feedback": "Un plan en deux parties est impossible : les arguments puis les contre-arguments s'annuleraient, on ne répondrait pas au problème ; et un plan en deux parties signifie qu'on croit pouvoir répondre par oui ou par non, alors qu'une question à laquelle on peut répondre par oui ou par non ne pose pas problème. La difficulté commence dès le regroupement des idées : si deux groupes seulement se constituent, chercher d'autres idées, non pour opposer, mais pour pointer vers d'autres directions (des conditions, des conséquences, des nuances : « oui, mais à condition que… »). Exemple : sur le Père Noël, « existe-t-il ? oui ou non » est une impasse ; on peut montrer que la croyance au Père Noël a des effets positifs sur l'enfant, et qu'on l'a aussi inventée pour faire acheter (fête commerciale, comme la Saint-Valentin). C'est en croisant la recherche d'idées qu'on échappe au manichéisme et au dualisme (oui/non, pour/contre, avantages/inconvénients)."}], "tags": ["la liberté", "méthode"]}, {"type": "single", "name": "Par quelle partie doit toujours commencer une dissertation ?", "options": [{"text": "Par la partie la plus proche de l'opinion commune, celle qu'on a présentée puis remise en question dans l'introduction ; ici, la liberté d'indifférence, car c'est le plus bas degré de liberté.", "correct": true, "feedback": "La première partie doit toujours être la plus proche de l'opinion commune, celle qu'on a présentée puis remise en question dans l'introduction. Ici, le texte le plus proche de l'idée commune de la liberté comme choix est celui de Descartes : la liberté d'indifférence, choisir une chose ou son contraire. On commence donc par là, d'autant que la liberté d'indifférence est le plus bas degré de liberté : il est logique de commencer par le plus bas degré et de terminer la copie sur la liberté la plus haute. C'est le bon sens qui doit guider l'organisation des idées : on ne demande pas la meilleure façon de faire, mais une bonne façon de faire, expliquée au maximum, avec des notions et des repères maîtrisés."}, {"text": "Par la partie la plus éloignée de l'opinion commune, pour surprendre.", "correct": false, "feedback": "La première partie doit toujours être la plus proche de l'opinion commune, celle qu'on a présentée puis remise en question dans l'introduction. Ici, le texte le plus proche de l'idée commune de la liberté comme choix est celui de Descartes : la liberté d'indifférence, choisir une chose ou son contraire. On commence donc par là, d'autant que la liberté d'indifférence est le plus bas degré de liberté : il est logique de commencer par le plus bas degré et de terminer la copie sur la liberté la plus haute. C'est le bon sens qui doit guider l'organisation des idées : on ne demande pas la meilleure façon de faire, mais une bonne façon de faire, expliquée au maximum, avec des notions et des repères maîtrisés."}, {"text": "Par la thèse de l'auteur préféré, quel que soit son rôle dans le sujet.", "correct": false, "feedback": "La première partie doit toujours être la plus proche de l'opinion commune, celle qu'on a présentée puis remise en question dans l'introduction. Ici, le texte le plus proche de l'idée commune de la liberté comme choix est celui de Descartes : la liberté d'indifférence, choisir une chose ou son contraire. On commence donc par là, d'autant que la liberté d'indifférence est le plus bas degré de liberté : il est logique de commencer par le plus bas degré et de terminer la copie sur la liberté la plus haute. C'est le bon sens qui doit guider l'organisation des idées : on ne demande pas la meilleure façon de faire, mais une bonne façon de faire, expliquée au maximum, avec des notions et des repères maîtrisés."}, {"text": "Par la partie la plus longue, pour se mettre en confiance.", "correct": false, "feedback": "La première partie doit toujours être la plus proche de l'opinion commune, celle qu'on a présentée puis remise en question dans l'introduction. Ici, le texte le plus proche de l'idée commune de la liberté comme choix est celui de Descartes : la liberté d'indifférence, choisir une chose ou son contraire. On commence donc par là, d'autant que la liberté d'indifférence est le plus bas degré de liberté : il est logique de commencer par le plus bas degré et de terminer la copie sur la liberté la plus haute. C'est le bon sens qui doit guider l'organisation des idées : on ne demande pas la meilleure façon de faire, mais une bonne façon de faire, expliquée au maximum, avec des notions et des repères maîtrisés."}], "tags": ["la liberté", "Descartes", "méthode"]}, {"type": "single", "name": "Pourquoi faut-il rédiger son plan en phrases complètes au brouillon ?", "options": [{"text": "Parce que c'est en faisant des phrases qu'on s'auto-évalue : si on n'arrive pas à résumer une partie en une phrase (sujet, verbe, complément), c'est qu'on croit avoir des idées mais qu'on ne sait pas encore.", "correct": true, "feedback": "Dans la deuxième page du brouillon, construire le plan avec des phrases : chaque titre et sous-titre doit être une phrase complète (sujet, verbe, complément), pas deux ou trois mots. C'est en faisant des phrases qu'on s'auto-évalue : si on n'est pas capable d'écrire une phrase qui résume ce qu'on va dire dans cette partie, c'est qu'on croit avoir des idées mais qu'en réalité on ne sait pas encore ; il faut alors revenir en arrière et continuer à réfléchir. La méthode renvoie toujours à sa propre responsabilité : une méthode qui dirait simplement ce qu'il faut faire serait un ordre. Être rassuré par des règles, c'est ne pas vouloir réfléchir ni décider par soi-même."}, {"text": "Parce que le correcteur ramasse le brouillon avec la copie.", "correct": false, "feedback": "Dans la deuxième page du brouillon, construire le plan avec des phrases : chaque titre et sous-titre doit être une phrase complète (sujet, verbe, complément), pas deux ou trois mots. C'est en faisant des phrases qu'on s'auto-évalue : si on n'est pas capable d'écrire une phrase qui résume ce qu'on va dire dans cette partie, c'est qu'on croit avoir des idées mais qu'en réalité on ne sait pas encore ; il faut alors revenir en arrière et continuer à réfléchir. La méthode renvoie toujours à sa propre responsabilité : une méthode qui dirait simplement ce qu'il faut faire serait un ordre. Être rassuré par des règles, c'est ne pas vouloir réfléchir ni décider par soi-même."}, {"text": "Parce que les phrases font meilleure impression que les mots isolés.", "correct": false, "feedback": "Dans la deuxième page du brouillon, construire le plan avec des phrases : chaque titre et sous-titre doit être une phrase complète (sujet, verbe, complément), pas deux ou trois mots. C'est en faisant des phrases qu'on s'auto-évalue : si on n'est pas capable d'écrire une phrase qui résume ce qu'on va dire dans cette partie, c'est qu'on croit avoir des idées mais qu'en réalité on ne sait pas encore ; il faut alors revenir en arrière et continuer à réfléchir. La méthode renvoie toujours à sa propre responsabilité : une méthode qui dirait simplement ce qu'il faut faire serait un ordre. Être rassuré par des règles, c'est ne pas vouloir réfléchir ni décider par soi-même."}, {"text": "Parce que le plan en phrases compte pour la moitié de la note.", "correct": false, "feedback": "Dans la deuxième page du brouillon, construire le plan avec des phrases : chaque titre et sous-titre doit être une phrase complète (sujet, verbe, complément), pas deux ou trois mots. C'est en faisant des phrases qu'on s'auto-évalue : si on n'est pas capable d'écrire une phrase qui résume ce qu'on va dire dans cette partie, c'est qu'on croit avoir des idées mais qu'en réalité on ne sait pas encore ; il faut alors revenir en arrière et continuer à réfléchir. La méthode renvoie toujours à sa propre responsabilité : une méthode qui dirait simplement ce qu'il faut faire serait un ordre. Être rassuré par des règles, c'est ne pas vouloir réfléchir ni décider par soi-même."}], "tags": ["la liberté", "méthode"]}, {"type": "single", "name": "Par quoi est-il bon de terminer une partie, et pourquoi ?", "options": [{"text": "Par une objection ou un contre-exemple, qui ouvre la partie suivante et montre qu'il y a d'autres thèses possibles.", "correct": true, "feedback": "Un bon principe : terminer une partie par une objection ou un contre-exemple, qui ouvre la partie suivante et montre qu'il y a d'autres thèses possibles. Chaque partie représente une thèse, c'est-à-dire une réponse possible au sujet, qu'on défend par des arguments et des exemples : exactement ce qu'on apprend à repérer (thèse, arguments, exemples) dans une explication de texte. Les deux exercices sont complémentaires. Exemple ici : la deuxième partie a montré qu'on est d'autant plus libre qu'on sait ce qu'on fait (obéir à sa raison) ; l'objection : être libre, est-ce simplement obéir à sa raison, une forme de résignation de la volonté ? Chez Kant, même en situation de détresse, on ne doit pas faire de fausse promesse : est-ce se résigner, accepter la fatalité ? Le problème rebondit, prend une autre forme, et il faut continuer à le traiter jusqu'à avoir parcouru l'ensemble de ce qui fait problème : en 4 heures, on doit voir plusieurs aspects du problème, jamais seulement deux facettes qui s'opposent."}, {"text": "Par un résumé de tout ce qu'on vient de dire.", "correct": false, "feedback": "Un bon principe : terminer une partie par une objection ou un contre-exemple, qui ouvre la partie suivante et montre qu'il y a d'autres thèses possibles. Chaque partie représente une thèse, c'est-à-dire une réponse possible au sujet, qu'on défend par des arguments et des exemples : exactement ce qu'on apprend à repérer (thèse, arguments, exemples) dans une explication de texte. Les deux exercices sont complémentaires. Exemple ici : la deuxième partie a montré qu'on est d'autant plus libre qu'on sait ce qu'on fait (obéir à sa raison) ; l'objection : être libre, est-ce simplement obéir à sa raison, une forme de résignation de la volonté ? Chez Kant, même en situation de détresse, on ne doit pas faire de fausse promesse : est-ce se résigner, accepter la fatalité ? Le problème rebondit, prend une autre forme, et il faut continuer à le traiter jusqu'à avoir parcouru l'ensemble de ce qui fait problème : en 4 heures, on doit voir plusieurs aspects du problème, jamais seulement deux facettes qui s'opposent."}, {"text": "Par une citation d'auteur non expliquée, pour montrer sa culture.", "correct": false, "feedback": "Un bon principe : terminer une partie par une objection ou un contre-exemple, qui ouvre la partie suivante et montre qu'il y a d'autres thèses possibles. Chaque partie représente une thèse, c'est-à-dire une réponse possible au sujet, qu'on défend par des arguments et des exemples : exactement ce qu'on apprend à repérer (thèse, arguments, exemples) dans une explication de texte. Les deux exercices sont complémentaires. Exemple ici : la deuxième partie a montré qu'on est d'autant plus libre qu'on sait ce qu'on fait (obéir à sa raison) ; l'objection : être libre, est-ce simplement obéir à sa raison, une forme de résignation de la volonté ? Chez Kant, même en situation de détresse, on ne doit pas faire de fausse promesse : est-ce se résigner, accepter la fatalité ? Le problème rebondit, prend une autre forme, et il faut continuer à le traiter jusqu'à avoir parcouru l'ensemble de ce qui fait problème : en 4 heures, on doit voir plusieurs aspects du problème, jamais seulement deux facettes qui s'opposent."}, {"text": "Par une question rhétorique au lecteur.", "correct": false, "feedback": "Un bon principe : terminer une partie par une objection ou un contre-exemple, qui ouvre la partie suivante et montre qu'il y a d'autres thèses possibles. Chaque partie représente une thèse, c'est-à-dire une réponse possible au sujet, qu'on défend par des arguments et des exemples : exactement ce qu'on apprend à repérer (thèse, arguments, exemples) dans une explication de texte. Les deux exercices sont complémentaires. Exemple ici : la deuxième partie a montré qu'on est d'autant plus libre qu'on sait ce qu'on fait (obéir à sa raison) ; l'objection : être libre, est-ce simplement obéir à sa raison, une forme de résignation de la volonté ? Chez Kant, même en situation de détresse, on ne doit pas faire de fausse promesse : est-ce se résigner, accepter la fatalité ? Le problème rebondit, prend une autre forme, et il faut continuer à le traiter jusqu'à avoir parcouru l'ensemble de ce qui fait problème : en 4 heures, on doit voir plusieurs aspects du problème, jamais seulement deux facettes qui s'opposent."}], "tags": ["la liberté", "méthode"]}, {"type": "single", "name": "Que représente chaque partie d'une dissertation ?", "options": [{"text": "Une thèse, c'est-à-dire une réponse possible au sujet, défendue par des arguments et des exemples, comme on apprend à les repérer dans une explication de texte.", "correct": true, "feedback": "Un bon principe : terminer une partie par une objection ou un contre-exemple, qui ouvre la partie suivante et montre qu'il y a d'autres thèses possibles. Chaque partie représente une thèse, c'est-à-dire une réponse possible au sujet, qu'on défend par des arguments et des exemples : exactement ce qu'on apprend à repérer (thèse, arguments, exemples) dans une explication de texte. Les deux exercices sont complémentaires. Exemple ici : la deuxième partie a montré qu'on est d'autant plus libre qu'on sait ce qu'on fait (obéir à sa raison) ; l'objection : être libre, est-ce simplement obéir à sa raison, une forme de résignation de la volonté ? Chez Kant, même en situation de détresse, on ne doit pas faire de fausse promesse : est-ce se résigner, accepter la fatalité ? Le problème rebondit, prend une autre forme, et il faut continuer à le traiter jusqu'à avoir parcouru l'ensemble de ce qui fait problème : en 4 heures, on doit voir plusieurs aspects du problème, jamais seulement deux facettes qui s'opposent."}, {"text": "Un auteur du programme, résumé chronologiquement.", "correct": false, "feedback": "Un bon principe : terminer une partie par une objection ou un contre-exemple, qui ouvre la partie suivante et montre qu'il y a d'autres thèses possibles. Chaque partie représente une thèse, c'est-à-dire une réponse possible au sujet, qu'on défend par des arguments et des exemples : exactement ce qu'on apprend à repérer (thèse, arguments, exemples) dans une explication de texte. Les deux exercices sont complémentaires. Exemple ici : la deuxième partie a montré qu'on est d'autant plus libre qu'on sait ce qu'on fait (obéir à sa raison) ; l'objection : être libre, est-ce simplement obéir à sa raison, une forme de résignation de la volonté ? Chez Kant, même en situation de détresse, on ne doit pas faire de fausse promesse : est-ce se résigner, accepter la fatalité ? Le problème rebondit, prend une autre forme, et il faut continuer à le traiter jusqu'à avoir parcouru l'ensemble de ce qui fait problème : en 4 heures, on doit voir plusieurs aspects du problème, jamais seulement deux facettes qui s'opposent."}, {"text": "Un moment de la vie du correcteur.", "correct": false, "feedback": "Un bon principe : terminer une partie par une objection ou un contre-exemple, qui ouvre la partie suivante et montre qu'il y a d'autres thèses possibles. Chaque partie représente une thèse, c'est-à-dire une réponse possible au sujet, qu'on défend par des arguments et des exemples : exactement ce qu'on apprend à repérer (thèse, arguments, exemples) dans une explication de texte. Les deux exercices sont complémentaires. Exemple ici : la deuxième partie a montré qu'on est d'autant plus libre qu'on sait ce qu'on fait (obéir à sa raison) ; l'objection : être libre, est-ce simplement obéir à sa raison, une forme de résignation de la volonté ? Chez Kant, même en situation de détresse, on ne doit pas faire de fausse promesse : est-ce se résigner, accepter la fatalité ? Le problème rebondit, prend une autre forme, et il faut continuer à le traiter jusqu'à avoir parcouru l'ensemble de ce qui fait problème : en 4 heures, on doit voir plusieurs aspects du problème, jamais seulement deux facettes qui s'opposent."}, {"text": "Une liste de définitions à recopier du cours.", "correct": false, "feedback": "Un bon principe : terminer une partie par une objection ou un contre-exemple, qui ouvre la partie suivante et montre qu'il y a d'autres thèses possibles. Chaque partie représente une thèse, c'est-à-dire une réponse possible au sujet, qu'on défend par des arguments et des exemples : exactement ce qu'on apprend à repérer (thèse, arguments, exemples) dans une explication de texte. Les deux exercices sont complémentaires. Exemple ici : la deuxième partie a montré qu'on est d'autant plus libre qu'on sait ce qu'on fait (obéir à sa raison) ; l'objection : être libre, est-ce simplement obéir à sa raison, une forme de résignation de la volonté ? Chez Kant, même en situation de détresse, on ne doit pas faire de fausse promesse : est-ce se résigner, accepter la fatalité ? Le problème rebondit, prend une autre forme, et il faut continuer à le traiter jusqu'à avoir parcouru l'ensemble de ce qui fait problème : en 4 heures, on doit voir plusieurs aspects du problème, jamais seulement deux facettes qui s'opposent."}], "tags": ["la liberté", "méthode"]}, {"type": "single", "name": "Quelle objection peut terminer la deuxième partie de la dissertation sur la liberté sans choix ?", "options": [{"text": "Obéir à sa raison, est-ce simplement une forme de résignation de la volonté ? Chez Kant, même en situation de détresse, on ne doit pas faire de fausse promesse : est-ce se résigner et accepter la fatalité ?", "correct": true, "feedback": "Un bon principe : terminer une partie par une objection ou un contre-exemple, qui ouvre la partie suivante et montre qu'il y a d'autres thèses possibles. Chaque partie représente une thèse, c'est-à-dire une réponse possible au sujet, qu'on défend par des arguments et des exemples : exactement ce qu'on apprend à repérer (thèse, arguments, exemples) dans une explication de texte. Les deux exercices sont complémentaires. Exemple ici : la deuxième partie a montré qu'on est d'autant plus libre qu'on sait ce qu'on fait (obéir à sa raison) ; l'objection : être libre, est-ce simplement obéir à sa raison, une forme de résignation de la volonté ? Chez Kant, même en situation de détresse, on ne doit pas faire de fausse promesse : est-ce se résigner, accepter la fatalité ? Le problème rebondit, prend une autre forme, et il faut continuer à le traiter jusqu'à avoir parcouru l'ensemble de ce qui fait problème : en 4 heures, on doit voir plusieurs aspects du problème, jamais seulement deux facettes qui s'opposent."}, {"text": "Obéir à sa raison rend trop heureux, et le bonheur est immoral.", "correct": false, "feedback": "Un bon principe : terminer une partie par une objection ou un contre-exemple, qui ouvre la partie suivante et montre qu'il y a d'autres thèses possibles. Chaque partie représente une thèse, c'est-à-dire une réponse possible au sujet, qu'on défend par des arguments et des exemples : exactement ce qu'on apprend à repérer (thèse, arguments, exemples) dans une explication de texte. Les deux exercices sont complémentaires. Exemple ici : la deuxième partie a montré qu'on est d'autant plus libre qu'on sait ce qu'on fait (obéir à sa raison) ; l'objection : être libre, est-ce simplement obéir à sa raison, une forme de résignation de la volonté ? Chez Kant, même en situation de détresse, on ne doit pas faire de fausse promesse : est-ce se résigner, accepter la fatalité ? Le problème rebondit, prend une autre forme, et il faut continuer à le traiter jusqu'à avoir parcouru l'ensemble de ce qui fait problème : en 4 heures, on doit voir plusieurs aspects du problème, jamais seulement deux facettes qui s'opposent."}, {"text": "La liberté d'indifférence est le plus haut degré de liberté.", "correct": false, "feedback": "Un bon principe : terminer une partie par une objection ou un contre-exemple, qui ouvre la partie suivante et montre qu'il y a d'autres thèses possibles. Chaque partie représente une thèse, c'est-à-dire une réponse possible au sujet, qu'on défend par des arguments et des exemples : exactement ce qu'on apprend à repérer (thèse, arguments, exemples) dans une explication de texte. Les deux exercices sont complémentaires. Exemple ici : la deuxième partie a montré qu'on est d'autant plus libre qu'on sait ce qu'on fait (obéir à sa raison) ; l'objection : être libre, est-ce simplement obéir à sa raison, une forme de résignation de la volonté ? Chez Kant, même en situation de détresse, on ne doit pas faire de fausse promesse : est-ce se résigner, accepter la fatalité ? Le problème rebondit, prend une autre forme, et il faut continuer à le traiter jusqu'à avoir parcouru l'ensemble de ce qui fait problème : en 4 heures, on doit voir plusieurs aspects du problème, jamais seulement deux facettes qui s'opposent."}, {"text": "Le savant qui conclut de la nécessité de sa démonstration est le plus libre des hommes.", "correct": false, "feedback": "Un bon principe : terminer une partie par une objection ou un contre-exemple, qui ouvre la partie suivante et montre qu'il y a d'autres thèses possibles. Chaque partie représente une thèse, c'est-à-dire une réponse possible au sujet, qu'on défend par des arguments et des exemples : exactement ce qu'on apprend à repérer (thèse, arguments, exemples) dans une explication de texte. Les deux exercices sont complémentaires. Exemple ici : la deuxième partie a montré qu'on est d'autant plus libre qu'on sait ce qu'on fait (obéir à sa raison) ; l'objection : être libre, est-ce simplement obéir à sa raison, une forme de résignation de la volonté ? Chez Kant, même en situation de détresse, on ne doit pas faire de fausse promesse : est-ce se résigner, accepter la fatalité ? Le problème rebondit, prend une autre forme, et il faut continuer à le traiter jusqu'à avoir parcouru l'ensemble de ce qui fait problème : en 4 heures, on doit voir plusieurs aspects du problème, jamais seulement deux facettes qui s'opposent."}], "tags": ["la liberté", "Kant", "le devoir", "méthode"]}, {"type": "single", "name": "Que signifie l'image du rugby pour la problématique (« transformer l'essai ») ?", "options": [{"text": "Le problème, c'est le but qu'on marque entre les deux poteaux, mais à condition d'avoir marqué un essai avant : l'analyse des termes du sujet dans le paragraphe précédent ; la problématique transforme l'essai.", "correct": true, "feedback": "L'introduction : premier paragraphe, l'opinion commune sur le sujet (ici : la liberté se mesure à l'étendue des choix offerts ; une liberté sans choix paraît absurde ; l'absence d'alternative équivaudrait à la contrainte, à l'esclavage ou au destin). Deuxième paragraphe, remettre en cause cette opinion commune : phrase type réutilisable, « Pourtant, cette identification de la liberté au choix mérite d'être interrogée » (adapter au sujet). Analyser les termes du sujet en cherchant des significations différentes : « ne pas avoir le choix » peut vouloir dire trois choses différentes, et c'est cette contradiction qui fait problème. Troisième paragraphe : formuler le problème, à partir de la contradiction précédente. Image du rugby : le problème, c'est le but que vous marquez entre les deux poteaux, mais à condition d'avoir marqué un essai avant (l'analyse des termes dans le paragraphe précédent) ; la problématique transforme l'essai. Ne pas aller trop loin dans l'introduction : ne pas citer d'auteur, ne pas griller ses cartouches ; des exemples (le savant qui obéit à sa raison en concluant, l'homme juste, celui qui affronte avec lucidité) suffisent. Puis annoncer les étapes de la réflexion."}, {"text": "La problématique est un match : deux camps s'affrontent, pour et contre.", "correct": false, "feedback": "L'introduction : premier paragraphe, l'opinion commune sur le sujet (ici : la liberté se mesure à l'étendue des choix offerts ; une liberté sans choix paraît absurde ; l'absence d'alternative équivaudrait à la contrainte, à l'esclavage ou au destin). Deuxième paragraphe, remettre en cause cette opinion commune : phrase type réutilisable, « Pourtant, cette identification de la liberté au choix mérite d'être interrogée » (adapter au sujet). Analyser les termes du sujet en cherchant des significations différentes : « ne pas avoir le choix » peut vouloir dire trois choses différentes, et c'est cette contradiction qui fait problème. Troisième paragraphe : formuler le problème, à partir de la contradiction précédente. Image du rugby : le problème, c'est le but que vous marquez entre les deux poteaux, mais à condition d'avoir marqué un essai avant (l'analyse des termes dans le paragraphe précédent) ; la problématique transforme l'essai. Ne pas aller trop loin dans l'introduction : ne pas citer d'auteur, ne pas griller ses cartouches ; des exemples (le savant qui obéit à sa raison en concluant, l'homme juste, celui qui affronte avec lucidité) suffisent. Puis annoncer les étapes de la réflexion."}, {"text": "La problématique se jette au milieu du sujet et l'aplatit.", "correct": false, "feedback": "L'introduction : premier paragraphe, l'opinion commune sur le sujet (ici : la liberté se mesure à l'étendue des choix offerts ; une liberté sans choix paraît absurde ; l'absence d'alternative équivaudrait à la contrainte, à l'esclavage ou au destin). Deuxième paragraphe, remettre en cause cette opinion commune : phrase type réutilisable, « Pourtant, cette identification de la liberté au choix mérite d'être interrogée » (adapter au sujet). Analyser les termes du sujet en cherchant des significations différentes : « ne pas avoir le choix » peut vouloir dire trois choses différentes, et c'est cette contradiction qui fait problème. Troisième paragraphe : formuler le problème, à partir de la contradiction précédente. Image du rugby : le problème, c'est le but que vous marquez entre les deux poteaux, mais à condition d'avoir marqué un essai avant (l'analyse des termes dans le paragraphe précédent) ; la problématique transforme l'essai. Ne pas aller trop loin dans l'introduction : ne pas citer d'auteur, ne pas griller ses cartouches ; des exemples (le savant qui obéit à sa raison en concluant, l'homme juste, celui qui affronte avec lucidité) suffisent. Puis annoncer les étapes de la réflexion."}, {"text": "L'essai vaut plus de points que le but : la problématique est facultative.", "correct": false, "feedback": "L'introduction : premier paragraphe, l'opinion commune sur le sujet (ici : la liberté se mesure à l'étendue des choix offerts ; une liberté sans choix paraît absurde ; l'absence d'alternative équivaudrait à la contrainte, à l'esclavage ou au destin). Deuxième paragraphe, remettre en cause cette opinion commune : phrase type réutilisable, « Pourtant, cette identification de la liberté au choix mérite d'être interrogée » (adapter au sujet). Analyser les termes du sujet en cherchant des significations différentes : « ne pas avoir le choix » peut vouloir dire trois choses différentes, et c'est cette contradiction qui fait problème. Troisième paragraphe : formuler le problème, à partir de la contradiction précédente. Image du rugby : le problème, c'est le but que vous marquez entre les deux poteaux, mais à condition d'avoir marqué un essai avant (l'analyse des termes dans le paragraphe précédent) ; la problématique transforme l'essai. Ne pas aller trop loin dans l'introduction : ne pas citer d'auteur, ne pas griller ses cartouches ; des exemples (le savant qui obéit à sa raison en concluant, l'homme juste, celui qui affronte avec lucidité) suffisent. Puis annoncer les étapes de la réflexion."}], "tags": ["la liberté", "méthode"]}, {"type": "single", "name": "Pourquoi ne faut-il pas citer d'auteur dans l'introduction ?", "options": [{"text": "Parce qu'on ne doit pas aller trop loin ni griller ses cartouches : on ne fait que reprendre ce qui fait vraiment problème, avec des exemples (le savant, l'homme juste, celui qui affronte avec lucidité).", "correct": true, "feedback": "L'introduction : premier paragraphe, l'opinion commune sur le sujet (ici : la liberté se mesure à l'étendue des choix offerts ; une liberté sans choix paraît absurde ; l'absence d'alternative équivaudrait à la contrainte, à l'esclavage ou au destin). Deuxième paragraphe, remettre en cause cette opinion commune : phrase type réutilisable, « Pourtant, cette identification de la liberté au choix mérite d'être interrogée » (adapter au sujet). Analyser les termes du sujet en cherchant des significations différentes : « ne pas avoir le choix » peut vouloir dire trois choses différentes, et c'est cette contradiction qui fait problème. Troisième paragraphe : formuler le problème, à partir de la contradiction précédente. Image du rugby : le problème, c'est le but que vous marquez entre les deux poteaux, mais à condition d'avoir marqué un essai avant (l'analyse des termes dans le paragraphe précédent) ; la problématique transforme l'essai. Ne pas aller trop loin dans l'introduction : ne pas citer d'auteur, ne pas griller ses cartouches ; des exemples (le savant qui obéit à sa raison en concluant, l'homme juste, celui qui affronte avec lucidité) suffisent. Puis annoncer les étapes de la réflexion."}, {"text": "Parce que les correcteurs détestent tous les auteurs du programme.", "correct": false, "feedback": "L'introduction : premier paragraphe, l'opinion commune sur le sujet (ici : la liberté se mesure à l'étendue des choix offerts ; une liberté sans choix paraît absurde ; l'absence d'alternative équivaudrait à la contrainte, à l'esclavage ou au destin). Deuxième paragraphe, remettre en cause cette opinion commune : phrase type réutilisable, « Pourtant, cette identification de la liberté au choix mérite d'être interrogée » (adapter au sujet). Analyser les termes du sujet en cherchant des significations différentes : « ne pas avoir le choix » peut vouloir dire trois choses différentes, et c'est cette contradiction qui fait problème. Troisième paragraphe : formuler le problème, à partir de la contradiction précédente. Image du rugby : le problème, c'est le but que vous marquez entre les deux poteaux, mais à condition d'avoir marqué un essai avant (l'analyse des termes dans le paragraphe précédent) ; la problématique transforme l'essai. Ne pas aller trop loin dans l'introduction : ne pas citer d'auteur, ne pas griller ses cartouches ; des exemples (le savant qui obéit à sa raison en concluant, l'homme juste, celui qui affronte avec lucidité) suffisent. Puis annoncer les étapes de la réflexion."}, {"text": "Parce qu'on doit citer les auteurs seulement dans la conclusion.", "correct": false, "feedback": "L'introduction : premier paragraphe, l'opinion commune sur le sujet (ici : la liberté se mesure à l'étendue des choix offerts ; une liberté sans choix paraît absurde ; l'absence d'alternative équivaudrait à la contrainte, à l'esclavage ou au destin). Deuxième paragraphe, remettre en cause cette opinion commune : phrase type réutilisable, « Pourtant, cette identification de la liberté au choix mérite d'être interrogée » (adapter au sujet). Analyser les termes du sujet en cherchant des significations différentes : « ne pas avoir le choix » peut vouloir dire trois choses différentes, et c'est cette contradiction qui fait problème. Troisième paragraphe : formuler le problème, à partir de la contradiction précédente. Image du rugby : le problème, c'est le but que vous marquez entre les deux poteaux, mais à condition d'avoir marqué un essai avant (l'analyse des termes dans le paragraphe précédent) ; la problématique transforme l'essai. Ne pas aller trop loin dans l'introduction : ne pas citer d'auteur, ne pas griller ses cartouches ; des exemples (le savant qui obéit à sa raison en concluant, l'homme juste, celui qui affronte avec lucidité) suffisent. Puis annoncer les étapes de la réflexion."}, {"text": "Parce que les citations d'auteurs sont interdites le jour du bac.", "correct": false, "feedback": "L'introduction : premier paragraphe, l'opinion commune sur le sujet (ici : la liberté se mesure à l'étendue des choix offerts ; une liberté sans choix paraît absurde ; l'absence d'alternative équivaudrait à la contrainte, à l'esclavage ou au destin). Deuxième paragraphe, remettre en cause cette opinion commune : phrase type réutilisable, « Pourtant, cette identification de la liberté au choix mérite d'être interrogée » (adapter au sujet). Analyser les termes du sujet en cherchant des significations différentes : « ne pas avoir le choix » peut vouloir dire trois choses différentes, et c'est cette contradiction qui fait problème. Troisième paragraphe : formuler le problème, à partir de la contradiction précédente. Image du rugby : le problème, c'est le but que vous marquez entre les deux poteaux, mais à condition d'avoir marqué un essai avant (l'analyse des termes dans le paragraphe précédent) ; la problématique transforme l'essai. Ne pas aller trop loin dans l'introduction : ne pas citer d'auteur, ne pas griller ses cartouches ; des exemples (le savant qui obéit à sa raison en concluant, l'homme juste, celui qui affronte avec lucidité) suffisent. Puis annoncer les étapes de la réflexion."}], "tags": ["la liberté", "méthode"]}, {"type": "single", "name": "Dans la copie du baccalauréat, on peut mettre des titres et un petit schéma pour montrer la structure de sa réflexion.", "options": [{"text": "Faux", "correct": true, "feedback": "La copie doit être entièrement rédigée : pas de plan, pas de titres, pas d'abréviations, et surtout pas de schéma ni de dessin. Les schémas risquent d'être interprétés comme des signes de reconnaissance, ce qui annulerait la copie (comme la signature, qui viole l'anonymat). Les titres et sous-titres du plan détaillé distribué ne sont là que pour l'apprentissage."}, {"text": "Vrai", "correct": false, "feedback": "La copie doit être entièrement rédigée : pas de plan, pas de titres, pas d'abréviations, et surtout pas de schéma ni de dessin. Les schémas risquent d'être interprétés comme des signes de reconnaissance, ce qui annulerait la copie (comme la signature, qui viole l'anonymat). Les titres et sous-titres du plan détaillé distribué ne sont là que pour l'apprentissage."}], "tags": ["la liberté", "méthode"]}, {"type": "single", "name": "Comment dépasser la dualité entre deux parties antagonistes ?", "options": [{"text": "En changeant de perspective : la liberté du point de vue de la connaissance (première partie), de la morale (deuxième), puis sur le terrain de la politique (troisième partie) : « je passe la balle à l'ailier droit ».", "correct": true, "feedback": "Pour dépasser la dualité entre deux parties antagonistes, changer de perspective : première partie, la liberté du point de vue de la connaissance (le libre arbitre, faire le contraire de ce que la raison recommande) ; deuxième partie, du point de vue de la morale ; troisième partie, la liberté sur le terrain de la politique, « je passe la balle à l'ailier droit » pour progresser vers le but. Troisième partie : la liberté en situation consiste à assumer et chercher à transformer ce qu'on n'a pas choisi. La fatalité, objection de fin de deuxième partie, c'est aussi celle de la maladie que Sartre prend en exemple : face à la maladie, céder au fatalisme, se résigner, est encore un choix possible, l'expression de ma liberté ; mais je peux aussi résister, dénier, lutter : la question de la liberté devient question d'action. On peut parler de perspective politique ou morale au sens large."}, {"text": "En ajoutant un quatrième auteur au même point de vue.", "correct": false, "feedback": "Pour dépasser la dualité entre deux parties antagonistes, changer de perspective : première partie, la liberté du point de vue de la connaissance (le libre arbitre, faire le contraire de ce que la raison recommande) ; deuxième partie, du point de vue de la morale ; troisième partie, la liberté sur le terrain de la politique, « je passe la balle à l'ailier droit » pour progresser vers le but. Troisième partie : la liberté en situation consiste à assumer et chercher à transformer ce qu'on n'a pas choisi. La fatalité, objection de fin de deuxième partie, c'est aussi celle de la maladie que Sartre prend en exemple : face à la maladie, céder au fatalisme, se résigner, est encore un choix possible, l'expression de ma liberté ; mais je peux aussi résister, dénier, lutter : la question de la liberté devient question d'action. On peut parler de perspective politique ou morale au sens large."}, {"text": "En répétant la première partie en d'autres mots.", "correct": false, "feedback": "Pour dépasser la dualité entre deux parties antagonistes, changer de perspective : première partie, la liberté du point de vue de la connaissance (le libre arbitre, faire le contraire de ce que la raison recommande) ; deuxième partie, du point de vue de la morale ; troisième partie, la liberté sur le terrain de la politique, « je passe la balle à l'ailier droit » pour progresser vers le but. Troisième partie : la liberté en situation consiste à assumer et chercher à transformer ce qu'on n'a pas choisi. La fatalité, objection de fin de deuxième partie, c'est aussi celle de la maladie que Sartre prend en exemple : face à la maladie, céder au fatalisme, se résigner, est encore un choix possible, l'expression de ma liberté ; mais je peux aussi résister, dénier, lutter : la question de la liberté devient question d'action. On peut parler de perspective politique ou morale au sens large."}, {"text": "En laissant le lecteur choisir entre les deux thèses.", "correct": false, "feedback": "Pour dépasser la dualité entre deux parties antagonistes, changer de perspective : première partie, la liberté du point de vue de la connaissance (le libre arbitre, faire le contraire de ce que la raison recommande) ; deuxième partie, du point de vue de la morale ; troisième partie, la liberté sur le terrain de la politique, « je passe la balle à l'ailier droit » pour progresser vers le but. Troisième partie : la liberté en situation consiste à assumer et chercher à transformer ce qu'on n'a pas choisi. La fatalité, objection de fin de deuxième partie, c'est aussi celle de la maladie que Sartre prend en exemple : face à la maladie, céder au fatalisme, se résigner, est encore un choix possible, l'expression de ma liberté ; mais je peux aussi résister, dénier, lutter : la question de la liberté devient question d'action. On peut parler de perspective politique ou morale au sens large."}], "tags": ["la liberté", "méthode"]}, {"type": "single", "name": "Que montre Sartre avec l'exemple de la maladie dans la troisième partie ?", "options": [{"text": "La liberté en situation assume et cherche à transformer ce qu'on n'a pas choisi : se résigner à la maladie est encore un choix possible, mais je peux aussi résister, dénier, lutter ; la question de la liberté devient question d'action.", "correct": true, "feedback": "Pour dépasser la dualité entre deux parties antagonistes, changer de perspective : première partie, la liberté du point de vue de la connaissance (le libre arbitre, faire le contraire de ce que la raison recommande) ; deuxième partie, du point de vue de la morale ; troisième partie, la liberté sur le terrain de la politique, « je passe la balle à l'ailier droit » pour progresser vers le but. Troisième partie : la liberté en situation consiste à assumer et chercher à transformer ce qu'on n'a pas choisi. La fatalité, objection de fin de deuxième partie, c'est aussi celle de la maladie que Sartre prend en exemple : face à la maladie, céder au fatalisme, se résigner, est encore un choix possible, l'expression de ma liberté ; mais je peux aussi résister, dénier, lutter : la question de la liberté devient question d'action. On peut parler de perspective politique ou morale au sens large."}, {"text": "La maladie supprime la liberté : le malade n'est plus libre du tout.", "correct": false, "feedback": "Pour dépasser la dualité entre deux parties antagonistes, changer de perspective : première partie, la liberté du point de vue de la connaissance (le libre arbitre, faire le contraire de ce que la raison recommande) ; deuxième partie, du point de vue de la morale ; troisième partie, la liberté sur le terrain de la politique, « je passe la balle à l'ailier droit » pour progresser vers le but. Troisième partie : la liberté en situation consiste à assumer et chercher à transformer ce qu'on n'a pas choisi. La fatalité, objection de fin de deuxième partie, c'est aussi celle de la maladie que Sartre prend en exemple : face à la maladie, céder au fatalisme, se résigner, est encore un choix possible, l'expression de ma liberté ; mais je peux aussi résister, dénier, lutter : la question de la liberté devient question d'action. On peut parler de perspective politique ou morale au sens large."}, {"text": "Il faut se résigner : c'est la seule attitude raisonnable face à la maladie.", "correct": false, "feedback": "Pour dépasser la dualité entre deux parties antagonistes, changer de perspective : première partie, la liberté du point de vue de la connaissance (le libre arbitre, faire le contraire de ce que la raison recommande) ; deuxième partie, du point de vue de la morale ; troisième partie, la liberté sur le terrain de la politique, « je passe la balle à l'ailier droit » pour progresser vers le but. Troisième partie : la liberté en situation consiste à assumer et chercher à transformer ce qu'on n'a pas choisi. La fatalité, objection de fin de deuxième partie, c'est aussi celle de la maladie que Sartre prend en exemple : face à la maladie, céder au fatalisme, se résigner, est encore un choix possible, l'expression de ma liberté ; mais je peux aussi résister, dénier, lutter : la question de la liberté devient question d'action. On peut parler de perspective politique ou morale au sens large."}, {"text": "La maladie n'a rien à voir avec la liberté, c'est un problème médical.", "correct": false, "feedback": "Pour dépasser la dualité entre deux parties antagonistes, changer de perspective : première partie, la liberté du point de vue de la connaissance (le libre arbitre, faire le contraire de ce que la raison recommande) ; deuxième partie, du point de vue de la morale ; troisième partie, la liberté sur le terrain de la politique, « je passe la balle à l'ailier droit » pour progresser vers le but. Troisième partie : la liberté en situation consiste à assumer et chercher à transformer ce qu'on n'a pas choisi. La fatalité, objection de fin de deuxième partie, c'est aussi celle de la maladie que Sartre prend en exemple : face à la maladie, céder au fatalisme, se résigner, est encore un choix possible, l'expression de ma liberté ; mais je peux aussi résister, dénier, lutter : la question de la liberté devient question d'action. On peut parler de perspective politique ou morale au sens large."}], "tags": ["la liberté", "Sartre"]}, {"type": "single", "name": "Comment Kant distingue-t-il les impératifs dans la phrase étudiée en exercice ?", "options": [{"text": "« Tous les impératifs commandent soit hypothétiquement, soit catégoriquement » : l'impératif hypothétique représente la nécessité pratique d'une action possible en tant qu'elle constitue un moyen de parvenir à quelque chose qu'on veut.", "correct": true, "feedback": "Exercice fait en classe à partir du texte de Kant : « Tous les impératifs commandent soit hypothétiquement, soit catégoriquement. Les premiers représentent la nécessité pratique d'une action possible en tant qu'elle constitue un moyen de parvenir à quelque chose qu'on veut. » Un impératif hypothétique est un devoir relatif : il dépend de conditions, d'un but qu'on se donne ou de moyens. Un impératif catégorique doit être rempli sans condition : l'action est considérée pour elle-même, sans relation à une autre fin ; ce qui existe pour soi-même, indépendamment d'autres choses, c'est l'absolu. Repère du programme à utiliser : absolu/relatif. L'impératif n'est jamais un ordre reçu de l'extérieur : que l'impératif soit catégorique ou hypothétique, ce sont des devoirs qu'on se donne à soi-même ; la seule question : le devoir est-il subordonné à un résultat, un moyen, des conditions, ou s'impose-t-il absolument, quelles que soient les circonstances ?"}, {"text": "Il y a des impératifs utiles, des impératifs agréables et des impératifs moraux.", "correct": false, "feedback": "Exercice fait en classe à partir du texte de Kant : « Tous les impératifs commandent soit hypothétiquement, soit catégoriquement. Les premiers représentent la nécessité pratique d'une action possible en tant qu'elle constitue un moyen de parvenir à quelque chose qu'on veut. » Un impératif hypothétique est un devoir relatif : il dépend de conditions, d'un but qu'on se donne ou de moyens. Un impératif catégorique doit être rempli sans condition : l'action est considérée pour elle-même, sans relation à une autre fin ; ce qui existe pour soi-même, indépendamment d'autres choses, c'est l'absolu. Repère du programme à utiliser : absolu/relatif. L'impératif n'est jamais un ordre reçu de l'extérieur : que l'impératif soit catégorique ou hypothétique, ce sont des devoirs qu'on se donne à soi-même ; la seule question : le devoir est-il subordonné à un résultat, un moyen, des conditions, ou s'impose-t-il absolument, quelles que soient les circonstances ?"}, {"text": "Les impératifs se classent en trois degrés : faible, moyen, fort.", "correct": false, "feedback": "Exercice fait en classe à partir du texte de Kant : « Tous les impératifs commandent soit hypothétiquement, soit catégoriquement. Les premiers représentent la nécessité pratique d'une action possible en tant qu'elle constitue un moyen de parvenir à quelque chose qu'on veut. » Un impératif hypothétique est un devoir relatif : il dépend de conditions, d'un but qu'on se donne ou de moyens. Un impératif catégorique doit être rempli sans condition : l'action est considérée pour elle-même, sans relation à une autre fin ; ce qui existe pour soi-même, indépendamment d'autres choses, c'est l'absolu. Repère du programme à utiliser : absolu/relatif. L'impératif n'est jamais un ordre reçu de l'extérieur : que l'impératif soit catégorique ou hypothétique, ce sont des devoirs qu'on se donne à soi-même ; la seule question : le devoir est-il subordonné à un résultat, un moyen, des conditions, ou s'impose-t-il absolument, quelles que soient les circonstances ?"}, {"text": "Il n'y a qu'un seul impératif, le catégorique, les autres sont des ordres.", "correct": false, "feedback": "Exercice fait en classe à partir du texte de Kant : « Tous les impératifs commandent soit hypothétiquement, soit catégoriquement. Les premiers représentent la nécessité pratique d'une action possible en tant qu'elle constitue un moyen de parvenir à quelque chose qu'on veut. » Un impératif hypothétique est un devoir relatif : il dépend de conditions, d'un but qu'on se donne ou de moyens. Un impératif catégorique doit être rempli sans condition : l'action est considérée pour elle-même, sans relation à une autre fin ; ce qui existe pour soi-même, indépendamment d'autres choses, c'est l'absolu. Repère du programme à utiliser : absolu/relatif. L'impératif n'est jamais un ordre reçu de l'extérieur : que l'impératif soit catégorique ou hypothétique, ce sont des devoirs qu'on se donne à soi-même ; la seule question : le devoir est-il subordonné à un résultat, un moyen, des conditions, ou s'impose-t-il absolument, quelles que soient les circonstances ?"}], "tags": ["le devoir", "Kant"]}, {"type": "single", "name": "Quelle est la différence entre un impératif hypothétique et un impératif catégorique ?", "options": [{"text": "L'hypothétique est un devoir relatif : il dépend d'un but, de moyens ou de conditions ; le catégorique doit être rempli sans condition : l'action est considérée pour elle-même, sans relation à une autre fin.", "correct": true, "feedback": "Exercice fait en classe à partir du texte de Kant : « Tous les impératifs commandent soit hypothétiquement, soit catégoriquement. Les premiers représentent la nécessité pratique d'une action possible en tant qu'elle constitue un moyen de parvenir à quelque chose qu'on veut. » Un impératif hypothétique est un devoir relatif : il dépend de conditions, d'un but qu'on se donne ou de moyens. Un impératif catégorique doit être rempli sans condition : l'action est considérée pour elle-même, sans relation à une autre fin ; ce qui existe pour soi-même, indépendamment d'autres choses, c'est l'absolu. Repère du programme à utiliser : absolu/relatif. L'impératif n'est jamais un ordre reçu de l'extérieur : que l'impératif soit catégorique ou hypothétique, ce sont des devoirs qu'on se donne à soi-même ; la seule question : le devoir est-il subordonné à un résultat, un moyen, des conditions, ou s'impose-t-il absolument, quelles que soient les circonstances ?"}, {"text": "L'hypothétique vient de la raison, le catégorique vient de la société.", "correct": false, "feedback": "Exercice fait en classe à partir du texte de Kant : « Tous les impératifs commandent soit hypothétiquement, soit catégoriquement. Les premiers représentent la nécessité pratique d'une action possible en tant qu'elle constitue un moyen de parvenir à quelque chose qu'on veut. » Un impératif hypothétique est un devoir relatif : il dépend de conditions, d'un but qu'on se donne ou de moyens. Un impératif catégorique doit être rempli sans condition : l'action est considérée pour elle-même, sans relation à une autre fin ; ce qui existe pour soi-même, indépendamment d'autres choses, c'est l'absolu. Repère du programme à utiliser : absolu/relatif. L'impératif n'est jamais un ordre reçu de l'extérieur : que l'impératif soit catégorique ou hypothétique, ce sont des devoirs qu'on se donne à soi-même ; la seule question : le devoir est-il subordonné à un résultat, un moyen, des conditions, ou s'impose-t-il absolument, quelles que soient les circonstances ?"}, {"text": "L'hypothétique est un ordre reçu, le catégorique un choix personnel.", "correct": false, "feedback": "Exercice fait en classe à partir du texte de Kant : « Tous les impératifs commandent soit hypothétiquement, soit catégoriquement. Les premiers représentent la nécessité pratique d'une action possible en tant qu'elle constitue un moyen de parvenir à quelque chose qu'on veut. » Un impératif hypothétique est un devoir relatif : il dépend de conditions, d'un but qu'on se donne ou de moyens. Un impératif catégorique doit être rempli sans condition : l'action est considérée pour elle-même, sans relation à une autre fin ; ce qui existe pour soi-même, indépendamment d'autres choses, c'est l'absolu. Repère du programme à utiliser : absolu/relatif. L'impératif n'est jamais un ordre reçu de l'extérieur : que l'impératif soit catégorique ou hypothétique, ce sont des devoirs qu'on se donne à soi-même ; la seule question : le devoir est-il subordonné à un résultat, un moyen, des conditions, ou s'impose-t-il absolument, quelles que soient les circonstances ?"}, {"text": "L'hypothétique est moral, le catégorique est politique.", "correct": false, "feedback": "Exercice fait en classe à partir du texte de Kant : « Tous les impératifs commandent soit hypothétiquement, soit catégoriquement. Les premiers représentent la nécessité pratique d'une action possible en tant qu'elle constitue un moyen de parvenir à quelque chose qu'on veut. » Un impératif hypothétique est un devoir relatif : il dépend de conditions, d'un but qu'on se donne ou de moyens. Un impératif catégorique doit être rempli sans condition : l'action est considérée pour elle-même, sans relation à une autre fin ; ce qui existe pour soi-même, indépendamment d'autres choses, c'est l'absolu. Repère du programme à utiliser : absolu/relatif. L'impératif n'est jamais un ordre reçu de l'extérieur : que l'impératif soit catégorique ou hypothétique, ce sont des devoirs qu'on se donne à soi-même ; la seule question : le devoir est-il subordonné à un résultat, un moyen, des conditions, ou s'impose-t-il absolument, quelles que soient les circonstances ?"}], "tags": ["le devoir", "Kant", "Absolu/relatif"]}, {"type": "single", "name": "Un impératif, chez Kant, est un ordre qu'on reçoit de l'extérieur.", "options": [{"text": "Faux", "correct": true, "feedback": "Exercice fait en classe à partir du texte de Kant : « Tous les impératifs commandent soit hypothétiquement, soit catégoriquement. Les premiers représentent la nécessité pratique d'une action possible en tant qu'elle constitue un moyen de parvenir à quelque chose qu'on veut. » Un impératif hypothétique est un devoir relatif : il dépend de conditions, d'un but qu'on se donne ou de moyens. Un impératif catégorique doit être rempli sans condition : l'action est considérée pour elle-même, sans relation à une autre fin ; ce qui existe pour soi-même, indépendamment d'autres choses, c'est l'absolu. Repère du programme à utiliser : absolu/relatif. L'impératif n'est jamais un ordre reçu de l'extérieur : que l'impératif soit catégorique ou hypothétique, ce sont des devoirs qu'on se donne à soi-même ; la seule question : le devoir est-il subordonné à un résultat, un moyen, des conditions, ou s'impose-t-il absolument, quelles que soient les circonstances ?"}, {"text": "Vrai", "correct": false, "feedback": "Exercice fait en classe à partir du texte de Kant : « Tous les impératifs commandent soit hypothétiquement, soit catégoriquement. Les premiers représentent la nécessité pratique d'une action possible en tant qu'elle constitue un moyen de parvenir à quelque chose qu'on veut. » Un impératif hypothétique est un devoir relatif : il dépend de conditions, d'un but qu'on se donne ou de moyens. Un impératif catégorique doit être rempli sans condition : l'action est considérée pour elle-même, sans relation à une autre fin ; ce qui existe pour soi-même, indépendamment d'autres choses, c'est l'absolu. Repère du programme à utiliser : absolu/relatif. L'impératif n'est jamais un ordre reçu de l'extérieur : que l'impératif soit catégorique ou hypothétique, ce sont des devoirs qu'on se donne à soi-même ; la seule question : le devoir est-il subordonné à un résultat, un moyen, des conditions, ou s'impose-t-il absolument, quelles que soient les circonstances ?"}], "tags": ["le devoir", "Kant"]}, {"type": "single", "name": "« Je dois savoir parler plus fort que les autres » : quel type d'impératif, et pourquoi ?", "options": [{"text": "Hypothétique : c'est un devoir relatif au but de se faire entendre.", "correct": true, "feedback": "Exemples corrigés en classe. « Je dois savoir parler plus fort que les autres » : impératif hypothétique, relatif au but de se faire entendre. « Je dois respecter les prises de parole des autres » : impératif catégorique ; mais attention à la raison : si c'est « par politesse », on retombe dans l'hypothétique (la politesse est une condition). Le respect, c'est une question de dignité : quelles que soient les idées de la personne, même si je ne suis pas d'accord, elle a moralement le droit de s'exprimer ; si je la prive de sa parole, je nie sa dignité de personne. Le droit de chacun à avoir un toit : si on le conditionne aux finances de la France, c'est un impératif hypothétique ; si l'on dit qu'il en va de la dignité des personnes (dormir dans la rue n'est pas digne de l'humanité), c'est un devoir absolu, quelles que soient les finances. Question ouverte pour aller plus loin : l'impératif catégorique peut-il valoir en politique ? Peut-être qu'en politique il n'y a que des impératifs hypothétiques (l'aide à l'Ukraine dépend des finances, des moyens : les États s'en disputent)."}, {"text": "Catégorique : parler fort s'impose absolument à quiconque.", "correct": false, "feedback": "Exemples corrigés en classe. « Je dois savoir parler plus fort que les autres » : impératif hypothétique, relatif au but de se faire entendre. « Je dois respecter les prises de parole des autres » : impératif catégorique ; mais attention à la raison : si c'est « par politesse », on retombe dans l'hypothétique (la politesse est une condition). Le respect, c'est une question de dignité : quelles que soient les idées de la personne, même si je ne suis pas d'accord, elle a moralement le droit de s'exprimer ; si je la prive de sa parole, je nie sa dignité de personne. Le droit de chacun à avoir un toit : si on le conditionne aux finances de la France, c'est un impératif hypothétique ; si l'on dit qu'il en va de la dignité des personnes (dormir dans la rue n'est pas digne de l'humanité), c'est un devoir absolu, quelles que soient les finances. Question ouverte pour aller plus loin : l'impératif catégorique peut-il valoir en politique ? Peut-être qu'en politique il n'y a que des impératifs hypothétiques (l'aide à l'Ukraine dépend des finances, des moyens : les États s'en disputent)."}, {"text": "Ce n'est pas un impératif du tout, c'est un conseil de vie.", "correct": false, "feedback": "Exemples corrigés en classe. « Je dois savoir parler plus fort que les autres » : impératif hypothétique, relatif au but de se faire entendre. « Je dois respecter les prises de parole des autres » : impératif catégorique ; mais attention à la raison : si c'est « par politesse », on retombe dans l'hypothétique (la politesse est une condition). Le respect, c'est une question de dignité : quelles que soient les idées de la personne, même si je ne suis pas d'accord, elle a moralement le droit de s'exprimer ; si je la prive de sa parole, je nie sa dignité de personne. Le droit de chacun à avoir un toit : si on le conditionne aux finances de la France, c'est un impératif hypothétique ; si l'on dit qu'il en va de la dignité des personnes (dormir dans la rue n'est pas digne de l'humanité), c'est un devoir absolu, quelles que soient les finances. Question ouverte pour aller plus loin : l'impératif catégorique peut-il valoir en politique ? Peut-être qu'en politique il n'y a que des impératifs hypothétiques (l'aide à l'Ukraine dépend des finances, des moyens : les États s'en disputent)."}, {"text": "Catégorique, parce que la parole est une dignité humaine.", "correct": false, "feedback": "Exemples corrigés en classe. « Je dois savoir parler plus fort que les autres » : impératif hypothétique, relatif au but de se faire entendre. « Je dois respecter les prises de parole des autres » : impératif catégorique ; mais attention à la raison : si c'est « par politesse », on retombe dans l'hypothétique (la politesse est une condition). Le respect, c'est une question de dignité : quelles que soient les idées de la personne, même si je ne suis pas d'accord, elle a moralement le droit de s'exprimer ; si je la prive de sa parole, je nie sa dignité de personne. Le droit de chacun à avoir un toit : si on le conditionne aux finances de la France, c'est un impératif hypothétique ; si l'on dit qu'il en va de la dignité des personnes (dormir dans la rue n'est pas digne de l'humanité), c'est un devoir absolu, quelles que soient les finances. Question ouverte pour aller plus loin : l'impératif catégorique peut-il valoir en politique ? Peut-être qu'en politique il n'y a que des impératifs hypothétiques (l'aide à l'Ukraine dépend des finances, des moyens : les États s'en disputent)."}], "tags": ["le devoir", "Kant"]}, {"type": "single", "name": "Pourquoi « je dois respecter les prises de parole des autres » est-il un impératif catégorique ?", "options": [{"text": "Parce que le respect est une question de dignité : quelles que soient les idées de la personne, elle a moralement le droit de s'exprimer ; si on répond « par politesse », on retombe dans l'hypothétique, car la politesse est une condition.", "correct": true, "feedback": "Exemples corrigés en classe. « Je dois savoir parler plus fort que les autres » : impératif hypothétique, relatif au but de se faire entendre. « Je dois respecter les prises de parole des autres » : impératif catégorique ; mais attention à la raison : si c'est « par politesse », on retombe dans l'hypothétique (la politesse est une condition). Le respect, c'est une question de dignité : quelles que soient les idées de la personne, même si je ne suis pas d'accord, elle a moralement le droit de s'exprimer ; si je la prive de sa parole, je nie sa dignité de personne. Le droit de chacun à avoir un toit : si on le conditionne aux finances de la France, c'est un impératif hypothétique ; si l'on dit qu'il en va de la dignité des personnes (dormir dans la rue n'est pas digne de l'humanité), c'est un devoir absolu, quelles que soient les finances. Question ouverte pour aller plus loin : l'impératif catégorique peut-il valoir en politique ? Peut-être qu'en politique il n'y a que des impératifs hypothétiques (l'aide à l'Ukraine dépend des finances, des moyens : les États s'en disputent)."}, {"text": "Parce que la politesse est la plus haute des vertus sociales.", "correct": false, "feedback": "Exemples corrigés en classe. « Je dois savoir parler plus fort que les autres » : impératif hypothétique, relatif au but de se faire entendre. « Je dois respecter les prises de parole des autres » : impératif catégorique ; mais attention à la raison : si c'est « par politesse », on retombe dans l'hypothétique (la politesse est une condition). Le respect, c'est une question de dignité : quelles que soient les idées de la personne, même si je ne suis pas d'accord, elle a moralement le droit de s'exprimer ; si je la prive de sa parole, je nie sa dignité de personne. Le droit de chacun à avoir un toit : si on le conditionne aux finances de la France, c'est un impératif hypothétique ; si l'on dit qu'il en va de la dignité des personnes (dormir dans la rue n'est pas digne de l'humanité), c'est un devoir absolu, quelles que soient les finances. Question ouverte pour aller plus loin : l'impératif catégorique peut-il valoir en politique ? Peut-être qu'en politique il n'y a que des impératifs hypothétiques (l'aide à l'Ukraine dépend des finances, des moyens : les États s'en disputent)."}, {"text": "Parce que le respect des règles de classe est un ordre du professeur.", "correct": false, "feedback": "Exemples corrigés en classe. « Je dois savoir parler plus fort que les autres » : impératif hypothétique, relatif au but de se faire entendre. « Je dois respecter les prises de parole des autres » : impératif catégorique ; mais attention à la raison : si c'est « par politesse », on retombe dans l'hypothétique (la politesse est une condition). Le respect, c'est une question de dignité : quelles que soient les idées de la personne, même si je ne suis pas d'accord, elle a moralement le droit de s'exprimer ; si je la prive de sa parole, je nie sa dignité de personne. Le droit de chacun à avoir un toit : si on le conditionne aux finances de la France, c'est un impératif hypothétique ; si l'on dit qu'il en va de la dignité des personnes (dormir dans la rue n'est pas digne de l'humanité), c'est un devoir absolu, quelles que soient les finances. Question ouverte pour aller plus loin : l'impératif catégorique peut-il valoir en politique ? Peut-être qu'en politique il n'y a que des impératifs hypothétiques (l'aide à l'Ukraine dépend des finances, des moyens : les États s'en disputent)."}, {"text": "Parce que la parole d'autrui est toujours vraie et doit être approuvée.", "correct": false, "feedback": "Exemples corrigés en classe. « Je dois savoir parler plus fort que les autres » : impératif hypothétique, relatif au but de se faire entendre. « Je dois respecter les prises de parole des autres » : impératif catégorique ; mais attention à la raison : si c'est « par politesse », on retombe dans l'hypothétique (la politesse est une condition). Le respect, c'est une question de dignité : quelles que soient les idées de la personne, même si je ne suis pas d'accord, elle a moralement le droit de s'exprimer ; si je la prive de sa parole, je nie sa dignité de personne. Le droit de chacun à avoir un toit : si on le conditionne aux finances de la France, c'est un impératif hypothétique ; si l'on dit qu'il en va de la dignité des personnes (dormir dans la rue n'est pas digne de l'humanité), c'est un devoir absolu, quelles que soient les finances. Question ouverte pour aller plus loin : l'impératif catégorique peut-il valoir en politique ? Peut-être qu'en politique il n'y a que des impératifs hypothétiques (l'aide à l'Ukraine dépend des finances, des moyens : les États s'en disputent)."}], "tags": ["le devoir", "Kant"]}, {"type": "single", "name": "Le droit de chacun à avoir un toit : quand devient-il un impératif catégorique ?", "options": [{"text": "Quand on dit qu'il en va de la dignité des personnes (dormir dans la rue n'est pas digne de l'humanité) : un devoir absolu, quelles que soient les finances de la France ; conditionné aux finances, ce serait un impératif hypothétique.", "correct": true, "feedback": "Exemples corrigés en classe. « Je dois savoir parler plus fort que les autres » : impératif hypothétique, relatif au but de se faire entendre. « Je dois respecter les prises de parole des autres » : impératif catégorique ; mais attention à la raison : si c'est « par politesse », on retombe dans l'hypothétique (la politesse est une condition). Le respect, c'est une question de dignité : quelles que soient les idées de la personne, même si je ne suis pas d'accord, elle a moralement le droit de s'exprimer ; si je la prive de sa parole, je nie sa dignité de personne. Le droit de chacun à avoir un toit : si on le conditionne aux finances de la France, c'est un impératif hypothétique ; si l'on dit qu'il en va de la dignité des personnes (dormir dans la rue n'est pas digne de l'humanité), c'est un devoir absolu, quelles que soient les finances. Question ouverte pour aller plus loin : l'impératif catégorique peut-il valoir en politique ? Peut-être qu'en politique il n'y a que des impératifs hypothétiques (l'aide à l'Ukraine dépend des finances, des moyens : les États s'en disputent)."}, {"text": "Quand les finances de la France le permettent : alors seulement il devient catégorique.", "correct": false, "feedback": "Exemples corrigés en classe. « Je dois savoir parler plus fort que les autres » : impératif hypothétique, relatif au but de se faire entendre. « Je dois respecter les prises de parole des autres » : impératif catégorique ; mais attention à la raison : si c'est « par politesse », on retombe dans l'hypothétique (la politesse est une condition). Le respect, c'est une question de dignité : quelles que soient les idées de la personne, même si je ne suis pas d'accord, elle a moralement le droit de s'exprimer ; si je la prive de sa parole, je nie sa dignité de personne. Le droit de chacun à avoir un toit : si on le conditionne aux finances de la France, c'est un impératif hypothétique ; si l'on dit qu'il en va de la dignité des personnes (dormir dans la rue n'est pas digne de l'humanité), c'est un devoir absolu, quelles que soient les finances. Question ouverte pour aller plus loin : l'impératif catégorique peut-il valoir en politique ? Peut-être qu'en politique il n'y a que des impératifs hypothétiques (l'aide à l'Ukraine dépend des finances, des moyens : les États s'en disputent)."}, {"text": "Quand une majorité de Français le vote démocratiquement.", "correct": false, "feedback": "Exemples corrigés en classe. « Je dois savoir parler plus fort que les autres » : impératif hypothétique, relatif au but de se faire entendre. « Je dois respecter les prises de parole des autres » : impératif catégorique ; mais attention à la raison : si c'est « par politesse », on retombe dans l'hypothétique (la politesse est une condition). Le respect, c'est une question de dignité : quelles que soient les idées de la personne, même si je ne suis pas d'accord, elle a moralement le droit de s'exprimer ; si je la prive de sa parole, je nie sa dignité de personne. Le droit de chacun à avoir un toit : si on le conditionne aux finances de la France, c'est un impératif hypothétique ; si l'on dit qu'il en va de la dignité des personnes (dormir dans la rue n'est pas digne de l'humanité), c'est un devoir absolu, quelles que soient les finances. Question ouverte pour aller plus loin : l'impératif catégorique peut-il valoir en politique ? Peut-être qu'en politique il n'y a que des impératifs hypothétiques (l'aide à l'Ukraine dépend des finances, des moyens : les États s'en disputent)."}, {"text": "Jamais : le logement relève de l'économie, pas de la morale.", "correct": false, "feedback": "Exemples corrigés en classe. « Je dois savoir parler plus fort que les autres » : impératif hypothétique, relatif au but de se faire entendre. « Je dois respecter les prises de parole des autres » : impératif catégorique ; mais attention à la raison : si c'est « par politesse », on retombe dans l'hypothétique (la politesse est une condition). Le respect, c'est une question de dignité : quelles que soient les idées de la personne, même si je ne suis pas d'accord, elle a moralement le droit de s'exprimer ; si je la prive de sa parole, je nie sa dignité de personne. Le droit de chacun à avoir un toit : si on le conditionne aux finances de la France, c'est un impératif hypothétique ; si l'on dit qu'il en va de la dignité des personnes (dormir dans la rue n'est pas digne de l'humanité), c'est un devoir absolu, quelles que soient les finances. Question ouverte pour aller plus loin : l'impératif catégorique peut-il valoir en politique ? Peut-être qu'en politique il n'y a que des impératifs hypothétiques (l'aide à l'Ukraine dépend des finances, des moyens : les États s'en disputent)."}], "tags": ["le devoir", "Kant", "la justice"]}, {"type": "short", "name": "Quelle question ouverte la séance laisse-t-elle, à propos de l'impératif catégorique ?", "answers": ["l'impératif catégorique peut-il valoir en politique", "peut-il y avoir des impératifs catégoriques en politique", "est-ce qu'il peut y avoir des impératifs catégoriques en politique"], "feedback": "Exemples corrigés en classe. « Je dois savoir parler plus fort que les autres » : impératif hypothétique, relatif au but de se faire entendre. « Je dois respecter les prises de parole des autres » : impératif catégorique ; mais attention à la raison : si c'est « par politesse », on retombe dans l'hypothétique (la politesse est une condition). Le respect, c'est une question de dignité : quelles que soient les idées de la personne, même si je ne suis pas d'accord, elle a moralement le droit de s'exprimer ; si je la prive de sa parole, je nie sa dignité de personne. Le droit de chacun à avoir un toit : si on le conditionne aux finances de la France, c'est un impératif hypothétique ; si l'on dit qu'il en va de la dignité des personnes (dormir dans la rue n'est pas digne de l'humanité), c'est un devoir absolu, quelles que soient les finances. Question ouverte pour aller plus loin : l'impératif catégorique peut-il valoir en politique ? Peut-être qu'en politique il n'y a que des impératifs hypothétiques (l'aide à l'Ukraine dépend des finances, des moyens : les États s'en disputent).", "tags": ["le devoir", "Kant", "l'État", "la justice"]}]};
+(function(o){for(var k in o){var v=o[k];if(typeof v==='string'){o[k]=nbsp(v);}else if(v&&typeof v==='object'){(function w(x){for(var j in x){var y=x[j];if(typeof y==='string'){x[j]=nbsp(y);}else if(y&&typeof y==='object'){w(y);}}})(v);}}})(QUIZ);
+var HELP_DEF = "## Comment fonctionne ce QCM ?\n\n**Déroulement.** Le QCM présente les questions une par une. Choisissez votre réponse puis cliquez sur **Valider** : un encart affiche alors « Réponse acceptée. » ou l'explication du cours (encart « Explication » si la réponse ne convient pas). La barre de progression en haut indique votre avancement.\n\n**Types de questions.** Cinq formes possibles : choix unique (une seule bonne réponse), choix multiple (plusieurs bonnes réponses), réponse courte (tapez votre réponse, les variantes proches sont acceptées), association (relier chaque élément à sa définition) et texte à trous (complétez la phrase). Dans les questions à trous et les réponses courtes, la touche **Entrée** valide directement la réponse.\n\n**Écran de score.** À la fin, votre score s'affiche accompagné d'un bilan de votre performance : une appréciation d'ensemble, les types d'erreurs à corriger et deux conseils pour progresser.\n\n## L'écran « Revoir les réponses du QCM »\n\nDepuis l'écran de score, le bouton **Revoir les réponses du QCM** affiche le récapitulatif complet : pour chaque question, votre réponse, la bonne réponse mise en évidence et l'explication du cours.\n\n**Poser une question.** Sous chaque question du récapitulatif, le bouton **Poser une question** ouvre une recherche : la réponse est cherchée dans des sources en ligne (des pages consultées sont indiquées sous chaque réponse). Vous pouvez poser **plusieurs questions successives** : elles s'empilent les unes sous les autres et restent enregistrées dans le navigateur, même après avoir fermé la page. La touche Entrée envoie la question, le bouton **Réduire** referme la conversation.\n\n**Enregistrer.** Deux exports sont possibles :\n- **Enregistrer les questions et réponses (texte)** (en haut du récapitulatif) : enregistre uniquement les questions que vous avez posées et les réponses obtenues.\n- **Enregistrer mon résultat** (en bas de page) : enregistre tout votre résultat (chaque question, votre réponse, la réponse attendue, l'explication du cours) ainsi que toutes les questions posées et les réponses obtenues.\n\nLes fichiers obtenus sont des fichiers texte que vous pouvez conserver, imprimer ou consulter plus tard.\n\n## Apparence et navigation\n\n\n- Les deux boutons ronds à droite de l'écran permettent de **remonter tout en haut** (flèche du haut) ou de **descendre tout en bas** (flèche du bas) du QCM.\n- Chaque appareil dispose d'une **limite quotidienne d'utilisation** pour un QCM donné : au-delà, les recherches de réponses ne sont plus possibles jusqu'au lendemain, mais le QCM reste utilisable.";
+var HELP=lsGet("qcm_help_"+qid(),HELP_DEF);
+
+var st = {i:0, score:0, answered:false, clicks:[], tclicks:[], perm:null, ans:{}, ai:0, bilan:null};
+var card = document.getElementById('quizcard');
+QUIZ.sub=QUIZ.sub||document.getElementById('qsub').textContent;
+
+function nbsp(s){return String(s).replace(/ ([;:!?])/g,'\u00A0$1').replace(/« /g,'«\u00A0').replace(/ »/g,'\u00A0»');}
+function esc(s){return nbsp(s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'));}
+function shuffle(a){for(var i=a.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1)),t=a[i];a[i]=a[j];a[j]=t;}return a;}
+
+function setTheme(t){
+  document.body.setAttribute('data-theme',t);
+  try{localStorage.setItem('qcm_theme',t);}catch(e){}
+}
+/* ---- Page d'aide (bouton « ? »), éditable dans le mode édition ---- */
+function showHelp(){
+  closeHelp();
+  var w=document.createElement('div');
+  w.className='helpwrap';w.id='helpwrap';
+  w.onclick=function(e){if(e.target===w)closeHelp();};
+  w.innerHTML='<div class="helpbox" role="dialog" aria-label="Aide"><div style="display:flex;align-items:center;justify-content:space-between"><h2>Aide</h2><button class="ghost" onclick="closeHelp()">Fermer ✕</button></div>'+md(HELP)+'<div style="text-align:center;margin-top:18px"><button onclick="closeHelp()">Fermer</button></div></div>';
+  document.body.appendChild(w);
+  try{var t=w.querySelector('h2');if(t&&t.focus)t.focus();}catch(e){}
+}
+function closeHelp(){
+  var w=document.getElementById('helpwrap');
+  if(w)w.remove();
+}
+
+function render(){
+  st.answered=false;
+  var Q=QUIZ.questions, q=Q[st.i];
+  var h='<div class="progwrap"><div class="progbar"></div></div>';
+  h+='<div class="qnum">Question '+(st.i+1)+' sur '+Q.length+'</div>';
+  if(q.type==='single'||q.type==='multi'){
+    st.perm=shuffle(q.options.map(function(o,k){return k;}));
+    h+='<p class="qtext">'+esc(q.name)+'</p>'+(q.tags&&q.tags.length?'<div class="qtags">'+q.tags.map(function(t){return '<span>'+esc(t)+'</span>';}).join('')+'</div>':'');
+    st.perm.forEach(function(orig,d){
+      h+='<label class="opt" id="opt'+d+'" style="animation-delay:'+(0.05+d*0.07)+'s"><input type="'+(q.type==='single'?'radio':'checkbox')+'" name="q" value="'+d+'" onchange="markSel()"> '+esc(q.options[orig].text)+'</label>';
+    });
+  }else if(q.type==='short'){
+    h+='<p class="qtext">'+esc(q.name)+'</p>'+TH+'<input type="text" id="shortin" placeholder="Votre réponse…" onkeydown="keyGo(event)">';
+  }else if(q.type==='matching'){
+    h+='<p class="qtext">'+esc(q.name)+'</p>'+TH;
+    var pool=shuffle(q.pairs.map(function(p){return p.a;}));
+    q.pairs.forEach(function(p,k){
+      h+='<div style="margin:10px 0"><strong>'+esc(p.q)+'</strong><select class="pairsel" id="sel'+k+'"><option value="">— Choisir —</option>'+pool.map(function(a){return '<option>'+esc(a)+'</option>';}).join('')+'</select></div>';
+    });
+  }else if(q.type==='cloze'){
+    h+='<p class="qtext" style="white-space:pre-wrap">'+TH;
+    q.segs.forEach(function(s,k){
+      if(s.t!==undefined){h+=esc(s.t);}else{h+='<span class="blank"><input type="text" id="cz'+k+'" onkeydown="keyGo(event)" style="min-width:120px;padding:7px 9px;border:1px solid var(--line);border-radius:6px;background:var(--card);color:var(--ink)"></span>';}
+    });
+    h+='</p>';
+  }
+  h+='<button id="valbtn" onclick="validate()">Valider</button>';
+  card.innerHTML=h;
+  document.querySelector('.progbar').style.width=(100*st.i/Q.length)+'%';
+  card.style.animation='none';void card.offsetWidth;card.style.animation='';
+}
+function markSel(){
+  document.querySelectorAll('label.opt').forEach(function(l){l.classList.remove('sel');});
+  document.querySelectorAll('input[name=q]').forEach(function(inp){if(inp.checked)inp.closest('label').classList.add('sel');});
+}
+function norm(s){return (s||'').replace(/[\u00A0\u202F]/g,' ').toLowerCase().replace(/[éèêë]/g,'e').replace(/[àâä]/g,'a').replace(/[îï]/g,'i').replace(/[ôö]/g,'o').replace(/[ûùü]/g,'u').replace(/ç/g,'c').replace(/[''`’]/g,'').replace(/-/g,' ').replace(/[^a-z0-9 ]/g,'').replace(/\s+/g,' ').replace(/^ | $/g,'');}
+
+function keyGo(e){
+  if(!e||e.key!=='Enter')return;
+  if(e.preventDefault)e.preventDefault();
+  validate();
+}
+function titleClick(){
+  var now=Date.now();
+  st.tclicks.push(now);
+  st.tclicks=st.tclicks.filter(function(t){return now-t<700;});
+  if(st.tclicks.length>=3){st.tclicks=[];openEditor();}
+}
+function validate(){
+  var now=Date.now(); st.clicks.push(now);
+  st.clicks=st.clicks.filter(function(t){return now-t<500;});
+  if(st.clicks.length>=3){st.clicks=[];cheatRandom();return;}
+  if(st.answered)return;
+  var q=QUIZ.questions[st.i], ok=false, fb='', pending=null;
+  if(q.type==='single'||q.type==='multi'){
+    var selD=[].slice.call(document.querySelectorAll('input[name=q]:checked')).map(function(i){return +i.value;});
+    var sel=selD.map(function(d){return st.perm[d];});
+    var corr=q.options.map(function(o,k){return o.correct?k:-1;}).filter(function(k){return k>=0;});
+    if(q.type==='single'){ok=sel.length===1&&corr.indexOf(sel[0])>=0;}
+    else{ok=sel.length===corr.length&&sel.every(function(s){return corr.indexOf(s)>=0;});}
+    st.perm.forEach(function(orig,d){
+      var el=document.getElementById('opt'+d);
+      if(q.options[orig].correct)el.classList.add('good'); else if(selD.indexOf(d)>=0)el.classList.add('bad');
+      el.querySelector('input').disabled=true;
+    });
+    st.ans[st.i]={ok:ok,given:sel};
+    fb=corr.map(function(k){return q.options[k].feedback||'';}).join('<br><br>')||('Réponse attendue : '+corr.map(function(k){return q.options[k].text;}).join(' ; '));
+  }else if(q.type==='short'){
+    var inp=document.getElementById('shortin');
+    var v=norm(inp.value);
+    ok=q.answers.some(function(a){return norm(a)===v;});
+    inp.disabled=true;
+    st.ans[st.i]={ok:ok,given:inp.value};
+    fb=q.feedback||('Réponses acceptées : '+q.answers.join(' ; '));
+    if(!ok&&v){pending=function(done){aiCheckText(st.i,inp.value,q.answers,done);};}
+  }else if(q.type==='matching'){
+    var allOk=true;
+    q.pairs.forEach(function(p,k){
+      var v=document.getElementById('sel'+k).value;
+      if(norm(v)!==norm(p.a))allOk=false;
+      document.getElementById('sel'+k).disabled=true;
+    });
+    ok=allOk;
+    st.ans[st.i]={ok:ok,given:q.pairs.map(function(p,k){return document.getElementById('sel'+k).value;})};
+    fb='Associations correctes : '+q.pairs.map(function(p){return p.q+' → '+p.a;}).join(' ; ');
+  }else if(q.type==='cloze'){
+    var allOk2=true, wrongs=[];
+    q.segs.forEach(function(s,k){
+      if(s.blank===undefined)return;
+      var gv=document.getElementById('cz'+k).value;
+      var v2=norm(gv);
+      if(!s.blank.some(function(a){return norm(a)===v2;})){allOk2=false;wrongs.push({k:k,gv:gv,blank:s.blank});}
+      document.getElementById('cz'+k).disabled=true;
+    });
+    ok=allOk2;
+    st.ans[st.i]={ok:ok,given:q.segs.map(function(s,k){return s.blank===undefined?null:document.getElementById('cz'+k).value;})};
+    fb='La réponse complète : « '+q.segs.map(function(s){return s.blank!==undefined?s.blank[0]:s.t;}).join('')+' »';
+    if(!ok&&wrongs.some(function(w){return norm(w.gv);})){pending=function(done){aiCheckCloze(st.i,wrongs,done);};}
+  }
+  if(pending){
+    st.answered=true;
+    card.insertAdjacentHTML('beforeend','<div class="fb ok" id="aichk">⏳ Vérification de votre réponse…</div>');
+    pending(function(aiOk,extra){
+      var el=document.getElementById('aichk'); if(el)el.remove();
+      if(aiOk){ok=true;st.ans[st.i].ok=true;}
+      finishValidate(ok,fb+(extra?'<br><br>'+extra:''));
+    });
+  }else{finishValidate(ok,fb);}
+}
+function finishValidate(ok,fb){
+  if(ok)st.score++;
+  st.answered=true;
+  var h='<div class="fb '+(ok?'ok':'no')+'" style="animation-delay:.25s"><strong>'+(ok?'Réponse acceptée. ✅':'Explication')+'</strong><br>'+fb+'</div>';
+  if(ok){
+    var cols=['#2e7d32','#ffd166','#ef476f','#118ab2','#06d6a0','#f78c6b'];
+    var conf='<div class="party">';
+    for(var c=0;c<14;c++){conf+='<i style="left:'+(8+6*c)+'%;background:'+cols[c%cols.length]+';animation-delay:'+(c*0.025).toFixed(3)+'s"></i>';}
+    h+=conf+'</div>';
+    card.classList.add('cheer');
+    var bt=document.createElement('div');bt.className='bigtick';bt.textContent='✅';
+    document.body.appendChild(bt);
+    setTimeout(function(){if(bt.parentNode)bt.parentNode.removeChild(bt);},900);
+  }
+  h+='<button class="ghost" onclick="redo()" style="margin-top:10px">← Refaire cette question</button> ';
+  h+='<button onclick="next()">'+(st.i+1<QUIZ.questions.length?'Question suivante →':'Voir le score')+'</button>';
+  card.insertAdjacentHTML('beforeend',h);
+}
+function redo(){
+  var a=st.ans[st.i];
+  if(a&&a.ok)st.score--;
+  delete st.ans[st.i];
+  render();
+}
+function cheatRandom(){
+  st.score=0;
+  QUIZ.questions.forEach(function(q,k){
+    var ok=false, given=null;
+    if(q.type==='single'){
+      var j=Math.floor(Math.random()*q.options.length);
+      given=[j]; ok=!!q.options[j].correct;
+    }else if(q.type==='multi'){
+      var nb=1+Math.floor(Math.random()*Math.min(3,q.options.length));
+      var picks=shuffle(q.options.map(function(o,x){return x;})).slice(0,nb);
+      var corr=q.options.filter(function(o){return o.correct;}).length;
+      ok=picks.length===corr&&picks.every(function(x){return q.options[x].correct;});
+      given=picks;
+    }else if(q.type==='short'){
+      if(Math.random()<0.5){given=q.answers[Math.floor(Math.random()*q.answers.length)];ok=true;}
+      else{given=['réponse au hasard'][0];ok=false;}
+    }else if(q.type==='matching'){
+      var pool=shuffle(q.pairs.map(function(p){return p.a;}));
+      given=pool;
+      ok=q.pairs.every(function(p,x){return norm(pool[x])===norm(p.a);});
+    }else if(q.type==='cloze'){
+      given=[];ok=true;
+      q.segs.forEach(function(s){
+        if(s.blank===undefined){given.push(null);return;}
+        if(Math.random()<0.6){given.push(s.blank[0]);}
+        else{given.push('au hasard');ok=false;}
+      });
+    }
+    st.ans[k]={ok:ok,given:given};
+    if(ok)st.score++;
+  });
+  st.i=QUIZ.questions.length-1;
+  st.answered=true;
+  renderScore();
+}
+function next(){
+  st.i++;
+  if(st.i<QUIZ.questions.length){render();return;}
+  renderScore();
+}
+
+/* -- Nom de base conventionnel pour l'Arbre de compétences -- */
+function baseName(){ try{ if(typeof dlBase==='function') return dlBase(); }catch(e){} return (QUIZ.title||'qcm').replace(/[^A-Za-z0-9]+/g,'').slice(0,40); }
+
+function renderScore(){
+  var n=QUIZ.questions.length, s=st.score, pct=Math.round(100*s/n);
+  var msg=pct>=80?'Excellent, le cours est maîtrisé ! 🎉':pct>=50?'Bonne base : revoyez les explications des questions manquées.':'À reprendre : relisez le cours et le texte de Kant, puis refaites le QCM.';
+  var pb=document.querySelector('.progbar'); if(pb)pb.style.width='100%';
+  var savedBilan=st.bilan||lsGet('bilan_'+qid(),'');
+  var bilanH=savedBilan?('<strong>Bilan de votre performance</strong><br>'+md(savedBilan)):'<em>Bilan en préparation…</em>';
+  card.innerHTML='<h2 class="score">'+(pct>=80?'🏆 ':'')+'Score<span class="big">'+s+' / '+n+'</span>'+pct+'%</h2><div class="bar"><div id="scorebar" style="width:0%"></div></div><p style="text-align:center">'+msg+'</p><div class="fb ok" id="bilan" style="text-align:left">'+bilanH+'</div><div style="text-align:center"><button onclick="review()">Revoir les réponses du QCM</button> <button class="ghost" onclick="restart()">Refaire le QCM</button></div>';
+  
+  /* -- Sauvegarde du meilleur résultat, pour l'Arbre de compétences (même origine) -- */
+  try{
+    var prev=JSON.parse(lsGet('qcmres_'+baseName(),'null')||'null');
+    if(!prev||pct>prev.pct){ lsSet('qcmres_'+baseName(), JSON.stringify({pct:pct,score:s,total:n,date:Date.now(),comps:(QUIZ.comps||[])})); }
+  }catch(e){}
+
+  setTimeout(function(){var sb=document.getElementById('scorebar'); if(sb)sb.style.width=pct+'%';},120);
+  if(!savedBilan)aiBilan();
+}
+function review(){
+  var h='<div class="qnum">Récapitulatif — vos réponses et les explications du cours</div>';
+  if(QUIZ.questions.some(function(qq,k){return loadChat(k).length;}))h+='<div style="text-align:center"><button class="ghost" onclick="saveChat()">💾 Enregistrer les questions et réponses (texte)</button></div>';
+  var rb=st.bilan||lsGet('bilan_'+qid(),'');
+  if(rb)h+='<div class="fb ok"><strong>Bilan de votre performance</strong><br>'+md(rb)+'</div>';
+  QUIZ.questions.forEach(function(q,k){
+    var a=st.ans[k]||{ok:false,given:null};
+    h+='<div class="rq"><p class="qtext">'+(k+1)+'. '+esc(q.name)+'</p>';
+    if(q.type==='single'||q.type==='multi'){
+      q.options.forEach(function(o,j){
+        var picked=a.given&&a.given.indexOf(j)>=0;
+        var cls=o.correct?'good':(picked?'bad':'');
+        h+='<div class="opt '+cls+'">'+(o.correct?'✔ ':'')+esc(o.text)+(picked?' <em>(votre réponse)</em>':'')+'</div>';
+      });
+      var corrText=q.options.filter(function(o){return o.correct;}).map(function(o){return o.feedback||o.text;}).join('<br><br>');
+      h+='<div class="fb '+(a.ok?'ok':'no')+'">'+corrText+'</div>';
+    }else if(q.type==='short'){
+      h+='<p><em>Votre réponse :</em> '+esc(a.given||'—')+'</p><p><em>Réponses acceptées :</em> '+esc(q.answers.join(' ; '))+'</p>';
+      if(q.feedback)h+='<div class="fb '+(a.ok?'ok':'no')+'">'+q.feedback+'</div>';
+    }else if(q.type==='matching'){
+      q.pairs.forEach(function(p,j){
+        var gv=a.given?a.given[j]:'';
+        h+='<p>'+esc(p.q)+' → <em>'+esc(gv||'—')+'</em>'+(norm(gv)===norm(p.a)?' ✔':' <span style="color:var(--bad)">✖ '+esc(p.a)+'</span>')+'</p>';
+      });
+    }else{
+      h+='<p style="white-space:pre-wrap">';
+      q.segs.forEach(function(s,j){
+        if(s.t!==undefined)h+=esc(s.t);
+        else{var gv=a.given?a.given[j]:'';var gok=s.blank.some(function(x){return norm(x)===norm(gv);});
+          h+='<strong>'+esc(gv||'…')+'</strong>'+(gok?' ✔':' ('+esc(s.blank[0])+')');}
+      });
+      h+='</p>';
+    }
+    h+=(loadChat(k).length?aiChatHtml(k)+aiInput(k):aiBox(k));
+    h+='</div>';
+  });
+  h+='<div style="text-align:center"><button onclick="saveResult()">Enregistrer mon résultat</button> <button onclick="restart()">Refaire le QCM</button> <button class="ghost" onclick="renderScore()">Retour au score</button></div>';
+  card.innerHTML=h;
+  if(window.scrollTo)window.scrollTo(0,0);
+}
+function restart(){st.i=0;st.score=0;st.clicks=[];st.ans={};st.ai=0;st.bilan=null;render();}
+
+/* ---- Couche IA minimaliste (Ministral 3B, repli Mistral Small) ---- */
+var MISTRAL_KEY='mstrl_rWaAuPNbjAcCqKNJDj7XjTiFhS3AdBds_2jbUGh';
+var AI_MAX=10;
+var AI_MODELS=['ministral-3b-latest','mistral-small-latest'];
+/* ---- Markdown minimal pour les réponses de l'IA ---- */
+function md(t){
+  t=String(t).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+  t=t.replace(/```[a-z]*\n?/g,'');
+  t=t.replace(/\[([^\]]+)\]\((https?:\/\/[^\s)]+)\)/g,'<a href="$2" target="_blank" rel="noopener">$1</a>');
+  t=t.replace(/\*\*(.+?)\*\*/g,'<strong>$1</strong>');
+  t=t.replace(/(^|[^*\w])\*([^*\n]+)\*/g,'$1<em>$2</em>');
+  t=t.replace(/^#{1,4}\s*(.+)$/gm,'<strong>$1</strong>');
+  t=t.replace(/^\s*[-•]\s+/gm,'• ');
+  t=t.replace(/\n/g,'<br>');
+  return nbsp(t);
+}
+/* ---- Quota IA quotidien, par élève et par QCM (sans connexion) ---- */
+function lsGet(k,d){try{return localStorage.getItem(k)||d;}catch(e){return d;}}
+function lsSet(k,v){try{localStorage.setItem(k,v);}catch(e){}}
+function hash(s){var h=0;for(var i=0;i<s.length;i++){h=((h<<5)-h+s.charCodeAt(i))|0;}return 'h'+(h>>>0).toString(36);}
+function devId(){var d=lsGet('ai_dev','');if(!d){d=(Date.now().toString(36)+Math.random().toString(36).slice(2,10));lsSet('ai_dev',d);}return d;}
+var AI_IP='na';
+try{fetch('https://api.ipify.org?format=json').then(function(r){return r.json();}).then(function(j){if(j&&j.ip)AI_IP=String(j.ip);}).catch(function(){});}catch(e){}
+function qid(){return hash(QUIZ.title);}
+function dayKey(){var d=new Date();return d.getFullYear()+'-'+(d.getMonth()+1)+'-'+d.getDate();}
+function quotaKey(){return 'aiq_'+qid()+'_'+hash(AI_IP)+'_'+devId()+'_'+dayKey();}
+var AI_DAILY_MAX=25;
+function quotaLeft(){return AI_DAILY_MAX-(+lsGet(quotaKey(),'0')||0);}
+function quotaUse(){lsSet(quotaKey(),String((+lsGet(quotaKey(),'0')||0)+1));}
+/* ---- Appel générique à l'IA (Ministral 3B, repli Mistral Small) ---- */
+function aiCall(sys,usr,maxtok,temp,cb){
+  if(quotaLeft()<=0){cb(null);return;}
+  quotaUse();
+  function call(model){
+    return fetch('https://api.mistral.ai/v1/chat/completions',{method:'POST',headers:{'Content-Type':'application/json','Authorization':'Bearer '+MISTRAL_KEY},body:JSON.stringify({model:model,messages:[{role:'system',content:sys},{role:'user',content:usr}],max_tokens:maxtok,temperature:temp})});
+  }
+  call(AI_MODELS[0])
+    .then(function(r){return r.json().then(function(j){return {ok:r.ok,j:j};});})
+    .then(function(res){
+      if(res.ok)return cb((res.j&&res.j.choices&&res.j.choices[0]&&res.j.choices[0].message&&res.j.choices[0].message.content)||null);
+      var m=String((res.j&&res.j.message)||'');
+      if(m.indexOf('model')>=0||m.indexOf('not found')>=0){
+        return call(AI_MODELS[1]).then(function(r){return r.json();}).then(function(j){return cb((j.choices&&j.choices[0]&&j.choices[0].message&&j.choices[0].message.content)||null);}).catch(function(){cb(null);});
+      }
+      cb(null);
+    })
+    .catch(function(){cb(null);});
+}
+/* ---- Analyse robuste du verdict JSON renvoyé pour une vérification ---- */
+function aiVerdict(txt,n){
+  var t=String(txt).replace(/```[a-z]*\n?/g,'').trim();
+  var j=null; try{j=JSON.parse(t);}catch(e){}
+  var arr=null,comment=null;
+  if(j){
+    comment=j.comment||null;
+    if(comment&&typeof comment!=='string'){
+      comment=(comment.text!==undefined&&typeof comment.text==='string')?comment.text:(comment.raison!==undefined&&typeof comment.raison==='string')?comment.raison:(comment.message!==undefined&&typeof comment.message==='string')?comment.message:null;
+    }
+    if(Array.isArray(j.ok))arr=j.ok;
+    else if(typeof j.ok==='boolean')arr=[j.ok];
+  }
+  if(!arr){
+    var m=t.match(/\[[\s\S]*?\]/);
+    if(m){arr=m[0].slice(1,-1).split(',').map(function(x){return /true/i.test(x);});}
+    else if(/"ok"\s*:\s*"?true"?/i.test(t))arr=[true];
+    else if(/"ok"\s*:\s*"?false"?/i.test(t))arr=[false];
+    var cm=t.match(/"comment"\s*:\s*"([^"]*)"/); if(cm)comment=cm[1];
+  }
+  if(arr&&n){while(arr.length<n)arr.push(false);arr=arr.slice(0,n);}
+  return {ok:arr,comment:comment};
+}
+/* ---- Vérification IA des réponses courtes approximatives ---- */
+function aiCheckText(k,given,answers,done){
+  try{if(!navigator.onLine){done(false,null);return;}}catch(e){done(false,null);return;}
+  var q=QUIZ.questions[k];
+  var usr='Question du QCM : « '+q.name+' »\nRéponses attendues : '+answers.join(' ; ')+'\nRéponse de l\'élève : « '+given+' »\nCette réponse est-elle correcte ou une variante acceptable ? Accepte toute variante fidèle au sens : faute d\'orthographe, majuscules, ponctuation en début ou en fin de réponse (points, virgules, guillemets), pluriel, article ou casse, espaces, synonyme fidèle au sens (par exemple « emprunt » au lieu de « prêt »). Ne refuse que si le sens est réellement différent ou si la réponse est vide. Réponds STRICTEMENT en JSON sans autre texte ni bloc de code : {"ok":true,"comment":"une phrase très brève pour l\'élève"} ou {"ok":false,...}';
+  aiCall('Tu es un correcteur de philosophie. Réponds uniquement en JSON, sans texte autour.',usr,120,0,function(txt){
+    if(!txt){done(false,null);return;}
+    var v=aiVerdict(txt,1);
+    if(v.ok===null){
+      aiCall('Réponds uniquement OUI ou NON, un seul mot, sans ponctuation.',usr+'\n\nRéponds uniquement par OUI (si la réponse de l\'élève est acceptable) ou NON.',10,0,function(t2){
+        if(t2&&/oui|vrai|true/i.test(String(t2).toLowerCase()))done(true,null);
+        else done(false,null);
+      });
+      return;
+    }
+    /* Aucun message ajouté après l'explication (pas de « Réponse acceptée : null ») */
+    done(!!(v.ok&&v.ok[0]),null);
+  });
+}
+/* ---- Vérification IA des textes à trous approximatifs ---- */
+function aiCheckCloze(k,wrongs,done){
+  try{if(!navigator.onLine){done(false,null);return;}}catch(e){done(false,null);return;}
+  var q=QUIZ.questions[k];
+  var list=wrongs.map(function(w,x){return 'Trou '+(x+1)+' — réponse de l\'élève : « '+w.gv+' » ; réponses attendues : '+w.blank.join(' ; ');}).join('\n');
+  var usr='Texte à trous du QCM : « '+q.name+' »\n'+list+'\nPour chaque trou, la réponse de l\'élève est-elle correcte ou une variante acceptable ? Accepte toute variante fidèle au sens : faute d\'orthographe, majuscules, ponctuation en début ou en fin de réponse (points, virgules, guillemets), pluriel, espaces, synonyme fidèle au sens (par exemple « emprunt » au lieu de « prêt »). Un trou laissé vide est toujours faux. Ne refuse que si le sens est réellement différent. Réponds STRICTEMENT en JSON sans autre texte ni bloc de code : {"ok":[true ou false pour chaque trou dans l\'ordre], "comment": "une phrase très brève"}';
+  aiCall('Tu es un correcteur de philosophie. Réponds uniquement en JSON, sans texte autour.',usr,150,0,function(txt){
+    if(!txt){done(false,null);return;}
+    var v=aiVerdict(txt,wrongs.length);
+    if(!v.ok){
+      aiCall('Réponds uniquement par une liste de mots OUI ou NON séparés par des virgules, un par trou, dans l\'ordre, sans autre texte.',usr+'\n\nRéponds uniquement par une liste de OUI ou NON séparés par des virgules, dans l\'ordre des trous.',20,0,function(t2){
+        if(!t2){done(false,null);return;}
+        var parts=String(t2).split(/[,;\n]/).map(function(x){return /oui|vrai|true/i.test(x.trim());});
+        while(parts.length<wrongs.length)parts.push(false);
+        var all=wrongs.every(function(w,x){return parts[x]===true;});
+        done(all,null);
+      });
+      return;
+    }
+    var all=wrongs.length>0&&wrongs.every(function(w,x){return v.ok[x]===true;});
+    done(all,null);
+  });
+}
+/* ---- Bilan IA de fin de QCM ---- */
+function aiBilan(){
+  try{if(!navigator.onLine){bilanFallback();return;}}catch(e){}
+  if(quotaLeft()<=0){bilanFallback();return;}
+  var n=QUIZ.questions.length;
+  var det=QUIZ.questions.map(function(q,k){
+    var a=st.ans[k]||{ok:false,given:null};
+    var g=Array.isArray(a.given)?a.given.filter(Boolean).join(' ; '):(a.given||'—');
+    return 'Q'+(k+1)+' : '+(a.ok?'réussie':'manquée (réponse donnée : '+g+')');
+  }).join('\n');
+  var sys='Tu es un professeur de philosophie au lycée. Rédige un bilan de révision pour un élève de terminale, en français : un mot d\'ensemble sur sa performance, le ou les types d\'erreurs observés, puis 2 conseils précis pour progresser. 150 mots maximum. STYLE IMPERSONNEL OBLIGATOIRE : ne jamais t\'adresser à l\'élève, ni « tu » ni « vous » ni impératifs ; employer des tournures neutres du type « Le score obtenu montre… », « Les erreurs portent sur… », « Il convient de… », « Il serait utile de… ». Markdown simple autorisé (**gras**, listes).';
+  var usr='Score : '+st.score+'/'+n+'\nDétail question par question :\n'+det;
+  aiCall(sys,usr,400,0.3,function(txt){
+    var el=document.getElementById('bilan');
+    if(!el)return;
+    if(txt){st.bilan=txt;lsSet('bilan_'+qid(),txt);el.innerHTML='<strong>Bilan de votre performance</strong><br>'+md(txt);}
+    else bilanFallback();
+  });
+}
+function bilanFallback(){
+  var el=document.getElementById('bilan'); if(!el)return;
+  var missed=QUIZ.questions.map(function(q,k){return st.ans[k]&&st.ans[k].ok?-1:k;}).filter(function(x){return x>=0;});
+  var t='<strong>Bilan</strong><br>';
+  if(!missed.length)t+='Sans faute : le cours est maîtrisé. La simple relecture des explications suffit à consolider l\'ensemble.';
+  else t+='À réviser en priorité : '+missed.map(function(x){return 'question '+(x+1);}).join(', ')+'. Relire les explications correspondantes, puis refaire le QCM.';
+  if(quotaLeft()<=0)t+='<br><em>Bilan détaillé indisponible : limite quotidienne atteinte pour ce QCM.</em>';
+  else t+='<br><em>Bilan détaillé indisponible (pas de connexion).</em>';
+  el.innerHTML=t;
+}
+function scrollPage(bottom){
+  var ed=document.getElementById('editor');
+  if(ed&&!ed.classList.contains('hidden')){
+    var ey=bottom?Math.max(0,ed.scrollHeight-ed.clientHeight):0;
+    try{ed.scrollTo({top:ey,behavior:'smooth'});}catch(e){ed.scrollTop=ey;}
+    return;
+  }
+  var y=bottom?Math.max(0,document.documentElement.scrollHeight-window.innerHeight):0;
+  try{window.scrollTo({top:y,behavior:'smooth'});}catch(e){window.scrollTo(0,y);}
+}
+function aiBox(k){
+  return '<div class="aibox" id="aibox'+k+'"><button class="ghost" onclick="aiOpen('+k+')">Poser une question</button></div>';
+}
+/* ---- Conversation : questions successives par question du QCM ---- */
+function loadChat(k){
+  if(!st.chat)st.chat={};
+  if(st.chat[k]===undefined){
+    var s=lsGet('chat_'+qid()+'_'+k,'');
+    st.chat[k]=[];
+    if(s){try{st.chat[k]=JSON.parse(s)||[];}catch(e){st.chat[k]=[];}}
+  }
+  return st.chat[k];
+}
+function chatLinksHtml(urls){
+  return (urls||[]).slice(0,7).map(function(u){return '<a href="'+u+'" target="_blank" rel="noopener">'+u+'</a>';}).join('<br>');
+}
+function aiChatHtml(k){
+  var a=loadChat(k),h='';
+  a.forEach(function(x,xi){
+    h+='<div class="fb ok" style="margin-top:8px"><strong>Question '+(xi+1)+' :</strong> '+esc(x.q)+'</div>';
+    h+='<div class="fb ok" style="margin-top:6px"><strong>Explication</strong><br>'+md(x.a);
+    var lk=chatLinksHtml(x.urls);
+    if(lk)h+='<br><span class="lbl">Pages consultées :</span><br>'+lk;
+    h+='</div>';
+  });
+  return h;
+}
+function aiInput(k){
+  return '<div style="margin-top:10px"><input type="text" id="aiq'+k+'" placeholder="Poser une autre question sur ce point du cours…" onkeydown="aiGo(event,'+k+')" style="margin-bottom:8px"><button onclick="aiAsk('+k+')">Envoyer</button> <button class="ghost" onclick="document.getElementById(\'aibox'+k+'\').innerHTML=aiBox('+k+')">Réduire</button></div>';
+}
+function aiOpen(k){
+  document.getElementById('aibox'+k).innerHTML=aiChatHtml(k)+aiInput(k);
+  var inp=document.getElementById('aiq'+k);
+  if(inp&&inp.focus){try{inp.focus();}catch(e){}}
+}
+/* Enregistre toutes les questions-réponses de l'écran de révision en fichier texte */
+function saveChat(){
+  var lines=[QUIZ.title+(QUIZ.sub?' — '+QUIZ.sub:''),'Questions posées et réponses obtenues',''];
+  var n=0;
+  QUIZ.questions.forEach(function(q,k){
+    var c=loadChat(k);
+    if(!c.length)return;
+    n++;
+    lines.push('——— Question '+(k+1)+' du QCM : '+q.name+' ———');
+    c.forEach(function(x){
+      lines.push('Question posée : '+x.q);
+      lines.push('Réponse :');
+      var t=String(x.a).replace(/\[([^\]]+)\]\(([^)]+)\)/g,'$1 ($2)').replace(/\*\*/g,'').replace(/^\s*#+\s*/gm,'').replace(/^\s*[-*]\s+/gm,'- ');
+      lines.push(t);
+      if(x.urls&&x.urls.length)lines.push('Pages consultées : '+x.urls.join(' , '));
+      lines.push('');
+    });
+  });
+  if(!n){alert('Aucune question posée pour le moment.');return;}
+  var blob=new Blob([lines.join('\n')],{type:'text/plain'});
+  var a=document.createElement('a');a.href=URL.createObjectURL(blob);
+  a.download=dlBase()+'-QuestionsReponses.txt';
+  document.body.appendChild(a);a.click();a.remove();
+}
+/* Convertit le markdown des réponses en texte brut pour les exports texte */
+function mdPlain(t){
+  return String(t).replace(/\[([^\]]+)\]\(([^)]+)\)/g,'$1 ($2)').replace(/\*\*/g,'').replace(/^\s*#+\s*/gm,'').replace(/^\s*[-*]\s+/gm,'- ').replace(/^\s*•\s+/gm,'- ');
+}
+/* Enregistre tout le résultat du QCM (réponses, explications) + toutes les questions posées et leurs réponses */
+function saveResult(){
+  var n=QUIZ.questions.length;
+  var lines=[QUIZ.title+(QUIZ.sub?' — '+QUIZ.sub:''),'Résultat du QCM : '+st.score+' / '+n+' ('+Math.round(100*st.score/Math.max(1,n))+'%)',''];
+  QUIZ.questions.forEach(function(q,k){
+    var a=st.ans[k]||{ok:false,given:null};
+    var g=Array.isArray(a.given)?a.given.filter(Boolean).join(' ; '):(a.given||'—');
+    lines.push('——— Question '+(k+1)+' : '+q.name+' ———');
+    lines.push('Réponse donnée : '+g);
+    lines.push(a.ok?'Résultat : réussie ✔':'Résultat : manquée ✖');
+    var exp='',corr='';
+    if(q.type==='single'||q.type==='multi'){
+      corr=q.options.filter(function(o){return o.correct;}).map(function(o){return o.text;}).join(' ; ');
+      exp=q.options.filter(function(o){return o.correct&&o.feedback;}).map(function(o){return o.feedback;}).join('\n\n');
+    }else if(q.type==='short'){
+      corr=q.answers.join(' ; ');
+      exp=q.feedback||'';
+    }else if(q.type==='matching'){
+      corr=q.pairs.map(function(p){return p.q+' → '+p.a;}).join(' ; ');
+    }else{
+      corr=q.segs.map(function(s){return s.t!==undefined?s.t:(s.blank?s.blank[0]:'');}).join('');
+    }
+    lines.push('Réponse attendue : '+corr);
+    if(exp)lines.push('Explication : '+mdPlain(exp));
+    lines.push('');
+  });
+  if(QUIZ.questions.some(function(qq,k){return loadChat(k).length;})){
+    lines.push('====================','Questions posées et réponses obtenues','');
+    QUIZ.questions.forEach(function(q,k){
+      var c=loadChat(k);
+      if(!c.length)return;
+      lines.push('——— Question '+(k+1)+' du QCM : '+q.name+' ———');
+      c.forEach(function(x){
+        lines.push('Question posée : '+x.q);
+        lines.push('Réponse :');
+        lines.push(mdPlain(x.a));
+        if(x.urls&&x.urls.length)lines.push('Pages consultées : '+x.urls.join(' , '));
+        lines.push('');
+      });
+    });
+  }
+  var blob=new Blob([lines.join('\n')],{type:'text/plain'});
+  var a=document.createElement('a');a.href=URL.createObjectURL(blob);
+  a.download=dlBase()+'-Resultat.txt';
+  document.body.appendChild(a);a.click();a.remove();
+}
+function aiGo(e,k){
+  if(!e||e.key!=='Enter')return;
+  if(e.preventDefault)e.preventDefault();
+  aiAsk(k);
+}
+function aiContext(k){
+  var q=QUIZ.questions[k];
+  var ctx='Question du QCM : '+q.name+'\n';
+  if(q.options)ctx+='Explication du cours : '+q.options.filter(function(o){return o.correct;}).map(function(o){return o.feedback||o.text;}).join('\n');
+  if(q.answers)ctx+='Réponses acceptées : '+q.answers.join(' ; ')+'\nExplication du cours : '+(q.feedback||'');
+  if(q.pairs)ctx+='Associations correctes : '+q.pairs.map(function(p){return p.q+' → '+p.a;}).join(' ; ');
+  if(q.segs)ctx+='Texte à trous corrigé : '+q.segs.map(function(s){return s.t!==undefined?s.t:'['+s.blank[0]+']';}).join('');
+  return ctx;
+}
+/* ---- Recherche internet de sources académiques pour les questions des élèves ---- */
+/* Sites et sources exclusivement français */
+function isFrUrl(u){
+  u=String(u||'');
+  return /^https?:\/\/[^\/]*\.fr(\/|$)/i.test(u)||/fr\.wikipedia\.org|cairn\.info|cairn\.fr|openedition\.org|revues\.org|philomag\.com|hal\.science|erudit\.org|classiques\.uqac\.ca|le-philosophe\.|la-philosophie\.fr|noes\.|persee\.fr|universalis\.fr|lemonde\.fr|lemonde\.com/i.test(u);
+}
+function aiSearch(q){
+  var terms=(q+' '+QUIZ.title).replace(/[«»"]/g,'').slice(0,200);
+  function wiki(){
+    return fetch('https://fr.wikipedia.org/w/api.php?action=query&list=search&srsearch='+encodeURIComponent(terms)+'&srlimit=2&format=json&origin=*')
+      .then(function(r){return r.json();})
+      .then(function(j){
+        var hits=(j&&j.query&&j.query.search)||[];
+        return hits.map(function(h){return '« '+h.title+' » (Wikipedia : https://fr.wikipedia.org/wiki/'+encodeURIComponent(h.title)+')';}).join('\n');
+      }).catch(function(){return '';});
+  }
+  function openalex(){
+    return fetch('https://api.openalex.org/works?search='+encodeURIComponent(terms)+'&per-page=5&language=fre&mailto=prof.c2phi.fr@gmail.com')
+      .then(function(r){return r.json();})
+      .then(function(j){
+        var hits=(j&&j.results)||[];
+        return hits.filter(function(w){return w.title;}).map(function(w){
+          var url=w.doi?w.doi:(w.id||'');
+          var auth=w.authorships&&w.authorships[0]&&w.authorships[0].author&&w.authorships[0].author.display_name;
+          return '« '+w.title+' »'+(w.publication_year?(' ('+w.publication_year+')'):'')+(auth?(' — '+auth):'')+' (source académique : '+url+')';
+        }).join('\n');
+      }).catch(function(){return '';});
+  }
+  function ddg(){
+    return fetch('https://api.duckduckgo.com/?q='+encodeURIComponent(terms)+'&kl=fr-fr&format=json&no_html=1&skip_disambig=1')
+      .then(function(r){return r.json();})
+      .then(function(j){
+        var out=[];
+        var topics=(j&&(j.RelatedTopics||[]))||[];
+        topics.forEach(function(t){
+          var u=t.FirstURL||(t.topics&&t.topics[0]&&t.topics[0].FirstURL);
+          var x=t.Text||(t.topics&&t.topics[0]&&t.topics[0].Text);
+          if(u&&x&&/https?:/.test(u)&&isFrUrl(u))out.push('« '+String(x).split(' - ')[0].slice(0,90)+' » ('+u+')');
+        });
+        return out.slice(0,3).join('\n');
+      }).catch(function(){return '';});
+  }
+  return Promise.all([openalex(),wiki(),ddg()]).then(function(r){
+    var lines=(r[0]+'\n'+r[1]+'\n'+r[2]).split('\n');
+    /* OpenAlex : ne conserver que les œuvres en français dont le lien est un site français ou un DOI */
+    lines=lines.filter(function(l){return l&&(/doi\.org|source académique/.test(l)?(/doi\.org/.test(l)||isFrUrl(l)):isFrUrl(l)||/Wikipedia : https:\/\/fr\.wikipedia\.org/.test(l));});
+    return lines.slice(0,7).join('\n');
+  }).catch(function(){return '';});
+}
+function aiSourcesLinks(sources){
+  var urls=String(sources||'').match(/https?:\/\/[^\s)»]+/g)||[];
+  var seen={},out=[];
+  urls.forEach(function(u){if(!seen[u]){seen[u]=1;out.push(u);}});
+  return out.slice(0,7).map(function(u){return '<a href="'+u+'" target="_blank" rel="noopener">'+u+'</a>';}).join('<br>');
+}
+function chatUrls(sources){
+  var urls=String(sources||'').match(/https?:\/\/[^\s)»]+/g)||[];
+  var seen={},out=[];
+  urls.forEach(function(u){if(!seen[u]){seen[u]=1;out.push(u);}});
+  return out.slice(0,7);
+}
+function aiAsk(k){
+  if(st.ai>=AI_MAX){document.getElementById('aibox'+k).innerHTML=aiChatHtml(k)+'<div class="fb no">Limite de '+AI_MAX+' questions par session atteinte.</div>';return;}
+  var q=document.getElementById('aiq'+k).value.trim();
+  if(!q)return;
+  var b=document.getElementById('aibox'+k);
+  if(quotaLeft()<=0){b.innerHTML=aiChatHtml(k)+'<div class="fb no">Limite quotidienne d\'utilisation atteinte pour ce QCM.</div>';return;}
+  b.innerHTML=aiChatHtml(k)+'<div class="fb ok" id="aistat'+k+'">🔎 Recherche de sources…</div>';
+  st.ai++;
+  aiSearch(q).then(function(sources){
+    var el=document.getElementById('aistat'+k); if(el)el.innerHTML='⏳ Recherche d\'une réponse…';
+    var sys='Tu es un professeur de philosophie au lycée. Réponds en français, en 120 mots maximum, de façon claire et pédagogique. Fonde-toi d\'abord sur l\'explication de la séance fournie ; tu peux la compléter avec les sources trouvées sur internet ci-dessous : sources académiques (articles, DOI) et sites sérieux sur le sujet (encyclopédies, universités, ressources de référence). Si tu t\'appuies sur une source, cite-la explicitement entre parenthèses (auteur ou site, titre) et donne le lien exact de la page consultée. Markdown simple autorisé (**gras**, listes, [libellé](https://lien)).';
+    var usr=aiContext(k)+'\n\nSources trouvées sur internet :\n'+(sources||'(aucune source trouvée)')+'\n\nQuestion de l\'élève : '+q;
+    aiCall(sys,usr,300,0.3,function(txt){
+      if(txt){
+        var a=loadChat(k);
+        a.push({q:q,a:txt,urls:chatUrls(sources)});
+        lsSet('chat_'+qid()+'_'+k,JSON.stringify(a));
+        b.innerHTML=aiChatHtml(k)+aiInput(k);
+      }
+      else{b.innerHTML=aiChatHtml(k)+'<div class="fb no">Impossible de répondre pour le moment (connexion). Reformulez ou réessayez plus tard.</div>'+aiInput(k);}
+    });
+  });
+}
+
+/* ---- Cheat code : 3 clics rapides sur Valider -> mode édition ---- */
+function openEditor(){
+  var p=document.getElementById('editpanel');
+  var h='<h2>Mode édition du QCM</h2>';
+  h+=quotaPanelHtml();
+  h+='<span class="lbl">Titre</span><input type="text" id="etitle" value="'+esc(QUIZ.title)+'">';
+  h+='<span class="lbl">Sous-titre (classe et date)</span><input type="text" id="esub" value="'+esc(QUIZ.sub||document.getElementById('qsub').textContent)+'">';
+  QUIZ.questions.forEach(function(q,k){
+    h+='<div class="eq"><button class="mini danger" onclick="delQ('+k+')">Supprimer cette question</button>';
+    h+='<span class="lbl">Intitulé / texte de la question</span><textarea rows="3" id="eq'+k+'">'+esc(q.type==='cloze'?q.segs.map(clozeRaw).join(''):q.name)+'</textarea>';
+    h+='<span class="lbl">Type : '+(q.type==='single'?'choix unique':q.type==='multi'?'choix multiple':q.type==='short'?'réponse courte':q.type==='matching'?'association':'texte à trous')+'</span>';
+    if(q.type==='single'||q.type==='multi'){
+      q.options.forEach(function(o,j){
+        h+='<div style="border-top:1px dashed var(--line);padding-top:8px;margin-top:8px">';
+        h+='<span class="lbl">Option '+(j+1)+'</span>';
+        h+='<input type="text" id="eo'+k+'_'+j+'" value="'+esc(o.text)+'">';
+        h+='<label><input type="'+(q.type==='single'?'radio':'checkbox')+'" id="ec'+k+'_'+j+'" '+(o.correct?'checked':'')+' onchange="singleFix('+k+','+j+')"> Bonne réponse</label> ';
+        h+='<span class="lbl">Explication (feedback)</span><textarea rows="2" id="ef'+k+'_'+j+'">'+esc(o.feedback)+'</textarea>';
+        h+='<button class="mini" onclick="delOpt('+k+','+j+')">Retirer cette option</button></div>';
+      });
+      h+='<button class="mini" onclick="addOpt('+k+')">Ajouter une option</button>';
+    }else if(q.type==='short'){
+      h+='<span class="lbl">Réponses acceptées (séparées par des points-virgules)</span><input type="text" id="ea'+k+'" value="'+esc(q.answers.join(' ; '))+'">';
+      h+='<span class="lbl">Explication</span><textarea rows="3" id="ef'+k+'">'+esc(q.feedback)+'</textarea>';
+    }else if(q.type==='matching'){
+      q.pairs.forEach(function(pr,j){
+        h+='<div style="border-top:1px dashed var(--line);padding-top:8px;margin-top:8px"><input type="text" id="epq'+k+'_'+j+'" value="'+esc(pr.q)+'"> <input type="text" id="epa'+k+'_'+j+'" value="'+esc(pr.a)+'"> <button class="mini" onclick="delPair('+k+','+j+')">Retirer</button></div>';
+      });
+      h+='<button class="mini" onclick="addPair('+k+')">Ajouter une paire</button>';
+    }else{
+      h+='<span class="lbl">Texte à trous (syntaxe {1:SHORTANSWER:=réponse~~variante})</span><textarea rows="4" id="eq'+k+'">'+esc(q.segs.map(clozeRaw).join(''))+'</textarea>';
+    }
+    h+='</div>';
+  });
+  h+='<button class="ghost" onclick="addQ()">Ajouter une question (choix unique)</button><br>';
+  h+='<div class="eq"><span class="lbl">Page d\'aide (affichée par le bouton « ? »)</span><textarea rows="8" id="ehelp">'+esc(HELP)+'</textarea></div>';
+  h+='<button onclick="applyEdit()">Appliquer les modifications</button> ';
+  h+='<button class="ghost" onclick="downloadJson()">Télécharger le QCM (JSON)</button> ';
+  h+='<button class="ghost" onclick="downloadHtml()">Télécharger le QCM (HTML)</button> ';
+  h+='<button class="danger" onclick="document.getElementById(\'editor\').classList.add(\'hidden\')">Fermer sans appliquer</button>';
+  h+=quotaPanelHtml();
+  p.innerHTML=h;
+  document.getElementById('editor').classList.remove('hidden');
+}
+/* Panneau d'information sur la limite d'utilisation (affiché en tête et en pied du mode édition) */
+function quotaPanelHtml(){
+  var used=AI_DAILY_MAX-quotaLeft();
+  var left=Math.max(0,AI_DAILY_MAX-used);
+  var pct=Math.min(100,Math.round(100*used/AI_DAILY_MAX));
+  var h='<div class="eq" style="border:1px solid var(--line);padding:10px;margin:10px 0">';
+  h+='<strong>Limite d\'utilisation — données prises en compte</strong>';
+  h+='<p style="margin:6px 0">QCM : '+esc(QUIZ.title)+' (identifiant : '+qid()+')<br>';
+  h+='Jour : '+dayKey()+' — Identifiant de l\'appareil : '+esc(devId())+' — Adresse IP : '+esc(AI_IP)+'<br>';
+  h+='Clé de comptage : '+esc(quotaKey())+'</p>';
+  h+='<p style="margin:6px 0">Plafond : '+AI_DAILY_MAX+' utilisations par jour / appareil / IP / QCM — ';
+  h+='<strong>Niveau atteint : '+used+' / '+AI_DAILY_MAX+' ('+pct+'%)</strong> — Restant au total : <strong>'+left+'</strong></p>';
+  h+='<div style="background:var(--line);height:8px;border-radius:4px;overflow:hidden"><div style="background:var(--accent,#4a7);height:8px;width:'+pct+'%"></div></div>';
+  h+='<p style="margin:6px 0">Limite de session : '+AI_MAX+' questions — posées dans cette session : '+st.ai+'</p>';
+  h+='</div>';
+  return h;
+}
+function clozeRaw(seg){
+  return seg.t!==undefined?seg.t:'{1:SHORTANSWER:='+seg.blank.join('~~')+'}';
+}
+function singleFix(k,j){
+  if(QUIZ.questions[k].type!=='single')return;
+  QUIZ.questions[k].options.forEach(function(o,x){if(x!==j)document.getElementById('ec'+k+'_'+x).checked=false;});
+}
+function delQ(k){if(confirm('Supprimer cette question ?')){QUIZ.questions.splice(k,1);openEditor();}}
+function delOpt(k,j){QUIZ.questions[k].options.splice(j,1);openEditor();}
+function addOpt(k){QUIZ.questions[k].options.push({text:'Nouvelle option',correct:false,feedback:''});openEditor();}
+function delPair(k,j){QUIZ.questions[k].pairs.splice(j,1);openEditor();}
+function addPair(k){QUIZ.questions[k].pairs.push({q:'Élément',a:'Associé'});openEditor();}
+function addQ(){QUIZ.questions.push({type:'single',name:'Nouvelle question',options:[{text:'Bonne réponse',correct:true,feedback:''},{text:'Mauvaise réponse 1',correct:false,feedback:''},{text:'Mauvaise réponse 2',correct:false,feedback:''},{text:'Mauvaise réponse 3',correct:false,feedback:''}]});openEditor();}
+
+function applyEdit(){
+  QUIZ.title=document.getElementById('etitle').value||QUIZ.title;
+  var nh=document.getElementById('ehelp');
+  if(nh){HELP=nh.value;lsSet('qcm_help_'+qid(),HELP);}
+  document.getElementById('qtitle').textContent=QUIZ.title;
+  document.title=QUIZ.title;
+  QUIZ.sub=document.getElementById('esub').value||'';
+  document.getElementById('qsub').textContent=QUIZ.sub;
+  QUIZ.questions.forEach(function(q,k){
+    if(q.type==='single'||q.type==='multi'){
+      q.name=document.getElementById('eq'+k).value;
+      q.options.forEach(function(o,j){
+        o.text=document.getElementById('eo'+k+'_'+j).value;
+        o.correct=!!document.getElementById('ec'+k+'_'+j).checked;
+        o.feedback=document.getElementById('ef'+k+'_'+j).value;
+      });
+    }else if(q.type==='short'){
+      q.name=document.getElementById('eq'+k).value;
+      q.answers=document.getElementById('ea'+k).value.split(';').map(function(s){return s.trim();}).filter(Boolean);
+      q.feedback=document.getElementById('ef'+k).value;
+    }else if(q.type==='matching'){
+      q.name=document.getElementById('eq'+k).value;
+      q.pairs.forEach(function(p,j){
+        p.q=document.getElementById('epq'+k+'_'+j).value;
+        p.a=document.getElementById('epa'+k+'_'+j).value;
+      });
+    }else{
+      var raw=document.getElementById('eq'+k).value;
+      var segs=[],i=0,re=/\{1:(?:SHORTANSWER|MULTICHOICE|NUMERICAL):([^}]*)\}/g,m;
+      while((m=re.exec(raw))!==null){
+        if(m.index>i)segs.push({t:raw.slice(i,m.index)});
+        segs.push({blank:m[1].split(/~~|~/).map(function(a){return a.replace(/^=/,'').trim();})});
+        i=re.lastIndex;
+      }
+      if(i<raw.length)segs.push({t:raw.slice(i)});
+      q.segs=segs;
+    }
+  });
+  document.getElementById('editor').classList.add('hidden');
+  st.i=Math.min(st.i,QUIZ.questions.length-1);st.score=0;st.clicks=[];render();
+}
+/* Nom de fichier des téléchargements : ClasseMoisJour-Notion (ex. TG51116-ImperatifCategorique.html).
+   Classe extraite du sous-titre ou du titre ; mois et jour extraits de la date de la séance
+   dans le sous-titre (sinon date du jour) ; notion = dernière partie du titre, sans accents,
+   sans petits mots (l', le, de, …), chaque mot commençant par une majuscule. */
+function dlBase(){
+  var t=QUIZ.title||'qcm',sub=QUIZ.sub||'';
+  var m=sub.match(/([A-Z]{2,4}\d(?:\/[A-Z]{2,4}\d)*)/)||t.match(/([A-Z]{2,4}\d)/);
+  var cls=m?m[1].replace(/[^A-Za-z0-9]/g,''):'';
+  var mois=['janvier','février','mars','avril','mai','juin','juillet','août','septembre','octobre','novembre','décembre'];
+  var dm=sub.toLowerCase().match(/(\d{1,2})(?:er)?\s+([a-zéû]+)/);
+  var mo=dm?mois.indexOf(dm[2]):-1,mmdd;
+  if(dm&&mo>=0){mmdd=('0'+(mo+1)).slice(-2)+('0'+parseInt(dm[1],10)).slice(-2);}
+  else{var d=new Date();mmdd=('0'+(d.getMonth()+1)).slice(-2)+('0'+d.getDate()).slice(-2);}
+  var notion=t.split(/ : | - | — /).pop().trim();
+  var stop={l:1,d:1,n:1,s:1,j:1,le:1,la:1,les:1,de:1,du:1,des:1,un:1,une:1,a:1,au:1,aux:1,et:1,en:1,y:1,ce:1,cet:1,cette:1,que:1,qui:1,est:1,il:1,elle:1,on:1,comme:1,autre:1,autres:1};
+  var slug=notion.replace(/[\u0027\u2019]/g,' ');
+  try{slug=slug.normalize('NFD').replace(/[\u0300-\u036f]/g,'');}catch(e){}
+  slug=slug.split(/[^A-Za-z0-9]+/).filter(function(w){return w&&!stop[w.toLowerCase()];}).map(function(w){return w.charAt(0).toUpperCase()+w.slice(1);}).join('');
+  if(!slug)slug=t.replace(/[^A-Za-z0-9]/g,'')||'qcm';
+  return (cls?cls:'')+mmdd+'-'+slug;
+}
+function downloadJson(){
+  var blob=new Blob([JSON.stringify(QUIZ,null,2)],{type:'application/json'});
+  var a=document.createElement('a');a.href=URL.createObjectURL(blob);
+  a.download=dlBase()+'.json';
+  document.body.appendChild(a);a.click();a.remove();
+}
+/* Enregistre la page HTML complète avec le QCM modifié :
+   exige que la déclaration « var QUIZ = {...}; » occupe une ligne unique. */
+function downloadHtml(){
+  applyEdit();
+  var sc=document.getElementsByTagName('script'),si=-1;
+  for(var i=0;i<sc.length;i++){if(sc[i].textContent.indexOf('var QUIZ = ')>=0){si=i;break;}}
+  if(si<0){alert('Enregistrement impossible : script du QCM introuvable.');return;}
+  var lines=sc[si].textContent.split('\n'),done=false;
+  for(var L=0;L<lines.length;L++){
+    if(lines[L].indexOf('var QUIZ = ')===0){lines[L]='var QUIZ = '+JSON.stringify(QUIZ)+';';done=true;break;}
+  }
+  if(!done){alert('Enregistrement impossible : la déclaration du QCM doit rester sur une ligne unique.');return;}
+  for(var L2=0;L2<lines.length;L2++){
+    if(lines[L2].indexOf('var HELP_DEF = ')===0){lines[L2]='var HELP_DEF = '+JSON.stringify(HELP)+';';break;}
+  }
+  var clone=document.documentElement.cloneNode(true);
+  clone.getElementsByTagName('script')[si].textContent=lines.join('\n');
+  var c=clone.querySelector('#quizcard'); if(c)c.innerHTML='';
+  var ed=clone.querySelector('#editor'); if(ed){ed.classList.add('hidden');var ep=clone.querySelector('#editpanel');if(ep)ep.innerHTML='';}
+  var blob=new Blob(['<!DOCTYPE html>\n'+clone.outerHTML],{type:'text/html'});
+  var a=document.createElement('a');a.href=URL.createObjectURL(blob);
+  a.download=dlBase()+'.html';
+  document.body.appendChild(a);a.click();a.remove();
+}
+(function(){try{
+  document.getElementById('qtitle').textContent=QUIZ.title;
+  document.title=QUIZ.title;
+  document.getElementById('qsub').textContent=QUIZ.sub||'';
+}catch(e){}})();
+render();
+</script>
+</body>
+</html>
