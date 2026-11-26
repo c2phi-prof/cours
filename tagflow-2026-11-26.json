@@ -1,0 +1,933 @@
+{
+ "version": 1,
+ "exported": "2026-11-26T16:11:53.182Z",
+ "tags": [
+  {
+   "id": "t_d_terminisme",
+   "name": "déterminisme",
+   "description": "Tout événement est l’effet nécessaire de causes antérieures.",
+   "color": "#d1495b"
+  },
+  {
+   "id": "t_libre_arbitre",
+   "name": "libre arbitre",
+   "description": "Pouvoir de choisir, y compris contre ce que la raison recommande.",
+   "color": "#ed8a3b"
+  },
+  {
+   "id": "t_autonomie",
+   "name": "autonomie",
+   "description": "Se donner à soi-même sa loi : liberté fondée sur la raison.",
+   "color": "#e0b42d"
+  },
+  {
+   "id": "t_responsabilit_",
+   "name": "responsabilité",
+   "description": "Assumer ses actes, voire ce dont on n’est pas cause.",
+   "color": "#5aa469"
+  },
+  {
+   "id": "t_contrainte",
+   "name": "contrainte",
+   "description": "Ce qui s’impose du dehors à la volonté.",
+   "color": "#2a9d8f"
+  },
+  {
+   "id": "t_4mi2f62",
+   "name": "indifférence",
+   "description": "État de la volonté non poussée par la perception du vrai ou du bien, ou faculté positive de choisir entre deux contraires.",
+   "pattern": "Termes désignant l'indifférence, l'indétermination ou le fait de ne pas être poussé d'un côté plutôt que de l'autre.",
+   "color": "#69439c"
+  },
+  {
+   "id": "t_wdyfmbp",
+   "name": "base matérielle",
+   "description": "Les conditions économiques et matérielles de la vie sociale, qui servent de fondement au reste de la société.",
+   "pattern": "Termes désignant l'économie, la production, la matière, la base ou la structure concrète de la société (par opposition aux idées et aux institutions).",
+   "color": "#3b6fb6"
+  },
+  {
+   "id": "t_skq3jw3",
+   "name": "impératif moral",
+   "description": "Commandement de la raison pratique qui s'impose à la volonté comme un devoir, sans condition ni intérêt.",
+   "pattern": "Termes désignant le devoir, l'impératif, la loi morale et la maxime : ce que la raison ordonne à la volonté de façon inconditionnelle.",
+   "color": "#b723ae"
+  },
+  {
+   "id": "t_3uuvlnu",
+   "name": "intérêt personnel",
+   "description": "Mobile de l'action fondé sur l'utilité, le bien-être ou le bonheur propre, opposé à la loi morale.",
+   "pattern": "Termes désignant l'amour de soi, l'utilité personnelle, l'envie, le besoin et le bien-être : ce qui motive l'action par l'intérêt individuel.",
+   "color": "#64a22a"
+  },
+  {
+   "id": "t_w0pp2kq",
+   "name": "possibles",
+   "description": "Les possibilités ouvertes à un sujet dans sa situation, que sa liberté peut saisir ou refuser.",
+   "pattern": "Termes désignant les possibilités, les possibles, les horizons et l'éventail de choix ouverts à une existence.",
+   "color": "#cc27a2"
+  },
+  {
+   "id": "t_pzpv9ra",
+   "name": "connecteur logique",
+   "description": "Mot de liaison qui articule le raisonnement : reformulation, opposition, cause ou conséquence.",
+   "pattern": "Termes désignant les connecteurs logiques et marqueurs d'articulation du raisonnement (autrement dit, car, mais, donc, ainsi, or, pourtant).",
+   "color": "#9a3255"
+  }
+ ],
+ "texts": [
+  {
+   "id": "descartes",
+   "title": "",
+   "paragraphs": [
+    {
+     "id": "descartes_0",
+     "text": "« L'indifférence me semble signifier proprement l'état dans lequel se trouve la volonté lorsqu'elle n'est pas poussée d'un côté plutôt que de l'autre par la perception du vrai ou du bien ; et c'est en ce sens que je l'ai prise lorsque j'ai écrit que le plus bas degré de la liberté est celui où nous nous déterminons aux choses pour lesquelles nous sommes indifférents. Mais peut-être d'autres entendent-ils par indifférence la faculté positive de se déterminer pour l'un ou l'autre de deux contraires, c'est-à-dire de poursuivre ou de fuir, d'affirmer ou de nier. Cette faculté positive, je n'ai pas nié qu'elle fût dans la volonté. Bien plus, j'estime qu'elle s'y trouve, non seulement dans ces actes où elle n'est poussée par aucune raison évidente d'un côté plutôt que de l'autre, mais aussi dans tous les autres ; à tel point que, lorsqu'une raison très évidente nous porte d'un côté, bien que, moralement parlant, nous ne puissions guère choisir le parti contraire, absolument parlant, néanmoins, nous le pouvons. Car il nous est toujours possible de nous retenir de poursuivre un bien clairement connu ou d'admettre une vérité évidente, pourvu que nous pensions que c'est un bien d'affirmer par là notre libre arbitre ».",
+     "sels": [
+      {
+       "id": "s_9b91hhm",
+       "start": 2,
+       "end": 16,
+       "tag": "t_4mi2f62"
+      },
+      {
+       "id": "s_lccupy5",
+       "start": 250,
+       "end": 281,
+       "tag": "t_autonomie"
+      },
+      {
+       "id": "s_z8gbyzh",
+       "start": 428,
+       "end": 444,
+       "tag": "t_libre_arbitre"
+      },
+      {
+       "id": "s_a7k1hwx",
+       "start": 972,
+       "end": 1018,
+       "tag": "t_libre_arbitre"
+      },
+      {
+       "id": "s_lathb61",
+       "start": 1057,
+       "end": 1108,
+       "tag": "t_d_terminisme"
+      },
+      {
+       "id": "s_d7fjuqt",
+       "start": 1189,
+       "end": 1224,
+       "tag": "t_libre_arbitre"
+      }
+     ],
+     "fil": [
+      {
+       "start": 2,
+       "end": 16,
+       "role": "notion",
+       "grp": "a0"
+      },
+      {
+       "start": 250,
+       "end": 281,
+       "role": "thèse",
+       "grp": "a1"
+      },
+      {
+       "start": 370,
+       "end": 384,
+       "role": "connecteur",
+       "grp": "a2"
+      },
+      {
+       "start": 428,
+       "end": 444,
+       "role": "notion",
+       "grp": "a3"
+      },
+      {
+       "start": 516,
+       "end": 563,
+       "role": "exemple",
+       "grp": "a4"
+      },
+      {
+       "start": 589,
+       "end": 604,
+       "role": "thèse",
+       "grp": "a5"
+      },
+      {
+       "start": 634,
+       "end": 643,
+       "role": "connecteur",
+       "grp": "a6"
+      },
+      {
+       "start": 729,
+       "end": 751,
+       "role": "notion",
+       "grp": "a7"
+      },
+      {
+       "start": 972,
+       "end": 1018,
+       "role": "thèse",
+       "grp": "a8"
+      },
+      {
+       "start": 1057,
+       "end": 1108,
+       "role": "exemple",
+       "grp": "a9"
+      },
+      {
+       "start": 1189,
+       "end": 1224,
+       "role": "conclusion",
+       "grp": "a10"
+      }
+     ]
+    },
+    {
+     "id": "descartes_1",
+     "text": "René Descartes, Lettre au Père Mesland.",
+     "sels": []
+    },
+    {
+     "id": "descartes_2",
+     "text": "L'ambiguïté de la liberté d'indifférence est analysée par Descartes. Il fait dans cet extrait une distinction implicite entre la liberté d'indifférence et le libre-arbitre. En un premier sens, l'indifférence est l'indétermination de la volonté qui ne se décide en faveur d'aucun choix lorsqu'aucune raison ne vient la pousser dans une direction ou dans une autre. Mais on peut se demander dans ce cas si la liberté a encore quelque chose à voir avec l'action de la volonté puisqu'elle ne se fonde sur aucun jugement. C'est pourquoi Descartes considère qu'elle est le plus bas degré de liberté, car la volonté n'y a aucune part.",
+     "sels": []
+    },
+    {
+     "id": "descartes_3",
+     "text": "En un autre sens cependant, Descartes accorde à l'indifférence de la volonté la valeur d'une capacité positive, quand elle est définie comme la faculté de choisir une chose ou son contraire. Nous expérimentons alors l'étendue infinie de la volonté. Nous l'expérimentons surtout lorsque la raison, dans le double sens de ratio et de logos dicte les principes de notre action et que nous choisissons cependant de faire le contraire.",
+     "sels": []
+    },
+    {
+     "id": "descartes_4",
+     "text": "Le texte de Descartes nous montre que la liberté est fondée sur la raison, mais que notre volonté a toujours le pouvoir absolu de choisir le contraire de ce que la raison recommande. La liberté d'indifférence est une première forme de liberté négative, au sens d'une liberté qui ne serait pas fondée sur un choix.",
+     "sels": []
+    },
+    {
+     "id": "descartes_5",
+     "text": "Le libre arbitre est à la fois la liberté de choisir par indifférence et de choisir le contraire de ce que la raison nous recommande. C'est donc une liberté positive mais aussi le plus bas degré de liberté.",
+     "sels": []
+    }
+   ]
+  },
+  {
+   "id": "marx",
+   "title": "",
+   "paragraphs": [
+    {
+     "id": "marx_0",
+     "text": "« Dans la production sociale de leur existence, les hommes entrent en des rapports déterminés, nécessaires, indépendants de leur volonté, rapports de production qui correspondent à un degré de développement déterminé de leurs forces productives matérielles. L'ensemble de ces rapports de production constitue la structure économique de la société, la base concrète sur laquelle s'élève une superstructure juridique et politique et à laquelle correspondent des formes de conscience sociales déterminées. Le mode de production de la vie matérielle conditionne le processus de vie social, politique et intellectuel en général. Ce n'est pas la conscience des hommes qui détermine leur être ; c'est inversement leur être social qui détermine leur conscience ».",
+     "sels": [
+      {
+       "id": "s_yf854xy",
+       "start": 108,
+       "end": 136,
+       "tag": "t_contrainte"
+      },
+      {
+       "id": "s_lf20yyo",
+       "start": 74,
+       "end": 93,
+       "tag": "t_d_terminisme"
+      },
+      {
+       "id": "s_vwdej44",
+       "start": 312,
+       "end": 332,
+       "tag": "t_wdyfmbp"
+      },
+      {
+       "id": "s_sloloh7",
+       "start": 390,
+       "end": 427,
+       "tag": "t_wdyfmbp"
+      },
+      {
+       "id": "s_gq17hfa",
+       "start": 546,
+       "end": 557,
+       "tag": "t_d_terminisme"
+      },
+      {
+       "id": "s_m7iqb1m",
+       "start": 624,
+       "end": 650,
+       "tag": "t_autonomie"
+      },
+      {
+       "id": "s_lgf6k75",
+       "start": 706,
+       "end": 722,
+       "tag": "t_d_terminisme"
+      }
+     ],
+     "fil": [
+      {
+       "start": 74,
+       "end": 93,
+       "role": "notion",
+       "grp": "a0"
+      },
+      {
+       "start": 108,
+       "end": 136,
+       "role": "thèse",
+       "grp": "a1"
+      },
+      {
+       "start": 138,
+       "end": 160,
+       "role": "notion",
+       "grp": "a2"
+      },
+      {
+       "start": 312,
+       "end": 332,
+       "role": "notion",
+       "grp": "a3"
+      },
+      {
+       "start": 390,
+       "end": 427,
+       "role": "notion",
+       "grp": "a4"
+      },
+      {
+       "start": 546,
+       "end": 557,
+       "role": "thèse",
+       "grp": "a5"
+      },
+      {
+       "start": 624,
+       "end": 650,
+       "role": "objection",
+       "grp": "a6"
+      },
+      {
+       "start": 688,
+       "end": 705,
+       "role": "connecteur",
+       "grp": "a7"
+      },
+      {
+       "start": 706,
+       "end": 722,
+       "role": "conclusion",
+       "grp": "a8"
+      }
+     ]
+    },
+    {
+     "id": "marx_1",
+     "text": "Karl Marx, Contribution à la critique de l'économie politique.",
+     "sels": []
+    },
+    {
+     "id": "marx_2",
+     "text": "Nous agissons également sans avoir le choix dans notre existence sociale parce que celle-ci résulte, selon Marx, d'un rapport de production indépendant de notre volonté. La société correspond à un certain stade de développement des moyens de production économiques entièrement dépendant des conditions matérielles. Cette structure économique de la société sert de fondement aux discours qui composent le reste de la vie humaine : les différentes idéologies qui structurent les valeurs philosophiques, éthiques, politiques et scientifiques de la société. Le fondement économique détermine ainsi la conscience collective.",
+     "sels": []
+    },
+    {
+     "id": "marx_3",
+     "text": "Les deux structures : l'infrastructure (ou base) est l'ensemble des rapports de production, correspondant à un degré de développement des forces productives. La superstructure comprend les institutions juridiques et politiques (État, droit) et les formes de conscience sociales (religion, morale, philosophie, art). C'est l'infrastructure qui détermine la superstructure.",
+     "sels": []
+    },
+    {
+     "id": "marx_4",
+     "text": "Les hommes sont d'abord des êtres sociaux : ils entrent dans des rapports nécessaires, indépendants de leur volonté. On naît dans une société déjà structurée par des rapports de production donnés ; la conscience est le produit, non le point de départ.",
+     "sels": []
+    },
+    {
+     "id": "marx_5",
+     "text": "La conscience est déterminée par l'être social, mais pas inerte : elle est le lieu où les hommes prennent conscience des contradictions et peuvent mener le conflit jusqu'au bout. Déterminée en dernière instance, elle peut devenir lucide sur ses propres déterminations : c'est le germe de la liberté. La liberté marxienne n'est pas celle du libre arbitre, ni celle du sage, mais celle de la praxis : comprendre ce qui nous détermine pour agir sur la structure elle-même.",
+     "sels": []
+    }
+   ]
+  },
+  {
+   "id": "kant",
+   "title": "",
+   "paragraphs": [
+    {
+     "id": "kant_0",
+     "text": "« Il n'y a donc qu'un unique impératif catégorique, et c'est celui-ci : Agis seulement d'après la maxime grâce à laquelle tu peux vouloir en même temps qu'elle devienne une loi universelle.",
+     "sels": [
+      {
+       "id": "s_o84m9zy",
+       "start": 22,
+       "end": 50,
+       "tag": "t_skq3jw3"
+      },
+      {
+       "id": "s_lv8iiuk",
+       "start": 130,
+       "end": 137,
+       "tag": "t_autonomie"
+      },
+      {
+       "id": "s_y2yr1lj",
+       "start": 173,
+       "end": 188,
+       "tag": "t_autonomie"
+      }
+     ],
+     "fil": [
+      {
+       "start": 11,
+       "end": 15,
+       "role": "connecteur",
+       "grp": "a0"
+      },
+      {
+       "start": 22,
+       "end": 50,
+       "role": "thèse",
+       "grp": "a1"
+      },
+      {
+       "start": 72,
+       "end": 86,
+       "role": "thèse",
+       "grp": "a2"
+      },
+      {
+       "start": 95,
+       "end": 104,
+       "role": "notion",
+       "grp": "a3"
+      },
+      {
+       "start": 130,
+       "end": 137,
+       "role": "notion",
+       "grp": "a4"
+      },
+      {
+       "start": 173,
+       "end": 188,
+       "role": "conclusion",
+       "grp": "a5"
+      }
+     ]
+    },
+    {
+     "id": "kant_1",
+     "text": "[Par exemple, un individu] se voit pressé par le besoin d'emprunter de l'argent. Il sait parfaitement qu'il ne pourra rembourser, mais voit aussi qu'on ne lui accordera aucun prêt s'il ne promet pas avec fermeté de rendre l'argent à un moment déterminé. Il a envie de faire une telle promesse ; mais il conserve encore assez de conscience morale pour se demander : n'est-il pas interdit et contraire au devoir de se tirer d'affaire par un tel expédient ? À supposer qu'il se résolve pourtant à y recourir, la maxime de son action s'énoncerait ainsi : quand je me crois à court d'argent, j'accepte d'en emprunter et de promettre de le rendre, bien que je sache que tel ne sera jamais le cas. Sans doute ce principe de l'amour de soi ou de l'utilité personnelle est-il compatible, éventuellement, avec tout mon bien-être futur, mais pour l'instant la seule question est de savoir si c'est juste. Je transforme donc la prétention de l'amour de soi en une loi universelle et construis la question suivante : qu'adviendrait-il dès lors que ma maxime serait érigée en loi universelle ? Mais dans ce cas je vois d'emblée qu'elle ne pourrait jamais acquérir la valeur d'une loi universelle de la nature et s'accorder avec elle-même, mais qu'inévitablement, il lui faudrait se contredire. Car universaliser une loi selon laquelle chaque individu croyant être dans le besoin pourrait promettre tout ce qui lui vient à l'esprit, avec l'intention de ne pas tenir ses promesses, cela reviendrait à rendre même impossible le fait de promettre, ainsi que le but qu'on peut lui associer, dans la mesure où personne ne croirait à ce qu'on lui promet, et qu'au contraire tout le monde rirait de telle déclaration en n'y voyant que de vains subterfuges ».",
+     "sels": [
+      {
+       "id": "s_qmis86p",
+       "start": 390,
+       "end": 409,
+       "tag": "t_skq3jw3"
+      },
+      {
+       "id": "s_ihso3bc",
+       "start": 506,
+       "end": 529,
+       "tag": "t_skq3jw3"
+      },
+      {
+       "id": "s_41l541k",
+       "start": 719,
+       "end": 731,
+       "tag": "t_3uuvlnu"
+      },
+      {
+       "id": "s_8djjmcp",
+       "start": 952,
+       "end": 967,
+       "tag": "t_autonomie"
+      }
+     ],
+     "fil": [
+      {
+       "start": 1,
+       "end": 12,
+       "role": "exemple",
+       "grp": "a0"
+      },
+      {
+       "start": 49,
+       "end": 79,
+       "role": "exemple",
+       "grp": "a1"
+      },
+      {
+       "start": 81,
+       "end": 128,
+       "role": "exemple",
+       "grp": "a2"
+      },
+      {
+       "start": 130,
+       "end": 134,
+       "role": "connecteur",
+       "grp": "a3"
+      },
+      {
+       "start": 328,
+       "end": 345,
+       "role": "notion",
+       "grp": "a4"
+      },
+      {
+       "start": 390,
+       "end": 409,
+       "role": "notion",
+       "grp": "a5"
+      },
+      {
+       "start": 506,
+       "end": 529,
+       "role": "notion",
+       "grp": "a6"
+      },
+      {
+       "start": 618,
+       "end": 640,
+       "role": "exemple",
+       "grp": "a7"
+      },
+      {
+       "start": 719,
+       "end": 731,
+       "role": "notion",
+       "grp": "a8"
+      },
+      {
+       "start": 740,
+       "end": 759,
+       "role": "notion",
+       "grp": "a9"
+      },
+      {
+       "start": 952,
+       "end": 967,
+       "role": "notion",
+       "grp": "a10"
+      }
+     ]
+    },
+    {
+     "id": "kant_2",
+     "text": "Emmanuel Kant, Fondation de la métaphysique des mœurs.",
+     "sels": []
+    },
+    {
+     "id": "kant_3",
+     "text": "L'argumentation de Kant est construite à partir d'un exemple : celui d'un homme qui désire emprunter une somme d'argent sans être certain de pouvoir rembourser le prêt qu'il demande. Ce que montre Kant c'est que cette action est justifiée par une règle de conduite qu'il nomme maxime subjective parce qu'elle s'appuie sur l'amour de soi, et le bien-être (bonheur) futur que l'on peut espérer d'un tel emprunt.",
+     "sels": []
+    },
+    {
+     "id": "kant_4",
+     "text": "Mais cette maxime subjective ne semble pas suffisante car elle contient une contradiction qui apparaît si on la généralise au genre humain. L'universalisation est l'opération de la raison qui consiste à faire d'une règle de conduite subjective une loi morale comparable dans sa nécessité aux lois qui gouvernent la nature. La fausse promesse rend impossible toute promesse future car elle ruine la confiance qu'elle présuppose. C'est ainsi que les principes de nos actions doivent, selon Kant, être soumis au tribunal de la raison.",
+     "sels": []
+    },
+    {
+     "id": "kant_5",
+     "text": "Agir par devoir consiste à prendre comme principe de nos actions ceux qui peuvent être suivis par tous les hommes, universellement, sans aboutir à une contradiction dans la raison. Ce n'est qu'en suivant les principes de l'impératif catégorique que la volonté est libre. Nous agissons donc librement lorsque nous accomplissons notre devoir : l'obligation ne s'oppose pas à la liberté.",
+     "sels": []
+    }
+   ]
+  },
+  {
+   "id": "sartre",
+   "title": "",
+   "paragraphs": [
+    {
+     "id": "sartre_0",
+     "text": "« Me voilà tuberculeux par exemple. Ici apparaît la malédiction (et la grandeur). Cette maladie, qui m'infecte, m'affaiblit, me change, limite brusquement mes possibilités et mes horizons. J'étais acteur ou sportif ; avec mes deux pneumos, je ne puis plus l'être. Ainsi je suis déchargé de toute responsabilité touchant ces possibilités que le cours du monde vient de m'ôter. C'est ce que le langage populaire nomme être diminué. Et ce mot semble recouvrir une image correcte : j'étais un bouquet de possibilités, on ôte quelques fleurs, le bouquet reste dans le vase, diminué, réduit à quelques éléments.",
+     "sels": [
+      {
+       "id": "s_nt0gkdn",
+       "start": 101,
+       "end": 134,
+       "tag": "t_contrainte"
+      },
+      {
+       "id": "s_21m6evf",
+       "start": 136,
+       "end": 171,
+       "tag": "t_d_terminisme"
+      },
+      {
+       "id": "s_y69szne",
+       "start": 278,
+       "end": 310,
+       "tag": "t_responsabilit_"
+      },
+      {
+       "id": "s_deklpt3",
+       "start": 341,
+       "end": 358,
+       "tag": "t_d_terminisme"
+      }
+     ],
+     "fil": [
+      {
+       "start": 2,
+       "end": 34,
+       "role": "exemple",
+       "grp": "a0"
+      },
+      {
+       "start": 49,
+       "end": 80,
+       "role": "thèse",
+       "grp": "a1"
+      },
+      {
+       "start": 101,
+       "end": 134,
+       "role": "notion",
+       "grp": "a2"
+      },
+      {
+       "start": 136,
+       "end": 171,
+       "role": "notion",
+       "grp": "a3"
+      },
+      {
+       "start": 264,
+       "end": 269,
+       "role": "connecteur",
+       "grp": "a4"
+      },
+      {
+       "start": 278,
+       "end": 310,
+       "role": "thèse",
+       "grp": "a5"
+      },
+      {
+       "start": 341,
+       "end": 358,
+       "role": "notion",
+       "grp": "a6"
+      },
+      {
+       "start": 416,
+       "end": 428,
+       "role": "objection",
+       "grp": "a7"
+      },
+      {
+       "start": 486,
+       "end": 512,
+       "role": "exemple",
+       "grp": "a8"
+      }
+     ]
+    },
+    {
+     "id": "sartre_1",
+     "text": "Mais en réalité il n'en est rien : cette image est [insuffisante]. La situation nouvelle, quoique venue du dehors, doit être vécue, c'est-à-dire assumée, dans un dépassement. Il est vrai de dire qu'on m'ôte ces possibilités mais il est aussi vrai de dire que j'y renonce ou que je m'y cramponne ou que je ne veux pas voir qu'elles me sont ôtées ou que je me soumets à un régime systématique pour les reconquérir. En un mot ces possibilités sont non pas supprimées mais remplacées par un choix d'attitudes possibles envers la disparition de ces possibilités. Et d'autre part surgissent avec mon état nouveau des possibilités nouvelles : possibilités à l'égard de ma maladie (être un bon ou un mauvais malade), possibilités vis-à-vis de ma condition (gagner tout de même ma vie, etc.), un malade ne possède ni plus ni moins de possibilités qu'un bien portant ; il a son éventail de possibles comme l'autre et il a à décider sur sa situation, c'est-à-dire à assumer sa condition de malade pour la dépasser (vers la guérison ou vers une vie humaine de malade avec de nouveaux horizons).",
+     "sels": [
+      {
+       "id": "s_va6pmeg",
+       "start": 90,
+       "end": 113,
+       "tag": "t_contrainte"
+      },
+      {
+       "id": "s_lriwaxn",
+       "start": 145,
+       "end": 173,
+       "tag": "t_responsabilit_"
+      },
+      {
+       "id": "s_xa7gduj",
+       "start": 484,
+       "end": 514,
+       "tag": "t_libre_arbitre"
+      },
+      {
+       "id": "s_9q1aijx",
+       "start": 611,
+       "end": 633,
+       "tag": "t_w0pp2kq"
+      },
+      {
+       "id": "s_6vlsndp",
+       "start": 955,
+       "end": 985,
+       "tag": "t_responsabilit_"
+      }
+     ],
+     "fil": [
+      {
+       "start": 0,
+       "end": 32,
+       "role": "objection",
+       "grp": "a0"
+      },
+      {
+       "start": 52,
+       "end": 64,
+       "role": "thèse",
+       "grp": "a1"
+      },
+      {
+       "start": 90,
+       "end": 113,
+       "role": "notion",
+       "grp": "a2"
+      },
+      {
+       "start": 115,
+       "end": 130,
+       "role": "thèse",
+       "grp": "a3"
+      },
+      {
+       "start": 145,
+       "end": 173,
+       "role": "notion",
+       "grp": "a4"
+      },
+      {
+       "start": 229,
+       "end": 254,
+       "role": "connecteur",
+       "grp": "a5"
+      },
+      {
+       "start": 259,
+       "end": 270,
+       "role": "exemple",
+       "grp": "a6"
+      },
+      {
+       "start": 278,
+       "end": 294,
+       "role": "exemple",
+       "grp": "a7"
+      },
+      {
+       "start": 445,
+       "end": 479,
+       "role": "thèse",
+       "grp": "a8"
+      },
+      {
+       "start": 484,
+       "end": 514,
+       "role": "notion",
+       "grp": "a9"
+      },
+      {
+       "start": 558,
+       "end": 573,
+       "role": "connecteur",
+       "grp": "a10"
+      },
+      {
+       "start": 611,
+       "end": 633,
+       "role": "notion",
+       "grp": "a11"
+      },
+      {
+       "start": 674,
+       "end": 706,
+       "role": "exemple",
+       "grp": "a12"
+      },
+      {
+       "start": 805,
+       "end": 837,
+       "role": "conclusion",
+       "grp": "a13"
+      },
+      {
+       "start": 955,
+       "end": 985,
+       "role": "conclusion",
+       "grp": "a14"
+      }
+     ]
+    },
+    {
+     "id": "sartre_2",
+     "text": "Autrement dit, la maladie est une condition à l'intérieur de laquelle l'homme est de nouveau libre et sans excuses. Il a à prendre la responsabilité de sa maladie. Sa maladie est une excuse pour ne pas réaliser ses possibilités de non-malade mais elle n'en est pas une pour ses possibilités de malade qui sont aussi nombreuses... Ainsi suis-je sans repos : toujours transformé, miné, laminé, ruiné du dehors et toujours libre, toujours obligé de reprendre à mon compte, de prendre la responsabilité de ce dont je ne suis pas responsable ».",
+     "sels": [
+      {
+       "id": "s_e87akuj",
+       "start": 0,
+       "end": 13,
+       "tag": "t_pzpv9ra"
+      },
+      {
+       "id": "s_ed1pbv1",
+       "start": 82,
+       "end": 114,
+       "tag": "t_libre_arbitre"
+      },
+      {
+       "id": "s_75rr12t",
+       "start": 123,
+       "end": 148,
+       "tag": "t_responsabilit_"
+      },
+      {
+       "id": "s_oh5rm26",
+       "start": 179,
+       "end": 210,
+       "tag": "t_d_terminisme"
+      },
+      {
+       "id": "s_bkbdavp",
+       "start": 242,
+       "end": 268,
+       "tag": "t_w0pp2kq"
+      },
+      {
+       "id": "s_flr7ndd",
+       "start": 278,
+       "end": 300,
+       "tag": "t_w0pp2kq"
+      },
+      {
+       "id": "s_3wo3nfr",
+       "start": 330,
+       "end": 335,
+       "tag": "t_pzpv9ra"
+      },
+      {
+       "id": "s_yvlw2gj",
+       "start": 392,
+       "end": 407,
+       "tag": "t_contrainte"
+      },
+      {
+       "id": "s_fompn9z",
+       "start": 411,
+       "end": 425,
+       "tag": "t_libre_arbitre"
+      },
+      {
+       "id": "s_0omr4c3",
+       "start": 502,
+       "end": 536,
+       "tag": "t_responsabilit_"
+      }
+     ],
+     "fil": [
+      {
+       "start": 0,
+       "end": 13,
+       "role": "connecteur",
+       "grp": "a0"
+      },
+      {
+       "start": 82,
+       "end": 114,
+       "role": "thèse",
+       "grp": "a1"
+      },
+      {
+       "start": 123,
+       "end": 148,
+       "role": "notion",
+       "grp": "a2"
+      },
+      {
+       "start": 123,
+       "end": 162,
+       "role": "notion",
+       "grp": "a3"
+      },
+      {
+       "start": 179,
+       "end": 210,
+       "role": "objection",
+       "grp": "a4"
+      },
+      {
+       "start": 179,
+       "end": 241,
+       "role": "objection",
+       "grp": "a5"
+      },
+      {
+       "start": 242,
+       "end": 268,
+       "role": "connecteur",
+       "grp": "a6"
+      },
+      {
+       "start": 278,
+       "end": 300,
+       "role": "notion",
+       "grp": "a7"
+      },
+      {
+       "start": 330,
+       "end": 335,
+       "role": "connecteur",
+       "grp": "a8"
+      },
+      {
+       "start": 392,
+       "end": 407,
+       "role": "objection",
+       "grp": "a9"
+      },
+      {
+       "start": 411,
+       "end": 425,
+       "role": "conclusion",
+       "grp": "a10"
+      },
+      {
+       "start": 502,
+       "end": 536,
+       "role": "conclusion",
+       "grp": "a11"
+      }
+     ]
+    },
+    {
+     "id": "sartre_3",
+     "text": "Jean-Paul Sartre, Cahiers pour une morale.",
+     "sels": []
+    },
+    {
+     "id": "sartre_4",
+     "text": "Ce texte propose une autre définition de la liberté que celle d'avoir le choix. Du point de vue des choix possibles, cette liberté est encore négative. Car l'exemple de la maladie qui fait irruption dans la vie du tuberculeux montre en apparence une diminution des possibilités offertes et par conséquent la diminution d'une forme de liberté fondée sur la volonté et le choix.",
+     "sels": []
+    },
+    {
+     "id": "sartre_5",
+     "text": "À partir de cet exemple, Sartre va fonder la liberté humaine sur l'absence de choix, ou plus exactement sur leur disparition. Ma liberté est ainsi définie comme la capacité de transcender toute situation dont je reçois la responsabilité du dehors, c'est-à-dire sans l'avoir choisie. Il n'y a pas en soi de meilleure manière d'assumer la responsabilité d'une situation que l'on n'a pas choisie. Il y a seulement différentes attitudes qui sont toutes des manières d'être libre, c'est-à-dire de transcender les choses et le monde naturel.",
+     "sels": []
+    },
+    {
+     "id": "sartre_6",
+     "text": "Les attitudes que le malade peut adopter face à sa maladie sont des attitudes possibles envers la disparition de ces possibilités. C'est cette liberté négative qui fait que le possible existe malgré la disparition des choix. Preuve que nous pouvons être libres sans avoir de choix, ou par disparition de nos choix, libre envers la disparition même.",
+     "sels": []
+    }
+   ]
+  },
+  {
+   "id": "dissertation",
+   "title": "",
+   "paragraphs": [
+    {
+     "id": "dissertation_0",
+     "text": "Pour l'opinion commune, la liberté repose sur des choix. Plus nous avons le choix, plus nous sommes libres. Et au contraire, la diminution des choix limite notre liberté. Pourtant il y a plusieurs façons de ne pas avoir le choix. Lorsque nous sommes déterminés par les lois de la nature, nous ne choisissons pas. Lorsqu'un choix s'impose plus qu'un autre au terme d'un raisonnement qui en démontre le bien-fondé, c'est une autre façon d'agir sans avoir le choix. Enfin, accomplir son devoir en obéissant à des principes qui déterminent notre action est une troisième façon d'agir sans avoir le choix. Ces différentes manières montrent que la liberté peut s'accommoder d'une certaine dose de déterminisme et qu'elle ne se définit pas uniquement par le choix. Ainsi la question « Peut-on être libre sans avoir le choix ? » invite à s'interroger sur la possibilité d'une liberté négative.",
+     "sels": []
+    }
+   ]
+  }
+ ]
+}
